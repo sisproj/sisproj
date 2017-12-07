@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>SIS - Standard Intranet System</title>
+
+	<!-- font icon, FA -->
+	<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<!-- css -->
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/mainStyle.css">
+
+	<!-- jquery -->
+	<script src="jquery/jquery-3.2.1.min.js"></script>
+	<script src="jquery/jquery.easing.1.3.js"></script>
+	<!-- mainjs -->
+	<script src="js/mainjs.js"></script>
+</head>
+<body>
+	<!-- 상단부분 -->
+	<header>
+		<h1><a href="#"><img src="images/logo.png" alt=""></a></h1>
+		<div id="loginfo">
+			<p>접속자 : 이름 ▼ </p>
+			<div id="loglist">
+				<ul>
+					<li><a href="#">개인정보변경</a></li>
+					<li><a href="#">비밀번호변경</a></li>
+					<li><hr></li>
+					<li><a href="#">로그아웃</a></li>
+				</ul>
+			</div>	
+		</div>	
+		<nav>
+			<ul>
+				<li><a href="#">스케줄</a></li>
+				<li><a href="#">주소록</a></li>
+				<li><a href="#">자원관리</a></li>
+				<li><a href="#" class="active">전자결재</a></li>
+				<li><a href="#">근태관리</a></li>
+				<li><a href="#">웹하드</a></li>
+				<li><a href="#">공지사항</a></li>
+				<li><a href="#">사내뉴스</a></li>
+			</ul>
+		</nav>
+	</header>
+	<section>
+		<div id="bookmark" class="hidden">
+			<div id="bookmarkbtn">	
+				<i class="fa fa-bookmark" aria-hidden="true"></i>
+				<span class="bold" style="display:none">Bookmark</span>
+			</div>
+			<ul style="display:none">
+				<li><hr></li>
+				<li><a href="#">전자결재</a></li>
+				<li><a href="#">스케쥴</a></li>
+				<li><a href="#">근태관리</a></li>
+			</ul>
+		</div>
+		<aside>
+			<div id="listbtn" class=""><p>◀</p></div>
+			<nav>
+				<ul>
+					<li><a href="#">1</a></li>
+					<li><a href="#">2</a></li>
+					<li><a href="#">3</a></li>
+					<li><a href="#">4</a></li>
+					<li><a href="#">5</a></li>
+					<li><a href="#">6</a></li>
+				</ul>	
+			</nav>
+		</aside>
+		<!-- include부분 -->
+		<article>
+			맨 첫줄 
+			<div>div태그</div>
+			<span>span태그</span><br>
+			<input type="text"><br>
+			<input type="password"><br>
+			<input type="button" value="버튼"><br>
+			<input type="submit" value="제출"><br>
+			<input type="reset" value="리셋"><br>
+			<input type="radio"><br>
+			<input type="checkbox"><br>
+		</article>
+		<!-- include부분 끝-->
+	</section>
+	<footer>
+		<div><a href="#">회사소개</a> | <a href="#">서비스 약관</a> | <a href="#">개인정보처리방침</a> | <a href="#">고객센터</a> | © Standard Intranet System</div>
+	</footer>
+</body>
+</html>
