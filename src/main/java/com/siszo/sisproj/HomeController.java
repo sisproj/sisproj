@@ -20,7 +20,7 @@ public class HomeController {
     /**
      * Simply selects the home view to render by returning its name.
      */
-    @RequestMapping(value = "/home.do", method = RequestMethod.GET)
+    @RequestMapping(value = "/home.do", method = RequestMethod.POST)
     public String home(Locale locale, Model model) {
         logger.info("Welcome home! The client locale is {}.", locale);
 
@@ -28,6 +28,12 @@ public class HomeController {
 
 
         return "home";
+    }
+    
+    @RequestMapping(value ="/login.do")
+    public String login() {
+    	logger.info("로그인 화면 보여주기");
+    	return "login";
     }
 
 }
