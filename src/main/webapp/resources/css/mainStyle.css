@@ -207,6 +207,7 @@ section #bookmark{
 	background-color: #fff;
 	cursor:pointer;
 	text-align: center;
+	z-index: 9000;
 }
 section #bookmark ul li{
 	line-height:30px;
@@ -229,23 +230,24 @@ section #bookmarkbtn i{
 }
 section article{
 	box-sizing:border-box;
-	width: 70%;
-	min-width: 800px;
-	float:left;
 	padding:10px;
-	overflow:auto;
+	overflow-x: hidden;
+	overflow-y:auto;
 }
 section #headsection{
 	position: fixed;
-	margin:94px 0 0 300px;	
+	width: calc(100%-300px);
+	margin:94px 40px 0 300px;	
 	background-color: #ddd;
 }
 section #bodysection{
-	margin:163px 0 20px 300px;	
+	position: relative;
+	top: 163px;
+	width: calc(100%-300px);
+	margin:0 40px 20px 300px;	
 }
 section article h1{
 	box-sizing: border-box;
-	width: 30%;
 	margin-top: 20px;
 	margin-left: ;
 	font-size: 25px;

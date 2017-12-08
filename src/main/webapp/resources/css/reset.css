@@ -16,10 +16,6 @@ footer, header, hgroup, menu, nav, section {
 ol, ul {
 	list-style: none;
 }
-
-table {
-	border-collapse: collapse;
-}
 img{
 	border:0;	
 }
@@ -47,11 +43,6 @@ input[type=submit],
 input[type=button],
 input[type=reset],
 a.button{
-	/* 선택옵션
-	width: 100px;
-	height: 50px;
-	line-height: 50px;
-	선택옵션 끝 */
 	display: inline-block;
 	font-size: 0.9em;
 	cursor:pointer;
