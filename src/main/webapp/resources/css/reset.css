@@ -38,7 +38,7 @@ a, a:active, a:visited {
 }
 .bold{font-weight: bold;}
 .thin{font-weight: 200;}
-input{outline: none;}
+input,select{outline: none;}
 input[type=submit],
 input[type=button],
 input[type=reset],
