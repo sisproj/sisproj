@@ -2,77 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@include file="../inc/top.jsp" %>
 <style>
-    .messenger-top {
-        background-color: #333;
-        height: 50px;
-        width: 100%;
-        vertical-align: middle;
-        position: relative;
-    }
-
-    .messenger-top span {
-        margin-top: 50px;
-    }
-
-    .messenger-top button {
-        margin-top: 10px;
-        margin-right: 10px;
-        text-align: center;
-        float: right;
-    }
-
-    .messenger-top button i {
-        font-size: 25px;
-        float: right;
-    }
-
-    .messenger-container {
-        background-color: #3C0;
-        float: left;
-        height: 75%;
-        width: 80%;
-        position: relative;
-        overflow: scroll;
-        overflow-x: hidden;
-    }
-
-    .message-enter {
-        background-color: #C0F;
-        height: 50px;
-        width: 100%;
-        position: relative;
-        text-align: center;
-        vertical-align: middle;
-        clear: both;
-        float: left;
-    }
-
-    .messenger-nav {
-        background-color: #09C;
-        float: right;
-        height: 75%;
-        width: 20%;
-        position: relative;
-    }
-
-    .other-msg {
-        margin-left: 50px;
-    }
-
-    .my-msg {
-        margin-right: 50px;
-        text-align: right;
-    }
-
-    #msg {
-        width: 70%;
-    }
-
-    .msg-start-btn {
-        width: 248px;
-        height: 50px;
-        margin: 30px;
-    }
+   /*커밋 테스트  */
 
 </style>
 <!-- 0. include부분 -->
