@@ -1,6 +1,6 @@
 
 html, body{
-	 width: 100%;
+	width: 100%;
 	height: 100%;
 	background-color: #ddd;
 }
@@ -13,7 +13,6 @@ header{
 	padding-left: 10px;
 	padding-top: 10px;
 	background-color: #069;
-	z-index: 9000;
 }
 header h1 img {
 	height: 70px;
@@ -64,7 +63,6 @@ aside{
 	background-color: #069;
 	float:left;
 	margin-right: 30px;
-	z-index: 9000;
 }
 aside #loginfo{
 	box-sizing: border-box;
@@ -139,7 +137,6 @@ aside nav{
 	margin-top: 15px;
 }
 aside nav li a{
-	box-sizing:border-box;
 	display: inline-block;
 	z-index:50;
 	width: 100%;
@@ -163,9 +160,6 @@ aside #organ{
 	box-sizing:border-box;
 	width: 298px;
 	height: 40px;
-	padding-left: 15%;
-	padding-right: 5%;
-	line-height: 40px;
 	cursor:pointer;
 	background: #4c4c4c;
 	background: -moz-linear-gradient(top, #4c4c4c 0%, #595959 12%, #666666 25%, #474747 39%, #2c2c2c 50%, #000000 51%, #111111 60%, #2b2b2b 76%, #1c1c1c 91%, #131313 100%);
@@ -191,9 +185,8 @@ aside nav li i{
 
 /* section */
 section{
-	box-sizing:border-box;
 	width: 100%;
-	min-width: 1070px;
+	min-width: 1100px;
 	height: calc(100vh - 144px);
 	margin-bottom: 50px;
 }
@@ -236,13 +229,13 @@ section article{
 	box-sizing:border-box;
 	padding:10px;
 	overflow-x: hidden;
+	overflow-y:auto;
 }
 section #headsection{
 	position: fixed;
-	width: 100%;
+	width: calc(100%-300px);
 	margin:94px 40px 0 300px;	
 	background-color: #ddd;
-	z-index: 9000;
 }
 section #bodysection{
 	position: relative;

@@ -7,7 +7,7 @@ $(function(){
 	$('section').on("click", function(){
 		$('#loglist').slideUp();
 	});
-	/*왼쪽 메뉴 슬라이드*/
+	 /*왼쪽 메뉴 슬라이드*/
 	$('#listbtn p').on("click", function(){
 		var cname = $('#listbtn').attr('class');
 		if(cname=='hidden'){
