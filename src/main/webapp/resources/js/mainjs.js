@@ -17,7 +17,7 @@ $(function(){
 			$('#listbtn').attr('class','show');
 			$(this).html('<i class="fa fa-chevron-circle-left" style="text-align: center;">');
 			$('section article').animate({
-				width:'70%',
+				width: 'calc(100%-300px)',
 				'margin-left':'300px'
 			});
 			$('aside nav ul li a span').show();
@@ -29,7 +29,7 @@ $(function(){
 			$('#listbtn').attr('class','hidden');
 			$(this).html('<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>');
 			$('section article').animate({
-				width:'90%',
+				width: 'calc(100%-50px)',
 				'margin-left':'80px'
 			});
 			$('aside nav ul li a span').hide();

@@ -13,6 +13,7 @@ header{
 	padding-left: 10px;
 	padding-top: 10px;
 	background-color: #069;
+	z-index: 9000;
 }
 header h1 img {
 	height: 70px;
@@ -63,6 +64,7 @@ aside{
 	background-color: #069;
 	float:left;
 	margin-right: 30px;
+	z-index: 9000;
 }
 aside #loginfo{
 	box-sizing: border-box;
@@ -137,6 +139,7 @@ aside nav{
 	margin-top: 15px;
 }
 aside nav li a{
+	box-sizing:border-box;
 	display: inline-block;
 	z-index:50;
 	width: 100%;
@@ -188,8 +191,9 @@ aside nav li i{
 
 /* section */
 section{
+	box-sizing:border-box;
 	width: 100%;
-	min-width: 1100px;
+	min-width: 1070px;
 	height: calc(100vh - 144px);
 	margin-bottom: 50px;
 }
@@ -232,13 +236,13 @@ section article{
 	box-sizing:border-box;
 	padding:10px;
 	overflow-x: hidden;
-	overflow-y:auto;
 }
 section #headsection{
 	position: fixed;
-	width: calc(100%-300px);
+	width: 100%;
 	margin:94px 40px 0 300px;	
 	background-color: #ddd;
+	z-index: 9000;
 }
 section #bodysection{
 	position: relative;
