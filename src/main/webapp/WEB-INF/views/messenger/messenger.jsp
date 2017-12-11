@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@include file="../inc/top.jsp" %>
 <style>
-   /*커밋 테스트  */
+   /*커밋 테스트22  */
 
 </style>
 <!-- 0. include부분 -->
