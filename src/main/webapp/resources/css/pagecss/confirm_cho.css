@@ -1,0 +1,84 @@
+@charset "UTF-8";
+#cf_choice h2{
+	margin-left: 30px;
+	margin-bottom: 10px;
+}	
+#cf_choice #doc_type {
+	box-sizing:border-box;
+	margin-left: 30px;
+	width: 25%;
+	height: 500px;
+	border: 2px solid #fff;
+	border-right: 1px solid #fff;
+	padding: 10px;
+	float:left;
+}
+#cf_choice #doc_type h3{
+	text-align: center;
+	margin-bottom: 10px;
+	background-color: #fff;
+	height: 40px;
+	line-height: 40px;
+	border-radius: 5px;
+}
+#cf_choice #doc_type p{
+	padding: 5px;
+}
+#cf_choice #doc_type p:hover{
+	background-color: #d1d1d1;
+}
+#cf_choice #doc_form{
+	box-sizing:border-box;
+	padding: 10px;
+	width: 70%;
+	height: 500px;
+	border: 2px solid #fff;
+	border-left: 1px solid #fff;
+	float:left;
+}
+#cf_choice #doc_form .dh{
+	box-sizing:border-box;				
+	height: 40px;
+	left: 40px;
+	line-height: 40px;
+	border-radius: 5px;
+	background-color: #fff;
+	margin-bottom: 10px;
+}
+#cf_choice #doc_form .dh span{
+	font-size: 1.17em;
+	font-weight: bold;
+	text-align: center;
+}
+#cf_choice #doc_form .dh .sh1{
+	display: block;	
+	width: 40%;
+	float:left;
+}
+#cf_choice #doc_form .dh .sh2{
+	display: block;
+}
+#cf_choice #doc_form .dd:hover{
+	background-color: #d1d1d1;			
+}
+#cf_choice #doc_form .dd span{
+	text-align: center;	
+	padding: 5px;
+}
+#cf_choice #doc_form .dd .sd1{
+	display: block;	
+	width: 40%;
+	float:left;
+}
+#cf_choice #doc_form .dd .sd2{
+	display: block;
+}
+#cf_choice #writebtn{
+	width: 95%;
+	padding:5px;
+	text-align: right;
+}
+#cf_choice #writebtn input[type=button]{
+	width: 70px;
+	height: 30px;
+}

@@ -35,5 +35,16 @@ public class HomeController {
     	logger.info("로그인 화면 보여주기");
     	return "login";
     }
-
+    
+    @RequestMapping("/inc/top.do")
+    public String top() {
+    	logger.info("top 보여주기");
+    	return "inc/top";
+    }
+    
+    @RequestMapping("/inc/bottom.do")
+    public String bottom() {
+    	logger.info("bottom 보여주기");
+    	return "inc/bottom";
+    }
 }

@@ -127,6 +127,7 @@ aside #loginfo #asidebtn ul li:first-child{
 	background-color: transparent;
 } */
 aside #listbtn p {
+	display:none;
 	text-align: center;
 	line-height: 50px;
 	font-size: 25px;
@@ -231,16 +232,16 @@ section article{
 }
 section #headsection{
 	position: fixed;
-	width: calc(100%-300px);
+	width: 100%;
 	margin:94px 40px 0 300px;	
 	background-color: #ddd;
+	z-index:9000;
 }
 section #bodysection{
 	position: relative;
 	top: 163px;
 	width: calc(100%-300px);
-	margin:0 40px 20px 300px;	
-	height: calc(100vh - 164px);
+	margin:0 40px 50px 300px;	
 }
 section article h1{
 	box-sizing: border-box;

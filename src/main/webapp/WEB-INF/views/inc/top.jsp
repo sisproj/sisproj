@@ -37,7 +37,7 @@
             <li><a href="#">메신저</a></li>
             <li><a href="#">스케줄</a></li>
             <li><a href="#">자원관리</a></li>
-            <li><a href="#">전자결재</a></li>
+            <li><a href="<c:url value='/confirm/main.do'/>">전자결재</a></li>
             <li><a href="#">근태관리</a></li>
             <li><a href="#">웹하드</a></li>
             <li><a href="#">공지사항</a></li>

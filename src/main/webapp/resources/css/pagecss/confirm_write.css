@@ -1,0 +1,207 @@
+@charset "UTF-8";
+/*버튼*/
+#writeFrm #submitbtn{
+	width: 95%;
+	padding:10px;
+	text-align: right;
+}
+#linebtn{
+	width: 95%;
+	padding:10px;
+	text-align: right;			
+}
+#linebtn input{
+	width: 100px;
+	height: 30px;				
+}
+#writeFrm #submitbtn input{
+	width: 70px;
+	height: 30px;
+}
+/* 상단 */
+#link_cho{
+	box-sizing:border-box;
+	width: 95%;
+	margin: 0 auto;
+	border: 2px solid #fff;
+	border-radius: 10px;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+#link_cho div{
+	height: 30px;
+	line-height: 30px;		
+}
+#divtitle{
+	margin-bottom: 10px;
+}
+#link_cho div span{
+	box-sizing:border-box;
+	display: inline-block;
+	width: 20%;
+	background-color: #036;
+	border-radius:10px;
+	text-align: center;
+	font-weight: bold;
+	color: #fff;
+}
+#link_cho div input{
+	box-sizing:border-box;
+	width: 79%;
+	border: 0;
+	height: 30px;
+	border-radius:10px;
+	padding-left: 10px;
+}
+#link_cho div select{
+	box-sizing:border-box;
+	width: 79%;
+	border: 0;
+	height: 30px;
+	border-radius:10px;
+	padding-left: 10px;
+}
+/*상단 끝*/
+/* 미드 */
+form#writeFrm #doc_type{
+	box-sizing:border-box;
+	width: 95%;
+	margin: 0 auto;
+	border: 2px solid #fff;
+	border-radius: 10px;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+#writeFrm #doc_type #dt_head input{
+	display: block;
+	margin: 0 auto;
+	width: 200px;
+	background-color: transparent;
+	border: 0;
+	border-bottom: 2px dashed #555;
+	font-size: 1.5em;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 10px;
+}
+#writeFrm #doc_type #userinfo{
+	font-size: 0.8em;
+}
+#writeFrm #doc_type #doc_info {
+	box-sizing:border-box;
+	width: 40%;
+	border: 2px solid #fff;
+	padding: 10px;
+	float: left;
+	margin-right: 10%;
+	height: 174px;
+}
+#doc_type #userinfo input{
+	font-size: 0.9em;
+	background-color: transparent;
+	border: 0;
+}
+#writeFrm #doc_type #doc_info div{
+	height: 30px;
+	line-height: 30px;
+	margin-bottom: 10px;
+}
+#writeFrm #doc_type #doc_info div:last-child{
+	margin-bottom: 0;
+}
+#writeFrm #doc_type #doc_info div label{
+	display: inline-block;
+	width: 30%;
+	background-color: #036;
+	text-align: center;
+	color: #fff;
+	border-radius: 10px;
+}
+#writeFrm #doc_type #doc_info div input{
+	box-sizing:border-box;
+	width: 68%;
+	border: 0;
+	height: 30px;
+	border-radius:10px;
+	padding-left: 10px;
+	cursor:not-allowed;
+}
+
+#writeFrm #doc_type #confirmer{
+	box-sizing:border-box;
+	width: 45%;
+	float: right;		
+	border: 1px solid #fff;	
+	height: 174px;
+}
+#writeFrm #doc_type #confirmer div{
+	box-sizing:border-box;
+	width: 25%;
+	float: left;	
+	border: 1px solid #fff;
+	height: 50%;
+}
+#writeFrm #doc_type #confirmer div span{
+	display: block;
+	box-sizing:border-box;
+	padding: 5px;
+}
+#writeFrm #doc_type #confirmer div span:first-child{
+	height: 70%;
+	border-bottom: 1px solid #fff;
+}
+#writeFrm #doc_type #confirmer div span:last-child{
+	height: 30%;
+	text-align: center;
+	overflow: hidden;
+}
+#writeFrm #doc_type #confirmer div span img{
+	display: block;
+	margin: 0 auto;
+	height: 100%;
+}
+#writeFrm #doc_type #cf_info {
+	margin-top: 10px;
+	border: 2px solid #fff;
+	box-sizing:border-box;
+	padding: 10px;
+}
+#writeFrm #doc_type #cf_info .dr{
+	height: 30px;
+	line-height: 30px;
+	margin-bottom: 10px;
+}
+#writeFrm #doc_type #cf_info .dr label{
+	box-sizing:border-box;
+	display: inline-block;
+	width: 20%;
+	background-color: #036;
+	border-radius:10px;
+	text-align: center;
+	font-weight: bold;
+	color: #fff;
+	cursor:not-allowed;	
+}
+#writeFrm #doc_type #cf_info .dr input{
+	box-sizing:border-box;
+	width: 79%;
+	border: 0;
+	height: 30px;
+	border-radius:10px;
+	padding-left: 10px;	
+	cursor:not-allowed;			
+}
+/* 미드 끝 */
+/*하단*/
+#writeFrm #insFile{
+	box-sizing:border-box;
+	width: 95%;
+	margin: 0 auto;
+	border: 2px solid #fff;
+	border-radius: 10px;
+	padding: 10px;
+}
+#writeFrm #insFile h3{
+
+}
+/*하단 끝*/
