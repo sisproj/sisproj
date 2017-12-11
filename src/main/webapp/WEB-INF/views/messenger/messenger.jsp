@@ -15,6 +15,8 @@
         document.getElementById("rightMenu").style.display = "none";
     }
 </script>
+
+
 <!-- 0. include부분 -->
 <div class="w3-top">
     <div class="w3-bar w3-white w3-padding w3-card" style="letter-spacing:4px;">
