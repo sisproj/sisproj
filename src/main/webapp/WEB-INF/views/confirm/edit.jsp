@@ -1,17 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ include file="../inc/top.jsp" %>
 <link href="<c:url value='/resources/css/pagecss/confirm_write.css'/>" rel="stylesheet" type="text/css">
+<!-- 0. include부분 -->
 			<nav>
 				<ul>
 					<!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
-					<li class="active"><a href="<c:url value='/confirm/newcho.do'/>"><i class="fa fa-pencil-square-o"></i>&nbsp;<span>새 결재 진행</span></a></li>
+					<li><a href="<c:url value='/confirm/newcho.do'/>"><i class="fa fa-pencil-square-o"></i>&nbsp;<span>새 결재 진행</span></a></li>
 					<li><a href="<c:url value='/confirm/tempsave.do'/>"><i class="fa fa-floppy-o"></i>&nbsp;<span>임시 저장함</span></a></li>
 					<li><a href="<c:url value='/confirm/await.do'/>"><i class="fa fa-hdd-o"></i>&nbsp;<span>결재 대기함</span></a></li>
 					<li><a href="<c:url value='/confirm/complete.do'/>"><i class="fa fa-file-text"></i>&nbsp;<span>결재 완료함</span></a></li>
 					<li><a href="<c:url value='/confirm/return.do'/>"><i class="fa fa-history"></i>&nbsp;<span>결재 반려함</span></a></li>
 					<li><a href="<c:url value='/confirm/setting.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>결재 환경 설정</span></a></li>
 					<li><a href="<c:url value='/confirm/typeform.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>결재 양식 관리</span></a></li>
-				</ul>	
+				</ul>
 				<!-- 1.왼쪽 사이드 메뉴 지정 끝-->
 				<div id="listbtn"><p><i class="fa fa-chevron-circle-left" style="text-align: center;"></i></p></div>
 			</nav>
@@ -73,35 +74,35 @@
 						</div>
 						<div id="confirmer">
 							<div>
-								<span><img src="<c:url value='/resources/user_sign/app_sign.gif'/>" alt="결재"></span>
+								<span><img src="../user_sign/app_sign.gif" alt="결재"></span>
 								<span>결재자1</span>
 							</div>
 							<div>
-								<span><img src="<c:url value='/resources/user_sign/app_sign.gif'/>" alt="결재"></span>
+								<span><img src="../user_sign/app_sign.gif" alt="결재"></span>
 								<span>결재자2</span>
 							</div>
 							<div>
-								<span><img src="<c:url value='/resources/user_sign/app_sign.gif'/>" alt="결재"></span>
+								<span><img src="../user_sign/app_sign.gif" alt="결재"></span>
 								<span>결재자3</span>
 							</div>
 							<div>
-								<span><img src="<c:url value='/resources/user_sign/app_sign.gif'/>" alt="결재"></span>
+								<span><img src="../user_sign/app_sign.gif" alt="결재"></span>
 								<span>결재자4</span>
 							</div>
 							<div>
-								<span><img src="<c:url value='/resources/user_sign/app_sign.gif'/>" alt="결재"></span>
+								<span><img src="../user_sign/app_sign.gif" alt="결재"></span>
 								<span>결재자5</span>
 							</div>
 							<div>
-								<span><img src="<c:url value='/resources/user_sign/app_sign.gif'/>" alt="결재"></span>
+								<span><img src="../user_sign/app_sign.gif" alt="결재"></span>
 								<span>결재자6</span>
 							</div>
 							<div>
-								<span><img src="<c:url value='/resources/user_sign/app_sign.gif'/>" alt="결재"></span>
+								<span><img src="../user_sign/app_sign.gif" alt="결재"></span>
 								<span>결재자7</span>
 							</div>
 							<div>
-								<span><img src="<c:url value='/resources/user_sign/app_sign.gif'/>" alt="결재"></span>
+								<span><img src="../user_sign/app_sign.gif" alt="결재"></span>
 								<span>결재자8</span>
 							</div>
 						</div>
@@ -117,7 +118,15 @@
 							</div>			
 							<!-- 에디터부분 -->
 							<div id="smarteditor">
-								<textarea name="ir1" id="ir1" rows="20" style="width: 100%;"></textarea>
+								<textarea name="ir1" id="ir1" rows="20" style="width: 100%;"><table border="0" cellpadding="0" cellspacing="0" style="border:1px solid #cccccc; border-left:0; border-bottom:0;" class="__se_tbl"><tbody>
+<tr><td style="border:1px solid #cccccc; border-top:0; border-right:0; background-color:#ffffff" width="693"><p>&nbsp;dadads</p></td>
+<td style="border:1px solid #cccccc; border-top:0; border-right:0; background-color:#ffffff" width="693"><p>&nbsp;213123</p></td>
+</tr>
+<tr><td style="border:1px solid #cccccc; border-top:0; border-right:0; background-color:#ffffff" width="693"><p>&nbsp;sadasd</p></td>
+<td style="border:1px solid #cccccc; border-top:0; border-right:0; background-color:#ffffff" width="693"><p>&nbsp;1234123</p></td>
+</tr>
+</tbody>
+</table><p><br></p></textarea>
 							</div>
 							<!-- 에디터부분 끝 -->				
 						</div>
@@ -134,8 +143,14 @@
 							<option value="3">3</option>
 							<option value="4">4</option>
 						</select>
-						<div id="files"></div>
-					</div>
+						<p>(새로 파일을 첨부하면 기존파일은 전부 삭제 됩니다.)</p>
+						<h3 id="fileinfo">현재 첨부된 파일</h3>
+						<div id="files">	
+							<span><a href="#">파일이름.jsp</a></span><br>
+							<span><a href="#">파일이름.jsp</a></span><br>
+							<span><a href="#">파일이름.jsp</a></span><br>
+							<span><a href="#">파일이름.jsp</a></span></div>
+						</div>
 					<!-- 바로 결재하는지 임시저장하는지 저장타입넘겨주는 input -->
 					<input type="hidden" name="savetype" id="savetype">
 					<div id="submitbtn">
@@ -155,5 +170,6 @@
 		</script>
 		<!-- 4. 상단 네비 색먹이기 끝-->
 		<!-- 0. include부분 끝-->
+
 <%@ include file="../inc/bottom.jsp" %>
 <script type="text/javascript" src="<c:url value='/resources/js/pagejs/confirm_write.js'/>"></script>

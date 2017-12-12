@@ -1,0 +1,151 @@
+@charset "UTF-8";
+/*버튼*/
+			#submitbtn{
+				width: 100%;
+				text-align: right;
+			}
+			#submitbtn input{
+				width: 70px;
+				height: 30px;
+			}
+			/* 상단 */
+			#docFrm #link_cho{
+				box-sizing:border-box;
+				width: 95%;
+				margin: 0 auto;
+				border: 2px solid #fff;
+				border-radius: 10px;
+				padding: 10px;
+				margin-bottom: 10px;
+			}
+			#docFrm #link_cho div{
+				height: 30px;
+				line-height: 30px;		
+				margin-bottom: 10px;
+			}
+			#docFrm #link_cho div:last-child{
+			margin-bottom: 0;
+			}
+			#docFrm #link_cho div span{
+				box-sizing:border-box;
+				display: inline-block;
+				width: 20%;
+				background-color: #036;
+				border-radius:10px;
+				text-align: center;
+				font-weight: bold;
+				color: #fff;
+			}
+			#docFrm #link_cho div input[type=text]{
+				box-sizing:border-box;
+				width: 79%;
+				border: 0;
+				height: 30px;
+				border-radius:10px;
+				padding-left: 10px;
+			}
+			#docFrm #link_cho div select{
+				box-sizing:border-box;
+				width: 79%;
+				border: 0;
+				height: 30px;
+				border-radius:10px;
+				padding-left: 10px;
+			}
+			/*상단 끝*/
+			/* 미드 */
+			#doc_type{
+				box-sizing:border-box;
+				width: 95%;
+				margin: 0 auto;
+				border: 2px solid #fff;
+				border-radius: 10px;
+				padding: 10px;
+				margin-bottom: 10px;
+			}
+			#doc_type #dt_head input{
+				display: block;
+				margin: 0 auto;
+				width: 200px;
+				background-color: transparent;
+				border: 0;
+				border-bottom: 2px dashed #555;
+				font-size: 1.5em;
+				font-weight: bold;
+				text-align: center;
+				margin-bottom: 10px;
+			}
+			#doc_type #doc_info {
+				box-sizing:border-box;
+				width: 40%;
+				border: 2px solid #fff;
+				padding: 10px;
+				float: left;
+				margin-right: 10%;
+				height: 174px;
+			}
+			#userinfo input{
+				font-size: 0.9em;
+				background-color: transparent;
+				border: 0;
+			}
+			#doc_type #doc_info div{
+				height: 30px;
+				line-height: 30px;
+				margin-bottom: 10px;
+			}
+			#doc_type #doc_info div:last-child{
+				margin-bottom: 0;
+			}
+			#doc_type #doc_info div label{
+				display: inline-block;
+				width: 30%;
+				background-color: #036;
+				text-align: center;
+				color: #fff;
+				border-radius: 10px;
+			}
+			#doc_type #doc_info div input{
+				box-sizing:border-box;
+				width: 68%;
+				border: 0;
+				height: 30px;
+				border-radius:10px;
+				padding-left: 10px;
+				cursor:not-allowed;
+			}
+
+			#doc_type #confirmer{
+				box-sizing:border-box;
+				width: 45%;
+				float: right;		
+				border: 1px solid #fff;	
+				height: 174px;
+			}
+			#doc_type #confirmer div{
+				box-sizing:border-box;
+				width: 25%;
+				float: left;	
+				border: 1px solid #fff;
+				height: 50%;
+			}
+			#doc_type #confirmer div span{
+				display: block;
+				box-sizing:border-box;
+				padding: 5px;
+			}
+			#doc_type #confirmer div span:first-child{
+				height: 70%;
+				border-bottom: 1px solid #fff;
+			}
+			#doc_type #confirmer div span:last-child{
+				height: 30%;
+				text-align: center;
+				overflow: hidden;
+			}
+			#doc_type #confirmer div span img{
+				display: block;
+				margin: 0 auto;
+				height: 100%;
+			}
+			/* 미드 끝 */

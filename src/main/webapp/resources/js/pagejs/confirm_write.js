@@ -29,6 +29,8 @@ $(function(){
 		} else {
 			$('#files').html("");			
 		}
+		
+		$('#fileinfo').text('새로 첨부할 파일');
 	});
 
 	$('#submit').click(function(){

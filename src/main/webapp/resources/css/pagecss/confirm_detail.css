@@ -11,59 +11,15 @@
 	text-align: right;			
 }
 #linebtn input{
-	width: 100px;
+	width: 70px;
 	height: 30px;				
 }
 #writeFrm #submitbtn input{
 	width: 70px;
 	height: 30px;
 }
-/* 상단 */
-#link_cho{
-	box-sizing:border-box;
-	width: 95%;
-	margin: 0 auto;
-	border: 2px solid #fff;
-	border-radius: 10px;
-	padding: 10px;
-	margin-bottom: 10px;
-}
-#link_cho div{
-	height: 30px;
-	line-height: 30px;		
-}
-#divtitle{
-	margin-bottom: 10px;
-}
-#link_cho div span{
-	box-sizing:border-box;
-	display: inline-block;
-	width: 20%;
-	background-color: #036;
-	border-radius:10px;
-	text-align: center;
-	font-weight: bold;
-	color: #fff;
-}
-#link_cho div input{
-	box-sizing:border-box;
-	width: 79%;
-	border: 0;
-	height: 30px;
-	border-radius:10px;
-	padding-left: 10px;
-}
-#link_cho div select{
-	box-sizing:border-box;
-	width: 79%;
-	border: 0;
-	height: 30px;
-	border-radius:10px;
-	padding-left: 10px;
-}
-/*상단 끝*/
 /* 미드 */
-form#writeFrm #doc_type{
+#writeFrm #doc_type{
 	box-sizing:border-box;
 	width: 95%;
 	margin: 0 auto;
@@ -137,7 +93,7 @@ form#writeFrm #doc_type{
 #writeFrm #doc_type #confirmer div{
 	box-sizing:border-box;
 	width: 25%;
-	float: left;	
+	float: right;	
 	border: 1px solid #fff;
 	height: 50%;
 }
@@ -191,6 +147,9 @@ form#writeFrm #doc_type{
 	padding-left: 10px;	
 	cursor:not-allowed;			
 }
+#writeFrm #doc_type #cf_info #contents{
+	width: 100%;
+}
 /* 미드 끝 */
 /*하단*/
 #writeFrm #insFile{
@@ -200,18 +159,78 @@ form#writeFrm #doc_type{
 	border: 2px solid #fff;
 	border-radius: 10px;
 	padding: 10px;
-}
-
-#insFile h3{
-	height: 40px;
-	line-height: 40px;
-	background-color: #fff;
-	box-sizing: border-box;
-	padding-left: 10px;
-	border-radius: 10px;
-	margin-bottom: 5px;
-}
-#insFile p{
 	margin-bottom: 10px;
+}
+#writeFrm #cf_comment{
+	box-sizing:border-box;
+	width: 95%;
+	margin: 0 auto;
+	border: 2px solid #fff;
+	border-radius: 10px;
+	padding: 10px;				
+}
+#writeFrm #cf_comment #comm_wr{
+	padding: 10px;
+	height: 70px;
+	border-bottom: 2px solid #fff;
+}
+#writeFrm #cf_comment #comm_wr #con{
+	box-sizing:border-box;
+	width: 80%;
+	height: 70px;
+	float:left;
+	margin-right: 10px;
+	padding: 10px;
+	resize:none;
+	border: 2px solid #fff;
+	border-radius:10px ;
+}
+#writeFrm #cf_comment #comm_wr input[type=submit]{
+	width: 15%;
+	max-width: 150px;
+	height: 70px;
+	float:right;
+	margin-right: 10px;
+}
+#writeFrm #cf_comment .selcomm{
+	box-sizing:border-box;
+	min-height: 100px;
+	padding: 10px;
+	border-bottom: 2px solid #fff;
+}
+#writeFrm #cf_comment .selcomm .comm_info{
+	position: relative;
+	margin-bottom: 20px;
+}
+#writeFrm #cf_comment .selcomm .comm_info span:last-child{
+	position: absolute;
+	right: 0;
+}
+#writeFrm #cf_comment .selcomm .comm_content .comm_ed{
+	display: none;
+}
+#writeFrm #cf_comment .selcomm .comm_content .comm_ed textarea{
+	box-sizing:border-box;
+	width: 80%;
+	height: 70px;
+	float:left;
+	margin-right: 10px;
+	padding: 10px;
+	resize:none;
+	border: 2px solid #fff;
+	border-radius:10px ;
+}
+#writeFrm #cf_comment .selcomm .comm_content .comm_ed input[type=submit]{
+	width: 15%;
+	max-width: 150px;
+	height: 70px;
+	float:right;
+	margin-right: 10px;
+}
+#writeFrm #cf_comment .selcomm .comm_con{
+	margin-top: 10x;
+}
+#writeFrm #cf_comment .selcomm:last-child{
+	border-bottom: 2px solid transparent;
 }
 /*하단 끝*/

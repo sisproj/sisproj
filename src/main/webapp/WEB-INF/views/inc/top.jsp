@@ -22,7 +22,8 @@
     <script src="<c:url value="/resources/jquery/jquery.easing.1.3.js"/>"></script>
     <!-- jquery-ui -->
     <script src="<c:url value="/resources/jquery-ui/jquery-ui.min.js"/>"></script>
-
+	<!-- smart editor 2.0 -->
+	<script type="text/javascript" src="<c:url value='/resources/se2/js/service/HuskyEZCreator.js'/>" charset="utf-8"></script>
     <!-- mainjs -->
     <script src="<c:url value="/resources/js/mainjs.js"/>"></script>
 </head>

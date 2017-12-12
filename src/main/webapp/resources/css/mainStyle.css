@@ -167,11 +167,11 @@ aside #organ{
 	cursor:pointer;
 	background: rgb(82,82,82);
 }
-aside #organ #organtitle i{
+aside #organ #organtitle > i{
 	text-align: right;
 	color: #fff;
 }
-aside #organ #organtitle span{
+aside #organ #organtitle > span{
 	display: inline-block;
 	width: 80%;
 	color: #fff;
