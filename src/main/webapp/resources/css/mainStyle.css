@@ -159,7 +159,7 @@ aside nav li.active{
 }
 /*조직도 버튼*/
 aside #organ{
-	position: absolute;
+	position: fixed;
 	bottom: 0;
 	box-sizing:border-box;
 	width: 298px;
