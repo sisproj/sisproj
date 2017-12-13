@@ -73,35 +73,35 @@
 						</div>
 						<div id="confirmer">
 							<div>
-								<span><img src="<c:url value='/resources/user_sign/app_sign.gif'/>" alt="결재"></span>
+								<span></span>
 								<span>결재자1</span>
 							</div>
 							<div>
-								<span><img src="<c:url value='/resources/user_sign/app_sign.gif'/>" alt="결재"></span>
+								<span></span>
 								<span>결재자2</span>
 							</div>
 							<div>
-								<span><img src="<c:url value='/resources/user_sign/app_sign.gif'/>" alt="결재"></span>
+								<span></span>
 								<span>결재자3</span>
 							</div>
 							<div>
-								<span><img src="<c:url value='/resources/user_sign/app_sign.gif'/>" alt="결재"></span>
+								<span></span>
 								<span>결재자4</span>
 							</div>
 							<div>
-								<span><img src="<c:url value='/resources/user_sign/app_sign.gif'/>" alt="결재"></span>
+								<span></span>
 								<span>결재자5</span>
 							</div>
 							<div>
-								<span><img src="<c:url value='/resources/user_sign/app_sign.gif'/>" alt="결재"></span>
+								<span></span>
 								<span>결재자6</span>
 							</div>
 							<div>
-								<span><img src="<c:url value='/resources/user_sign/app_sign.gif'/>" alt="결재"></span>
+								<span></span>
 								<span>결재자7</span>
 							</div>
 							<div>
-								<span><img src="<c:url value='/resources/user_sign/app_sign.gif'/>" alt="결재"></span>
+								<span></span>
 								<span>결재자8</span>
 							</div>
 						</div>
@@ -148,11 +148,7 @@
 			<!-- 3. 내용 끝 -->
 		</article>
 		<!-- 4. 상단 네비 색먹이기 // li태그 순서(전자결재 : 6번째) 입력 -->
-		<script type="text/javascript">
-			$(function(){
-				$('header nav ul li:nth-child(6) a').addClass('active');
-			});
-		</script>
+		<script type="text/javascript" src="<c:url value='/resources/js/pagejs/confirm.js'/>"></script>
 		<!-- 4. 상단 네비 색먹이기 끝-->
 		<!-- 0. include부분 끝-->
 <%@ include file="../inc/bottom.jsp" %>

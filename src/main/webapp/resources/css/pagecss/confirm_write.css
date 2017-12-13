@@ -131,7 +131,6 @@ form#writeFrm #doc_type{
 	box-sizing:border-box;
 	width: 45%;
 	float: right;		
-	border: 1px solid #fff;	
 	height: 174px;
 }
 #writeFrm #doc_type #confirmer div{
