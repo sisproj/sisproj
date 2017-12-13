@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
-<%@ include file="../inc/top.jsp" %>
+<%@ include file="../../inc/top.jsp" %>
 <link href="<c:url value='/resources/css/pagecss/confirm_instypeform.css'/>" rel="stylesheet" type="text/css">
 		<!-- 0. include부분 -->
 			<nav>
@@ -129,7 +129,7 @@
 		<!-- 4. 상단 네비 색먹이기 끝-->
 		<!-- 0. include부분 끝-->
 
-<%@ include file="../inc/bottom.jsp" %>
+<%@ include file="../../inc/bottom.jsp" %>
 <script type="text/javascript">
 	$(function(){
 		$('#doc_name').change(function(){
