@@ -7,35 +7,6 @@ $(function(){
 	$('section').on("click", function(){
 		$('#loglist').slideUp();
 	});
-	 /*왼쪽 메뉴 슬라이드*/
-	$('#listbtn p').on("click", function(){
-		var cname = $('#listbtn').attr('class');
-		if(cname=='hidden'){
-			$('aside').animate({
-				width:'298px'
-			});
-			$('#listbtn').attr('class','show');
-			$(this).html('<i class="fa fa-chevron-circle-left" style="text-align: center;">');
-			$('section article').animate({
-				width: 'calc(100%-300px)',
-				'margin-left':'300px'
-			});
-			$('aside nav ul li a span').show();
-			$('aside #loginfo').delay(500).css('display','block');
-		} else {
-			$('aside').animate({
-				width:'50px'
-			});
-			$('#listbtn').attr('class','hidden');
-			$(this).html('<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>');
-			$('section article').animate({
-				width: 'calc(100%-50px)',
-				'margin-left':'80px'
-			});
-			$('aside nav ul li a span').hide();
-			$('aside #loginfo').hide();
-		}
-	});
 	/*북마크 창*/
 	$('#bookmarkbtn').on("click",function(){
 		var cname = $('#bookmark').attr('class');

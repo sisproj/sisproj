@@ -35,5 +35,4 @@ public class HomeController {
     	logger.info("로그인 화면 보여주기");
     	return "login";
     }
-
 }

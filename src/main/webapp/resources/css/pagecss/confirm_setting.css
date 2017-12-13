@@ -1,0 +1,103 @@
+@charset "UTF-8";
+
+.ui-tabs-nav a{
+	outline: none;
+}
+/* 결재서명등록 */
+#cf_settings > div > h3{
+	box-sizing:border-box;
+	padding-left: 10px;
+}
+#cf_settings #sign_img {
+	padding: 10px;
+}
+#cf_settings #sign_img p{
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+#cf_settings input[type=button],
+#cf_settings input[type=submit]{
+	width: 80px;
+	height: 30px;
+}
+/* 결재서명등록 끝 */
+/* 결재라인등록 */
+#cf_settings #save_line{
+	box-sizing:border-box;
+	margin-top: 10px;
+	height: 500px;
+}
+#cf_settings #save_line h3{
+	box-sizing:border-box;
+	height: 40px;
+	line-height: 40px;
+	padding-left: 10px;
+	background-color: #fff;
+	border-radius:10px ;
+}
+#cf_settings #save_line #cf_line{
+	box-sizing:border-box;
+	width: 30%;
+	height: 500px;
+	border: 2px solid #fff;
+	border-right: 1px solid #fff;
+	float: left;
+	padding: 10px;
+}
+#cf_settings #save_line #cf_line div{
+	box-sizing:border-box;
+	padding: 5px;
+}
+#cf_settings #save_line #line_detail{
+	box-sizing:border-box;
+	width: 70%;
+	height: 500px;
+	border: 2px solid #fff;
+	border-left: 1px solid #fff;
+	float: left;
+	padding: 10px;
+}
+#cf_settings #save_line #line_detail #detailbtn{
+	height: 50px;
+	position: absolute;
+	bottom: 10px;
+	right:40px;
+}
+#cf_settings #save_line #line_detail #detail table{
+	padding: 5px;
+	width: 100%;
+}
+#cf_settings #save_line #line_detail #detail table tr th:nth-child(1){
+	width: 15%;
+}
+#cf_settings #save_line #line_detail #detail table tr th:nth-child(2){
+	width: 35%;
+}
+#cf_settings #save_line #line_detail #detail table tr th:nth-child(3){
+	width: 30%;
+}
+#cf_settings #save_line #line_detail #detail table tr th:nth-child(4){
+	width: 20%;
+}
+#cf_settings #save_line #line_detail #detail table tr th{
+	background-color: #036;
+	border-radius:10px;
+	color: #fff;
+	padding: 5px;
+}
+#cf_settings #save_line #line_detail #detail table tr td{
+	border-bottom: 2px solid #fff;
+	padding: 5px;
+	text-align: center;
+}
+#savelinebtn{
+	position: relative;
+	height: 25px;
+}
+#savelinebtn input{
+	display: block;	
+	position: absolute;
+	right: 0;
+}	
+/* 결재라인등록 끝*/

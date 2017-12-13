@@ -22,7 +22,8 @@
     <script src="<c:url value="/resources/jquery/jquery.easing.1.3.js"/>"></script>
     <!-- jquery-ui -->
     <script src="<c:url value="/resources/jquery-ui/jquery-ui.min.js"/>"></script>
-
+	<!-- smart editor 2.0 -->
+	<script type="text/javascript" src="<c:url value='/resources/se2/js/service/HuskyEZCreator.js'/>" charset="utf-8"></script>
     <!-- mainjs -->
     <script src="<c:url value="/resources/js/mainjs.js"/>"></script>
 </head>
@@ -37,7 +38,7 @@
             <li><a href="#">메신저</a></li>
             <li><a href="#">스케줄</a></li>
             <li><a href="#">자원관리</a></li>
-            <li><a href="#">전자결재</a></li>
+            <li><a href="<c:url value='/confirm/main.do'/>">전자결재</a></li>
             <li><a href="#">근태관리</a></li>
             <li><a href="#">웹하드</a></li>
             <li><a href="#">공지사항</a></li>
