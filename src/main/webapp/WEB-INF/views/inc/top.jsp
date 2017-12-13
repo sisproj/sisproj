@@ -25,6 +25,36 @@
 
     <!-- mainjs -->
     <script src="<c:url value="/resources/js/mainjs.js"/>"></script>
+    <script type="text/javascript">
+    	$(function(){
+    		$('#orgDown').hide();
+   			$('#organbody').hide();
+   			$('#deptMinus').hide();
+   			$('#organbody ul ul li').hide();
+    		$('#orgUp').click(function(){
+    			$('#organ').css('height','500px');
+    			$('#orgUp').hide();
+    			$('#orgDown').show();
+    			$('#organbody').show();
+    		});
+    		$('#orgDown').click(function(){    			
+    			$('#organ').css('height','40px');
+    			$('#orgDown').hide();
+    			$('#orgUp').show();
+    		});
+    		$('#deptPlus').click(function(){
+    			/* var cho = $(this).attr('id'); */
+    			$('#organbody ul ul li').show();
+    			$('#deptPlus').hide();
+    			$('#deptMinus').show();
+    		});
+    		$('#deptMinus').click(function(){
+    			$('#organbody ul ul li').hide();
+    			$('#deptPlus').show();
+    			$('#deptMinus').hide();
+    		});
+    	});
+    </script>
 </head>
 <body>
 <!-- 상단부분 -->
@@ -33,7 +63,7 @@
     <nav>
         <ul>
             <li><a href="#">HOME</a></li>
-            <li><a href="#">주소록</a></li>
+            <li><a href="<c:url value='/phoneBook/phoneBookList.do'/>">주소록</a></li>
             <li><a href="#">메신저</a></li>
             <li><a href="#">스케줄</a></li>
             <li><a href="#">자원관리</a></li>
@@ -55,7 +85,7 @@
             <!-- 북마크 리스트 -->
             <li>
                 <hr>
-            </li>
+            </li>            
             <li><a href="#"><i class="fa fa-pencil-square-o"></i><span style="display:none">&nbsp;전자결재</span></a></li>
             <li><a href="#"><i class="fa fa-calendar"></i><span style="display:none">&nbsp;스케쥴</span></a></li>
             <li><a href="#"><i class="fa fa-id-badge"></i><span style="display:none">&nbsp;근태관리</span></a></li>
@@ -88,8 +118,89 @@
             </div>
 
         </div>
+        <style>
+        	#organ{
+        		
+        	}
+        	#organtitle{
+        		line-height: 40px;
+        	}
+        	#organtitle > i{margin-left: 3px;}
+        	#orgSearch{
+        		width: 200px; 
+        		color: #fff; 
+        		background-color:#333; 
+        		border: 0; 
+        		height: 25px;
+        		box-sizing:border-box;
+        		padding-left: 10px;
+        	}
+        	#organbody ul li{      		
+        		padding-left: 10px;
+        	}
+        	#organbody ul ul li{      		
+        		padding-left: 20px;
+        	}
+        	#organbody{background: white; height: 445px; margin: 0 5px; padding: 5px;}
+        	#organbody ul li ul li i{
+        		color: rgb(119, 198, 231);
+        	}
+        	.orgSearch{
+        		display: inline-block;
+        		height: 30px;
+        		padding: 0;
+        	}
+        	#orgSearchIcon{
+        		display:inline-block;
+        		background-color:#333;
+        		color: rgb(82,82,82);
+        		width:40px;
+        		height: 25px;
+        		text-align: center;
+        		vertical-align: middle;
+        		margin-top: -1px;
+        	}
+        	#orgSearchIcon i {
+        		display:inline-block;
+        		line-height: 25px;        	
+        	}
+        </style>
         <div id="organ">
-            <div id="organtitle"><span>조직도</span><i class="fa fa-chevron-up" aria-hidden="true"></i></div>
+            <div id="organtitle">
+	            <i class="fa fa-sitemap" aria-hidden="true"></i>
+	            <div class="orgSearch">
+		            <input type="text" id="orgSearch" name="orgSearch" placeholder="부서/이름/아이디/직급/직책"><a href="#" id="orgSearchIcon"><i class="fa fa-search"></i></a>
+	            </div>
+	            <i id="orgUp" class="fa fa-chevron-up" aria-hidden="true"></i>
+	            <i id="orgDown" class="fa fa-chevron-down" aria-hidden="true"></i>
+            </div>
             <div id="organbody">
+            	<ul>
+            		<li><i id="deptPlus" class="fa fa-plus-square" aria-hidden="true"></i>
+            		<i id="deptMinus" class="fa fa-minus-square" aria-hidden="true"></i>
+            		 부서1
+            			<ul>
+            				<li><i class="fa fa-user" ></i> 김팀장</li>
+            				<li><i class="fa fa-user"></i> 이과장</li>
+            				<li><i class="fa fa-user"></i> 박대리</li>
+            				<li><i class="fa fa-user"></i> 정사원</li>
+            				<li><i class="fa fa-user"></i> 최인턴</li>
+            			</ul>
+            		</li>
+            	</ul>
+            	<ul>
+            		<li><i id="deptPlus" class="fa fa-plus-square" aria-hidden="true"></i>
+            		<i id="deptMinus" class="fa fa-minus-square" aria-hidden="true"></i>
+            		 부서2
+            			<ul>
+            				<li><i class="fa fa-user" aria-hidden="true" style="color: rgb(119, 198, 231);"></i> 김팀장</li>
+            				<li><i class="fa fa-user" aria-hidden="true" style="color: rgb(119, 198, 231);"></i> 이과장</li>
+            				<li><i class="fa fa-user" aria-hidden="true" style="color: rgb(119, 198, 231);"></i> 박대리</li>
+            				<li><i class="fa fa-user" aria-hidden="true" style="color: rgb(119, 198, 231);"></i> 정사원</li>
+            				<li><i class="fa fa-user" aria-hidden="true" style="color: rgb(119, 198, 231);"></i> 최인턴</li>
+            			</ul>
+            		</li>
+            	</ul>
+            	
             </div>
         </div>
