@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+#awaittb {
+	width: 100%;
+}
+#awaittb th{
+	box-sizing:border-box;
+	padding: 5px;
+	background-color: #036;
+	border-radius:10px;
+	height: 30px;
+	color: #fff;
+	font-size: 1.17em;
+}
+#awaittb th:nth-child(1){
+	width: 20%;
+}
+#awaittb th:nth-child(2){
+	width: 45%;
+}
+#awaittb th:nth-child(3){
+	width: 15%;
+}
+#awaittb th:nth-child(4){
+	width: 20%;
+
+}
+#awaittb td {
+	box-sizing:border-box;
+	padding: 5px;
+	border-bottom: 2px solid #fff;
+}
+#awaittb td:nth-child(1){
+	font-size: 0.8em;
+	text-align: center;
+}
+#awaittb td:nth-child(2){
+	padding-left: 10px;
+	text-align: left;
+}
+#awaittb td:nth-child(3){
+	text-align: center;
+}
+#awaittb td:nth-child(4){
+	text-align: center;
+}
