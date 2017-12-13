@@ -65,15 +65,15 @@
     <h1><a href="#"><img src="<c:url value="/resources/images/logo_w.png"/>" alt=""></a></h1>
     <nav>
         <ul>
-            <li><a href="#">HOME</a></li>
+            <li><a href="<c:url value='/home.do'/>">HOME</a></li>
             <li><a href="<c:url value='/phoneBook/phoneBookList.do'/>">주소록</a></li>
-            <li><a href="#">스케줄</a></li>
-            <li><a href="#">자원관리</a></li>
+            <li><a href="<c:url value='/scheduler/scheduler.do'/>">스케줄</a></li>
+            <li><a href="<c:url value='/commue/commueList.do'/>">자원관리</a></li>
             <li><a href="<c:url value='/confirm/main.do'/>">전자결재</a></li>
-            <li><a href="#">근태관리</a></li>
-            <li><a href="#">웹하드</a></li>
-            <li><a href="#">공지사항</a></li>
-            <li><a href="#">사내뉴스</a></li>
+            <li><a href="<c:url value=''/>">근태관리</a></li>
+            <li><a href="<c:url value=''/>">웹하드</a></li>
+            <li><a href="<c:url value=''/>">공지사항</a></li>
+            <li><a href="<c:url value=''/>">사내뉴스</a></li>
         </ul>
     </nav>
 </header>
