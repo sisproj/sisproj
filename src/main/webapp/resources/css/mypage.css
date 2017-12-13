@@ -1,0 +1,102 @@
+@charset "UTF-8";
+
+	#dimyPage{
+		width:900px;
+		padding:5px;
+		clear: both;
+	}
+ 	#dimyPage #diTel #tel2{
+		width:85px;
+	}
+	/*#dimyPage #diName #name{
+		width: 150px;
+	} */
+	#dimyPage #emplist{
+		border:none;
+		border-color:rgb(221,221,221);
+		border-collapse:collapse;
+		text-align: center;
+		width: 750px;
+	}
+	#dimyPage #emplist th{
+		border-bottom:3px solid rgb(31,71,135);
+	}
+	#dimyPage #emplist td{
+		padding-top:5px;
+		border-bottom:1px solid gray;
+	}
+	 #dimyPage #diZipcode #zipcode{
+	 	width: 140px;
+	 }
+	 #dimyPage #address,#addressDetail{
+	 	margin-top: 10px;
+	 }
+	 #dimyPage select{
+	 border-radius: 5px;
+	 height:24px;
+	 }
+	 #dimyPage #diEmail #email1{ 
+	 	width: 120px;
+	 }
+	#dimyPage form{
+		width: 650px;
+	}
+	#dimyPage #diImg #empImg{
+		background-color:white;
+		border:2px solid gray;
+		width: 200px;
+		height: 200px;
+		left:600px;
+		top:24px;
+		position: absolute;
+	}
+	#dimyPage fieldset	{
+		width: 90%;
+		padding: 0;
+		margin: 0 auto;
+		border: 0;
+		/* border-bottom: 2px solid #e2e2e2; */
+		}
+	 #dimyPage div	{
+	 	margin-top: 10px;
+	/* 	clear: both;
+		border-bottom: 1px solid #eee;
+		padding: 5px 0;
+		margin: 0; */
+		/* overflow: auto; */
+		}	 	
+	#dimyPage label	{
+		width: 20%;
+		float: left;
+		text-align: right;
+		padding: 3px 15px 0 0;
+		clear: left;		
+		font-weight: bold;
+		}
+	#dimyPage input[type="text"],#dimyPage input[type="password"]{	
+		/* width: 55%;
+		height: 1.2em;
+		font-size: 0.9em; */
+		height: 25px;
+		width : 250px; 
+		border: 1px solid #DCDDE3;
+		border-radius: 5px;
+		}
+		
+	#dimyPage input[type="submit"], #dimyPage input[type="reset"], 
+	#dimyPage input[type="button"],	#dimyPage button, #dimyPage input[type="password"]{
+		padding: 2px 10px;
+		/* font-weight: bold; */
+		/* color: #CD1076; */
+	}
+	#dimyPage select{		
+		border: 1px solid #DCDDE3;
+		font-size: 0.9em;
+		}
+	#dimyPage #diReg{
+		border-bottom: 0;
+		text-align: center;
+	}
+	/* #dimyPage input[type="button"]{
+		margin: 10px;
+	} */
