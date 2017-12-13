@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@include file="../inc/top.jsp" %>
 <!-- 0. include부분 -->
+<link rel="stylesheet" href="<c:url value="/resources/css/mypage.css"/>">
         <nav>
             <ul>
                 <!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
-                <li><a href="#"><i class="fa fa-address-card-o" aria-hidden="true"></i>&nbsp;<span>사원 근태</span></a></li>
+                <li><a href="#"><i class="fa fa-address-card-o" aria-hidden="true"></i>&nbsp;<span>근태 현황</span></a></li>
                 <li><a href="#"><i class="fa fa-list-alt" aria-hidden="true"></i>&nbsp;<span>부서 근태</span></a></li>             
                 <li><a href="#"><i class="fa fa-hdd-o"></i>&nbsp;<span>정보 수정</span></a></li>
             </ul>
@@ -26,13 +27,14 @@
 		<form id="frmCom" name="frmCom" action="">
 			<div id="diBtCa">
 				<div id="diCal">
-				<!-- 년/월 뒤로가기 앞으로가기 -->
+				<!-- 년/월 뒤로가기 앞으로가기 
+				년/월을 선택시 날짜나오게 하는 건 생각중...-->
 				<a href="#"><i class="fa fa-angle-left" aria-hidden="true" style="size:1.2em;"></i></a>&nbsp
 				<span>2017 1월</span>
 				&nbsp<a href="#"><i class="fa fa-angle-right" aria-hidden="true" style="size: 1.2em;"></i></a>
 				</div>
-				<input type="button" id="btDCom" name="btDCom" value="일별">
-				<input type="button" id="btMCom" name="btMCom" value="월별">
+				<input type="button" id="btMCom" name="btDCom" value="월별">
+				<input type="button" id="btDCom" name="btMCom" value="일별">
 			</div>
 		</form>
 	<%-- 	<div>
@@ -109,35 +111,44 @@
 	<style>
 		#dimyPage #diBtCa input[type=button]{
 			border-radius:0;
-			font-size: 1.1em;
-			margin: 0 1px 0 1px;
-			padding: 1px;
-			
+			background-color:rgb(221,221,221);
 		}
 		#dimyPage #diBtCa #btMCom{
 			float: left;
 		}
 		#dimyPage #comTb{
+		
 			border: none;
-			border-color:rgb(234,232,234);
+			border-color:rgb(221,221,221);
 			width: 95%;
+			border-collapse: collapse;
 		}
 		#dimyPage #comTb td{
 			font-size: 0.9em;
 			text-align: center;
+			border-bottom-color: black;
 		}
 		#dimyPage #comTb th{
+			border-color:rgb(0,102,153);
 			text-align:center;
 			min-width: 56px;
 			min-height: 67px;
+			background-color: rgb(0,102,153);
+			color: white;
 		}
 		#dimyPage #diBtCa #diCal{
 			font-weight: bold;
 			font-size: 1.5em;
 			text-align: center;
+			margin:  0 0 0 180px;
 		}
 		
 	</style>
     <!-- 4. 상단 네비 색먹이기 끝-->
+    <script type="text/javascript">
+        $(function () {
+            $('header nav ul li:nth-child(7) a').addClass('active');
+        });
+    </script>
     <!-- 0. include부분 끝-->
 <%@include file="../inc/bottom.jsp" %>
