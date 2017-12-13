@@ -14,6 +14,7 @@
     <!-- css -->
     <link rel="stylesheet" href="<c:url value="/resources/css/reset.css"/>">
     <link rel="stylesheet" href="<c:url value="/resources/css/mainStyle.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/mypage.css"/>">
     <!-- jquery-ui css -->
     <link rel="stylesheet" href="<c:url value="/resources/jquery-ui/jquery-ui.min.css"/>">
 
@@ -64,16 +65,15 @@
     <h1><a href="#"><img src="<c:url value="/resources/images/logo_w.png"/>" alt=""></a></h1>
     <nav>
         <ul>
-            <li><a href="#">HOME</a></li>
+            <li><a href="<c:url value='/home.do'/>">HOME</a></li>
             <li><a href="<c:url value='/phoneBook/phoneBookList.do'/>">주소록</a></li>
-            <li><a href="#">메신저</a></li>
-            <li><a href="#">스케줄</a></li>
-            <li><a href="#">자원관리</a></li>
+            <li><a href="<c:url value='/scheduler/scheduler.do'/>">스케줄</a></li>
+            <li><a href="<c:url value=''/>">자원관리</a></li>
             <li><a href="<c:url value='/confirm/main.do'/>">전자결재</a></li>
-            <li><a href="#">근태관리</a></li>
-            <li><a href="#">웹하드</a></li>
-            <li><a href="#">공지사항</a></li>
-            <li><a href="#">사내뉴스</a></li>
+            <li><a href="<c:url value='/commue/commueList.do'/>">근태관리</a></li>
+            <li><a href="<c:url value=''/>">웹하드</a></li>
+            <li><a href="<c:url value=''/>">공지사항</a></li>
+            <li><a href="<c:url value=''/>">사내뉴스</a></li>
         </ul>
     </nav>
 </header>
@@ -115,6 +115,7 @@
             <div id="asidebtn">
                 <ul>
                     <li><a href="#">출근</a></li>
+                    <li><a href="#">메신저</a></li>
                     <li><a href="<c:url value='/login.do'/>">로그 아웃</a></li>
                 </ul>
             </div>
