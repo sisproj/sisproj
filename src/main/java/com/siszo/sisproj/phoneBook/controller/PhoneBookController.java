@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PhoneBookController {
 	private static final Logger logger=LoggerFactory.getLogger(PhoneBookController.class);
 	
-	@RequestMapping("/phoneBook.do")
+	@RequestMapping("/phoneBookList.do")
 	public void main_view() {
 		logger.info("주소록 화면 보여주기");
 	}

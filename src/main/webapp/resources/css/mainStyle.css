@@ -25,12 +25,12 @@ header nav {
 	margin-top: 54px;
 	margin-left: 50px;
 	float:left;	
-	width: 70%;
+	width: calc(100% - 298px);
 }
 header nav ul li{
 	float:left;
 	margin-left: 2px;
-	width: 12%;
+	width: 10.5%;
 	min-width: 66px;
 }
 header nav ul li a {
