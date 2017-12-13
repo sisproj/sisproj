@@ -67,7 +67,6 @@
         <ul>
             <li><a href="#">HOME</a></li>
             <li><a href="<c:url value='/phoneBook/phoneBookList.do'/>">주소록</a></li>
-            <li><a href="#">메신저</a></li>
             <li><a href="#">스케줄</a></li>
             <li><a href="#">자원관리</a></li>
             <li><a href="<c:url value='/confirm/main.do'/>">전자결재</a></li>
@@ -116,6 +115,7 @@
             <div id="asidebtn">
                 <ul>
                     <li><a href="#">출근</a></li>
+                    <li><a href="#">메신저</a></li>
                     <li><a href="<c:url value='/login.do'/>">로그 아웃</a></li>
                 </ul>
             </div>

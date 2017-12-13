@@ -130,7 +130,7 @@
 		<!-- 4. 상단 네비 색먹이기 // li태그 순서(전자결재 : 6번째) 입력 -->
 		<script type="text/javascript">
 			$(function(){
-				$('header nav ul li:nth-child(6) a').addClass('active');
+				$('header nav ul li:nth-child(5) a').addClass('active');
 			});
 		</script>
 		<!-- 4. 상단 네비 색먹이기 끝-->

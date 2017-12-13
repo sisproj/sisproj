@@ -30,7 +30,7 @@ header nav {
 header nav ul li{
 	float:left;
 	margin-left: 2px;
-	width: 9%;
+	width: 12%;
 	min-width: 66px;
 }
 header nav ul li a {
@@ -102,12 +102,15 @@ aside #loginfo #info i{
 	font-weight: 600;
 	font-size: 0.8em;
 }
+aside #loginfo #asidebtn ul {
+	display:-webkit-box;
+}
 aside #loginfo #asidebtn ul li{
-	border-top: 2px solid #fff;
+	display: block;
 	box-sizing:border-box;
-	float:left;
-	width: 50%;
+	width: 32%;
 	height: 40px;
+	margin-right: 5px;
 }
 aside #loginfo #asidebtn ul li a{
 	display: block;
@@ -117,9 +120,12 @@ aside #loginfo #asidebtn ul li a{
 	width: 100%;
 	height: 100%;
 	line-height: 40px;
+	background: #036;
+	box-shadow:2px 2px 5px #000;
+	border-radius: 10px;
 }
-aside #loginfo #asidebtn ul li:first-child{
-	border-right: 2px solid #fff;
+aside #loginfo #asidebtn ul li a:hover{
+	box-shadow:2px 2px 5px transparent;	
 }
 /* aside #listbtn{
 	position: fixed;
