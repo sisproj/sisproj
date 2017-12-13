@@ -11,27 +11,6 @@
 			$('#myAddressUp').toggle();
 			$('#addressList ul').slideToggle();
 		});
-
-		$('.addrStaro, .addrStar').click(function(){
-			$('.addrStar').toggle();
-			$('.addrStaro').toggle();
-		});
-		
-		$('.divAddrBody table td').hover(function(){
-			$(this).parent().css('background','rgb(245,245,245)');
-		},function(){
-			$(this).parent().css('background','white');
-		});
-		
-		$('#checkAll').click(function() {
-			if($("#checkAll").prop("checked")) {
-				//전체 checkbox들을 체크해준다 
-				$("td input[type=checkbox]").prop("checked",true); 
-			} else { 
-				//모든 checkbox들의 체크해제
-				$("td input[type=checkbox]").prop("checked",false); 
-			}
-		});
 		
 	});
 </script>
@@ -42,7 +21,7 @@
                 	<i id="myAddressUp" class="myAddress fa fa-chevron-up"></i>
                 	<i id="myAddressDown" class="myAddress fa fa-chevron-down"></i></a>
                 	<ul>
-                		<li><a href="<c:url value='/phoneBook/phoneBookList.do'/>">전체 주소록</a>
+                		<li><a href="<c:url value='/phoneBook/phoneBookList.do'/>">전체 주소록</a>                		
                 			<ul>
                 				<li><a href="#">└ 가족</a></li>
                 				<li><a href="#">└ 친구</a></li>
@@ -75,67 +54,56 @@
         <!-- 3. 내용 -->
         <div id="divBodysection">
 	        <div class="divAddrHeader">
-		        <a href="#"><div><i class="fa fa-trash"></i><span> 삭제</span></div></a>
-		        <a href="#"><div><i class="fa fa-envelope-o"></i><span> 메일 보내기</span></div></a>
-		        <a href="#"><div><i class="fa fa-excel-o"></i><span> 주소록 내보내기</span></div></a>
-		        <div><input type="text" placeholder="연락처 검색"><a href="#"><i id="addrSearch" class="fa fa-search"></i></a></div>
-		        <div id="selectMenu">
-		        	<select>
-				        <option>10개씩 보기</option>
-				        <option>30개씩 보기</option>
-				        <option>50개씩 보기</option>
-			        </select>
-		        </div>
+		        <h3>연락처 추가</h3>
 		    </div>
 	        <div class="divAddrBody">
-	        	<table>
-	        		<colgroup>
-	        			<col width="5%">
-	        			<col width="5%">
-	        			<col width="15%">
-	        			<col width="15%">
-	        			<col width="25%">
-	        			<col width="20%">
-	        			<col width="15%">
-	        		</colgroup>
-	        		<tr>
-	        			<th><input type="checkbox" id="checkAll"></th>
-	        			<th><i class="fa fa-star"></i></th>
-	        			<th><a href="#">이름</a></th>
-	        			<th>전화번호</th>
-	        			<th>이메일</th>
-	        			<th>회사</th>
-	        			<th>그룹</th>
-	        		</tr>
-	        		<tr>
-	        			<td><input type="checkbox"></td>
-	        			<td><a href="#"><i class="fa fa-star-o addrStaro"></i><i class="fa fa-star addrStar"></i></a></td>
-	        			<td><a href="#">이름</a></td>
-	        			<td>전화번호</td>
-	        			<td><a href="#">이메일</a></td>
-	        			<td>회사</td>
-	        			<td>그룹</td>
-	        		</tr>
-	        		<tr>
-	        			<td><input type="checkbox"></td>
-	        			<td><a href="#"><i class="fa fa-star-o addrStaro"></i><i class="fa fa-star addrStar"></i></a></td>
-	        			<td><a href="#">이름</a></td>
-	        			<td>전화번호</td>
-	        			<td><a href="#">이메일</a></td>
-	        			<td>회사</td>
-	        			<td>그룹</td>
-	        		</tr>
-	        		<tr>
-	        			<td><input type="checkbox"></td>
-	        			<td><a href="#"><i class="fa fa-star-o addrStaro"></i><i class="fa fa-star addrStar"></i></a></td>
-	        			<td><a href="#">이름</a></td>
-	        			<td>전화번호</td>
-	        			<td><a href="#">이메일</a></td>
-	        			<td>회사</td>
-	        			<td>그룹</td>
-	        		</tr>
-	        	</table>
-	        </div>
+				<div>
+					<label for="name">이름</label> 
+					<input type="text" name="name"	id="name" style="ime-mode: active">
+				</div>
+				<div>
+			        <label for="hp1">핸드폰</label>
+			        <select name="hp1" id="hp1" title="휴대폰 앞자리">
+			            <option value="010">010</option>
+			            <option value="011">011</option>
+			            <option value="016">016</option>
+			            <option value="017">017</option>
+			            <option value="018">018</option>
+			            <option value="019">019</option>
+			       	</select>
+			        -
+			        <input type="text" name="hp2" id="hp2" maxlength="4" title="휴대폰 가운데자리"	class="width_80"> -
+			        <input type="text" name="hp3" id="hp3" maxlength="4" title="휴대폰 뒷자리" 	class="width_80">
+			    </div>
+			    <div>
+			        <label for="email1">이메일 주소</label>
+			        <input type="text" name="email1"  id="email1" title="이메일주소 앞자리"> @
+			        <select name="email2" id="email2"  title="이메일주소 뒷자리">
+			            <option value="naver.com">naver.com</option>
+			            <option value="hanmail.net">hanmail.net</option>
+			            <option value="nate.com">nate.com</option>
+			            <option value="gmail.com">gmail.com</option>
+			            <option value="etc">직접입력</option>
+			        </select>
+			        <input type="text" name="email3" id="email3" title="직접입력인 경우 이메일주소 뒷자리" style="visibility:hidden">
+			    </div>
+			    <div>
+			    	<label for="company">회사</label>
+			    	<input type="text" name="company" id="company" title="회사명">
+			    </div>
+			    <div>
+			    	<label for="company">그룹</label>
+				    <select name="groupName" id="groupName">
+				    	<option value="가족">가족</option>
+				    	<option value="친구">친구</option>
+				    	<option value="거래처">거래처</option>
+				    	<option value="동아리">동아리</option>
+				    </select>
+			    </div>
+			    <div class="center">
+			         <input type="submit" id="wr_submit" value="등록">
+			    </div>
+			</div>
 	        <div class="divPaging">
 	        	<p>이곳에 페이징 처리를 합시다</p>
 	        </div>
@@ -224,15 +192,5 @@
     	}
     	#selectMenu select{
     		border: 0;
-    	}		
-		/* #myAddressUp{
-			display: none;
-		} */
-		/*
-		#myAddressDown{
-			display:inline;
-		} */
-		.addrStar{display: none;}
-		.addrStaro{display:inline;}
-		.divAddrBody table tr:eq(0){border-bottom:1px solid rgb(195, 195, 195)}
+    	}
     </style>

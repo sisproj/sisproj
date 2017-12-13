@@ -11,11 +11,6 @@
 			$('#myAddressUp').toggle();
 			$('#addressList ul').slideToggle();
 		});
-
-		$('.addrStaro, .addrStar').click(function(){
-			$('.addrStar').toggle();
-			$('.addrStaro').toggle();
-		});
 		
 		$('.divAddrBody table td').hover(function(){
 			$(this).parent().css('background','rgb(245,245,245)');
@@ -75,10 +70,8 @@
         <!-- 3. 내용 -->
         <div id="divBodysection">
 	        <div class="divAddrHeader">
-		        <a href="#"><div><i class="fa fa-trash"></i><span> 삭제</span></div></a>
-		        <a href="#"><div><i class="fa fa-envelope-o"></i><span> 메일 보내기</span></div></a>
-		        <a href="#"><div><i class="fa fa-excel-o"></i><span> 주소록 내보내기</span></div></a>
-		        <div><input type="text" placeholder="연락처 검색"><a href="#"><i id="addrSearch" class="fa fa-search"></i></a></div>
+		        <a href="#"><div><i class="fa fa-trash"></i><span> 휴지통 비우기</span></div></a>		        
+		        <a href="#"><div><i class="fa fa-share-square-o"></i><span> 주소록으로 되돌리기</span></div></a>		        
 		        <div id="selectMenu">
 		        	<select>
 				        <option>10개씩 보기</option>
@@ -91,16 +84,14 @@
 	        	<table>
 	        		<colgroup>
 	        			<col width="5%">
-	        			<col width="5%">
 	        			<col width="15%">
 	        			<col width="15%">
 	        			<col width="25%">
 	        			<col width="20%">
-	        			<col width="15%">
+	        			<col width="20%">
 	        		</colgroup>
 	        		<tr>
 	        			<th><input type="checkbox" id="checkAll"></th>
-	        			<th><i class="fa fa-star"></i></th>
 	        			<th><a href="#">이름</a></th>
 	        			<th>전화번호</th>
 	        			<th>이메일</th>
@@ -109,7 +100,6 @@
 	        		</tr>
 	        		<tr>
 	        			<td><input type="checkbox"></td>
-	        			<td><a href="#"><i class="fa fa-star-o addrStaro"></i><i class="fa fa-star addrStar"></i></a></td>
 	        			<td><a href="#">이름</a></td>
 	        			<td>전화번호</td>
 	        			<td><a href="#">이메일</a></td>
@@ -118,7 +108,6 @@
 	        		</tr>
 	        		<tr>
 	        			<td><input type="checkbox"></td>
-	        			<td><a href="#"><i class="fa fa-star-o addrStaro"></i><i class="fa fa-star addrStar"></i></a></td>
 	        			<td><a href="#">이름</a></td>
 	        			<td>전화번호</td>
 	        			<td><a href="#">이메일</a></td>
@@ -127,7 +116,6 @@
 	        		</tr>
 	        		<tr>
 	        			<td><input type="checkbox"></td>
-	        			<td><a href="#"><i class="fa fa-star-o addrStaro"></i><i class="fa fa-star addrStar"></i></a></td>
 	        			<td><a href="#">이름</a></td>
 	        			<td>전화번호</td>
 	        			<td><a href="#">이메일</a></td>
