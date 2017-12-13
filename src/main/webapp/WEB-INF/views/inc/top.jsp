@@ -1,8 +1,8 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ page session="false" %>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"  %>
-<%@ taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -22,8 +22,10 @@
     <script src="<c:url value="/resources/jquery/jquery.easing.1.3.js"/>"></script>
     <!-- jquery-ui -->
     <script src="<c:url value="/resources/jquery-ui/jquery-ui.min.js"/>"></script>
-
+	<!-- smart editor 2.0 -->
+	<script type="text/javascript" src="<c:url value='/resources/se2/js/service/HuskyEZCreator.js'/>" charset="utf-8"></script>
     <!-- mainjs -->
+    
     <script src="<c:url value="/resources/js/mainjs.js"/>"></script>
     <script type="text/javascript">
     	$(function(){
@@ -67,7 +69,7 @@
             <li><a href="#">메신저</a></li>
             <li><a href="#">스케줄</a></li>
             <li><a href="#">자원관리</a></li>
-            <li><a href="#">전자결재</a></li>
+            <li><a href="<c:url value='/confirm/main.do'/>">전자결재</a></li>
             <li><a href="#">근태관리</a></li>
             <li><a href="#">웹하드</a></li>
             <li><a href="#">공지사항</a></li>
@@ -85,7 +87,7 @@
             <!-- 북마크 리스트 -->
             <li>
                 <hr>
-            </li>            
+            </li>
             <li><a href="#"><i class="fa fa-pencil-square-o"></i><span style="display:none">&nbsp;전자결재</span></a></li>
             <li><a href="#"><i class="fa fa-calendar"></i><span style="display:none">&nbsp;스케쥴</span></a></li>
             <li><a href="#"><i class="fa fa-id-badge"></i><span style="display:none">&nbsp;근태관리</span></a></li>
