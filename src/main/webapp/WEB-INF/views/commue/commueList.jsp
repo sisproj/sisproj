@@ -108,8 +108,11 @@
     </script>
 	<style>
 		#dimyPage #diBtCa input[type=button]{
-			border-radius:0;		 
-			background-color: black;
+			border-radius:0;
+			font-size: 1.1em;
+			margin: 0 1px 0 1px;
+			padding: 1px;
+			
 		}
 		#dimyPage #diBtCa #btMCom{
 			float: left;
@@ -117,7 +120,7 @@
 		#dimyPage #comTb{
 			border: none;
 			border-color:rgb(234,232,234);
-			width: 93%;
+			width: 95%;
 		}
 		#dimyPage #comTb td{
 			font-size: 0.9em;
@@ -132,8 +135,8 @@
 			font-weight: bold;
 			font-size: 1.5em;
 			text-align: center;
-			margin: 0 0 0 170px;		
 		}
+		
 	</style>
     <!-- 4. 상단 네비 색먹이기 끝-->
     <!-- 0. include부분 끝-->

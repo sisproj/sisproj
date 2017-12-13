@@ -14,6 +14,7 @@
     <!-- css -->
     <link rel="stylesheet" href="<c:url value="/resources/css/reset.css"/>">
     <link rel="stylesheet" href="<c:url value="/resources/css/mainStyle.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/mypage.css"/>">
     <!-- jquery-ui css -->
     <link rel="stylesheet" href="<c:url value="/resources/jquery-ui/jquery-ui.min.css"/>">
 
