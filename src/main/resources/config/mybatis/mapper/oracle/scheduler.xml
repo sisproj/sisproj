@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.scheduler">
+	<insert id="schedulerInsert" parameterType="SchedulerVO">
+		insert into scheduler(id,start_date,end_date,title)
+		values(#{id},#{startdate},#{enddate},#{title})
+	</insert>
+	
+	<select id="schedulerSelectAll" resultType="SchedulerVO">
+		select * from scheduler
+	</select>
+
+</mapper>
+
+
+
+
+
+
+
+

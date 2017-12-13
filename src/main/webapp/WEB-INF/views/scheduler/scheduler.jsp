@@ -1,80 +1,146 @@
 <%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@include file="../inc/top.jsp" %>
- <%
-   Calendar cal =Calendar.getInstance();
-  int nowYear = cal.get(Calendar.YEAR);
-  int nowMonth = cal.get(Calendar.MONTH)+1; // +1
-  int nowDay = cal.get(Calendar.DAY_OF_MONTH);
-  request.setCharacterEncoding( "utf-8");
-  String strYear = request.getParameter( "year");
-  String strMonth = request.getParameter( "month");
- 
-    int year = nowYear; // 현재의 년을 받아옴.
-    int month = nowMonth; // 현재의 월을 받아옴.
-    if(strYear != null)
-    {
-     year = Integer.parseInt(strYear); 
-    }
-  
-    if(strMonth != null)
-    {
-     month = Integer.parseInt(strMonth);
-    }
-   
-    cal.set(year,month-1,1);
-    int startDay = 1;
-   
-    int endDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-    int week = cal.get(Calendar.DAY_OF_WEEK);
-   
-%>
+	
+	<script type="text/javascript" charset="utf-8">
+		window.onload=function() {
+			scheduler.config.xml_date="%Y-%m-%d %H:%i";
+			scheduler.config.time_step = 30;
+			scheduler.config.multi_day = true;
+			scheduler.locale.labels.section_subject = "Subject";
+			scheduler.config.first_hour = 6;
+			scheduler.config.limit_time_select = true;
+			scheduler.config.details_on_dblclick = true;
+			scheduler.config.details_on_create = true;
 
+			scheduler.templates.event_class = function(start, end, event){
+				console.log(event);
+				var css = "";
 
+				if(event.subject) // if event has subject property then special class should be assigned
+					css += "event_"+event.subject;
 
-<script type="text/javascript">
-function window_onload()
- {
-    for ( i=2016;i<=2020 ; i++)
-   {
-        var op= new Option(i+ "년",i);
-         syear.options[i -2016]=op; 
-         if(i== <%=year %> )
-         {
-            syear.options[i -2016].selected ="selected" ;
-         }
-   }
-     for ( i=1;i<=12 ; i++)
-     {
-        var op= new Option(i+ "월",i);
-         smonth.options[i -1]=op;
-         if(i== <%=month %>)
-         {
-             smonth.options[i -1].selected = "selected";
-         }
-     }
- }
-function month_onchange()
-{   
-     var month = smonth.value;
-     var year = syear.value;
-     var addr = "scheduler.do?year=" + year +"&month=" + month;
-    // alert(addr);
-    //addr 이 가지는 주소값으로  페이지를 이동시킨다.       
-   location.href = addr;
-   
-}
-function year_onchange()
-{
-     var year = syear.value;
-     var month = smonth.value;
-     var addr = "scheduler.do?year=" + year +"&month=" + month;
-    
-        location.href = addr;
-    
-}
+				if(event.id == scheduler.getState().select_id){
+					css += " selected";
+				}
+				return css; // default return
 
-</script>
+				/*
+					Note that it is possible to create more complex checks
+					events with the same properties could have different CSS classes depending on the current view:
+
+					var mode = scheduler.getState().mode;
+					if(mode == "day"){
+						// custom logic here
+					}
+					else {
+						// custom logic here
+					}
+				*/
+			};
+
+			var subject = [
+				{ key: '', label: '가나다' },
+				{ key: 'a', label: '출장' },
+				{ key: 'b', label: '회의' },
+				{ key: 'c', label: '기타' }
+			];
+
+			scheduler.config.lightbox.sections=[
+				{name:"내용", height:43, map_to:"text", type:"textarea" , focus:true},
+				{name:"카테고리", height:20, type:"select", options: subject, map_to:"subject" },
+				{name:"시간", height:72, type:"time", map_to:"auto" }
+			];
+
+			
+			scheduler.init('scheduler_here', new Date(2017, 3, 20), "month");
+			
+			scheduler.attachEvent("onEventSave",function(id,ev,is_new){
+				var end_date = scheduler.getEvent(id).end_date;
+				var start_date = scheduler.getEvent(id).start_date;
+				var text = scheduler.getEvent(id).text;
+				 
+			    if (!ev.text) {
+			   	 
+			        alert("내용을 입력하세요");
+			        return false;
+			    } else {
+
+		        $('#startdate').val(start_date);
+		        $('#enddate').val(end_date);
+		        $('#title').val(text);
+		        $('#id').val(id);
+		        
+		        $('#schfrm').submit();
+			    return true;
+			    }
+			}); 
+			
+			<c:forEach var="vo" items="list">
+			 scheduler.parse([
+			//for문 돌려서 리스트만큼 가져오기
+					{ start_date: "2017-04-18 09:00", end_date: "2017-04-18 12:00", text:"English lesson", subject: 'english' },
+					
+				], "json");
+			 </c:forEach>
+
+		}
+
+	</script>
+	<style type="text/css" >
+		html, body{
+			margin:0;
+			padding:0;
+			height:100%;
+			overflow:hidden;
+		}
+
+		.dhx_cal_event div.dhx_footer,
+		.dhx_cal_event.past_event div.dhx_footer,
+		.dhx_cal_event.event_english div.dhx_footer,
+		.dhx_cal_event.event_math div.dhx_footer,
+		.dhx_cal_event.event_science div.dhx_footer{
+			background-color: transparent !important;
+		}
+		.dhx_cal_event .dhx_body{
+			-webkit-transition: opacity 0.1s;
+			transition: opacity 0.1s;
+			opacity: 0.7;
+		}
+		.dhx_cal_event .dhx_title{
+			line-height: 12px;
+		}
+		.dhx_cal_event_line:hover,
+		.dhx_cal_event:hover .dhx_body,
+		.dhx_cal_event.selected .dhx_body,
+		.dhx_cal_event.dhx_cal_select_menu .dhx_body{
+			opacity: 1;
+		}
+
+		.dhx_cal_event.event_math div, .dhx_cal_event_line.event_math{
+			background-color: orange !important;
+			border-color: #a36800 !important;
+		}
+		.dhx_cal_event_clear.event_math{
+			color:orange !important;
+		}
+
+		.dhx_cal_event.event_science div, .dhx_cal_event_line.event_science{
+			background-color: #36BD14 !important;
+			border-color: #698490 !important;
+		}
+		.dhx_cal_event_clear.event_science{
+			color:#36BD14 !important;
+		}
+
+		.dhx_cal_event.event_english div, .dhx_cal_event_line.event_english{
+			background-color: #FC5BD5 !important;
+			border-color: #839595 !important;
+		}
+		.dhx_cal_event_clear.event_english{
+			color:#B82594 !important;
+		}
+	</style>
         <!-- 0. include부분 -->
         <nav>
             <ul>
@@ -100,74 +166,28 @@ function year_onchange()
     </article>
     <article id="bodysection">
         <!-- 3. 내용 -->
-       <!--  <input type="button" value="버튼">
-        <input type="submit" value="제출">
-        <input type="reset" value="리셋">
-        <a href="#" class="button">a태그버튼</a> -->
-       
- <body onload ="window_onload()" >
-    <table align = "center" cellspacing= "1" cellpadding= "2" bgcolor ="#e6f6e6" >
-  <tr >
-   <td width="1200" colspan = "7" style=" color: blue; border: solid 1px red;" >
-   <b>&nbsp;
-   <select id = "syear" onchange= "year_onchange()" >
-    <option ></option >
-    </select ></b>
-    <b>&nbsp;
-    <select   id= "smonth" onchange= "month_onchange()"  >
-     <option ></option >
-    </select ></b>
-   </td>
-  </table >
-  
-  <table align = "center" cellspacing= "1" cellpadding= "2" bgcolor ="#cccccc" >
-   <tr >
-     <td bgcolor = "skyblue" width="100" height="50" style=" color: red; font-weight: bold;" > SunDay</td >
-     <td bgcolor = "skyblue" width="100" height="50" style="font-weight: bold;"> MunDay </td >
-     <td bgcolor = "skyblue" width="100" height="50" style="font-weight: bold;"> TuesDay </td >
-     <td bgcolor = "skyblue" width="100" height="50" style="font-weight: bold;"> WednesDay </td >
-     <td bgcolor = "skyblue" width="100" height="50" style="font-weight: bold;"> ThursDay </td >
-     <td bgcolor = "skyblue" width="100" height="50" style="font-weight: bold;"> FriDay </td >
-     <td bgcolor = "skyblue" width="100" height="50" style=" color: blue; font-weight: bold;" > SaturDay  </td>
-    
-   </tr >
-   <%
-      int newLine=0;
-      %><tr>
-     
-     <%for(int i=1; i<week; i++)
-      {%>
-       <td width='170' height='100' bgcolor='#ffffff'>&nbsp;</td>
-       <%newLine++;
-      }
-     
-      for(int i=startDay; i<=endDay; i++)
-      {
-       String fontColor=(newLine==0)?
-                "red":(newLine==6)? "blue": "black";
-       String bgColor=(nowYear==year)&&(nowMonth==month)
-                &&(nowDay==i)? " #e6e4e6": "#ffffff";
-       out.print( "<td width='170' height='100' bgcolor="+bgColor+ "><font color="+fontColor+ ">"+i+ "</font></td>" );
-      newLine++;
-     
-           if(newLine ==7 &&i!=endDay)
-           {
-            out.print( "</tr><tr>" );
-            newLine=0;
-           }
-      }
-     while(newLine>0 && newLine<7)
-     {
-      out.print( "<td width='170' height='100' bgcolor='#ffffff'>&nbsp;</td>");
-      newLine++;
-     }
-    %></tr>
-  
-   
-  </table >
-
-
-
+        <form name="schfrm" id="schfrm" method="post" action="schedulerOK.do">
+	        <input type="text" id="startdate" name="startdate">
+	        <input type="text" id="enddate" name="enddate">
+	        <input type="text" id="title" name="title">
+	        <input type="text" id="id" name="id">
+        </form>
+	<div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:100%;'>
+		<div class="dhx_cal_navline">
+			<div class="dhx_cal_prev_button">&nbsp;</div>
+			<div class="dhx_cal_next_button">&nbsp;</div>
+			<div class="dhx_cal_today_button"></div>
+			<div class="dhx_cal_date"></div>
+			<div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+			<div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+			<div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+		</div>
+		<div class="dhx_cal_header">
+		</div>
+		<div class="dhx_cal_data">
+		</div>		
+	</div>
+</body>
         <!-- 3. 내용 끝 -->
     </article>
     <!-- 4. 상단 네비 색먹이기 // li태그 순서(전자결재 : 6번째) 입력 -->
