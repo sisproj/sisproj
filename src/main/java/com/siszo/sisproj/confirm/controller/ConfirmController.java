@@ -39,18 +39,6 @@ public class ConfirmController {
 		logger.info("결재 환경 설정 보여주기");
 		return "confirm/setting";
 	}
-
-	@RequestMapping("/typeform.do")
-	public String typeform() {
-		logger.info("결재 환경 설정 보여주기");
-		return "confirm/typeform";
-	}
-	
-	@RequestMapping("/uptypeform.do")
-	public String uptypeform() {
-		logger.info("결재 양식 수정 화면 보여주기");
-		return "confirm/uptypeform";
-	}
 	
 	@RequestMapping("/await.do")
 	public String await() {
@@ -70,12 +58,6 @@ public class ConfirmController {
 		return "confirm/detail";
 	}
 	
-	@RequestMapping("/instypeform.do")
-	public String instypeform() {
-		logger.info("결재 양식 등록 화면 보여주기");
-		return "confirm/instypeform";
-	}
-	
 	@RequestMapping("/line.do")
 	public String line() {
 		logger.info("결재라인 선택화면 보여주기");
@@ -93,4 +75,24 @@ public class ConfirmController {
 		logger.info("문서 수정화면 보여주기");
 		return "confirm/edit";
 	}
+	
+	//admin
+	@RequestMapping("/instypeform.do")
+	public String instypeform() {
+		logger.info("결재 양식 등록 화면 보여주기");
+		return "confirm/adm/instypeform";
+	}
+	
+	@RequestMapping("/uptypeform.do")
+	public String uptypeform() {
+		logger.info("결재 양식 수정 화면 보여주기");
+		return "confirm/adm/uptypeform";
+	}
+	
+	@RequestMapping("/typeform.do")
+	public String typeform() {
+		logger.info("결재 환경 설정 보여주기");
+		return "confirm/adm/typeform";
+	}
+	
 }

@@ -57,7 +57,7 @@
 				<div class="clr"></div>
 				<div id="writebtn">
 					<form name="choicebtn" id="choicebtn" method="post" action="<c:url value='/confirm/write.do'/>">
-						<input type="text" id="form_no" name="form_no" value="">
+						<input type="hidden" id="form_no" name="form_no" value="">
 						<input type="submit" value="작성">
 					</form>
 				</div>	
@@ -65,16 +65,15 @@
 			<!-- 3. 내용 끝 -->
 		</article>
 		<!-- 4. 상단 네비 색먹이기 // li태그 순서(전자결재 : 6번째) 입력 -->
+		<script type="text/javascript" src="<c:url value='/resources/js/pagejs/confirm.js'/>"></script>
+		<!-- 4. 상단 네비 색먹이기 끝-->
+		<!-- 0. include부분 끝-->
 		<script type="text/javascript">
-			$(function(){
-				$('header nav ul li:nth-child(6) a').addClass('active');
-				
+			$(function(){				
 				$('.dd a').click(function(){
 					var docNo = $(this).attr('id');
 					$('#form_no').val(docNo);
 				});
 			});
 		</script>
-		<!-- 4. 상단 네비 색먹이기 끝-->
-		<!-- 0. include부분 끝-->
 <%@ include file="../inc/bottom.jsp" %>

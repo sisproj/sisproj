@@ -1,0 +1,196 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@include file="../inc/top.jsp" %>
+<!-- 0. include부분 -->
+<script type="text/javascript">
+	$(function(){
+		$('#myAddressUp').hide();
+		$('.myAddress').click(function(){
+			$('#myAddressDown').toggle();			
+			$('#myAddressUp').toggle();
+			$('#addressList ul').slideToggle();
+		});
+		
+	});
+</script>
+        <nav>
+            <ul>
+                <!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
+                <li id="addressList"><a href="#"><i class="fa fa-address-book-o"></i>&nbsp;<span>내 주소록</span>
+                	<i id="myAddressUp" class="myAddress fa fa-chevron-up"></i>
+                	<i id="myAddressDown" class="myAddress fa fa-chevron-down"></i></a>
+                	<ul>
+                		<li><a href="<c:url value='/phoneBook/phoneBookList.do'/>">전체 주소록</a>                		
+                			<ul>
+                				<li><a href="#">└ 가족</a></li>
+                				<li><a href="#">└ 친구</a></li>
+                				<li><a href="#">└ 거래처</a></li>
+                				<li><a href="#">└ 동아리</a></li>
+                			</ul>
+                		</li>                		
+                	</ul>
+                </li>
+                <li><a href="<c:url value='/phoneBook/phoneBookWrite.do'/>"><i class="fa fa-user-plus"></i>&nbsp;<span>연락처 추가</span></a></li>
+                <li><a href="#"><i class="fa fa-users"></i>&nbsp;<span>그룹 추가</span></a></li>
+                <li><a href="<c:url value='/phoneBook/phoneBookTrash.do'/>"><i class="fa fa-trash"></i>&nbsp;<span>휴지통</span></a></li>
+                <li><a href="#"><i class="fa fa-cog"></i>&nbsp;<span>환경설정</span></a></li>
+            </ul>
+            <!-- 1.왼쪽 사이드 메뉴 지정 끝-->
+            <div id="listbtn"><p><i class="fa fa-chevron-circle-left" style="text-align: center;"></i></p></div>
+        </nav>
+    </aside>
+    <!-- 왼쪽 사이드 메뉴 끝 -->
+    <hr>
+    <article id="headsection">
+        <!-- 2. 페이지 이름 지정 // 북마크 지정 여부 .bookmark || .nobook -->
+        <h1>
+        	<i class="fa fa-phone"></i>&nbsp;주소록&nbsp;
+        	<a href="#"><i class="fa fa-bookmark bookmark" aria-hidden="true"></i></a>
+        </h1>
+        <!-- 2. 페이지 이름 지정 끝 -->
+    </article>
+    <article id="bodysection">
+        <!-- 3. 내용 -->
+        <div id="divBodysection">
+	        <div class="divAddrHeader">
+		        <h3>연락처 추가</h3>
+		    </div>
+	        <div class="divAddrBody">
+				<div>
+					<label for="name">이름</label> 
+					<input type="text" name="name"	id="name" style="ime-mode: active">
+				</div>
+				<div>
+			        <label for="hp1">핸드폰</label>
+			        <select name="hp1" id="hp1" title="휴대폰 앞자리">
+			            <option value="010">010</option>
+			            <option value="011">011</option>
+			            <option value="016">016</option>
+			            <option value="017">017</option>
+			            <option value="018">018</option>
+			            <option value="019">019</option>
+			       	</select>
+			        -
+			        <input type="text" name="hp2" id="hp2" maxlength="4" title="휴대폰 가운데자리"	class="width_80"> -
+			        <input type="text" name="hp3" id="hp3" maxlength="4" title="휴대폰 뒷자리" 	class="width_80">
+			    </div>
+			    <div>
+			        <label for="email1">이메일 주소</label>
+			        <input type="text" name="email1"  id="email1" title="이메일주소 앞자리"> @
+			        <select name="email2" id="email2"  title="이메일주소 뒷자리">
+			            <option value="naver.com">naver.com</option>
+			            <option value="hanmail.net">hanmail.net</option>
+			            <option value="nate.com">nate.com</option>
+			            <option value="gmail.com">gmail.com</option>
+			            <option value="etc">직접입력</option>
+			        </select>
+			        <input type="text" name="email3" id="email3" title="직접입력인 경우 이메일주소 뒷자리" style="visibility:hidden">
+			    </div>
+			    <div>
+			    	<label for="company">회사</label>
+			    	<input type="text" name="company" id="company" title="회사명">
+			    </div>
+			    <div>
+			    	<label for="company">그룹</label>
+				    <select name="groupName" id="groupName">
+				    	<option value="가족">가족</option>
+				    	<option value="친구">친구</option>
+				    	<option value="거래처">거래처</option>
+				    	<option value="동아리">동아리</option>
+				    </select>
+			    </div>
+			    <div class="center">
+			         <input type="submit" id="wr_submit" value="등록">
+			    </div>
+			</div>
+	        <div class="divPaging">
+	        	<p>이곳에 페이징 처리를 합시다</p>
+	        </div>
+	        <!-- 3. 내용 끝 -->
+        </div>
+    </article>
+    <!-- 4. 상단 네비 색먹이기 // li태그 순서(전자결재 : 6번째) 입력 -->
+    <script type="text/javascript">
+        $(function () {
+            $('header nav ul li:nth-child(2) a').addClass('active');
+        });
+    </script>
+    <!-- 4. 상단 네비 색먹이기 끝-->
+    <!-- 0. include부분 끝-->
+    <%@include file="../inc/bottom.jsp" %>
+    <style>
+    	#bodysection > div{
+    		background: #fff;
+    		margin: 0;
+    	}
+    	#divBodysection{
+    		background: #fff;
+    		padding: 5px;
+    		width: 77%;
+    		margin: 20px, 0, 0, 0;
+    	}
+    	#addressList ul{display: none;}
+    	#addressList .myAddress{
+    		width:50px;
+    		height:50px;
+    		line-height:50px;
+    		display:block;
+    		float: right;    
+    		text-align: center;		
+    	}
+    	#addressList ul li a{
+    		padding-left: 30%;
+    	}
+    	#addressList ul li ul li a{
+    		padding-left: 35%;
+    	}
+    	.divAddrHeader{
+    		overflow: hidden;
+    	}
+    	.divAddrHeader div{
+    		float: left;
+    		border: 1px solid rgb(195, 195, 195);
+    		margin-right: 20px;
+    		padding: 5px;
+    		background-color: white;
+    	}
+    	.divAddrHeader div input{
+    		border: none;
+    		padding: 1px 0;
+    	}
+    	#addrSearch{
+    		color: rgb(195, 195, 195);
+    	}
+    	#bodysection div{
+    		margin: 10px;
+    	}
+    	.divAddrBody{
+    		height: 570px;
+    		margin-top: 10px;
+    	}
+    	.divAddrBody table{
+    		border-collapse: collapse;
+    		width: 100%;
+    	}
+    	.divAddrBody table tr{
+    		border-bottom: 1px solid rgb(245,245,245);
+    		border-top: 1px solid rgb(195,195,195);
+    		background-color: #fff;
+    	}
+    	.divAddrBody table th, td{
+    		text-align: center;
+    		padding: 10px;
+    	}
+    	.divAddrBody table th i, .addrStar{color: yellow;}
+    	.divPaging{
+    		border: 1px solid rgb(195, 195, 195);
+    		height: 50px;
+    	}
+    	#selectMenu{
+    		float: right;
+    	}
+    	#selectMenu select{
+    		border: 0;
+    	}
+    </style>
