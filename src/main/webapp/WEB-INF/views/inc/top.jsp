@@ -32,7 +32,7 @@
 <body>
 <!-- 상단부분 -->
 <header>
-    <h1><a href="#"><img src="<c:url value="/resources/images/logo_w.png"/>" alt=""></a></h1>
+    <h1><a href="<c:url value='/home.do'/>"><img src="${pageContext.request.contextPath }/resources/images/logo_w.png" alt=""></a></h1>
     <nav>
         <ul>
             <li><a href="<c:url value='/home.do'/>">HOME</a></li>
@@ -68,7 +68,7 @@
     <aside>
         <div id="loginfo">
             <div id="photo">
-                <img src="<c:url value="/resources/images/avatar.png"/>" alt="사진이미지">
+                <img src="${pageContext.request.contextPath }/resources/images/avatar.png" alt="사진이미지">
             </div>
             <div id="info">
                 <ul>
