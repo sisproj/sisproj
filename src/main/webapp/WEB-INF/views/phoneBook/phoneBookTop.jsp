@@ -101,8 +101,10 @@
     	}
     	.divAddrBody table th i, .addrStar{color: yellow;}
     	.divPaging{
-    		border: 1px solid rgb(195, 195, 195);
+    		/* border: 1px solid rgb(195, 195, 195); */
     		height: 50px;
+    		text-align: center;
+    		vertical-align: top;
     	}
     	#selectMenu{
     		float: right;

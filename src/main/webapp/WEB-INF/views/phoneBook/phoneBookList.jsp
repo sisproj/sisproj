@@ -21,16 +21,14 @@
 	        	<table>
 	        		<colgroup>
 	        			<col width="5%">
-	        			<col width="5%">
 	        			<col width="15%">
 	        			<col width="15%">
 	        			<col width="25%">
 	        			<col width="20%">
-	        			<col width="15%">
+	        			<col width="20%">
 	        		</colgroup>
 	        		<tr>
 	        			<th><input type="checkbox" id="checkAll"></th>
-	        			<th><i class="fa fa-star"></i></th>
 	        			<th><a href="#">이름</a></th>
 	        			<th>전화번호</th>
 	        			<th>이메일</th>
@@ -39,7 +37,6 @@
 	        		</tr>
 	        		<tr>
 	        			<td><input type="checkbox"></td>
-	        			<td><a href="#"><i class="fa fa-star-o addrStaro"></i><i class="fa fa-star addrStar"></i></a></td>
 	        			<td><a href="#">이름</a></td>
 	        			<td>전화번호</td>
 	        			<td><a href="#">이메일</a></td>
@@ -48,7 +45,6 @@
 	        		</tr>
 	        		<tr>
 	        			<td><input type="checkbox"></td>
-	        			<td><a href="#"><i class="fa fa-star-o addrStaro"></i><i class="fa fa-star addrStar"></i></a></td>
 	        			<td><a href="#">이름</a></td>
 	        			<td>전화번호</td>
 	        			<td><a href="#">이메일</a></td>
@@ -57,7 +53,6 @@
 	        		</tr>
 	        		<tr>
 	        			<td><input type="checkbox"></td>
-	        			<td><a href="#"><i class="fa fa-star-o addrStaro"></i><i class="fa fa-star addrStar"></i></a></td>
 	        			<td><a href="#">이름</a></td>
 	        			<td>전화번호</td>
 	        			<td><a href="#">이메일</a></td>
