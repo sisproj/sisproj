@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@include file="../inc/top.jsp" %>
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/bootstrap/bootstrap.min.css'/>">
+<script type="text/javascript" src="<c:url value='/resources/js/bootstrap/bootstrap.min.js'/>"></script>
 <!-- 0. include부분 -->
 			<nav>
 				<ul>
@@ -24,96 +26,96 @@
 		</article>	
 		<article id="bodysection">
 			<!-- 3. 내용 -->
-	<div class="container">
-		<div class="row">
-			<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
-				<thead>
-					<tr>
-						<th style="background-color: #eeeeee; text-align: center;">번호</th>
-						<th style="background-color: #eeeeee; text-align: center;">제목</th>
-						<th style="background-color: #eeeeee; text-align: center;">작성자</th>
-						<th style="background-color: #eeeeee; text-align: center;">작성일</th>
-						<th style="background-color: #eeeeee; text-align: center;">조회수</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>1</td>									
-						<td>안녕하세요.</td>									
-						<td>홍길동</td>									
-						<td>2015-05-05</td>								
-						<td>0</td>								
-					</tr>
-					<tr>
-						<td>2</td>									
-						<td>2안녕하세요.</td>									
-						<td>2홍길동</td>									
-						<td>2015-05-05</td>								
-						<td>0</td>								
-					</tr>
-					<tr>
-						<td>3</td>									
-						<td>3안녕하세요.</td>									
-						<td>3홍길동</td>									
-						<td>2015-05-05</td>								
-						<td>0</td>								
-					</tr>
-					<tr>
-						<td>4</td>									
-						<td>3안녕하세요.</td>									
-						<td>3홍길동</td>									
-						<td>2015-05-05</td>								
-						<td>0</td>								
-					</tr>
-					<tr>
-						<td>5</td>									
-						<td>3안녕하세요.</td>									
-						<td>3홍길동</td>									
-						<td>2015-05-05</td>								
-						<td>0</td>								
-					</tr>
-					<tr>
-						<td>6</td>									
-						<td>3안녕하세요.</td>									
-						<td>3홍길동</td>									
-						<td>2015-05-05</td>								
-						<td>0</td>								
-					</tr>
-					<tr>
-						<td>7</td>									
-						<td>3안녕하세요.</td>									
-						<td>3홍길동</td>									
-						<td>2015-05-05</td>								
-						<td>0</td>								
-					</tr>
-					<tr>
-						<td>8</td>									
-						<td>3안녕하세요.</td>									
-						<td>3홍길동</td>									
-						<td>2015-05-05</td>								
-						<td>0</td>								
-					</tr>
-					<tr>
-						<td>9</td>									
-						<td>3안녕하세요.</td>									
-						<td>3홍길동</td>									
-						<td>2015-05-05</td>								
-						<td>0</td>								
-					</tr>
-					<tr>
-						<td>10</td>									
-						<td>3안녕하세요.</td>									
-						<td>3홍길동</td>									
-						<td>2015-05-05</td>								
-						<td>0</td>								
-					</tr>
-				</tbody>
-			</table>
-			<a href="#" class="btn btn-success btn-arrow-left">이전</a>
-			<a href="#" class="btn btn-success btn-arrow-left">다음</a>
-			<a href="write.jsp" class="btn btn-primary pull-right">글쓰기</a>
-		</div>
-	</div>
+			<div class="container">
+				<div class="row">
+					<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
+						<thead>
+							<tr>
+								<th style="background-color: #eeeeee; text-align: center;">번호</th>
+								<th style="background-color: #eeeeee; text-align: center;">제목</th>
+								<th style="background-color: #eeeeee; text-align: center;">작성자</th>
+								<th style="background-color: #eeeeee; text-align: center;">작성일</th>
+								<th style="background-color: #eeeeee; text-align: center;">조회수</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>1</td>									
+								<td>안녕하세요.</td>									
+								<td>홍길동</td>									
+								<td>2015-05-05</td>								
+								<td>0</td>								
+							</tr>
+							<tr>
+								<td>2</td>									
+								<td>2안녕하세요.</td>									
+								<td>2홍길동</td>									
+								<td>2015-05-05</td>								
+								<td>0</td>								
+							</tr>
+							<tr>
+								<td>3</td>									
+								<td>3안녕하세요.</td>									
+								<td>3홍길동</td>									
+								<td>2015-05-05</td>								
+								<td>0</td>								
+							</tr>
+							<tr>
+								<td>4</td>									
+								<td>3안녕하세요.</td>									
+								<td>3홍길동</td>									
+								<td>2015-05-05</td>								
+								<td>0</td>								
+							</tr>
+							<tr>
+								<td>5</td>									
+								<td>3안녕하세요.</td>									
+								<td>3홍길동</td>									
+								<td>2015-05-05</td>								
+								<td>0</td>								
+							</tr>
+							<tr>
+								<td>6</td>									
+								<td>3안녕하세요.</td>									
+								<td>3홍길동</td>									
+								<td>2015-05-05</td>								
+								<td>0</td>								
+							</tr>
+							<tr>
+								<td>7</td>									
+								<td>3안녕하세요.</td>									
+								<td>3홍길동</td>									
+								<td>2015-05-05</td>								
+								<td>0</td>								
+							</tr>
+							<tr>
+								<td>8</td>									
+								<td>3안녕하세요.</td>									
+								<td>3홍길동</td>									
+								<td>2015-05-05</td>								
+								<td>0</td>								
+							</tr>
+							<tr>
+								<td>9</td>									
+								<td>3안녕하세요.</td>									
+								<td>3홍길동</td>									
+								<td>2015-05-05</td>								
+								<td>0</td>								
+							</tr>
+							<tr>
+								<td>10</td>									
+								<td>3안녕하세요.</td>									
+								<td>3홍길동</td>									
+								<td>2015-05-05</td>								
+								<td>0</td>								
+							</tr>
+						</tbody>
+					</table>
+					<a href="#" class="btn btn-success btn-arrow-left">이전</a>
+					<a href="#" class="btn btn-success btn-arrow-left">다음</a>
+					<a href="noticeWrite.do" class="btn btn-primary pull-right">글쓰기</a>
+				</div>
+			</div>
 	
 			<!-- 3. 내용 끝 -->
 		</article>

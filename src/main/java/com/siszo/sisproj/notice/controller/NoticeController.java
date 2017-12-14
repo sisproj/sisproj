@@ -13,7 +13,12 @@ public class NoticeController {
 	
 	@RequestMapping("/noticeList.do")
 	public void noticeList() {
-		logger.info("공지사항 리스트 보여주기");
+		logger.info("공지사항 리스트");
+	}
+	
+	@RequestMapping("/noticeWrite.do")
+	public void noticeWrite() {
+		logger.info("공지사항 글쓰기");
 	}
 }
 
