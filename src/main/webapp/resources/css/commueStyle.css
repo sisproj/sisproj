@@ -1,0 +1,89 @@
+@charset "UTF-8";
+
+	/* 일별 스타일  */
+		#dimypage{
+			width:90%;
+			padding: 10px;
+		}
+		#dimyPage #diBtCa input[type=button]{
+			border-radius:0;
+			background-color:rgb(221,221,221);
+		}
+		/* #dimyPage #diBtCa #btMCom,#btDCom{
+			float: left;
+		} */
+		#dimyPage #allList{	
+			border: none;
+			border-color:rgb(221,221,221);
+			border-collapse: collapse;
+			width: 95%;
+			margin-top: 5px;
+		}
+		#dimyPage #allList td{
+			font-size: 1em;
+			text-align: center;
+			border-bottom:1px solid gray;
+			padding-top: 5px;
+		}
+		#dimyPage #allList th{
+			border-color:rgb(0,102,153);
+			text-align:center;
+			min-width: 56px;
+			min-height: 67px;
+			background-color: rgb(0,102,153);
+			color: white;
+		}
+		#dimyPage #diBtCa #diCal{
+			font-weight: bold;
+			font-size: 1.5em;
+			text-align: center;
+			margin-right: 55px;
+		}		
+		#dimyPage label	{
+		width: 20%;
+		float: left;
+		text-align: right;
+		padding: 3px 15px 0 0;
+		clear: left;		
+		font-weight: bold;
+		}
+	#dimyPage input[type="text"],#dimyPage input[type="password"]{	
+		/* width: 55%;
+		height: 1.2em;
+		font-size: 0.9em; */
+		height: 25px;
+		width : 250px; 
+		border: 1px solid #DCDDE3;
+		border-radius: 5px;
+		}	
+	#dimyPage input[type="submit"], #dimyPage input[type="reset"], 
+	#dimyPage input[type="button"],	#dimyPage button, #dimyPage input[type="password"]{
+		padding: 2px 10px;
+		/* font-weight: bold; */
+		/* color: #CD1076; */
+	}
+	#dimyPage select{		
+		border-radius: 5px;
+	}
+	/* 월별 스타일 */
+	#dimyPage #MoList{
+		border:none;
+		width: 85%;
+		margin-top: 5px;	
+		border-collapse: collapse;
+		
+	}
+	#dimyPage #diMo td{
+		text-align: center;
+		font-size: 0.9em;
+	}
+	#dimyPage #diMo th{
+		min-height: 67px;
+		min-width: 54px;
+		padding-top: 3px;
+	}
+	#dimyPage #diMo #fEmp th,#dimyPage #diMo #fEmp td{
+		border: none;
+		border-bottom:3px solid rgb(0,102,153);
+	}
+	

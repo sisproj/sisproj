@@ -28,6 +28,7 @@
 			}
 		});
 		
+		$('.divAddrBody table tr:eq(0)').css('border-bottom','1px solid rgb(195, 195, 195)');
 	});
 </script>
         <nav>
@@ -222,5 +223,4 @@
 		} */
 		.addrStar{display: none;}
 		.addrStaro{display:inline;}
-		.divAddrBody table tr:eq(0){border-bottom:1px solid rgb(195, 195, 195)}
     </style>
