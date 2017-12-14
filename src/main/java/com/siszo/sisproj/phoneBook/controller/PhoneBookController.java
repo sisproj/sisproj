@@ -11,7 +11,16 @@ public class PhoneBookController {
 	private static final Logger logger=LoggerFactory.getLogger(PhoneBookController.class);
 	
 	@RequestMapping("/phoneBookList.do")
-	public void main_view() {
+	public void list() {
 		logger.info("주소록 화면 보여주기");
+	}
+	
+	@RequestMapping("/phoneBookWrite.do")
+	public void write() {
+		logger.info("연락처 등록 화면 보여주기");
+	}
+	@RequestMapping("/phoneBookTrash.do")
+	public void trash() {
+		logger.info("휴지통 화면 보여주기");
 	}
 }
