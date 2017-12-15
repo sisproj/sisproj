@@ -8,6 +8,10 @@
 				width: 70px;
 				height: 30px;
 			}
+			#submitbtn a.button{
+				width: 70px;
+				height: 30px;
+			}
 			/* 상단 */
 			#docFrm #link_cho{
 				box-sizing:border-box;
@@ -146,5 +150,8 @@
 				display: block;
 				margin: 0 auto;
 				height: 100%;
+			}
+			#typeType{
+				cursor:not-allowed;
 			}
 			/* 미드 끝 */

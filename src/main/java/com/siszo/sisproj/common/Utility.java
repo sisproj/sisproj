@@ -14,6 +14,17 @@ public class Utility {
 
         return fileInfo;
     }
+    
+    //input[type=text] 부분 db에서 가져 올때 <script or <style 태그 변환작업
+    public static String changeTag(String contents) {
+    	if(contents=="" || contents.equals("") || contents.isEmpty()) {
+    		contents="";
+    	} else {
+    		contents = contents.replace("<script","&lt;script");
+    		contents = contents.replace("<style","&lt;style");
+    	}
+    	return contents;
+    }
 }//class
 
 

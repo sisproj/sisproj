@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@include file="employeeTop.jsp" %>
-
+<article id="headsection">
+        <!-- 2. 페이지 이름 지정 // 북마크 지정 여부 .bookmark || .nobook -->
+        <h1><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;사원 리스트&nbsp;<a href="#"><i class="fa fa-bookmark bookmark"
+                                                                                         aria-hidden="false"></i></a>
+        </h1>
+    </article>
 <article id="bodysection">
 <div id="dimyPage">
 	<form id="searchEmp" name="searchEmp" action="list.do">
@@ -15,8 +20,8 @@
 			<input type="submit" id="btSear" value="검색">
 			<input type="button" id="btDeSe" name="btDeSe" value="상세조회">
 			<select id="pl" style="float: right;">
-				<option value="10명">10명</option>
-				<option value="25명">25명</option>
+				<option value="10">10명</option>
+				<option value="20">20명</option>
 			</select>
 		</div>
 	</form>
@@ -50,7 +55,7 @@
 						<td>인사팀</td>
 						<td>과장</td>
 						<td>재직</td>
-					<!-- if걸어서 관리자 일때만 나오게 함 관리자권한으로 되면 버튼 사라지고 그자리에 관리자로 바꿈-->
+					<!-- if걸어서 관리자 일때만 나오게 함 관리자권한으로 되면 버튼 사라지고 그자리에 관리자로 바꿈 -->
 						<td id="PoCh"><a href="#"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></td>
 					<!-- 	<td>관리자</td> -->
 						<td></td>
@@ -61,7 +66,7 @@
 		</table>
 		
 	</div>
-	<div style="text-align: center;">
+	<div style="text-align: center;width: 90%;">
 		<%@include file="../phoneBook/paging.jsp" %>
 	</div>
 </div>    	

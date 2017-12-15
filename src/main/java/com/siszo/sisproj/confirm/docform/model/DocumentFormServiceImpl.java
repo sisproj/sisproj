@@ -1,4 +1,6 @@
-package com.siszo.sisproj.confirm.model;
+package com.siszo.sisproj.confirm.docform.model;
+
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,16 +12,24 @@ public class DocumentFormServiceImpl implements DocumentFormService {
 	private DocumentFormDAO dfDao;
 
 	@Override
-	public int[] insertDocForm(DocumentFormVO vo) {
-		int cnt = dfDao.insertDocForm(vo);
-		int[] resArr = new int[]{vo.getFormNo(), cnt};
-		System.out.println("cnt="+cnt+", vo="+vo);
-		
-		return resArr;
+	public void insertDocForm(Map<String, String> map) {
+		dfDao.insertDocForm(map);
 	}
 
 	@Override
 	public DocumentFormVO selectDocFormByFormNo(int formNo) {
 		return dfDao.selectDocFormByFormNo(formNo);
 	}
+
+	@Override
+	public int updateDocForm(DocumentFormVO vo) {
+		return dfDao.updateDocForm(vo);
+	}
+
+	@Override
+	public void deleteDocForm(Map<String, Integer> map) {
+		dfDao.deleteDocForm(map);
+	}
+
+
 }

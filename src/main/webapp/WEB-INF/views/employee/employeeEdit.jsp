@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@include file="employeeTop.jsp" %>
+<article id="headsection">
+        <!-- 2. 페이지 이름 지정 // 북마크 지정 여부 .bookmark || .nobook -->
+        <h1><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;사원정보 수정&nbsp;<a href="#"><i class="fa fa-bookmark bookmark"
+                                                                                         aria-hidden="false"></i></a>
+        </h1>
+    </article>
 <article id="bodysection">
         <!-- 3. 내용 -->
         <!-- 사원로그인시 부서/직급/월급/사원번호 수정 불가 if걸기 -->
@@ -21,11 +27,29 @@
        		</div>
        		<div id="diDe">
 				<label for="dept">부서</label>
-				<input type="text" id="dept" name="dept">
+				<select>
+					<option value="재무">재무</option>
+					<option value="영업">영업</option>
+					<option value="인사">인사</option>
+					<option value="총무">총무</option>
+					<option value="기획">기획</option>
+					<option value="홍보">홍보</option>
+					<option value="법무">법무</option>
+				</select>
+				<!-- <input type="text" id="dept" name="dept"> -->
 			</div>
 			<div id="diPos">
 				<label for="position">직급</label>  
-				<input type="text" id="position" name="positiion">
+				<select>
+					<option value="인턴">인턴</option>
+					<option value="대리">대리</option>
+					<option value="차장">차장</option>
+					<option value="과장">과장</option>
+					<option value="부장">부장</option>
+					<option value="부사장">부사장</option>
+					<option value="사장">사장</option>
+				</select>  
+				<!-- <input type="text" id="position" name="positiion"> -->
 			</div>
        		<div id="diJumin">
 		        <label for="jumin">주민번호</label>	

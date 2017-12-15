@@ -27,7 +27,7 @@
 			<!-- 3. 내용 -->
 			<!-- writeform -->	
 				<!-- 상단 -->
-				<form name="docFrm" id="docFrm" method="post" action="<c:url value='/confirm/adm/instypeform.do'/>">
+				<form name="docFrm" id="docFrm" method="post" action="#">
 					<div id="link_cho">
 						<div id="divtitle">
 							<span class="sd1">양식이름</span>
@@ -35,11 +35,7 @@
 						</div>
 						<div id="link_doc">
 							<span class="sd1">문서종류</span>
-							<input type="text" id="typeType" name="typeType">
-						</div>
-						<div id="link_doc">
-							<span class="sd1">문서종류번호</span>
-							<input type="text" id="typeNo" name="typeNo">
+							<input type="text" id="typeType" name="typeType" placeholder="지금 등록되는 문서 종류는 수정이 불가합니다.">
 						</div>
 						<div id="link_doc">
 							<span class="sd1">보안수준</span>
@@ -99,19 +95,4 @@
 		<!-- 0. include부분 끝-->
 
 <%@ include file="../../inc/bottom.jsp" %>
-<script type="text/javascript">
-	$(function(){
-		$('#formName').change(function(){
-			var title = $(this).val();
-			$('#doc_type #dt_head input[name=doctype]').val(title);
-		});
-		$('#formLife').change(function(){
-			var title = $(this).val();
-			$('#doc_info #doclife').val(title);
-		});
-		$('#formSecu').change(function(){
-			var title = $(this).val();
-			$('#doc_info #docsecu').val(title);
-		});
-	});
-</script>
+<script type="text/javascript" src="<c:url value='/resources/js/pagejs/confirm_typeform.js'/>"></script>

@@ -7,6 +7,12 @@
 		});
 	});
 </script>
+<article id="headsection">
+        <!-- 2. 페이지 이름 지정 // 북마크 지정 여부 .bookmark || .nobook -->
+        <h1><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;상세 정보&nbsp;<a href="#"><i class="fa fa-bookmark bookmark"
+                                                                                         aria-hidden="false"></i></a>
+        </h1>
+    </article>
     <article id="bodysection">
         <!-- 3. 내용 -->
      <div id="dimyPage">
@@ -33,6 +39,15 @@
 			</div>
 			<div id="diPos">
 				<label for="position">직급</label>  
+			<!-- 	<select>
+					<option value="인턴">인턴</option>
+					<option value="대리">대리</option>
+					<option value="차장">차장</option>
+					<option value="과장">과장</option>
+					<option value="부장">부장</option>
+					<option value="부사장">부사장</option>
+					<option value="사장">사장</option>
+				</select>   -->
 				<input type="text" id="position" name="positiion">
 			</div>
 			<div id="diHobby">

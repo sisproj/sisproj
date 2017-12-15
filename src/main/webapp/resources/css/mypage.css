@@ -62,7 +62,7 @@
 		border:2px solid gray;
 		width: 200px;
 		height: 200px;
-		left:600px;
+		left:800px;
 		top:55px;
 		position: absolute;
 	}
@@ -73,7 +73,7 @@
 		border: 0;
 		}	 	
 	#dimyPage #diZipcode #zipcode {
-		width: 140px;
+		width: 150px;
 	}
 	#dimyPage label	{
 		width: 20%;
@@ -109,3 +109,8 @@
 	#dimyPage input[type="button"],#dimyPage input[type="submit"]{
 		border-radius: 4px;
 	} 
+	/*  #dimyPage .pagination{
+		width: 90%;
+		text-align: center;
+	}  */
+	
