@@ -7,7 +7,7 @@
 <link href="<c:url value="/resources/font-awesome/css/font-awesome.min.css"/>" rel="stylesheet" type="text/css">
 <!-- css -->
 <link rel="stylesheet" href="<c:url value="/resources/css/reset.css"/>">
-<link rel="stylesheet" href="<c:url value="/resources/css/mainStyle.css"/>">
+<%--<link rel="stylesheet" href="<c:url value="/resources/css/mainStyle.css"/>">--%>
 <!-- jquery-ui css -->
 <link rel="stylesheet" href="<c:url value="/resources/jquery-ui/jquery-ui.min.css"/>">
 

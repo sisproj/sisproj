@@ -1,9 +1,8 @@
 @charset "UTF-8";
 
 	#dimyPage{
-		width:900px;
-		padding:10px;
-		clear: both;
+		width:900px;	
+		padding:40px;
 	}
  	#dimyPage #diTel #tel2{
 		width:85px;
@@ -11,17 +10,20 @@
 	/*#dimyPage #diName #name{
 		width: 150px;
 	} */
-	#dimyPage #emplist{
+	#dimyPage #allList{
 		border:none;
 		border-color:rgb(221,221,221);
 		border-collapse:collapse;
 		text-align: center;
 		width: 750px;
 	}
-	#dimyPage #emplist th{
-		border-bottom:3px solid rgb(31,71,135);
+	#dimyPage #allList th{
+		background-color:rgb(0,102,153);
+		border-color:rgb(0,102,153);
+		border-bottom:1px solid rgb(0,102,153);;
+		color: white;
 	}
-	#dimyPage #emplist td{
+	#dimyPage #allList td{
 		padding-top:5px;
 		border-bottom:1px solid gray;
 	}
@@ -47,7 +49,7 @@
 		width: 200px;
 		height: 200px;
 		left:600px;
-		top:24px;
+		top:55px;
 		position: absolute;
 	}
 	#dimyPage fieldset	{
@@ -97,6 +99,6 @@
 		border-bottom: 0;
 		text-align: center;
 	}
-	/* #dimyPage input[type="button"]{
-		margin: 10px;
-	} */
+	 #dimyPage input[type="button"],#dimyPage input[type="submit"]{
+		border-radius: 4px;
+	} 
