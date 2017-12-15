@@ -60,7 +60,7 @@
 				<!-- 미드 -->
 					<div id="doc_type">
 						<div id="dt_head">
-							<input type="text" name="doctype" value="시행기안문">
+							<input type="text" name="doctype" value="${vo.formName }">
 						</div>
 						<div id="doc_info">
 							<div>
