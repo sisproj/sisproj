@@ -9,42 +9,39 @@
 		$(function() {
 			$('#orgDown').hide();
 			$('#organbody').hide();
-			$('#deptMinus').hide();
 			$('#organbody ul ul li').hide();
+			$('.deptMinus').hide();
 			
-			    $('#orgUp').click(function() {
+		    $('#orgUp').click(function() {
 				$('#organ').css('height', '500px');
 				$('#orgUp').hide();
 				$('#orgDown').show();
 				$('#organbody').show();
 			});
+			
 			$('#orgDown').click(function() {
 				$('#organ').css('height', '40px');
 				$('#orgDown').hide();
 				$('#orgUp').show();
 				$('#organbody').hide();
 			});
-			
-			$('.deptPlus').click(function(){
-				var dept = $(this).parent().attr('class');
-				alert(dept);
-				var deptt = '.'+dept;
-				$(deptt).show();
-				$('.deptPlus').hide();
-				$('.deptMinus').show();
+
+			$('.deptPlus').each(function(){
+				$(this).click(function(){
+						$(this).parent().children().children().show();
+						$(this).parent().find('.deptMinus').show();
+						$(this).hide();
+				});
 			});
-			
-			/* $('#deptPlus').click(function() {
-				 var cho = $(this).attr('id');
-				$('#organbody ul ul li').show();
-				$('#deptPlus').hide();
-				$('#deptMinus').show();
+			 
+			$('.deptMinus').each(function(){
+				$(this).click(function(){
+					$(this).parent().find('.deptPlus').show();
+					$(this).parent().children().children().hide();
+					$(this).hide();
+				});
 			});
-			$('#deptMinus').click(function() {
-				$('#organbody ul ul li').hide();
-				$('#deptPlus').show();
-				$('#deptMinus').hide();
-			}); */
+
 		}); 
 	</script>
 	<style>
@@ -116,12 +113,12 @@
 	</div>
      <div id="organbody">
      	<c:forEach var="deptVo" items="${deptList}">
-	     	<ul class="${deptVo.deptName }">
-	     		<li><i class="fa fa-plus-square deptPlus"></i>
-	     		<i class="fa fa-minus-square deptMinus"></i>
+	     	<ul >
+	     		<li class="deptName"><i id="deptPlus-${deptVo.deptNo }" class="fa fa-plus-square deptPlus"></i>
+	     				<i id="deptMinus-${deptVo.deptNo }" class="fa fa-minus-square deptMinus"></i>
 	     		 ${deptVo.deptName }
 	     			<ul>
-	     				<li><i class="fa fa-user" ></i> 김팀장</li>
+	     				<li><i class="fa fa-user"></i> 김팀장</li>
 	     				<li><i class="fa fa-user"></i> 이과장</li>
 	     				<li><i class="fa fa-user"></i> 박대리</li>
 	     				<li><i class="fa fa-user"></i> 정사원</li>

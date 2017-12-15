@@ -4,7 +4,10 @@
 
 <mapper namespace="config.mybatis.mapper.oracle.organization">	
 	<select id="selectDeptName" resultType="DeptVO">
-		select dept_Name from dept order by dept_No
+		select * from dept order by dept_No
+	</select>
+	<select id="selectEmpByDeptNo" resultType="EmpVO" parameterType="int">
+		select * from emp where dept_no=#{dept_no}
 	</select>
 </mapper>
 

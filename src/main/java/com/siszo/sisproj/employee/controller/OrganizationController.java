@@ -29,6 +29,7 @@ public class OrganizationController {
 		logger.info("부서명 조회결과 deptList.size()={}", deptList.size());
 		DeptVO vo = deptList.get(0);
 		System.out.println("이름 : "+vo.getDeptName());
+		System.out.println("번호 : "+vo.getDeptNo());
 		model.addAttribute("deptList", deptList);
 		
 		return "organization/orgList";
