@@ -1457,19 +1457,19 @@ pre code {
 
 @media ( min-width :768px) {
 	.container {
-		width: 750px
+		width: 100%
 	}
 }
 
 @media ( min-width :992px) {
 	.container {
-		width: 970px
+		width: 100%
 	}
 }
 
 @media ( min-width :1200px) {
 	.container {
-		width: 1170px
+		width: 100%
 	}
 }
 
@@ -1481,8 +1481,8 @@ pre code {
 }
 
 .row {
-	margin-right: -15px;
-	margin-left: -15px
+	margin-right: 55px;
+	margin-left: 5px
 }
 
 .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3,

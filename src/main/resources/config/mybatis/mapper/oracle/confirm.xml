@@ -3,10 +3,24 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="config.mybatis.mapper.oracle.confirm">
+	<insert id="insertDocForm" parameterType="DocumentFormVO">
+		<selectKey resultType="int" keyProperty="formNo" order="BEFORE">
+			select doc_form_seq.nextval from dual
+		</selectKey>
+		insert all
+		    into doc_type values(#{typeNo},#{typeType})
+		    into doc_form values(#{formNo}, #{formName}, #{typeNo}, #{formSecu},#{formLife},#{formEx})
+		select * from dual
+	</insert>
 	
+	<select id="selectDocFormByFormNo" parameterType="int" resultType="DocumentFormVO" >
+		select t.*, f.form_no, f.form_name, f.form_secu, f.form_life, f.form_ex
+		from doc_type t
+		join doc_form f
+		on t.type_no = f.form_type_no
+		where f.form_no=#{formNo}
+	</select>
 </mapper>
-
-
 
 
 

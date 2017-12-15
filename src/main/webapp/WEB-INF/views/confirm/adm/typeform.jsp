@@ -11,7 +11,7 @@
 					<li><a href="<c:url value='/confirm/complete.do'/>"><i class="fa fa-file-text"></i>&nbsp;<span>결재 완료함</span></a></li>
 					<li><a href="<c:url value='/confirm/return.do'/>"><i class="fa fa-history"></i>&nbsp;<span>결재 반려함</span></a></li>
 					<li><a href="<c:url value='/confirm/setting.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>결재 환경 설정</span></a></li>
-					<li class="active"><a href="<c:url value='/confirm/typeform.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>결재 양식 관리</span></a></li>
+					<li class="active"><a href="<c:url value='/confirm/adm/typeform.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>결재 양식 관리</span></a></li>
 				</ul>	
 				<!-- 1.왼쪽 사이드 메뉴 지정 끝-->
 				<div id="listbtn"><p><i class="fa fa-chevron-circle-left" style="text-align: center;"></i></p></div>
@@ -27,7 +27,7 @@
 			<!-- 3. 내용 -->
 			<div id="cf_choice">
 				<h2>양식 선택</h2>
-				<div id="writebtn"><input type="button" value="신규등록" onclick="location.href='<c:url value="/confirm/instypeform.do"/>'"></div>
+				<div id="writebtn"><input type="button" value="신규등록" onclick="location.href='<c:url value="/confirm/adm/instypeform.do"/>'"></div>
 				<div id="doc_type">
 					<h3>문서종류</h3>
 					<a href="#"><p><i class="fa fa-folder-open"></i> 업무</p></a>
@@ -39,7 +39,7 @@
 						<span class="sh2">설명</span>
 					</div>
 					<div class="dd">
-						<a href="<c:url value='/confirm/uptypeform.do'/>">
+						<a href="<c:url value='/confirm/adm/uptypeform.do'/>">
 							<span class="sd1">기안서</span>
 							<span class="sd2">시행기안문</span>
 						</a>

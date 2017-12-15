@@ -1,30 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
-<%@include file="../inc/top.jsp" %>
-     <!-- 0. include부분 -->
-         <link rel="stylesheet" href="<c:url value="/resources/css/mypage.css"/>">
-        <nav>
-            <ul>
-                <!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
-                 <li><a href="<c:url value='/employee/employeeRegister.do'/>"><i class="fa fa-address-card-o" aria-hidden="true"></i>&nbsp;<span>사원 등록</span></a></li>
-                <li><a href="<c:url value='/employee/employeeList.do'/>"><i class="fa fa-list-alt" aria-hidden="true"></i>&nbsp;<span>사원 조회 </span></a></li>             
-                <li><a href="<c:url value='/employee/employeeEdit.do'/>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;<span>정보 수정</span></a></li>
-            </ul>
-            <!-- 1.왼쪽 사이드 메뉴 지정 끝-->
-            <div id="listbtn"><p><i class="fa fa-chevron-circle-left" style="text-align: center;"></i></p></div>
-        </nav>
-    </aside>
-    <!-- 왼쪽 사이드 메뉴 끝 -->
-    <article id="headsection">
-        <!-- 2. 페이지 이름 지정 // 북마크 지정 여부 .bookmark || .nobook -->
-        <h1><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;정보 수정&nbsp;<a href="#"><i class="fa fa-bookmark bookmark"
-                                                                                         aria-hidden="false"></i></a>
-        </h1>
-        <!-- 2. 페이지 이름 지정 끝 -->
-    </article>
-    <article id="bodysection">
+<%@include file="employeeTop.jsp" %>
+<article id="bodysection">
         <!-- 3. 내용 -->
         <!-- 사원로그인시 부서/직급/월급/사원번호 수정 불가 if걸기 -->
-     <div id="dimyPage">
+    <div id="dimyPage">
       	<form id="frmEmp" name="frmEMP" action="">
       	  <fieldset>
   		    <div id="diId">
@@ -36,9 +15,7 @@
        		<div id="diName">
       	 		<label for="name">이름</label><input type="text" id="name" name="name">   
        		</div>
-       		<div id="diImg">
 	       	   <input type="image" src="" alt="이미지 등록" id="empImg">       		    
-	       	</div>
        		<div id="diEnName">
        		<label for="enName">영어이름</label> <input type="text" id="enName" name="enName">
        		</div>
@@ -52,8 +29,8 @@
 			</div>
        		<div id="diJumin">
 		        <label for="jumin">주민번호</label>	
-				<input type="text" name="jumin1" id="jumin1" maxlength="6" style="width: 118px;"> -
-				<input type="text" name="jumin2" id="jumin2" maxlength="7" style="width: 118px;">
+				<input type="text" name="jumin1" id="jumin1" maxlength="6"> -
+				<input type="text" name="jumin2" id="jumin2" maxlength="7">
 			</div>
 			<div id="diHobby">
 				<label for="hobby">취미</label>   	
@@ -63,7 +40,7 @@
 		        <label for="zipcode">우편번호</label>
 		        <input type="text" name="zipcode" id="zipcode" ReadOnly title="우편번호">
 		        <input type="button" value="우편번호 찾기" id="btnZipcode" title="새창열림">
-				<label for="address" id="address" style="margin-top: 17px;">주소</label>
+				<label for="address" id="address">주소</label>
 				<input type="text" name="address" id="address" >	
 				<label for="addressDetail" id="addressDetail" >상세주소</label>
 				<input type="text" name="addressDetail" id="addressDetail">
@@ -105,8 +82,7 @@
 		            <option value="gmail.com">yahoo.com</option>
 		            <option value="etc">직접입력</option>
 	        	</select>
-		        <input type="text" name="email3" id="email3" title="직접입력인 경우 이메일주소 뒷자리"
-		        	style="visibility:visible;width: 120px;" ><br>
+		        <input type="text" name="email3" id="email3" title="직접입력인 경우 이메일주소 뒷자리" ><br>
        		</div>
        		   <label for="upfile" style="margin-top: 5px;">사원사진 업로드</label>
            	   <input type="file" id="upfile" name="upfile" style="margin-top: 5px;"/>	 
@@ -118,7 +94,5 @@
 		  </fieldset>	
 	   </form> 
     </div>
-        <!-- 3. 내용 끝 -->
-    </article>
-    <!-- 0. include부분 끝-->
-<%@include file="../inc/bottom.jsp" %>
+</article>
+<%@include file="employeeBottom.jsp" %>

@@ -11,7 +11,7 @@
 					<li><a href="<c:url value='/confirm/complete.do'/>"><i class="fa fa-file-text"></i>&nbsp;<span>결재 완료함</span></a></li>
 					<li><a href="<c:url value='/confirm/return.do'/>"><i class="fa fa-history"></i>&nbsp;<span>결재 반려함</span></a></li>
 					<li><a href="<c:url value='/confirm/setting.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>결재 환경 설정</span></a></li>
-					<li class="active"><a href="<c:url value='/confirm/typeform.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>결재 양식 관리</span></a></li>
+					<li class="active"><a href="<c:url value='/confirm/adm/typeform.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>결재 양식 관리</span></a></li>
 				</ul>	
 				<!-- 1.왼쪽 사이드 메뉴 지정 끝-->
 				<div id="listbtn"><p><i class="fa fa-chevron-circle-left" style="text-align: center;"></i></p></div>
@@ -27,32 +27,36 @@
 			<!-- 3. 내용 -->
 			<!-- writeform -->	
 				<!-- 상단 -->
-				<form name="docFrm" id="docFrm" method="post" action="#" enctype="multipart/form-data">
-				<div id="link_cho">
-					<div id="divtitle">
-						<span class="sd1">양식이름</span>
-						<input type="text" id="doc_name">
-					</div>
-					<div id="link_doc">
-						<span class="sd1">문서종류</span>
-						<input type="text" id="doc_title">
-					</div>
-					<div id="link_doc">
-						<span class="sd1">문서종류번호</span>
-						<input type="text" id="doc_title">
-					</div>
-					<div id="link_doc">
-						<span class="sd1">보안수준</span>
-						<input type="text" id="doc_title">
-					</div>
-					<div id="link_doc">
-						<span class="sd1">보존년한</span>
-						<input type="text" id="doc_title">
-					</div>
-					<div id="submitbtn">
-						<input type="button" id="submit" value="등록">
-					</div>
-				</div>	
+				<form name="docFrm" id="docFrm" method="post" action="<c:url value='/confirm/adm/instypeform.do'/>">
+					<div id="link_cho">
+						<div id="divtitle">
+							<span class="sd1">양식이름</span>
+							<input type="text" id="formName" name="formName">
+						</div>
+						<div id="link_doc">
+							<span class="sd1">문서종류</span>
+							<input type="text" id="typeType" name="typeType">
+						</div>
+						<div id="link_doc">
+							<span class="sd1">문서종류번호</span>
+							<input type="text" id="typeNo" name="typeNo">
+						</div>
+						<div id="link_doc">
+							<span class="sd1">보안수준</span>
+							<input type="text" id="formSecu" name="formSecu">
+						</div>
+						<div id="link_doc">
+							<span class="sd1">보존년한</span>
+							<input type="text" id="formLife" name="formLife">
+						</div>
+						<div id="link_doc">
+							<span class="sd1">설명</span>
+							<input type="text" id="formEx" name="formEx">
+						</div>
+						<div id="submitbtn">
+							<input type="submit" id="submit" value="등록">
+						</div>
+					</div>	
 				</form>
 				<!-- 상단 끝 -->
 				<!-- 미드 -->
@@ -97,9 +101,17 @@
 <%@ include file="../../inc/bottom.jsp" %>
 <script type="text/javascript">
 	$(function(){
-		$('#doc_name').change(function(){
+		$('#formName').change(function(){
 			var title = $(this).val();
 			$('#doc_type #dt_head input[name=doctype]').val(title);
+		});
+		$('#formLife').change(function(){
+			var title = $(this).val();
+			$('#doc_info #doclife').val(title);
+		});
+		$('#formSecu').change(function(){
+			var title = $(this).val();
+			$('#doc_info #docsecu').val(title);
 		});
 	});
 </script>
