@@ -10,8 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class CommueController {
 	private static final Logger logger = LoggerFactory.getLogger(CommueController.class);
 	
-	@RequestMapping("/commueList.do")
-	public void commueList() {
-		logger.info("출퇴근 통계 보여주기");
+	@RequestMapping("/commueMonthList.do")
+	public void commueMonthList() {
+		logger.info("출퇴근 월별 통계 보여주기");
+	}
+	@RequestMapping("/commueDateList.do")
+	public void commueDateList() {
+		logger.info("출퇴근 일별 통계 보여주기");
 	}
 }
