@@ -2,30 +2,32 @@
 
 	/* 일별 스타일  */
 		#dimypage{
-			width:90%;
+			width:100%;
 			padding: 10px;
 		}
 		#dimyPage #diBtCa input[type=button]{
 			border-radius:0;
 			background-color:rgb(221,221,221);
 		}
-		/* #dimyPage #diBtCa #btMCom,#btDCom{
-			float: left;
-		} */
-		#dimyPage #allList{	
+		#dimyPage #diSel{
+			width: 100%;
+		}
+		#dimyPage #DList{	
 			border: none;
 			border-color:rgb(221,221,221);
 			border-collapse: collapse;
-			width: 95%;
+			width: 100%;
 			margin-top: 5px;
 		}
-		#dimyPage #allList td{
+		#dimyPage #DList td{
 			font-size: 1em;
 			text-align: center;
 			border-bottom:1px solid gray;
 			padding-top: 5px;
+			min-height: 33px;
+			min-width: 41px;
 		}
-		#dimyPage #allList th{
+		#dimyPage #DList th{
 			border-color:rgb(0,102,153);
 			text-align:center;
 			min-width: 56px;
@@ -37,7 +39,6 @@
 			font-weight: bold;
 			font-size: 1.5em;
 			text-align: center;
-			margin-right: 55px;
 		}		
 		#dimyPage label	{
 		width: 20%;
@@ -68,7 +69,7 @@
 	/* 월별 스타일 */
 	#dimyPage #MoList{
 		border:none;
-		width: 85%;
+		width: 100%;
 		margin-top: 5px;	
 		border-collapse: collapse;
 		

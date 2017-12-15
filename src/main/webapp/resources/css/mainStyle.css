@@ -246,7 +246,7 @@ section #headsection{
 section #bodysection{
 	position: relative;
 	top: 163px;
-	width: calc(100%-300px);
+	width: calc(100% - 300px);
 	margin:0 40px 50px 300px;	
 }
 section article h1{

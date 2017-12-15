@@ -93,5 +93,5 @@
         </div>
         
         <div id="organ">
-         <%@ include file="../organization/orgList.jsp"%>
+       		<c:import url="/organization/orgList.do"/>
         </div>
