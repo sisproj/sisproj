@@ -27,35 +27,33 @@
 			<!-- 3. 내용 -->
 			<!-- writeform -->	
 				<!-- 상단 -->
-				<form name="docFrm" id="docFrm" method="post" action="#" enctype="multipart/form-data">
+				<form name="docFrm" id="docFrm" method="post" action="#">
 					<div id="link_cho">
 						<div id="divtitle">
 							<span class="sd1">양식이름</span>
-							<input type="text" id="formName" name="formName">
+							<input type="text" id="formName" name="formName" value='${vo.formName }'>
 						</div>
 						<div id="link_doc">
 							<span class="sd1">문서종류</span>
-							<input type="text" id="typeType" name="typeType">
-						</div>
-						<div id="link_doc">
-							<span class="sd1">문서종류번호</span>
-							<input type="text" id="typeNo" name="typeNo">
+							<input type="text" id="typeType" name="typeType" value='${vo.typeType } // 이 부분은 수정할 수 없습니다.' readonly>
 						</div>
 						<div id="link_doc">
 							<span class="sd1">보안수준</span>
-							<input type="text" id="formSecu" name="formSecu">
+							<input type="text" id="formSecu" name="formSecu" value='${vo.formSecu }'>
 						</div>
 						<div id="link_doc">
 							<span class="sd1">보존년한</span>
-							<input type="text" id="formLife" name="formLife">
+							<input type="text" id="formLife" name="formLife" value='${vo.formLife }'>
 						</div>
 						<div id="link_doc">
 							<span class="sd1">설명</span>
-							<input type="text" id="formEx" name="formEx">
+							<input type="text" id="formEx" name="formEx" value='${vo.formEx }'>
 						</div>
 						<div id="submitbtn">
-							<input type="submit" id="submit" value="등록">
+							<input type="submit" id="submit" value="수정">
+							<a id="delbtn" class="button" href="<c:url value='/confirm/adm/formDel.do?formNo=${vo.formNo }&typeNo=${vo.typeNo }'/>">삭제</a>
 						</div>
+						<input type="hidden" name="formNo" value="${vo.formNo }">
 					</div>	
 				</form>
 				<!-- 상단 끝 -->
@@ -67,19 +65,19 @@
 						<div id="doc_info">
 							<div>
 								<label for ="docno" class="sd1">문서 번호</label>
-								<input type="text" name="docno" id="docno" value="" readonly>
+								<input type="text" name="docno" id="docno" readonly>
 							</div>
 							<div>
 								<label for="docreg" class="sd1">기안 일자</label>
-								<input type="text" name="docreg" id="docreg" value="" readonly>
+								<input type="text" name="docreg" id="docreg" readonly>
 							</div>
 							<div>
 								<label for="doclife" class="sd1">보존 년한</label>	
-								<input type="text" name="doclife" id="doclife" value="" readonly>
+								<input type="text" name="doclife" id="doclife" value="${vo.formLife }" readonly>
 							</div>
 							<div>
 								<label for="docsecu" class="sd1">보안수준</label>	
-								<input type="text" name="docsecu" id="docsecu" value="" readonly>
+								<input type="text" name="docsecu" id="docsecu" value="${vo.formSecu }" readonly>
 							</div>
 						</div>
 						<div id="confirmer">
@@ -98,11 +96,4 @@
 		<!-- 4. 상단 네비 색먹이기 끝-->
 		<!-- 0. include부분 끝-->
 <%@ include file="../../inc/bottom.jsp" %>
-<script type="text/javascript">
-	$(function(){
-		$('#doc_name').change(function(){
-			var title = $(this).val();
-			$('#doc_type #dt_head input[name=doctype]').val(title);
-		});
-	});
-</script>
+<script type="text/javascript" src="<c:url value='/resources/js/pagejs/confirm_typeform.js'/>"></script>

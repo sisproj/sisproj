@@ -39,7 +39,7 @@
 						<span class="sh2">설명</span>
 					</div>
 					<div class="dd">
-						<a href="<c:url value='/confirm/adm/uptypeform.do'/>">
+						<a href="<c:url value='/confirm/adm/uptypeform.do?formNo=28'/>">
 							<span class="sd1">기안서</span>
 							<span class="sd2">시행기안문</span>
 						</a>
