@@ -23,6 +23,5 @@
 
 			$('#updateSign').submit();
 		});
-
 		$( "#cf_settings" ).tabs();
 	});
