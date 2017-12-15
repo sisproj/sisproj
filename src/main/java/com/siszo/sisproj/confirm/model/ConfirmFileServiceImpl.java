@@ -6,6 +6,4 @@ import org.springframework.stereotype.Service;
 @Service
 public class ConfirmFileServiceImpl implements DocumentService {
 	
-	@Autowired
-	private ConfirmFileDAO cfDao;
 }

@@ -25,8 +25,6 @@ public class ConfirmController {
 	
 	@Autowired
 	private DocumentFormService dfService;
-	@Autowired
-	private DocumentService dService;
 	
 	@RequestMapping("/main.do")
 	public String main() {
