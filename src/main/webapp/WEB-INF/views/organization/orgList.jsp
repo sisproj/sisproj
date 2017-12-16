@@ -51,7 +51,7 @@
 	</script>
 	<style>
 		#organ {
-			
+			transition:all 500ms cubic-bezier(0.34, -0.13, 0.6, 1.18);
 		}		
 		#organtitle {
 			line-height: 40px;
@@ -126,9 +126,9 @@
 	     				<i id="deptMinus-${deptVo.deptNo }" class="fa fa-minus-square deptMinus"></i>
 	     		 ${deptVo.deptName }
 	     			<ul>
-	     			<%-- <c:forEach var="empVo" items="${empList }"> --%>
-	     				<li><i class="fa fa-user"></i>사원이름 사원직급</a></li>
-	     			<%-- </c:forEach> --%>
+	     			<c:forEach var="empVo" items="${empList }">
+	     				<li><i class="fa fa-user"></i>${empVo.empName } </a></li>
+	     			</c:forEach>
 	     			</ul>
 	     		</li>
 	     	</ul>

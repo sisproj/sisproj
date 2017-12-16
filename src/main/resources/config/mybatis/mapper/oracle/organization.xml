@@ -6,7 +6,9 @@
 	<select id="selectDeptName" resultType="DeptVO">
 		select * from dept order by dept_No
 	</select>
-	
+	<select id="selectEmpByDept" resultType="EmployeeVO">
+		select * from emp where dept_no=#{deptNo}
+	</select>
 </mapper>
 
 
