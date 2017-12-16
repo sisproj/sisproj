@@ -37,7 +37,6 @@ public class ConfirmController {
 	public String newwrite() {
 		logger.info("새 결재 진행 - choice 화면 보여주기");
 		
-		//ajax 배우고 구현 : 왼쪽 리스트 클릭시 오른쪽 리스트 뿌리기
 		
 		return "confirm/newcho";
 	}

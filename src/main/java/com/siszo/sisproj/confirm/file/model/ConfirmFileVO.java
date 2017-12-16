@@ -1,4 +1,4 @@
-package com.siszo.sisproj.confirm.model;
+package com.siszo.sisproj.confirm.file.model;
 
 public class ConfirmFileVO {
 	private int fileNo; //파일번호

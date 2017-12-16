@@ -1,4 +1,4 @@
-package com.siszo.sisproj.confirm.model;
+package com.siszo.sisproj.confirm.comment.model;
 
 import java.sql.Timestamp;
 
