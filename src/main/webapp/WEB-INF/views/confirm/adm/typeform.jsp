@@ -30,28 +30,24 @@
 				<div id="writebtn"><input type="button" value="신규등록" onclick="location.href='<c:url value="/confirm/adm/instypeform.do"/>'"></div>
 				<div id="doc_type">
 					<h3>문서종류</h3>
-					<a href="#"><p><i class="fa fa-folder-open"></i> 업무</p></a>
-					<a href="#"><p><i class="fa fa-folder"></i> 근태</p></a>
+					<c:forEach var="typeList" items="${docTypeList }">
+						<a href="#" class='${typeList.typeNo }'><p><i class="fa fa-folder"></i> ${typeList.typeType }</p></a>
+					</c:forEach>
 				</div>
 				<div id="doc_form">
 					<div class="dh">
 						<span class="sh1">양식 이름</span>
 						<span class="sh2">설명</span>
-					</div>
-					<div class="dd">
-						<a href="<c:url value='/confirm/adm/uptypeform.do?formNo=28'/>">
-							<span class="sd1">기안서</span>
-							<span class="sd2">시행기안문</span>
-						</a>
-					</div>
-					<div class="dd">
-						<a href="uptypeform.html">
-							<span class="sd1">기안서</span>
-							<span class="sd2">시행기안문</span>
-						</a>
-					</div>
+					</div>	
+					<c:forEach var="formList" items="${docFormList }">
+						<div class="dd">
+							<a href="<c:url value='/confirm/adm/uptypeform.do?formNo=${formList.formNo }'/>" id="${formList.formNo }" class="${formList.typeNo }"><!-- 양식번호 아이디로 받기, 종류번호는 클래스로 받기 -->
+								<span class="sd1">${formList.formName }</span>
+								<span class="sd2">${formList.formEx}</span>
+							</a>
+						</div>
+					</c:forEach>
 				</div>
-				<input type="hidden" id="form_name">
 			</div>
 			<!-- 3. 내용 끝 -->
 		</article>
@@ -59,6 +55,5 @@
 		<script type="text/javascript" src="<c:url value='/resources/js/pagejs/confirm.js'/>"></script>
 		<!-- 4. 상단 네비 색먹이기 끝-->
 		<!-- 0. include부분 끝-->
-
 <%@ include file="../../inc/bottom.jsp" %>
-<script type="text/javascript" src="<c:url value='/resources/js/pagejs/confirm_setting.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/pagejs/confirm_typeform.js'/>"></script>

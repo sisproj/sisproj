@@ -15,14 +15,20 @@ public class Utility {
         return fileInfo;
     }
     
-    //input[type=text] 부분 db에서 가져 올때 <script or <style 태그 변환작업
+    //input[type=text] 부분 db에서 가져 올때 태그 or 특수문자 변환작업
     public static String changeTag(String contents) {
-    	if(contents=="" || contents.equals("") || contents.isEmpty()) {
+    	if(contents==null || contents.isEmpty()) {
     		contents="";
     	} else {
     		contents = contents.replace("<script","&lt;script");
+    		contents = contents.replace("script>","script&gt;");
     		contents = contents.replace("<style","&lt;style");
+    		contents = contents.replace("</","&lt;/");
+    		contents = contents.replace("style>","style&gt;");
+    		contents = contents.replace("\"", "&quot;");
+    		contents = contents.replace("\'", "&#39;");
     	}
+    	System.out.println("contents="+contents);
     	return contents;
     }
 }//class

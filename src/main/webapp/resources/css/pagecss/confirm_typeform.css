@@ -65,6 +65,9 @@
 #cf_choice #doc_form .dd span{
 	text-align: center;	
 	padding: 5px;
+	height: 19px;
+	line-height:23px;
+	overflow: hidden;
 }
 #cf_choice #doc_form .dd .sd1{
 	display: block;	
@@ -73,6 +76,9 @@
 }
 #cf_choice #doc_form .dd .sd2{
 	display: block;
+}
+#cf_choice #doc_form .dd a{
+	display: none;
 }
 #cf_choice #writebtn{
 	width: 95%;

@@ -33,17 +33,17 @@ public class DocumentFormDAOMybatis extends SqlSessionDaoSupport implements Docu
 	}
 
 	@Override
-	public List<DocumentVO> selectDocFormAll() {
+	public List<DocumentFormVO> selectDocFormAll() {
 		return getSqlSession().selectList(namespace+".selectDocFormAll");
 	}
 
 	@Override
-	public List<DocumentVO> selectDocTypeAll() {
+	public List<DocumentFormVO> selectDocTypeAll() {
 		return getSqlSession().selectList(namespace+".selectDocTypeAll");
 	}
 
 	@Override
-	public DocumentVO selectFormByFormNo(int formNo) {
+	public DocumentFormVO selectFormByFormNo(int formNo) {
 		return getSqlSession().selectOne(namespace+".selectFormByFormNo",formNo);
 	}
 

@@ -45,7 +45,7 @@
 						<div class="dd">
 							<a href="#" id="${formList.formNo }" class="${formList.typeNo }"><!-- 양식번호 아이디로 받기, 종류번호는 클래스로 받기 -->
 								<span class="sd1">${formList.formName }</span>
-								<span class="sd2">${formList.formEx }</span>
+								<span class="sd2">${formList.formEx}</span>
 							</a>
 						</div>
 					</c:forEach>
@@ -65,18 +65,5 @@
 		<script type="text/javascript" src="<c:url value='/resources/js/pagejs/confirm.js'/>"></script>
 		<!-- 4. 상단 네비 색먹이기 끝-->
 		<!-- 0. include부분 끝-->
-		<script type="text/javascript">
-			$(function(){				
-				$('.dd a').click(function(){
-					var docNo = $(this).attr('id');
-					$('#form_no').val(docNo);
-				});
-				$('#doc_type a').click(function(){
-					$('#doc_form .dd a').hide();
-					var docType = $(this).attr('class');
-					var open = '#doc_form .dd a.'+docType;
-					$(open).show();
-				});
-			});
-		</script>
 <%@ include file="../inc/bottom.jsp" %>
+<script type="text/javascript" src="<c:url value='/resources/js/pagejs/confirm_newcho.js'/>"></script>

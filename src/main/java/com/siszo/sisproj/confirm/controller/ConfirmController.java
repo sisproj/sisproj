@@ -43,8 +43,8 @@ public class ConfirmController {
 	public String newwrite(ModelMap model) {
 		logger.info("새 결재 진행 - choice 화면 보여주기");
 		
-		List<DocumentVO> docFormList = dfService.selectDocFormAll();
-		List<DocumentVO> docTypeList = dfService.selectDocTypeAll();
+		List<DocumentFormVO> docFormList = dfService.selectDocFormAll();
+		List<DocumentFormVO> docTypeList = dfService.selectDocTypeAll();
 		logger.info("새 결재 진행 조회 결과 docFormList.size()={}, docTypeList.size()={}",docFormList.size(),docTypeList.size());
 		
 		model.addAttribute("docFormList", docFormList);
@@ -239,8 +239,13 @@ public class ConfirmController {
 	@RequestMapping("/adm/typeform.do")
 	public String typeform(ModelMap model) {
 		logger.info("결재 양식관리 보여주기");
+
+		List<DocumentFormVO> docFormList = dfService.selectDocFormAll();
+		List<DocumentFormVO> docTypeList = dfService.selectDocTypeAll();
+		logger.info("결재 양식 조회 결과 docFormList.size()={}, docTypeList.size()={}",docFormList.size(),docTypeList.size());
 		
-		//ajax 배우고 구현 : 왼쪽 리스트 클릭시 오른쪽 리스트 뿌리기
+		model.addAttribute("docFormList", docFormList);
+		model.addAttribute("docTypeList", docTypeList);		
 		
 		return "confirm/adm/typeform";
 	}

@@ -28,5 +28,15 @@
 			if(!confirm('정말로 삭제 하시겠습니까?')){
 				return false;
 			}
+		});		
+		
+		$('#cf_choice #doc_type a').click(function(){
+			$('#cf_choice #doc_type a i').attr('class', 'fa fa-folder');
+			$(this).find('i').attr('class','fa fa-folder-open');
+			
+			$('#cf_choice #doc_form .dd a').hide();
+			var docType = $(this).attr('class');
+			var open = '#cf_choice #doc_form .dd a.'+docType;
+			$(open).show();
 		});
 	});

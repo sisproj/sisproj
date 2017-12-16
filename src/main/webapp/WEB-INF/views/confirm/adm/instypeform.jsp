@@ -81,8 +81,7 @@
 						<div id="confirmer">
 						
 						</div>
-						<div class="clr"></div>			
-						</div>
+						<div class="clr"></div>	
 					</div>
 					<!-- 미드 끝 -->
 				<!-- 하단 끝 -->

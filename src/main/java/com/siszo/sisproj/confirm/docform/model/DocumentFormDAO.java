@@ -10,7 +10,7 @@ public interface DocumentFormDAO {
 	public DocumentFormVO selectDocFormByFormNo(int formNo);
 	public int updateDocForm(DocumentFormVO vo);
 	public void deleteDocForm(Map<String, Integer> map);
-	public List<DocumentVO> selectDocFormAll();
-	public List<DocumentVO> selectDocTypeAll();
-	public DocumentVO selectFormByFormNo(int formNo);
+	public List<DocumentFormVO> selectDocFormAll();
+	public List<DocumentFormVO> selectDocTypeAll();
+	public DocumentFormVO selectFormByFormNo(int formNo);
 }
