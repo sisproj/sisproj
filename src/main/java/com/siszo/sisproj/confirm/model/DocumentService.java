@@ -6,4 +6,6 @@ public interface DocumentService {
 	public static final String CONFIRM_AWAIT = "결재대기"; //결재 대기
 	public static final String CONFIRM_COMPLETE = "결재완료"; //결재 완료
 	public static final String CONFIRM_RETURN = "결재반려"; //결재 반려
+	
+	public int selectConfirmSEQ();
 }

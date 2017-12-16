@@ -32,32 +32,29 @@
 				<h2>양식 선택</h2>
 				<div id="doc_type">
 					<h3>문서종류</h3>
-					<a href="#"><p><i class="fa fa-folder-open"></i>업무</p></a>
-					<a href="#"><p><i class="fa fa-folder"></i> 근태</p></a>
+					<c:forEach var="typeList" items="${docTypeList }">
+						<a href="#" class='${typeList.typeNo }'><p><i class="fa fa-folder"></i> ${typeList.typeType }</p></a>
+					</c:forEach>
 				</div>
 				<div id="doc_form">
 					<div class="dh">
 						<span class="sh1">양식 이름</span>
 						<span class="sh2">설명</span>
-					</div>
-					<div class="dd">
-						<a href="#" id="200012312330010001"><!-- 양식번호 아이디로 받기 -->
-							<span class="sd1">기안서</span>
-							<span class="sd2">시행기안문</span>
-						</a>
-					</div>
-					<div class="dd">
-						<a href="#" id="200012312330020001">
-							<span class="sd1">근태계</span>
-							<span class="sd2">휴가신청서</span>
-						</a>
-					</div>
+					</div>			
+					<c:forEach var="formList" items="${docFormList }">
+						<div class="dd">
+							<a href="#" id="${formList.formNo }" class="${formList.typeNo }"><!-- 양식번호 아이디로 받기, 종류번호는 클래스로 받기 -->
+								<span class="sd1">${formList.formName }</span>
+								<span class="sd2">${formList.formEx }</span>
+							</a>
+						</div>
+					</c:forEach>
 				</div>
 				
 				<div class="clr"></div>
 				<div id="writebtn">
 					<form name="choicebtn" id="choicebtn" method="post" action="<c:url value='/confirm/write.do'/>">
-						<input type="hidden" id="form_no" name="form_no" value="">
+						<input type="hidden" id="form_no" name="formNo" value="">
 						<input type="submit" value="작성">
 					</form>
 				</div>	
@@ -73,6 +70,12 @@
 				$('.dd a').click(function(){
 					var docNo = $(this).attr('id');
 					$('#form_no').val(docNo);
+				});
+				$('#doc_type a').click(function(){
+					$('#doc_form .dd a').hide();
+					var docType = $(this).attr('class');
+					var open = '#doc_form .dd a.'+docType;
+					$(open).show();
 				});
 			});
 		</script>

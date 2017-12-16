@@ -37,6 +37,25 @@
 	<delete id="deleteDocForm" parameterMap="deleteFormParam">
 		call DEL_FORM_PROC(?,?)
 	</delete>
+	
+	<select id="selectDocFormAll" resultType="DocumentFormVO">
+		select t.*, f.form_no, f.form_name, f.form_secu, f.form_life, f.form_ex
+		from doc_type t
+		join doc_form f
+		on t.type_no = f.form_type_no
+	</select>
+	
+	<select id="selectDocTypeAll" resultType="DocumentFormVO">
+		select * from doc_type
+	</select>
+	
+	<select id="selectFormByFormNo" parameterType="int" resultType="DocumentFormVO">
+		select * from doc_form where form_no = #{formNo}
+	</select>
+	
+	<select id="selectConfirmSEQ" resultType="int">
+		select confirm_seq.nextval from dual
+	</select>
 </mapper>
 
 

@@ -60,7 +60,7 @@
 				<!-- 미드 -->
 					<div id="doc_type">
 						<div id="dt_head">
-							<input type="text" name="doctype" value="${vo.formName }">
+							<input type="text" name="doctype" value="${vo.formName }" readonly>
 						</div>
 						<div id="doc_info">
 							<div>

@@ -33,16 +33,28 @@ $(function(){
 		$('#fileinfo').text('새로 첨부할 파일');
 	});
 
-	$('#submit').click(function(){
-		$('#savetype').val($(this).attr('id'));
-		submitContents();
-		/*alert("#ir1 textarea부분!"+$('#ir1').val());
-		$('#writeFrm').submit();*/
+	$('#link_cho #doc_title').change(function(){
+		var title = $(this).val();
+		$('#cf_info #doctitle').val(title);
 	});
-	$('#save').click(function(){
+	$('#link_cho #link_doc').change(function(){
+		var link = $('#link_cho #link_doc :selected').val();
+		if(link != '0'){
+			$('#cf_info #linkdoc').val(link);	
+		}
+	});
+	
+	$('#submitbtn #submit').click(function(){
 		$('#savetype').val($(this).attr('id'));
 		submitContents();
-		/*alert($('#ir1').val());
-		$('#writeFrm').submit();*/
+		$('#savetype').val('confirm');
+		$('#writeFrm').submit();
+	});
+	
+	$('#submitbtn #save').click(function(){
+		$('#savetype').val($(this).attr('id'));
+		submitContents();
+		$('#savetype').val('save');
+		$('#writeFrm').submit();
 	});
 });

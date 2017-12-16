@@ -1,6 +1,9 @@
 package com.siszo.sisproj.confirm.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.siszo.sisproj.confirm.docform.model.DocumentFormService;
 import com.siszo.sisproj.confirm.docform.model.DocumentFormVO;
 import com.siszo.sisproj.confirm.model.DocumentService;
+import com.siszo.sisproj.confirm.model.DocumentVO;
 
 @Controller
 @RequestMapping("/confirm")
@@ -25,6 +29,8 @@ public class ConfirmController {
 	
 	@Autowired
 	private DocumentFormService dfService;
+	@Autowired
+	private DocumentService dService;
 	
 	@RequestMapping("/main.do")
 	public String main() {
@@ -34,16 +40,54 @@ public class ConfirmController {
 	}
 	
 	@RequestMapping("/newcho.do")
-	public String newwrite() {
+	public String newwrite(ModelMap model) {
 		logger.info("새 결재 진행 - choice 화면 보여주기");
 		
+		List<DocumentVO> docFormList = dfService.selectDocFormAll();
+		List<DocumentVO> docTypeList = dfService.selectDocTypeAll();
+		logger.info("새 결재 진행 조회 결과 docFormList.size()={}, docTypeList.size()={}",docFormList.size(),docTypeList.size());
+		
+		model.addAttribute("docFormList", docFormList);
+		model.addAttribute("docTypeList", docTypeList);
 		
 		return "confirm/newcho";
 	}
 	
 	@RequestMapping("/write.do")
-	public String write() {
+	public String write(@RequestParam(defaultValue="0") int formNo, Model model) {
 		logger.info("새 결재 진행 - 결재 작성 화면 보여주기");
+		
+		String msg="", url="";
+		if(formNo==0) {
+			msg="잘못된 URL입니다.";
+			url="/confirm/newcho.do";
+			
+			model.addAttribute("msg",msg);
+			model.addAttribute("url",url);
+			
+			return "common/message";
+		}
+		
+		DocumentFormVO vo = dfService.selectDocFormByFormNo(formNo);
+		int seq = dService.selectConfirmSEQ();
+		logger.info("새 결재문서 작성화면 보여주기 처리결과 vo={}, seql={}",vo, seq);
+		
+		Date day = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		String today = sdf.format(day);
+		System.out.println("오늘날짜"+today);
+		
+		model.addAttribute("vo",vo);
+		model.addAttribute("today",today);
+		model.addAttribute("seq",seq);
+		
+		return "confirm/write";
+	}
+	
+	@RequestMapping("/writeOk.do")
+	public String write_post(@ModelAttribute DocumentVO vo, Model model) {
+		logger.info("새 결재 진행 - 결재 문서 작성 처리");
+		
 		return "confirm/write";
 	}
 	

@@ -58,7 +58,7 @@
 				<!-- 미드 -->
 					<div id="doc_type">
 						<div id="dt_head">
-							<input type="text" name="doctype" value="">
+							<input type="text" name="doctype" value="" readonly>
 						</div>
 						<div id="doc_info">
 							<div>

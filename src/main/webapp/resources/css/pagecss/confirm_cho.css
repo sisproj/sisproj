@@ -73,6 +73,9 @@
 #cf_choice #doc_form .dd .sd2{
 	display: block;
 }
+#cf_choice #doc_form .dd a{
+	display: none;
+}
 #cf_choice #writebtn{
 	width: 95%;
 	padding:5px;

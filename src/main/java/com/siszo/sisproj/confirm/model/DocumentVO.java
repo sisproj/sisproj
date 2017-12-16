@@ -9,7 +9,6 @@ public class DocumentVO {
 	private int formTypeNo; //문서종류번호 (join doc_form.form_type_no)
 	private String formSecu; //보안수준 (join doc_form.form_secu)
 	private String formLife; //보존년한 (join doc_form.form_life)
-	private String formEx; //설명
 	private int empNo; //기안자
 	private String empName; //사원이름(join emp.emp_name)
 	private Timestamp cfRegdate; //기안일자
