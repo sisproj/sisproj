@@ -12,7 +12,7 @@ public class OrganizationDAOMybatis extends SqlSessionDaoSupport implements Orga
 	private String namespace="config.mybatis.mapper.oracle.organization";
 
 	@Override
-	public List<EmployeeVO> selectEmpByDept(int deptNo) {
-		return getSqlSession().selectList(namespace+".selectEmpByDept",deptNo);
+	public List<EmployeeVO> selectEmp() {
+		return getSqlSession().selectList(namespace+".selectEmp");
 	} 
 }

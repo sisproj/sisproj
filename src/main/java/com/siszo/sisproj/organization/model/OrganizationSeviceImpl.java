@@ -13,7 +13,7 @@ public class OrganizationSeviceImpl implements OrganizationService{
 	private OrganizationDAO orgDao;
 
 	@Override
-	public List<EmployeeVO> selectEmpByDept(int deptNo) {
-		return orgDao.selectEmpByDept(deptNo);
+	public List<EmployeeVO> selectEmp() {
+		return orgDao.selectEmp();
 	}
 }

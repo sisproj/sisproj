@@ -35,7 +35,7 @@ public class OrganizationController {
 		logger.info("부서명 조회결과 deptList.size()={}", deptList.size());
 		DeptVO vo = deptList.get(0);
 		
-		List<EmployeeVO> empList=orgService.selectEmpByDept(deptNo);
+		List<EmployeeVO> empList=orgService.selectEmp();
 		logger.info("부서별 사원리스트 조회 결과 empList.size()={}",empList.size());
 		
 		System.out.println("이름 : "+vo.getDeptName());
