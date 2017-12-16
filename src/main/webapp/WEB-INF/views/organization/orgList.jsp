@@ -42,7 +42,7 @@
 			});
 			
 			$('#divEmpInfo').hide();
-			$('#organBody ul li ul li').each(function({
+			$('#organBody ul li ul li').each(function(){
 				$(this).click(function(){
 					$('#divEmpInfo').show();
 				});
