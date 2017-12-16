@@ -41,7 +41,7 @@
 						<span class="sh2">설명</span>
 					</div>
 					<div class="dd">
-						<a href="#" id="200012312330010001"><!-- 문서번호 아이디로 받기 -->
+						<a href="#" id="200012312330010001"><!-- 양식번호 아이디로 받기 -->
 							<span class="sd1">기안서</span>
 							<span class="sd2">시행기안문</span>
 						</a>
