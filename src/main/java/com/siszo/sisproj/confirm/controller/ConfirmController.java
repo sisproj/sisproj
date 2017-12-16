@@ -81,6 +81,9 @@ public class ConfirmController {
 	@RequestMapping("/line.do")
 	public String line() {
 		logger.info("결재라인 선택화면 보여주기");
+
+		//ajax 배우고, 조직도 구현 후 구현: 왼쪽 리스트 클릭시 오른쪽 리스트 뿌리기		
+		
 		return "confirm/line";
 	}
 	
@@ -192,7 +195,7 @@ public class ConfirmController {
 	
 	@RequestMapping("/adm/typeform.do")
 	public String typeform(ModelMap model) {
-		logger.info("결재 환경 설정 보여주기");
+		logger.info("결재 양식관리 보여주기");
 		
 		//ajax 배우고 구현 : 왼쪽 리스트 클릭시 오른쪽 리스트 뿌리기
 		
