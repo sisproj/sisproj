@@ -123,12 +123,12 @@
      	<c:forEach var="deptVo" items="${deptList}">
 	     	<ul >
 	     		<li class="deptName"><i id="deptPlus-${deptVo.deptNo }" class="fa fa-plus-square deptPlus"></i>
-	     				<i id="deptMinus-${deptVo.deptNo }" class="fa fa-minus-square deptMinus"></i>
+	     			<i id="deptMinus-${deptVo.deptNo }" class="fa fa-minus-square deptMinus"></i>
 	     		 ${deptVo.deptName }
 	     			<ul>
 	     			<c:forEach var="empVo" items="${empList }">
 	     				<c:if test="${empVo.deptNo == deptVo.deptNo }">
-	     					<li><i class="fa fa-user"></i>${empVo.empName } </a></li>
+	     					<li><i class="fa fa-user"></i>  ${empVo.empName } </a></li>
 	     				</c:if>
 	     			</c:forEach>
 	     			</ul>
@@ -136,21 +136,24 @@
 	     	</ul>
      	</c:forEach>     	
      </div>
-     <!-- 
-     조직도에서 사원클릭시 개인정보 보여줌 
+     
+    <!--  조직도에서 사원클릭시 개인정보 보여줌  -->
+    <!-- 
      <div id="divEmpInfo">
+     	<div id="divClose"><i class="fa fa-times"></i></div>
      	<div id="divEmpImg">
      		<img alt="사원이름" src="사원이미지">
      	</div>
      	<div id="divEmp">
 	     	<div>사원이름(사원번호) 사원직급</div>
 	     	<div>사원 전화번호</div>
-	     	<div>사원 이메일</div>
-	     	<div>쪽지 아이콘, 메신저 아이콘</div>
+	     	<div><i class="fa fa-envelope-o"></i>사원 이메일</div>
+	     	<div><i class="fa fa-paper-plane"></i>쪽지 아이콘, <i class="fa fa-comments-o"></i>메신저 아이콘</div>
      	</div>
      </div>
-     조직도 : 사원정보 끝
       -->
+     <!-- 조직도 : 사원정보 끝 -->
+     
 </body>
 </html>
      
