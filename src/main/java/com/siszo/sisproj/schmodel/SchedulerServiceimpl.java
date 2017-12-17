@@ -14,8 +14,8 @@ public class SchedulerServiceimpl implements SchedulerService {
 	public int schedulerInsert(SchedulerVO vo) {
 		return schedulerDao.schedulerInsert(vo);
 	}
-	public List<SchedulerVO> schedulerSelectAll(){
-		return schedulerDao.schedulerSelectAll();
+	public List<SchedulerVO> schedulerSelectAll(int empNo){
+		return schedulerDao.schedulerSelectAll(empNo);
 	}
 
 }
