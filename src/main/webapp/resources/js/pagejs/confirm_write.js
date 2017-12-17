@@ -48,13 +48,13 @@ $(function(){
 		$('#savetype').val($(this).attr('id'));
 		submitContents();
 		$('#savetype').val('confirm');
-		$('#writeFrm').submit();
+		/*$('#writeFrm').submit();*/
 	});
 	
 	$('#submitbtn #save').click(function(){
 		$('#savetype').val($(this).attr('id'));
 		submitContents();
 		$('#savetype').val('save');
-		$('#writeFrm').submit();
+		/*$('#writeFrm').submit();*/
 	});
 });

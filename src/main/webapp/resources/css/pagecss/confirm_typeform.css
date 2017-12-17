@@ -13,6 +13,7 @@
 	border-right: 1px solid #fff;
 	padding: 10px;
 	float:left;
+	background-color: #eee;
 }
 #cf_choice #doc_type h3{
 	text-align: center;
@@ -36,6 +37,7 @@
 	border: 2px solid #fff;
 	border-left: 1px solid #fff;
 	float:left;
+	background-color: #eee;
 }
 #cf_choice #doc_form .dh{
 	box-sizing:border-box;				
