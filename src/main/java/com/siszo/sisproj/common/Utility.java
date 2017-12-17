@@ -20,13 +20,11 @@ public class Utility {
     	if(contents==null || contents.isEmpty()) {
     		contents="";
     	} else {
-    		contents = contents.replace("<script","&lt;script");
-    		contents = contents.replace("script>","script&gt;");
-    		contents = contents.replace("<style","&lt;style");
-    		contents = contents.replace("</","&lt;/");
-    		contents = contents.replace("style>","style&gt;");
+    		contents = contents.replace("<","&lt;");
+    		contents = contents.replace(">","&gt;");
     		contents = contents.replace("\"", "&quot;");
     		contents = contents.replace("\'", "&#39;");
+    		contents = contents.replace("\r\n", "<br>");
     	}
     	System.out.println("contents="+contents);
     	return contents;
