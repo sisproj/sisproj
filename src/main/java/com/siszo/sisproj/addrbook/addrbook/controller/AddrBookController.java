@@ -19,7 +19,7 @@ public class AddrBookController {
 	
 	@Autowired
 	private AddrBookService addrBookService;
-	
+/*	
 	@RequestMapping("/phoneBookList.do")
 	public String list(Model model) {
 		logger.info("개인주소록 보여주기");
@@ -28,5 +28,5 @@ public class AddrBookController {
 		logger.info("개인 주소록 조회 결과, addrBookList.size()={}", addrBookList.size());
 		
 		return "phoneBook/phoneBookList";
-	}
+	}*/
 }
