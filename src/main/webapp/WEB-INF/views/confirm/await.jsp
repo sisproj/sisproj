@@ -25,36 +25,60 @@
 		</article>	
 		<article id="bodysection">
 			<!-- 3. 내용 -->
-			<table id="awaittb">
-				<thead>
-					<tr>
-						<th>문서번호</th>
-						<th>제목</th>
-						<th>양식이름</th>
-						<th>기안자</th>
-						<th>기안일</th>
-						<th>상태</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>20171211102030001</td>
-						<td><a href="#">시행기안문</a></td>
-						<td>기안서</td>
-						<td>홍홍홍</td>
-						<td>2017-12-11</td>
-						<td>대기</td>
-					</tr>
-					<tr>
-						<td>20171211102030001</td>
-						<td>시행기안문</td>
-						<td>기안서</td>
-						<td>홍홍홍</td>
-						<td>2017-12-11</td>
-						<td>대기</td>
-					</tr>
-				</tbody>
-			</table>
+			<div id="wrap">
+				<div id="search" class="bold">
+					검색어 : <input type="text" name="searchKey" id="searchKey" placeholder="문서번호, 제목, 내용">
+					<input type="button" value="검색">
+				</div>
+				<table id="awaittb">
+					<thead>
+						<tr>
+							<th>문서번호</th>
+							<th>제목</th>
+							<th>양식이름</th>
+							<th>기안자</th>
+							<th>기안일</th>
+							<th>상태</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>20171211102030001</td>
+							<td><a href="#">시행기안문</a></td>
+							<td>기안서</td>
+							<td>홍홍홍</td>
+							<td>2017-12-11</td>
+							<td>대기</td>
+						</tr>
+						<tr>
+							<td>20171211102030001</td>
+							<td>시행기안문</td>
+							<td>기안서</td>
+							<td>홍홍홍</td>
+							<td>2017-12-11</td>
+							<td>대기</td>
+						</tr>
+					</tbody>
+				</table>
+				<div id="pagingbtn">
+					<div>
+					<a href="#"><span><i class="fa fa-arrow-left"></i></span></a>
+					<a href="#"><span><i class="fa fa-chevron-left"></i></span></a>
+					<a href="#"><span>1</span></a>
+					<a href="#"><span>2</span></a>
+					<a href="#"><span>3</span></a>
+					<a href="#"><span>4</span></a>
+					<a href="#"><span>5</span></a>
+					<a href="#"><span>6</span></a>
+					<a href="#"><span>7</span></a>
+					<a href="#"><span>8</span></a>
+					<a href="#"><span>9</span></a>
+					<a href="#"><span>10</span></a>
+					<a href="#"><span><i class="fa fa-chevron-right"></i></span></a>
+					<a href="#"><span><i class="fa fa-arrow-right"></i></span></a>
+					</div>
+				</div>
+			</div>
 			<!-- 3. 내용 끝 -->
 		</article>
 		<!-- 4. 상단 네비 색먹이기 // li태그 순서(전자결재 : 6번째) 입력 -->

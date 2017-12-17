@@ -4,12 +4,12 @@
 
 <mapper namespace="config.mybatis.mapper.oracle.scheduler">
 	<insert id="schedulerInsert" parameterType="SchedulerVO">
-		insert into scheduler(id,start_date,end_date,title)
-		values(#{id},#{startdate},#{enddate},#{title})
+		insert into pschedule(psch_No,psch_Title,psch_Start,psch_End,psch_Categ,emp_no)
+		values(#{pschNo},#{pschTitle},#{pschStart},#{pschEnd}, #{pschCateg},20170001) 
 	</insert>
-	
-	<select id="schedulerSelectAll" resultType="SchedulerVO">
-		select * from scheduler
+	<!-- emp_no는 추후 수정 -->
+	<select id="schedulerSelectAll" resultType="SchedulerVO" parameterType="int">
+		select * from pschedule <!-- where emp_no=#{empNo} -->
 	</select>
 
 </mapper>
