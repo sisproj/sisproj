@@ -9,7 +9,7 @@
 			scheduler.config.time_step = 30;
 			scheduler.config.multi_day = true;
 			scheduler.locale.labels.section_subject = "Subject";
-			scheduler.config.first_hour = 6;
+			scheduler.config.first_hour = 8;
 			scheduler.config.limit_time_select = true;
 			scheduler.config.details_on_dblclick = true;
 			scheduler.config.details_on_create = true;
@@ -18,7 +18,7 @@
 				var css = "";
 				if(event.subject) // if event has subject property then special class should be assigned
 					css += "event_"+event.subject;
-				if(event.id == scheduler.getState().select_id){
+				if(event.id == scheduler.	getState().select_id){
 					css += " selected";
 				}
 				return css; // default return
@@ -42,7 +42,8 @@
 				{ key: '회의', label: '회의' },
 				{ key: '외근', label: '외근' },
 				{ key: '회식', label: '회식' },
-				{ key: '기타', label: '기타' },
+				{ key: '야근', label: '야근' },
+				{ key: '기타', label: '기타' }
 			];
 
 			scheduler.config.lightbox.sections=[
@@ -51,7 +52,7 @@
 				{name:"시간", height:72, type:"time", map_to:"auto" }
 			];
 
-			scheduler.init('scheduler_here', new Date(), "month");
+			scheduler.init('scheduler_here', new Date(), "day");
 			
 			scheduler.attachEvent("onEventSave",function(id,ev,is_new){
 				var end_date = scheduler.getEvent(id).end_date;
@@ -74,30 +75,20 @@
 			    }
 			}); 
 		
-		 /*  scheduler.parse([
-			  for(var i=0; i<${fn:length(list)};i++){
-				    if(i=${fn:length(list)}-1)){
-						{ start_date: "${list[i].pschStart}", end_date: "${list[i].pschEnd}", text:"${list[i].pschTitle}", subject: '${list[i].pschCateg}' }
-	         		}else{
-						{ start_date: "${list[i].pschStart}", end_date: "${list[i].pschEnd}", text:"${list[i].pschTitle}", subject: '${list[i].pschCateg}' }
-	         		}
-			  }
-			], "json"); 
-			*/
-			
+				
 			scheduler.parse([
-					{ start_date: "${list[1].pschStart}", end_date: "${list[1].pschEnd}", text:"${list[1].pschTitle}", subject: '${list[1].pschCateg}' },
-					{ start_date: "${list[2].pschStart}", end_date: "${list[2].pschEnd}", text:"${list[2].pschTitle}", subject: '${list[2].pschCateg}' },
-					{ start_date: "${list[3].pschStart}", end_date: "${list[3].pschEnd}", text:"${list[3].pschTitle}", subject: '${list[3].pschCateg}' },
-					{ start_date: "${list[4].pschStart}", end_date: "${list[4].pschEnd}", text:"${list[4].pschTitle}", subject: '${list[4].pschCateg}' },
-					{ start_date: "${list[5].pschStart}", end_date: "${list[5].pschEnd}", text:"${list[5].pschTitle}", subject: '${list[5].pschCateg}' },
-					{ start_date: "${list[6].pschStart}", end_date: "${list[6].pschEnd}", text:"${list[6].pschTitle}", subject: '${list[6].pschCateg}' },
-					{ start_date: "${list[7].pschStart}", end_date: "${list[7].pschEnd}", text:"${list[7].pschTitle}", subject: '${list[7].pschCateg}' }
+				<c:if test="${empty list}">
+				 
+				</c:if>
+				<c:if test="${!empty list}">
+				<c:forEach var="i" begin="0" end="${list.size()-1}" step="1">
+				
+					{ start_date: "${list[i].pschStart}", end_date: "${list[i].pschEnd}", text:"${list[i].pschTitle}", subject: '${list[i].pschCateg}' },
+				</c:forEach>
+				</c:if>
 				], "json");
-			
 		}
 		
-
 
 
 	</script>
@@ -110,8 +101,9 @@ html, body {
 }
 
 .dhx_cal_event div.dhx_footer, .dhx_cal_event.past_event div.dhx_footer,
-	.dhx_cal_event.event_english div.dhx_footer, .dhx_cal_event.event_math div.dhx_footer,
-	.dhx_cal_event.event_science div.dhx_footer {
+	.dhx_cal_event.event_출장 div.dhx_footer, .dhx_cal_event.event_회의 div.dhx_footer,
+	.dhx_cal_event.event_외근 div.dhx_footer, .dhx_cal_event.event_회식 div.dhx_footer, 
+	.dhx_cal_event.event_야근 div.dhx_footer, .dhx_cal_event.event_기타 div.dhx_footer,{
 	background-color: transparent !important;
 }
 
@@ -131,32 +123,53 @@ html, body {
 	opacity: 1;
 }
 
-.dhx_cal_event.event_math div, .dhx_cal_event_line.event_math {
+.dhx_cal_event.event_출장 div, .dhx_cal_event_line.event_출장 {
 	background-color: orange !important;
 	border-color: #a36800 !important;
 }
 
-.dhx_cal_event_clear.event_math {
+.dhx_cal_event_clear.event_출장 {
 	color: orange !important;
 }
 
-.dhx_cal_event.event_science div, .dhx_cal_event_line.event_science {
+.dhx_cal_event.event_회의 div, .dhx_cal_event_line.event_회의 {
 	background-color: #36BD14 !important;
 	border-color: #698490 !important;
 }
 
-.dhx_cal_event_clear.event_science {
+.dhx_cal_event_clear.event_회의 {
 	color: #36BD14 !important;
 }
 
-.dhx_cal_event.event_english div, .dhx_cal_event_line.event_english {
+.dhx_cal_event.event_외근 div, .dhx_cal_event_line.event_외근 {
 	background-color: #FC5BD5 !important;
 	border-color: #839595 !important;
 }
 
-.dhx_cal_event_clear.event_english {
+.dhx_cal_event_clear.event_외근 {
 	color: #B82594 !important;
 }
+
+.dhx_cal_event.event_회식 div, .dhx_cal_event_line.event_회식 {
+	background-color: blue !important;
+	border-color: #839595 !important;
+}
+
+.dhx_cal_event_clear.event_회식 {
+	color: blue !important;
+}
+
+.dhx_cal_event.event_야근 div, .dhx_cal_event_line.event_야근 {
+	background-color: purple !important;
+	border-color: #839595 !important;
+}
+
+.dhx_cal_event_clear.event_야근 {
+	color: purple !important;
+}
+
+
+
 </style>
 <!-- 0. include부분 -->
 <nav>
@@ -192,10 +205,10 @@ html, body {
 <article id="bodysection">
 	<!-- 3. 내용 -->
 	<form name="schfrm" id="schfrm" method="post" action="schedulerOK.do">
-		<input type="text" id="pschStart" name="pschStart"> <input
-			type="text" id="pschEnd" name="pschEnd"> <input type="text"
-			id="pschTitle" name="pschTitle"> <input type="text"
-			id="pschCateg" name="pschCateg"> <input type="text"
+		<input type="hidden" id="pschStart" name="pschStart"> <input
+			type="hidden" id="pschEnd" name="pschEnd"> <input type="hidden"
+			id="pschTitle" name="pschTitle"> <input type="hidden"
+			id="pschCateg" name="pschCateg"> <input type="hidden"
 			id="pschNo" name="pschNo">
 	</form>
 	<div id="scheduler_here" class="dhx_cal_container"
@@ -213,7 +226,6 @@ html, body {
 		<div class="dhx_cal_data"></div>
 		
 	</div>
-	</body>
 	<!-- 3. 내용 끝 -->
 </article>
 <!-- 4. 상단 네비 색먹이기 // li태그 순서(전자결재 : 6번째) 입력 -->
