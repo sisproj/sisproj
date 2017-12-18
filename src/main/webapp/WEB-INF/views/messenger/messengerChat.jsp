@@ -4,6 +4,16 @@
 <script>
     var chatKey = "${key}";
     loadMessages(chatKey);
+
+    // 채팅 TextArea 엔터키 입력시
+    $('#chatMsg').keypress(function (e) {
+        var code = e.keyCode;
+        if (code === 13) {
+            writeMessage('user1');
+            $(this).val("");
+            return false;
+        }
+    });
 </script>
 
 <!-- 오른쪽 SideMenu -->

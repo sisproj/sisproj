@@ -10,6 +10,8 @@
 
     <%-- messenger JS--%>
     <script type="text/javascript">
+        var chatKey = null;
+
         function changeContent(key) {
             $('#messenger-main-container').html("").load('messengerChat.do', {key: key});
             $('#sidebar-button').show().attr('name', 'hide-nav');
@@ -38,6 +40,7 @@
                     snapshot.forEach(function (childSnapshot) {
                         var childKey = childSnapshot.key;
                         keyList.push(childKey);
+                        appendMessages(childKey);
                     });
                 }).then(function () { //불러오기 끝난후 실행
                     loadChats(keyList);
@@ -72,6 +75,41 @@
         var userId = "user1";
 
         function loadMessages(key) {
+            var messeagesRef = firebase.database().ref('messages/' + key);
+            messeagesRef.once('value', function (snapshot) {
+                snapshot.forEach(function (childSnapshot) {
+                    var childKey = childSnapshot.key;
+                    var timestamp = childSnapshot.val().timestamp;
+
+                    var date = new Date(timestamp);
+                    var hour = date.getHours();
+                    var min = date.getMinutes();
+
+                    if (userId === childSnapshot.val().name) {
+                        $('#messengerContainer').append(
+                            '<div class="message-wrap darker">' +
+                            '<img src="<c:url value='/resources/images/avatar.png'/>" alt="Avatar" class="right" style="width:100%;">' +
+                            '<p>' + childSnapshot.val().message + '</p>' +
+                            '<span class="time-right">' + hour + ':' + min + '</span>' +
+                            '</div>'
+                        );
+                    } else {
+                        $('#messengerContainer').append(
+                            '<div class="message-wrap">' +
+                            '<img src="<c:url value='/resources/images/avatar.png'/>" alt="Avatar" style="width:100%;">' +
+                            '<p>' + childSnapshot.val().message + '</p>' +
+                            '<span class="time-right">' + hour + ':' + min + '</span>' +
+                            '</div>'
+                        );
+                    }
+                });
+
+                //채팅 입력시 스크롤 맨 아래로
+                $('#messenger-main').scrollTop($(this).height());
+            });
+        }
+
+        function appendMessages(key) {
             /* key에 해당하는 채팅방의 메시지를 가져와 화면에 뿌려줌*/
             var messeagesRef = firebase.database().ref('messages/' + key);
             //Messages Child가 추가될때 마다 실행
@@ -99,9 +137,9 @@
                         '</div>'
                     );
                 }
-
-                //채팅 입력시 스크롤 맨 아래로
-                $('#messenger-main').scrollTop($(this).height());
+                if (chatKey != null) {
+                    writeChats(userId);
+                }
             });
         }
 
@@ -135,8 +173,6 @@
                 message: message,
                 timestamp: timestamp
             });
-
-            writeChats(userId);
         }
     </script>
 
@@ -189,14 +225,16 @@
     </div>
     <div class="w3-padding-64 w3-large w3-text-grey" id="chatsList" style="font-weight:bold">
         <button id="startChatButton" class="w3-button w3-blue w3-hover-black">채팅 시작</button>
-
-        <div class="chats-wrap w3-bar-item w3-button">
-            <img src="<c:url value='/resources/images/airplain.png'/>" alt="Avatar" style="width:100%;">
-            <a href="#" class="chat-wrap">
-                <div>대화 명1</div>
-                <div>마지막 메시지</div>
-            </a>
-        </div>
+        <ul>
+            <li class="w3-bar">
+                <img src="<c:url value='/resources/images/avatar.png'/>" class="w3-bar-item w3-circle"
+                     style="width:85px">
+                <div class="w3-bar-item">
+                    <span class="w3-large">Mike</span><br>
+                    <span>Web Designer</span>
+                </div>
+            </li>
+        </ul>
         <a class="w3-button w3-block w3-white w3-left-align active" id="myBtn">대화 명3</a>
     </div>
 </nav>

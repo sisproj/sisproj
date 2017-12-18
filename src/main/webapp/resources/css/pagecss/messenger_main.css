@@ -17,18 +17,6 @@
     margin: 20px 10% 20px 10%;
 }
 
-.chats-wrap {
-    display: flex;
-    flex-wrap: nowrap;
-    width: 100%;
-    vertical-align: middle;
-}
-
-.chats-wrap img {
-    max-width: 60px;
-    max-height: 60px;
-}
-
 /*Header*/
 .messenger-header {
     position: fixed;
