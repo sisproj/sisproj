@@ -20,8 +20,13 @@ public class MessengerController {
     }
 
     @RequestMapping(value = "/messenger/messengerChat.do", method = RequestMethod.POST)
-    public String messengerChat_post(@RequestParam String key, Model model) {
-        model.addAttribute("key", key);
+    public String messengerChat_post(@RequestParam String chatKey, Model model) {
+        model.addAttribute("chatKey", chatKey);
         return "messenger/messengerChat";
+    }
+
+    @RequestMapping(value = "/messenger/messengerStart.do", method = RequestMethod.GET)
+    public String messengerStart_get() {
+        return "messenger/messengerStart";
     }
 }

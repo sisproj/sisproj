@@ -88,7 +88,7 @@
             <div id="asidebtn">
                 <ul>
                     <li><a href="#">출근</a></li>
-                    <li><a href="#">메신저</a></li>
+                    <li><a href="#" onclick="window.open('<c:url value="/messenger/messenger.do"/>', 'messengerWindow', 'toolbar=no,scrollbars=yes')">메신저</a></li>
                     <li><a href="<c:url value='/login.do'/>">로그 아웃</a></li>
                 </ul>
             </div>
