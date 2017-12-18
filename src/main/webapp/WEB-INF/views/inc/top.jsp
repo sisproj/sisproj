@@ -27,6 +27,7 @@
     <!-- mainjs -->
     
     <script src="<c:url value="/resources/js/mainjs.js"/>"></script>
+    <script src="<c:url value="/resources/js/zipcode.js"/>"></script>
     
     <script src="<c:url value="/resources/codebase/dhtmlxscheduler.js"/>"></script>
     <link rel="stylesheet" href="<c:url value="/resources/codebase/dhtmlxscheduler.css"/>">
@@ -45,7 +46,7 @@
             <li><a href="<c:url value='/confirm/main.do'/>">전자결재</a></li>
             <li><a href="<c:url value='/commue/commueMonthList.do'/>">근태관리</a></li>
             <li><a href="<c:url value=''/>">웹하드</a></li>
-            <li><a href="<c:url value=''/>">공지사항</a></li>
+            <li><a href="<c:url value='/notice/noticeList.do'/>">공지사항</a></li>
             <li><a href="<c:url value=''/>">사내뉴스</a></li>
         </ul>
     </nav>
