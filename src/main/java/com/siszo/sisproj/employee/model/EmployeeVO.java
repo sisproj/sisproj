@@ -23,6 +23,13 @@ public class EmployeeVO {
 	private int empSal;
 	private String empBookMark;
 	private int deptNo;
+	private String empPosition;
+	public String getEmpPosition() {
+		return empPosition;
+	}
+	public void setEmpPosition(String empPosition) {
+		this.empPosition = empPosition;
+	}
 	public int getEmpNo() {
 		return empNo;
 	}
@@ -150,6 +157,7 @@ public class EmployeeVO {
 				+ ", empAddr=" + empAddr + ", empAddr2=" + empAddr2 + ", empHiredate=" + empHiredate + ", empHobby="
 				+ empHobby + ", empSchool=" + empSchool + ", empMajor=" + empMajor + ", empOutdate=" + empOutdate
 				+ ", empImg=" + empImg + ", empLev=" + empLev + ", empSal=" + empSal + ", empBookMark=" + empBookMark
-				+ ", deptNo=" + deptNo + "]";
+				+ ", deptNo=" + deptNo + ", empPosition=" + empPosition + "]";
 	}
+	
 }
