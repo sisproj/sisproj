@@ -49,8 +49,8 @@
 					<div id="save_line">
 						<div id="cf_line">
 							<h3>결재라인</h3>
-							<div><i class="fa fa-folder-open"></i> 기안용</div>
-							<div><i class="fa fa-folder"></i> 지출결의서용</div>
+							<a href="#"><div><i class="fa fa-folder-open"></i> 기안용</div></a>
+							<a href="#"><div><i class="fa fa-folder"></i> 지출결의서용</div></a>
 						</div>
 						<div id="line_detail">
 							<form name="detail" id="detail" method="post" action="#">

@@ -27,6 +27,9 @@
     <!-- mainjs -->
     
     <script src="<c:url value="/resources/js/mainjs.js"/>"></script>
+    
+    <script src="<c:url value="/resources/codebase/dhtmlxscheduler.js"/>"></script>
+    <link rel="stylesheet" href="<c:url value="/resources/codebase/dhtmlxscheduler.css"/>">
    
 </head>
 <body>
@@ -36,11 +39,11 @@
     <nav>
         <ul>
             <li><a href="<c:url value='/home.do'/>">HOME</a></li>
-            <li><a href="<c:url value='/phoneBook/phoneBookList.do'/>">주소록</a></li>
+            <li><a href="<c:url value='/addrBook/addrBookList.do'/>">주소록</a></li>
             <li><a href="<c:url value='/scheduler/scheduler.do'/>">스케줄</a></li>
             <li><a href="<c:url value=''/>">자원관리</a></li>
             <li><a href="<c:url value='/confirm/main.do'/>">전자결재</a></li>
-            <li><a href="<c:url value='/commue/commueList.do'/>">근태관리</a></li>
+            <li><a href="<c:url value='/commue/commueMonthList.do'/>">근태관리</a></li>
             <li><a href="<c:url value=''/>">웹하드</a></li>
             <li><a href="<c:url value=''/>">공지사항</a></li>
             <li><a href="<c:url value=''/>">사내뉴스</a></li>
@@ -73,7 +76,7 @@
             <div id="info">
                 <ul>
                     <li><i class="fa fa-id-card"></i>&nbsp;<span class="name bold">이름(id)</span></li>
-                    <li><i class="fa fa-cog"></i>&nbsp;<span><a href="#">개인정보수정</a></span></li>
+                    <li><i class="fa fa-cog"></i>&nbsp;<span><a href="<c:url value='/employee/employeeList.do'/>">마이페이지</a></span></li>
                     <li><i class="fa fa-envelope"></i>&nbsp;<span><a href="#">쪽지</a></span>&nbsp;<span
                             class="red">0</span></li>
                     <li><i class="fa fa-comments"></i>&nbsp;<span><a href="#">대화</a></span>&nbsp;<span

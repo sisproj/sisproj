@@ -27,6 +27,7 @@
 	box-sizing:border-box;
 	margin-top: 10px;
 	height: 500px;
+	background-color: #eee;
 }
 #cf_settings #save_line h3{
 	box-sizing:border-box;
@@ -35,6 +36,7 @@
 	padding-left: 10px;
 	background-color: #fff;
 	border-radius:10px ;
+	margin-bottom: 10px;
 }
 #cf_settings #save_line #cf_line{
 	box-sizing:border-box;
@@ -48,6 +50,9 @@
 #cf_settings #save_line #cf_line div{
 	box-sizing:border-box;
 	padding: 5px;
+}
+#cf_settings #save_line #cf_line div:hover{
+	background-color: #d1d1d1;
 }
 #cf_settings #save_line #line_detail{
 	box-sizing:border-box;

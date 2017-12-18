@@ -130,19 +130,17 @@
                 	<i id="myAddressUp" class="myAddress fa fa-chevron-up"></i>
                 	<i id="myAddressDown" class="myAddress fa fa-chevron-down"></i></a>
                 	<ul>
-                		<li><a href="<c:url value='/phoneBook/phoneBookList.do'/>">전체 주소록</a>
+                		<li><a href="<c:url value='/addrBook/addrBookList.do'/>">전체 주소록</a>
                 			<ul>
-                				<li><a href="#">└ 가족</a></li>
-                				<li><a href="#">└ 친구</a></li>
-                				<li><a href="#">└ 거래처</a></li>
-                				<li><a href="#">└ 동아리</a></li>
+                				<c:import url="/addrBook/addrGroupList.do"/>
+                				<!-- <li><a href="#">└ 가족</a></li> -->                				
                 			</ul>
                 		</li>                		
                 	</ul>
                 </li>
-                <li><a href="<c:url value='/phoneBook/phoneBookWrite.do'/>"><i class="fa fa-user-plus"></i>&nbsp;<span>연락처 추가</span></a></li>
+                <li><a href="<c:url value='/addrBook/addrBookWrite.do'/>"><i class="fa fa-user-plus"></i>&nbsp;<span>연락처 추가</span></a></li>
                 <li><a href="#"><i class="fa fa-users"></i>&nbsp;<span>그룹 추가</span></a></li>
-                <li><a href="<c:url value='/phoneBook/phoneBookTrash.do'/>"><i class="fa fa-trash"></i>&nbsp;<span>휴지통</span></a></li>
+                <li><a href="<c:url value='/addrBook/addrBookTrash.do'/>"><i class="fa fa-trash"></i>&nbsp;<span>휴지통</span></a></li>
                 <li><a href="#"><i class="fa fa-cog"></i>&nbsp;<span>환경설정</span></a></li>
             </ul>
             <!-- 1.왼쪽 사이드 메뉴 지정 끝-->

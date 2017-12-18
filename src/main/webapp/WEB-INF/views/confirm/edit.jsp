@@ -48,7 +48,7 @@
 				<!-- 미드 -->
 					<div id="doc_type">
 						<div id="dt_head">
-							<input type="text" name="doctype" value="시행기안문">
+							<input type="text" name="doctype" value="시행기안문" readonly>
 						</div>
 						<p id="userinfo">
 							기안자 : <input type="text" name="username" value="사용자(부서이름)" readonly>

@@ -1,4 +1,4 @@
-package com.siszo.sisproj.confirm.model;
+package com.siszo.sisproj.confirm.docform.model;
 
 //문서종류, 문서양식
 public class DocumentFormVO {

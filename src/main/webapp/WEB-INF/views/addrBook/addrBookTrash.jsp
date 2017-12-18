@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@include file="phoneBookTop.jsp"%>
+<%@include file="addrBookTop.jsp"%>
 
         <!-- 3. 내용 -->
     <article id="bodysection">
@@ -68,7 +68,7 @@
     </article>
     <!-- 3. 내용 끝 -->
     
-<%@include file="phoneBookBottom.jsp" %>    
+<%@include file="addrBookBottom.jsp" %>    
     	
     	
     	

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<%@include file="phoneBookTop.jsp"%>
+<%@include file="addrBookTop.jsp"%>
     <!-- 3. 내용 -->
     <article id="bodysection">
         <div id="divBodysection">
@@ -68,5 +68,5 @@
     </article>
     <!-- 3. 내용 끝 -->
 
-    <%@include file="phoneBookBottom.jsp" %>        
+    <%@include file="addrBookBottom.jsp" %>        
    

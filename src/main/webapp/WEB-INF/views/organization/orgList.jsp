@@ -4,52 +4,54 @@
 <!doctype HTML>
 <html>
 <head>
-   <script src="<c:url value="/resources/jquery/jquery-3.2.1.min.js"/>"></script>
 	<script type="text/javascript">
 		$(function() {
 			$('#orgDown').hide();
 			$('#organbody').hide();
-			$('#deptMinus').hide();
 			$('#organbody ul ul li').hide();
+			$('.deptMinus').hide();
 			
-			    $('#orgUp').click(function() {
+		    $('#orgUp').click(function() {
 				$('#organ').css('height', '500px');
 				$('#orgUp').hide();
 				$('#orgDown').show();
 				$('#organbody').show();
 			});
+			
 			$('#orgDown').click(function() {
 				$('#organ').css('height', '40px');
 				$('#orgDown').hide();
 				$('#orgUp').show();
 				$('#organbody').hide();
 			});
-			
-			$('.deptPlus').click(function(){
-				var dept = $(this).parent().attr('class');
-				alert(dept);
-				var deptt = '.'+dept;
-				$(deptt).show();
-				$('.deptPlus').hide();
-				$('.deptMinus').show();
+
+			$('.deptPlus').each(function(){
+				$(this).click(function(){
+						$(this).parent().children().children().show();
+						$(this).parent().find('.deptMinus').show();
+						$(this).hide();
+				});
+			});
+			 
+			$('.deptMinus').each(function(){
+				$(this).click(function(){
+					$(this).parent().find('.deptPlus').show();
+					$(this).parent().children().children().hide();
+					$(this).hide();
+				});
 			});
 			
-			/* $('#deptPlus').click(function() {
-				 var cho = $(this).attr('id');
-				$('#organbody ul ul li').show();
-				$('#deptPlus').hide();
-				$('#deptMinus').show();
+			$('#divEmpInfo').hide();
+			$('#organBody ul li ul li').each(function(){
+				$(this).click(function(){
+					$('#divEmpInfo').show();
+				});
 			});
-			$('#deptMinus').click(function() {
-				$('#organbody ul ul li').hide();
-				$('#deptPlus').show();
-				$('#deptMinus').hide();
-			}); */
 		}); 
 	</script>
 	<style>
 		#organ {
-			
+			transition:all 500ms cubic-bezier(0.34, -0.13, 0.6, 1.18);
 		}		
 		#organtitle {
 			line-height: 40px;
@@ -102,11 +104,14 @@
 			display: inline-block;
 			line-height: 25px;
 		}
+		#divEmpInfo{
+			display: none;
+		}
 	</style>
 </head>
 <body>
 	<div id="organtitle">
-         <i class="fa fa-sitemap" aria-hidden="true"></i>
+         <i class="fa fa-sitemap"></i>
          <div class="orgSearch">
           <input type="text" id="orgSearch" name="orgSearch" placeholder="부서/이름/아이디/직급/직책">
           <a href="#" id="orgSearchIcon"><i class="fa fa-search"></i></a>
@@ -116,22 +121,39 @@
 	</div>
      <div id="organbody">
      	<c:forEach var="deptVo" items="${deptList}">
-	     	<ul class="${deptVo.deptName }">
-	     		<li><i class="fa fa-plus-square deptPlus"></i>
-	     		<i class="fa fa-minus-square deptMinus"></i>
+	     	<ul >
+	     		<li class="deptName"><i id="deptPlus-${deptVo.deptNo }" class="fa fa-plus-square deptPlus"></i>
+	     			<i id="deptMinus-${deptVo.deptNo }" class="fa fa-minus-square deptMinus"></i>
 	     		 ${deptVo.deptName }
 	     			<ul>
-	     				<li><i class="fa fa-user" ></i> 김팀장</li>
-	     				<li><i class="fa fa-user"></i> 이과장</li>
-	     				<li><i class="fa fa-user"></i> 박대리</li>
-	     				<li><i class="fa fa-user"></i> 정사원</li>
-	     				<li><i class="fa fa-user"></i> 최인턴</li>
+	     			<c:forEach var="empVo" items="${empList }">
+	     				<c:if test="${empVo.deptNo == deptVo.deptNo }">
+	     					<li><i class="fa fa-user"></i>  ${empVo.empName } </a></li>
+	     				</c:if>
+	     			</c:forEach>
 	     			</ul>
 	     		</li>
 	     	</ul>
-     	</c:forEach>
-     	
+     	</c:forEach>     	
      </div>
+     
+    <!--  조직도에서 사원클릭시 개인정보 보여줌  -->
+    <!-- 
+     <div id="divEmpInfo">
+     	<div id="divClose"><i class="fa fa-times"></i></div>
+     	<div id="divEmpImg">
+     		<img alt="사원이름" src="사원이미지">
+     	</div>
+     	<div id="divEmp">
+	     	<div>사원이름(사원번호) 사원직급</div>
+	     	<div>사원 전화번호</div>
+	     	<div><i class="fa fa-envelope-o"></i>사원 이메일</div>
+	     	<div><i class="fa fa-paper-plane"></i>쪽지 아이콘, <i class="fa fa-comments-o"></i>메신저 아이콘</div>
+     	</div>
+     </div>
+      -->
+     <!-- 조직도 : 사원정보 끝 -->
+     
 </body>
 </html>
      

@@ -3,154 +3,161 @@ package com.siszo.sisproj.employee.model;
 import java.sql.Timestamp;
 
 public class EmployeeVO {
-	private int emp_no;
-	private String emp_name;
-	private String emp_eName;
-	private String emp_pwd;
-	private String emp_tel;
-	private String emp_ssn;
-	private String emp_email;
-	private String emp_zipcode;
-	private String emp_addr;
-	private String emp_addr2;
-	private Timestamp emp_hiredate;
-	private String emp_hobby;
-	private String emp_school;
-	private String emp_major;
-	private Timestamp emp_outdate;
-	private String emp_img;
-	private String emp_lev;
-	private int emp_sal;
-	private String emp_bookMark;
-	private int dept_no;
-	public int getEmp_no() {
-		return emp_no;
+	private int empNo;
+	private String empName;
+	private String empEName;
+	private String empPwd;
+	private String empTel;
+	private String empSsn;
+	private String empEmail;
+	private String empZipcode;
+	private String empAddr;
+	private String empAddr2;
+	private Timestamp empHiredate;
+	private String empHobby;
+	private String empSchool;
+	private String empMajor;
+	private Timestamp empOutdate;
+	private String empImg;
+	private String empLev;
+	private int empSal;
+	private String empBookMark;
+	private int deptNo;
+	private String empPosition;
+	public String getEmpPosition() {
+		return empPosition;
 	}
-	public void setEmp_no(int emp_no) {
-		this.emp_no = emp_no;
+	public void setEmpPosition(String empPosition) {
+		this.empPosition = empPosition;
 	}
-	public String getEmp_name() {
-		return emp_name;
+	public int getEmpNo() {
+		return empNo;
 	}
-	public void setEmp_name(String emp_name) {
-		this.emp_name = emp_name;
+	public void setEmpNo(int empNo) {
+		this.empNo = empNo;
 	}
-	public String getEmp_eName() {
-		return emp_eName;
+	public String getEmpName() {
+		return empName;
 	}
-	public void setEmp_eName(String emp_eName) {
-		this.emp_eName = emp_eName;
+	public void setEmpName(String empName) {
+		this.empName = empName;
 	}
-	public String getEmp_pwd() {
-		return emp_pwd;
+	public String getEmpEName() {
+		return empEName;
 	}
-	public void setEmp_pwd(String emp_pwd) {
-		this.emp_pwd = emp_pwd;
+	public void setEmpEName(String empEName) {
+		this.empEName = empEName;
 	}
-	public String getEmp_tel() {
-		return emp_tel;
+	public String getEmpPwd() {
+		return empPwd;
 	}
-	public void setEmp_tel(String emp_tel) {
-		this.emp_tel = emp_tel;
+	public void setEmpPwd(String empPwd) {
+		this.empPwd = empPwd;
 	}
-	public String getEmp_ssn() {
-		return emp_ssn;
+	public String getEmpTel() {
+		return empTel;
 	}
-	public void setEmp_ssn(String emp_ssn) {
-		this.emp_ssn = emp_ssn;
+	public void setEmpTel(String empTel) {
+		this.empTel = empTel;
 	}
-	public String getEmp_email() {
-		return emp_email;
+	public String getEmpSsn() {
+		return empSsn;
 	}
-	public void setEmp_email(String emp_email) {
-		this.emp_email = emp_email;
+	public void setEmpSsn(String empSsn) {
+		this.empSsn = empSsn;
 	}
-	public String getEmp_zipcode() {
-		return emp_zipcode;
+	public String getEmpEmail() {
+		return empEmail;
 	}
-	public void setEmp_zipcode(String emp_zipcode) {
-		this.emp_zipcode = emp_zipcode;
+	public void setEmpEmail(String empEmail) {
+		this.empEmail = empEmail;
 	}
-	public String getEmp_addr() {
-		return emp_addr;
+	public String getEmpZipcode() {
+		return empZipcode;
 	}
-	public void setEmp_addr(String emp_addr) {
-		this.emp_addr = emp_addr;
+	public void setEmpZipcode(String empZipcode) {
+		this.empZipcode = empZipcode;
 	}
-	public String getEmp_addr2() {
-		return emp_addr2;
+	public String getEmpAddr() {
+		return empAddr;
 	}
-	public void setEmp_addr2(String emp_addr2) {
-		this.emp_addr2 = emp_addr2;
+	public void setEmpAddr(String empAddr) {
+		this.empAddr = empAddr;
 	}
-	public Timestamp getEmp_hiredate() {
-		return emp_hiredate;
+	public String getEmpAddr2() {
+		return empAddr2;
 	}
-	public void setEmp_hiredate(Timestamp emp_hiredate) {
-		this.emp_hiredate = emp_hiredate;
+	public void setEmpAddr2(String empAddr2) {
+		this.empAddr2 = empAddr2;
 	}
-	public String getEmp_hobby() {
-		return emp_hobby;
+	public Timestamp getEmpHiredate() {
+		return empHiredate;
 	}
-	public void setEmp_hobby(String emp_hobby) {
-		this.emp_hobby = emp_hobby;
+	public void setEmpHiredate(Timestamp empHiredate) {
+		this.empHiredate = empHiredate;
 	}
-	public String getEmp_school() {
-		return emp_school;
+	public String getEmpHobby() {
+		return empHobby;
 	}
-	public void setEmp_school(String emp_school) {
-		this.emp_school = emp_school;
+	public void setEmpHobby(String empHobby) {
+		this.empHobby = empHobby;
 	}
-	public String getEmp_major() {
-		return emp_major;
+	public String getEmpSchool() {
+		return empSchool;
 	}
-	public void setEmp_major(String emp_major) {
-		this.emp_major = emp_major;
+	public void setEmpSchool(String empSchool) {
+		this.empSchool = empSchool;
 	}
-	public Timestamp getEmp_outdate() {
-		return emp_outdate;
+	public String getEmpMajor() {
+		return empMajor;
 	}
-	public void setEmp_outdate(Timestamp emp_outdate) {
-		this.emp_outdate = emp_outdate;
+	public void setEmpMajor(String empMajor) {
+		this.empMajor = empMajor;
 	}
-	public String getEmp_img() {
-		return emp_img;
+	public Timestamp getEmpOutdate() {
+		return empOutdate;
 	}
-	public void setEmp_img(String emp_img) {
-		this.emp_img = emp_img;
+	public void setEmpOutdate(Timestamp empOutdate) {
+		this.empOutdate = empOutdate;
 	}
-	public String getEmp_lev() {
-		return emp_lev;
+	public String getEmpImg() {
+		return empImg;
 	}
-	public void setEmp_lev(String emp_lev) {
-		this.emp_lev = emp_lev;
+	public void setEmpImg(String empImg) {
+		this.empImg = empImg;
 	}
-	public int getEmp_sal() {
-		return emp_sal;
+	public String getEmpLev() {
+		return empLev;
 	}
-	public void setEmp_sal(int emp_sal) {
-		this.emp_sal = emp_sal;
+	public void setEmpLev(String empLev) {
+		this.empLev = empLev;
 	}
-	public String getEmp_bookMark() {
-		return emp_bookMark;
+	public int getEmpSal() {
+		return empSal;
 	}
-	public void setEmp_bookMark(String emp_bookMark) {
-		this.emp_bookMark = emp_bookMark;
+	public void setEmpSal(int empSal) {
+		this.empSal = empSal;
 	}
-	public int getDept_no() {
-		return dept_no;
+	public String getEmpBookMark() {
+		return empBookMark;
 	}
-	public void setDept_no(int dept_no) {
-		this.dept_no = dept_no;
+	public void setEmpBookMark(String empBookMark) {
+		this.empBookMark = empBookMark;
+	}
+	public int getDeptNo() {
+		return deptNo;
+	}
+	public void setDeptNo(int deptNo) {
+		this.deptNo = deptNo;
 	}
 	@Override
 	public String toString() {
-		return "EmployeeVO [emp_no=" + emp_no + ", emp_name=" + emp_name + ", emp_eName=" + emp_eName + ", emp_pwd="
-				+ emp_pwd + ", emp_tel=" + emp_tel + ", emp_ssn=" + emp_ssn + ", emp_email=" + emp_email
-				+ ", emp_zipcode=" + emp_zipcode + ", emp_addr=" + emp_addr + ", emp_addr2=" + emp_addr2
-				+ ", emp_hiredate=" + emp_hiredate + ", emp_hobby=" + emp_hobby + ", emp_school=" + emp_school
-				+ ", emp_major=" + emp_major + ", emp_outdate=" + emp_outdate + ", emp_img=" + emp_img + ", emp_lev="
-				+ emp_lev + ", emp_sal=" + emp_sal + ", emp_bookMark=" + emp_bookMark + ", dept_no=" + dept_no + "]";
+		return "EmployeeVO [empNo=" + empNo + ", empName=" + empName + ", empEName=" + empEName + ", empPwd=" + empPwd
+				+ ", empTel=" + empTel + ", empSsn=" + empSsn + ", empEmail=" + empEmail + ", empZipcode=" + empZipcode
+				+ ", empAddr=" + empAddr + ", empAddr2=" + empAddr2 + ", empHiredate=" + empHiredate + ", empHobby="
+				+ empHobby + ", empSchool=" + empSchool + ", empMajor=" + empMajor + ", empOutdate=" + empOutdate
+				+ ", empImg=" + empImg + ", empLev=" + empLev + ", empSal=" + empSal + ", empBookMark=" + empBookMark
+				+ ", deptNo=" + deptNo + ", empPosition=" + empPosition + "]";
 	}
 	
 }

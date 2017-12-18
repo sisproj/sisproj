@@ -13,6 +13,7 @@
 	border-right: 1px solid #fff;
 	padding: 10px;
 	float:left;
+	background-color: #eee;
 }
 #cf_choice #doc_type h3{
 	text-align: center;
@@ -36,6 +37,7 @@
 	border: 2px solid #fff;
 	border-left: 1px solid #fff;
 	float:left;
+	background-color: #eee;
 }
 #cf_choice #doc_form .dh{
 	box-sizing:border-box;				
@@ -65,6 +67,9 @@
 #cf_choice #doc_form .dd span{
 	text-align: center;	
 	padding: 5px;
+	height: 19px;
+	line-height:23px;
+	overflow: hidden;
 }
 #cf_choice #doc_form .dd .sd1{
 	display: block;	
@@ -73,6 +78,9 @@
 }
 #cf_choice #doc_form .dd .sd2{
 	display: block;
+}
+#cf_choice #doc_form .dd a{
+	display: none;
 }
 #cf_choice #writebtn{
 	width: 95%;

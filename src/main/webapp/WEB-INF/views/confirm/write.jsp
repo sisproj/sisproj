@@ -37,70 +37,72 @@
 					<div id="link_doc">
 						<span class="sd1">연계문서선택</span>
 						<select id="link_doc" class="sd2">
-							<!-- if(내문서중 기안서만 출력) -->
-							<option value="mydoc">mydoc</option>
+							<!-- if(내 문서들 출력) -->
+							<option value="0">선택하세요</option>
+							<option value="(20171010102031001) 사내 인트라넷 시스템 도입의 건">사내 인트라넷 시스템 도입의 건</option>
+							<option value="(20171010102033022) 사내 인트라넷 시스템 도입에 대한 지출">사내 인트라넷 시스템 도입에 대한 지출</option>
 						</select>
 					</div>
 				</div>	
 				<!-- 상단 끝 -->
-				<form name="writeFrm" id="writeFrm" method="post" action="#" enctype="multipart/form-data">
+				<form name="writeFrm" id="writeFrm" method="post" action="<c:url value='/confirm/writeOk.do'/>" enctype="multipart/form-data">
 				<!-- 미드 -->
 					<div id="doc_type">
 						<div id="dt_head">
-							<input type="text" name="doctype" value="시행기안문">
+							<input type="text" name="formName" value="${vo.formName }" readonly>
 						</div>
 						<p id="userinfo">
 							기안자 : <input type="text" name="username" value="사용자(부서이름)" readonly>
-							<input type="hidden" name="userno" value="회원번호">
+							<input type="hidden" name="empNo" value="회원번호">
 						</p>
 						<div id="doc_info">
 							<div>
-								<label for ="docno" class="sd1">문서 번호</label>
-								<input type="text" name="docno" id="docno" value="20171011102030001" readonly>
+								<label for ="docno" class="sd1">문서 번호</label> <!-- 날짜+부서번호+양식번호+문서시퀀스 -->
+								<input type="text" name="cfNo" id="docno" value="${today }301333${seq}" readonly>
 							</div>
 							<div>
 								<label for="docreg" class="sd1">기안 일자</label>
-								<input type="text" name="docreg" id="docreg" value="20171011" readonly>
+								<input type="text" name="docreg" id="docreg" value="${today }" readonly>
 							</div>
 							<div>
 								<label for="doclife" class="sd1">보존 년한</label>	
-								<input type="text" name="doclife" id="doclife" value="5년" readonly>
+								<input type="text" name="formLife" id="doclife" value="${vo.formLife }" readonly>
 							</div>
 							<div>
 								<label for="docsecu" class="sd1">보안수준</label>	
-								<input type="text" name="docsecu" id="docsecu" value="중" readonly>
+								<input type="text" name="formSecu" id="docsecu" value="${vo.formSecu }" readonly>
 							</div>
 						</div>
 						<div id="confirmer">
-							<div>
+							<div id="confirmer1">
 								<span></span>
 								<span>결재자1</span>
 							</div>
-							<div>
+							<div id="confirmer2">
 								<span></span>
 								<span>결재자2</span>
 							</div>
-							<div>
+							<div id="confirmer3">
 								<span></span>
 								<span>결재자3</span>
 							</div>
-							<div>
+							<div id="confirmer4">
 								<span></span>
 								<span>결재자4</span>
 							</div>
-							<div>
+							<div id="confirmer5">
 								<span></span>
 								<span>결재자5</span>
 							</div>
-							<div>
+							<div id="confirmer6">
 								<span></span>
 								<span>결재자6</span>
 							</div>
-							<div>
+							<div id="confirmer7">
 								<span></span>
 								<span>결재자7</span>
 							</div>
-							<div>
+							<div id="confirmer8">
 								<span></span>
 								<span>결재자8</span>
 							</div>
@@ -109,15 +111,16 @@
 						<div id="cf_info">
 							<div class="dr">
 								<label for="linkdoc" class="sd1">연계문서</label>	
-								<input type="text" name="linkdoc" id="linkdoc" value="(20171010102031001) 시행기안문" readonly>
+								<input type="text" name="linkdoc" id="linkdoc" value="" readonly>
+								<input type="hidden" name="linkCfNo">
 							</div>
 							<div class="dr">
 								<label for="doctitle" class="sd1">제목</label>	
-								<input type="text" name="doctitle" id="doctitle" value="" readonly>
+								<input type="text" name="cfTitle" id="doctitle" value="" readonly>
 							</div>			
 							<!-- 에디터부분 -->
 							<div id="smarteditor">
-								<textarea name="ir1" id="ir1" rows="20" style="width: 100%;"></textarea>
+								<textarea name="cfContent" id="ir1" rows="20" style="width: 100%;"></textarea>
 							</div>
 							<!-- 에디터부분 끝 -->				
 						</div>
@@ -137,7 +140,7 @@
 						<div id="files"></div>
 					</div>
 					<!-- 바로 결재하는지 임시저장하는지 저장타입넘겨주는 input -->
-					<input type="hidden" name="savetype" id="savetype">
+					<input type="text" name="savetype" id="savetype">
 					<div id="submitbtn">
 						<input type="button" id="submit" onclick="submitContents()" value="결재">&nbsp;&nbsp;
 						<input type="button" id="save" onclick="submitContents()" value="임시저장">	
