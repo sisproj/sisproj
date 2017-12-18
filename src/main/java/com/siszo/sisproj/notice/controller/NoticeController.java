@@ -25,6 +25,13 @@ public class NoticeController {
 	public void noticeUpdate() {
 		logger.info("공지사항 글 수정하기");
 	}
+	
+	@RequestMapping("/noticeDetail.do")
+	public void noticeDetail() {
+		logger.info("공지사항 상세보기");
+	}
+	
+	
 }
 
 

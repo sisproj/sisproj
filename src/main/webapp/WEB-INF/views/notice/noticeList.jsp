@@ -26,16 +26,16 @@
 		</article>	
 		<article id="bodysection">
 			<!-- 3. 내용 -->
-			<div class="container">
+			<div class="container" style="max-width: 1045px;">
 				<div class="row">
-					<table class="table table-striped" style="text-align: center; border: 1px solid #eeeeee">
+					<table class="table table-striped" style="text-align: center; border-collapse:collapse; border: 1px solid #c5bdbd;">
 						<thead>
-							<tr>
-								<th style="background-color: #eeeeee; text-align: center;">번호</th>
-								<th style="background-color: #eeeeee; text-align: center;">제목</th>
-								<th style="background-color: #eeeeee; text-align: center;">작성자</th>
-								<th style="background-color: #eeeeee; text-align: center;">작성일</th>
-								<th style="background-color: #eeeeee; text-align: center;">조회수</th>
+							<tr style="background-color: #eeeeee;">
+								<th>번호</th>
+								<th>제목</th>
+								<th>작성자</th>
+								<th>작성일</th>
+								<th>조회수</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -104,6 +104,27 @@
 							</tr>
 							<tr>
 								<td>10</td>									
+								<td>3안녕하세요.</td>									
+								<td>3홍길동</td>									
+								<td>2015-05-05</td>								
+								<td>0</td>								
+							</tr>
+							<tr>
+								<td>11</td>									
+								<td>3안녕하세요.</td>									
+								<td>3홍길동</td>									
+								<td>2015-05-05</td>								
+								<td>0</td>								
+							</tr>
+							<tr>
+								<td>12</td>									
+								<td>3안녕하세요.</td>									
+								<td>3홍길동</td>									
+								<td>2015-05-05</td>								
+								<td>0</td>								
+							</tr>
+							<tr>
+								<td>13</td>									
 								<td>3안녕하세요.</td>									
 								<td>3홍길동</td>									
 								<td>2015-05-05</td>								
