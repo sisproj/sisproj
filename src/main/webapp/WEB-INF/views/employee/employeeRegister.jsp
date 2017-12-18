@@ -26,14 +26,14 @@
     <article id="bodysection">
         <!-- 3. 내용 -->
      <div id="dimyPage">
-      	<form id="frmEmp" name="frmEMP" action="">
+      	<form id="frmEmp" name="frmEMP" method="post" action="<c:url value='/employee/employeeRegister.do'/>">
       	  <fieldset>
        		<div id="diName">
-      	 		<label for="name">이름</label><input type="text" id="name" name="name" maxlength="6">   
+      	 		<label for="name">이름</label><input type="text" id="empName" name="empName" maxlength="6">   
        		</div>
 	       	   <input type="image" src="" alt="이미지 등록" id="empImg">       		    
        		<div id="diEnName">
-       		<label for="enName">영어이름</label> <input type="text" id="enName" name="enName">
+       		<label for="enName">영어이름</label> <input type="text" id="empEName" name="empEName">
        		</div>
        		<div id="diJumin">
 		        <label for="jumin">주민번호</label>	
@@ -43,21 +43,21 @@
 			<!-- 부서는 계속 추가하게 만들기 -->
 			<div id="diDe">
 				<label for="dept">부서</label>
-				<select>
-					<option value="재무">재무</option>
-					<option value="영업">영업</option>
-					<option value="인사">인사</option>
-					<option value="총무">총무</option>
-					<option value="기획">기획</option>
-					<option value="홍보">홍보</option>
-					<option value="법무">법무</option>
+				<select id="deptNo" name="deptNo">
+					<option value="101">기획</option>
+					<option value="201">인사</option>
+					<option value="301">재무</option>
+					<option value="401">홍보</option>
+					<option value="501">전산</option>
+					<option value="601">영업</option>
+					<option value="701">법무</option>
 				</select>
 				<!-- <input type="text" id="dept" name="dept"> -->
 			</div>
 			<!--직급은 계속 추가하게 만들기 -->
 			<div id="diPos">
 				<label for="position">직급</label>
-				<select>
+				<select id="empPosition" name="empPosition">
 					<option value="인턴">인턴</option>
 					<option value="대리">대리</option>
 					<option value="차장">차장</option>
@@ -70,28 +70,28 @@
 			</div>
 			<div id="diHobby">
 				<label for="hobby">취미</label>   	
-				<input type="text" name="hobby" id="hobby">
+				<input type="text" name="empHobby" id="empHobby">
 			</div>
 	        <div id="diZipcode">
 		        <label for="zipcode" id="zipcodel">우편번호</label>
-		        <input type="text" name="zipcode" id="zipcode" ReadOnly title="우편번호">
+		        <input type="text" name="empZipcode" id="empZipcode" title="우편번호">
 		        <input type="button" value="우편번호 찾기" id="btnZipcode" title="새창열림">
 				<label for="address" id="address">주소</label>
-				<input type="text" name="address" id="address">	
+				<input type="text" name="empAddr" id="empAddr">	
 				<label for="addressDetail" id="addressDetail">상세주소</label>
-				<input type="text" name="addressDetail" id="addressDetail">
+				<input type="text" name="empAddr2" id="empAddr2">
 			</div>
 			<div id="diSchool">
 				<label for="school">출신 학교</label>   	
-				<input type="text" name="school" id="school">
+				<input type="text" name="empSchool" id="empSchool">
 			</div>
 			<div id="diMajor">
 				<label for="major">전공</label>   	
-				<input type="text" name="major" id="major">
+				<input type="text" name="empMajor" id="empMajor">
 			</div>
 			<div id="diSal" style="">
 				<label for="sal">월급</label>   	
-				<input type="text" name="sal" id="sal"> 			 				 
+				<input type="text" name="empSal" id="empSal"> 			 				 
 			</div>
 			<div id="diTel">
 	       		<label for="hp1">핸드폰</label><select name="tel1" id="tel1" title="휴대폰 앞자리">

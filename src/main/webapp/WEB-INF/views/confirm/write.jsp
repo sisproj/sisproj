@@ -146,6 +146,9 @@
 						<input type="button" id="save" onclick="submitContents()" value="임시저장">	
 					</div>
 				</form>
+				<div id="choice_cfer">
+					<c:import url='/confirm/line.do'/>
+				</div>
 				<!-- 하단 끝 -->
 			<!-- writeform 끝-->	
 			<!-- 3. 내용 끝 -->
@@ -156,3 +159,10 @@
 		<!-- 0. include부분 끝-->
 <%@ include file="../inc/bottom.jsp" %>
 <script type="text/javascript" src="<c:url value='/resources/js/pagejs/confirm_write.js'/>"></script>
+<script type="text/javascript">
+	$(function(){
+		$('#linebtn input[type=button]').click(function(){
+			$('#choice_cfer').toggle();
+		})
+	});
+</script>

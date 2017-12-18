@@ -26,31 +26,32 @@
 		</article>	
 		<article id="bodysection">
 			<!-- 3. 내용 -->
-			<div class="container" style="max-width: 1045px;">
-				<div class="row">
-					<form method="post" action="writeAction.jsp">
-						<table class="table table-striped"
-							style="text-align: center; border: 1px solid #c5bdbd;">
-							<thead>
-								<tr>
-									<th colspan="2"	style="background-color: #eeeeee; text-align: center;">공지사항 글쓰기</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td><input type="text" class="form-control"
-										placeholder="글 제목" name="bbsTitle" maxlength="50"></td>
-								</tr>
-								<tr class="active">
-									<td><textarea class="form-control" placeholder="글 내용"
-											name="bbsContent" maxlength="2048" style="height: 480px;"></textarea></td>
-								</tr>
-							</tbody>
-						</table>
-						<input type="submit" class="btn btn-primary pull-right" value="글쓰기">
-					</form>
-				</div>
-			</div>
+	<div class="container" style="max-width: 1045px;">
+		<div class="row">
+			<form method="post" action="updateAction.jsp?bbsID">
+				<table class="table table-striped"
+					style="text-align: center; border: 1px solid #c5bdbd;">
+					<thead>
+						<tr>
+							<th colspan="2"	style="background-color: #eeeeee; text-align: center;">공지사항 수정</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><input type="text" class="form-control"
+								placeholder="글 제목" name="bbsTitle" maxlength="50" values=""></td>
+						</tr>
+						<tr>
+							<td class="active"><textarea class="form-control" placeholder="글 내용"
+									name="bbsContent" maxlength="2048" style="height: 480px;" values=""></textarea></td>
+						</tr>
+					</tbody>
+				</table>
+				<input type="submit" class="btn btn-primary pull-right" value="글수정">
+			</form>
+		</div>
+	</div>
+
 	<!-- 3. 내용 끝 -->
 		</article>
 		<!-- 4. 상단 네비 색먹이기 // li태그 순서(전자결재 : 6번째) 입력 -->
@@ -63,3 +64,6 @@
 		<!-- 0. include부분 끝-->
 
 <%@include file="../inc/bottom.jsp" %>
+
+
+

@@ -6,9 +6,10 @@ public class AddrBookVO {
 	private String addrComp;
 	private String addrTel;
 	private String addrEmail;
-	private String addrGruopNo;
+	private String addrGroupNo;
 	private String addrIsDel;
 	private int empNo;
+	
 	public int getAddrNo() {
 		return addrNo;
 	}
@@ -39,11 +40,11 @@ public class AddrBookVO {
 	public void setAddrEmail(String addrEmail) {
 		this.addrEmail = addrEmail;
 	}
-	public String getAddrGruopNo() {
-		return addrGruopNo;
+	public String getAddrGroupNo() {
+		return addrGroupNo;
 	}
-	public void setAddrGruopNo(String addrGruopNo) {
-		this.addrGruopNo = addrGruopNo;
+	public void setAddrGruopNo(String addrGroupNo) {
+		this.addrGroupNo = addrGroupNo;
 	}
 	public String getAddrIsDel() {
 		return addrIsDel;
@@ -60,7 +61,7 @@ public class AddrBookVO {
 	@Override
 	public String toString() {
 		return "AddrBookVO [addrNo=" + addrNo + ", addrName=" + addrName + ", addrComp=" + addrComp + ", addrTel="
-				+ addrTel + ", addrEmail=" + addrEmail + ", addrGruopNo=" + addrGruopNo + ", addrIsDel=" + addrIsDel
+				+ addrTel + ", addrEmail=" + addrEmail + ", addrGroupNo=" + addrGroupNo + ", addrIsDel=" + addrIsDel
 				+ ", empNo=" + empNo + "]";
 	}
 	

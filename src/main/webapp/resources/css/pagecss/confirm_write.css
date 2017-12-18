@@ -214,3 +214,17 @@ form#writeFrm #doc_type{
 	margin-bottom: 10px;
 }
 /*하단 끝*/
+/*결재자 선택 창*/
+#choice_cfer{
+	background-color: #eee;
+	position:absolute;
+	top:30%;
+	left:50%;
+	margin-left:-300px;
+	margin-top:-270px;
+	padding: 10px;
+	width: 600px;
+	height: 540px;
+	box-shadow:3px 3px 7px #555;
+	display: none;
+}

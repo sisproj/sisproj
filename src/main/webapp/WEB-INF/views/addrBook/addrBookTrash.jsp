@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<%@include file="phoneBookTop.jsp"%>
-    <!-- 3. 내용 -->
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@include file="addrBookTop.jsp"%>
+
+        <!-- 3. 내용 -->
     <article id="bodysection">
         <div id="divBodysection">
 	        <div class="divAddrHeader">
-		        <a href="#"><div><i class="fa fa-trash"></i><span> 삭제</span></div></a>
-		        <a href="#"><div><i class="fa fa-envelope-o"></i><span> 메일 보내기</span></div></a>
-		        <a href="#"><div><i class="fa fa-file-excel-o"></i><span> 주소록 내보내기</span></div></a>
-		        <div><input type="text" placeholder="연락처 검색"><a href="#"><i id="addrSearch" class="fa fa-search"></i></a></div>
+		        <a href="#"><div><i class="fa fa-trash"></i><span> 휴지통 비우기</span></div></a>		        
+		        <a href="#"><div><i class="fa fa-share-square-o"></i><span> 주소록으로 되돌리기</span></div></a>		        
 		        <div id="selectMenu">
 		        	<select>
 				        <option>10개씩 보기</option>
@@ -67,6 +67,13 @@
         </div>
     </article>
     <!-- 3. 내용 끝 -->
-
-    <%@include file="phoneBookBottom.jsp" %>        
-   
+    
+<%@include file="addrBookBottom.jsp" %>    
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	

@@ -141,6 +141,12 @@ public class ConfirmController {
 		logger.info("문서 수정화면 보여주기");
 		return "confirm/edit";
 	}
+
+	@RequestMapping("")
+	public String choline() {
+		logger.info("결재자 선택 화면");
+		return "";
+	}
 	
 	//admin
 	@RequestMapping(value="/adm/instypeform.do", method=RequestMethod.GET)

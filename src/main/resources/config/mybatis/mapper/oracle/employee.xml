@@ -3,17 +3,34 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="config.mybatis.mapper.oracle.employee">
+	
 	<insert id="insertEmployee">
 		<selectKey keyProperty="empNo" resultType="int" order="BEFORE">
-			select empNo_seq.nextval from dual
+			select emp_seq.nextval from dual
 		</selectKey>
 		insert into emp(emp_no,emp_name,emp_ename,emp_tel,emp_ssn,emp_email,emp_zipcode
 		,emp_addr,emp_addr2,emp_hiredate,emp_school,
-		emp_major,emp_img,emp_lev,emp_sal,dept_no,emp_position)
+		emp_major,emp_img,emp_sal,dept_no,emp_position,emp_lev)
 		values(#{empNo},#{empName},#{empEName},#{empTel},#{empSsn},#{empEmail},#{empZipcode}
 		,#{empAddr},#{empAddr2},#{empHiredate},#{empSchool},#{empMajor},
-		#{empImg},#{empLev},#{empSal},#{deptNo},#{empPosition});
+		#{empImg},#{empSal},#{deptNo},#{empPosition},#{empLev});
 	</insert>
+	<select id="selectEmployeeByNo" parameterType="int" resultType="EmployeeVO">
+		select * from emp e,dept d where e.DEPT_NO = d.DEPT_NO and e.emp_No=#{empNo}
+	</select>
+	<select id="selectAllEmployee" resultType="EmployeeVO">
+		select * from emp
+	</select>
+	<update id="editEmployee" parameterType="int">
+		update emp set empName=#{empName},
+		empEName=#{empEName},empTel=#{empTel},empSsn=#{empSsn},
+		empEmail=#{empEmail},empZipcode=#{empZipcode},empAddr=#{empAddr},
+		empAddr2=#{empAddr2},empHiredate=#{empHiredate},empSchool=#{empSchool},
+		empMajor=#{empMajor},empImg=#{empImg},empSal=#{empSal},
+		deptNo=#{deptNo},empPosition=#{empPosition},empLev=#{empLev}
+		where empNo=#{empNo}
+	</update>
+	
 </mapper>
 
 

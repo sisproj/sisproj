@@ -8,7 +8,7 @@
     </article>
 <article id="bodysection">
 <div id="dimyPage">
-	<form id="searchEmp" name="searchEmp" action="list.do">
+	<form id="searchEmp" name="searchEmp" method="get" action="employee/employeeList.do">
 		<div id="dimyP">
 			<select>
 				<option value="사원이름">사원이름</option>
@@ -47,14 +47,16 @@
 				<th></th>			
 			</tr>
 			<!-- for문 사원 리스트 시작 -->
-			<c:forEach begin="0" end="5">	
+			<c:forEach var="vo" items="${list}">	
+				<c:if test="${empty vo.empOutdate }">
 					<tr>				
-						<td>5</td>
+						<td>${vo.empNo }</td>
 						<!-- 사원번호로 사원 디테일 이동 -->
-						<td><a href="<c:url value='/employee/employeeDetail.do'/>">홍길동</a></td>
+						<td><a href="<c:url value='/employee/employeeDetail.do?empNo=${vo.empNo }'/>">${vo.empName }</a></td>
 						<td>인사팀</td>
-						<td>과장</td>
+						<td>${vo.empPosition }</td>
 						<td>재직</td>
+				</c:if>
 					<!-- if걸어서 관리자 일때만 나오게 함 관리자권한으로 되면 버튼 사라지고 그자리에 관리자로 바꿈 -->
 						<td id="PoCh"><a href="#"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></td>
 					<!-- 	<td>관리자</td> -->
@@ -67,7 +69,7 @@
 		
 	</div>
 	<div style="text-align: center;width: 90%;">
-		<%@include file="../phoneBook/paging.jsp" %>
+		<%@include file="../addrBook/paging.jsp" %>
 	</div>
 </div>    	
     </article>
@@ -78,7 +80,7 @@
 			confirm("관리자로 올리시겠습니까?");
 		});
 		$('#btDeSe').click(function(){
-			window.open('<c:url value='/employee/employeeDetailSerach.do'/>','chk',
+			window.open('<c:url value='/employee/employeeDetailSearch.do'/>','chk',
 					'left=0,top=0,width=500,height=250,locations=yes,resizable=yes');
 		});
 	});
