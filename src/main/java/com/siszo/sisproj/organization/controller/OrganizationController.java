@@ -1,4 +1,4 @@
-package com.siszo.sisproj.employee.controller;
+package com.siszo.sisproj.organization.controller;
 
 import java.util.List;
 
@@ -33,13 +33,9 @@ public class OrganizationController {
 		
 		List<DeptVO> deptList=deptService.selectDeptName();
 		logger.info("부서명 조회결과 deptList.size()={}", deptList.size());
-		DeptVO vo = deptList.get(0);
 		
 		List<EmployeeVO> empList=orgService.selectEmp();
 		logger.info("부서별 사원리스트 조회 결과 empList.size()={}",empList.size());
-		
-		System.out.println("이름 : "+vo.getDeptName());
-		System.out.println("번호 : "+vo.getDeptNo());
 		
 		model.addAttribute("deptList", deptList);
 		model.addAttribute("empList", empList);

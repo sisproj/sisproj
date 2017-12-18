@@ -35,30 +35,20 @@
 	        			<th>회사</th>
 	        			<th>그룹</th>
 	        		</tr>
-	        		<tr>
-	        			<td><input type="checkbox"></td>
-	        			<td><a href="#">이름</a></td>
-	        			<td>전화번호</td>
-	        			<td><a href="#">이메일</a></td>
-	        			<td>회사</td>
-	        			<td>그룹</td>
-	        		</tr>
-	        		<tr>
-	        			<td><input type="checkbox"></td>
-	        			<td><a href="#">이름</a></td>
-	        			<td>전화번호</td>
-	        			<td><a href="#">이메일</a></td>
-	        			<td>회사</td>
-	        			<td>그룹</td>
-	        		</tr>
-	        		<tr>
-	        			<td><input type="checkbox"></td>
-	        			<td><a href="#">이름</a></td>
-	        			<td>전화번호</td>
-	        			<td><a href="#">이메일</a></td>
-	        			<td>회사</td>
-	        			<td>그룹</td>
-	        		</tr>
+	        		<c:forEach var="addrBookVo" items="${addrList }">
+		        		<tr>
+		        			<td><input type="checkbox"></td>
+		        			<td><a href="#">${addrBookVo.addrName }</a></td>
+		        			<td>${addrBookVo.addrTel }</td>
+		        			<td><a href="#">${addrBookVo.addrEmail}</a></td>
+		        			<td>${addrBookVo.addrComp}</td>
+		        			<c:forEach var="addrGroupVo" items="${groupList }">
+		        				<c:if test="${addrBookVo.addrGroupNo==addrGroupVo.groupNo }">
+		        					<td>${addrGroupVo.groupName}</td>
+		        				</c:if>
+		        			</c:forEach>
+		        		</tr>
+	        		</c:forEach>
 	        	</table>
 	        </div>
 	        <div class="divPaging">

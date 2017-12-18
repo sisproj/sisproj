@@ -4,8 +4,16 @@
 
 <mapper namespace="config.mybatis.mapper.oracle.addrBook">	
 	<select id="selectAddrBookAll" resultType="addrBookVO">
-		select * from addrbook	
+		select * from addrBookView	
 	</select>
+	
+	<insert id="insertAddrBook" parameterType="AddrBookVO">
+		<selectKey keyProperty="addrNo" resultType="int" order="BEFORE">
+			select addrbook_seq.nextval from dual
+		</selectKey>
+		insert into addrBook
+		values(#{addrNo}, #{addrName}, #{addrComp}, #{addrTel}, #{addrEmail}, #{addrGroupNo}, #{addrIsDel}, #{empNo})
+	</insert>
 </mapper>
 
 
