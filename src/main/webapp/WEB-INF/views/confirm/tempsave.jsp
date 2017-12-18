@@ -42,7 +42,7 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td><input type="checkbox" name="select" value=""></td>
+						<td><input type="checkbox" name="select" value="문서번호받기"></td>
 						<td>20171211102030001</td>
 						<td><a href="#">시행기안문</a></td>
 						<td>기안서</td>
