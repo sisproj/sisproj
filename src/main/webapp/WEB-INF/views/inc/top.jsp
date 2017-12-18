@@ -27,6 +27,9 @@
     <!-- mainjs -->
     
     <script src="<c:url value="/resources/js/mainjs.js"/>"></script>
+    
+    <script src="<c:url value="/resources/codebase/dhtmlxscheduler.js"/>"></script>
+    <link rel="stylesheet" href="<c:url value="/resources/codebase/dhtmlxscheduler.css"/>">
    
 </head>
 <body>

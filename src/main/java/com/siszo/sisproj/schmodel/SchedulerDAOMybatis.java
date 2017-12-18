@@ -16,7 +16,7 @@ public class SchedulerDAOMybatis extends SqlSessionDaoSupport implements Schedul
 		return getSqlSession().insert(namespace+".schedulerInsert",vo);
 	}
 	
-	public List<SchedulerVO> schedulerSelectAll(){
-		return getSqlSession().selectList(namespace+".schedulerSelectAll");
+	public List<SchedulerVO> schedulerSelectAll(int empNo){
+		return getSqlSession().selectList(namespace+".schedulerSelectAll",empNo);
 	}
 }

@@ -132,10 +132,8 @@
                 	<ul>
                 		<li><a href="<c:url value='/phoneBook/phoneBookList.do'/>">전체 주소록</a>
                 			<ul>
-                				<li><a href="#">└ 가족</a></li>
-                				<li><a href="#">└ 친구</a></li>
-                				<li><a href="#">└ 거래처</a></li>
-                				<li><a href="#">└ 동아리</a></li>
+                				<c:import url="/phoneBook/addrGroupList.do"/>
+                				<!-- <li><a href="#">└ 가족</a></li> -->                				
                 			</ul>
                 		</li>                		
                 	</ul>
