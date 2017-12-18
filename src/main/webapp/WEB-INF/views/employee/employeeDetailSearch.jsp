@@ -11,23 +11,22 @@
 <body>
 
 <div id="dimyPage">
-	<form id="frmDeSe" name="frmDeSe" action="/employee/employeeList.do">
-		<label for="empNo">사원번호</label>
-		<input type="text" id="empNo" name="empNo">	
+	<form id="frmDeSe" name="frmDeSe" method="get" 
+	action="<c:url value='/employee/employeeDetailSearch.do?empName="+${empName }&empPosition=${empPosition }"'/>">
 		<label for="empName">사원이름</label>
 		<input type="text" id="empName" name="empName">			
 		<label for="deptNo">부서이름</label>
-		<select>
+	<%-- 	<select>
 			<!-- value 부서 번호 입력 for문-->
-			<%-- <c:forEach var="vo" items="${list }">
-			<option value="${vo.deptNo }">${vo.deptName }</option>
-			</c:forEach> --%>
+			<c:forEach var="deptVo" items="${list }">
+			<option value="${vo.deptName }">${vo.deptName }</option>
+			</c:forEach>
 			<option>인사팀</option>
 			<option>재무</option>
 			<option>홍보팀</option>
-		</select><br>
-		<label for="empPosition">직급</label>	
-		<select>
+		</select><br> --%>
+		<label>직급</label>	
+		<select id="empPosition">
 			<%-- <c:forEach var="vo" items="${list }">
 			<option value="${vo.empPosition }">${vo.empPosition }</option>
 			</c:forEach> --%>
@@ -42,10 +41,4 @@
 	</form>
 </div>
 </body>
-<script type="text/javascript">
-	$(function () {
-		$('#empNo').focus();
-		/* 입력값 pattern 적용 하기 */
-	});
-</script>
 </html>

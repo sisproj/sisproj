@@ -13,7 +13,7 @@ import com.siszo.sisproj.addrbook.addrgroup.model.AddrGroupService;
 import com.siszo.sisproj.addrbook.addrgroup.model.AddrGroupVO;
 
 @Controller
-@RequestMapping("/phoneBook")
+@RequestMapping("/addrBook")
 public class AddrGroupController {
 	private static final Logger logger=LoggerFactory.getLogger(AddrGroupController.class);
 	
@@ -29,6 +29,6 @@ public class AddrGroupController {
 		
 		model.addAttribute("addrGroupList", addrGroupList);
 		
-		return "phoneBook/addrGroupList";
+		return "addrBook/addrGroupList";
 	}
 }

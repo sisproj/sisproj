@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PhoneBookController {
 	private static final Logger logger=LoggerFactory.getLogger(PhoneBookController.class);
 	
-	@RequestMapping("/phoneBookList.do")
+	/*@RequestMapping("/phoneBookList.do")
 	public void list() {
 		logger.info("주소록 화면 보여주기");
 	}
@@ -22,5 +22,5 @@ public class PhoneBookController {
 	@RequestMapping("/phoneBookTrash.do")
 	public void trash() {
 		logger.info("휴지통 화면 보여주기");
-	}
+	}*/
 }

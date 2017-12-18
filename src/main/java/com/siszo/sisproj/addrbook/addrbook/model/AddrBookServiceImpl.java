@@ -14,4 +14,9 @@ public class AddrBookServiceImpl implements AddrBookService{
 	public List<AddrBookVO> selectAddrBookAll() {
 		return addrBookDao.selectAddrBookAll();
 	}
+
+	@Override
+	public int insertAddrBook(AddrBookVO vo) {
+		return addrBookDao.insertAddrBook(vo);
+	}
 }
