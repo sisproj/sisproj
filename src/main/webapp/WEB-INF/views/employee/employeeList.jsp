@@ -67,7 +67,7 @@
 		
 	</div>
 	<div style="text-align: center;width: 90%;">
-		<%@include file="../phoneBook/paging.jsp" %>
+		<%@include file="../addrBook/paging.jsp" %>
 	</div>
 </div>    	
     </article>
