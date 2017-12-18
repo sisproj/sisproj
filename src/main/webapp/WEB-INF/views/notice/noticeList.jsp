@@ -28,7 +28,7 @@
 			<!-- 3. 내용 -->
 			<div class="container">
 				<div class="row">
-					<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
+					<table class="table table-striped" style="text-align: center; border: 1px solid #eeeeee">
 						<thead>
 							<tr>
 								<th style="background-color: #eeeeee; text-align: center;">번호</th>

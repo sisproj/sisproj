@@ -27,29 +27,39 @@
 		<article id="bodysection">
 			<!-- 3. 내용 -->
 	<div class="container">
-		<div class="row">
-			<form method="post" action="writeAction.jsp">
-				<table class="table table-striped"
-					style="text-align: center; border: 3px solid #eeeeee">
-					<thead>
-						<tr>
-							<th colspan="2"
-								style="background-color: #eeeeee; text-align: center;">
-								공지사항 글쓰기</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td><input type="text" class="form-control"
-								placeholder="글 제목" name="bbsTitle" maxlength="50"></td>
-						</tr>
-						<tr class="active">
-							<td><textarea class="form-control" placeholder="글 내용"
-									name="bbsContent" maxlength="2048" style="height: 480px;"></textarea></td>
-						</tr>
-					</tbody>
-				</table>
-				<input type="submit" class="btn btn-primary pull-right" value="글쓰기">
+		<div class="divForm">
+			<form name="frmEdit" method="post" action="edit_ok.jsp"
+				onsubmit="return send(this)">
+				<!-- 수정 처리시 필요한 no를 hidden 필드에 넣는다 -->
+				<input type="hidden" name="no" value="">
+
+				<fieldset>
+					<legend>글수정</legend>
+					<div class="firstDiv">
+						<label for="title">제목</label> <input type="text" id="title"
+							name="title" value="" />
+					</div>
+					<div>
+						<label for="name">작성자</label> <input type="text" id="name"
+							name="name" value="" />
+					</div>
+					<div>
+						<label for="pwd">비밀번호</label> <input type="password" id="pwd"
+							name="pwd" />
+					</div>
+					<div>
+						<label for="email">이메일</label> <input type="text" id="email"
+							name="email" value="" />
+					</div>
+					<div>
+						<label for="content">내용</label>
+						<textarea id="content" name="content" rows="12" cols="40"></textarea>
+					</div>
+					<div class="center">
+						<input type="submit" value="수정" /> <input type="Button"
+							value="글목록" onclick="location.href	='list.jsp'" />
+					</div>
+				</fieldset>
 			</form>
 		</div>
 	</div>
@@ -57,7 +67,7 @@
 		</article>
 		<!-- 4. 상단 네비 색먹이기 // li태그 순서(전자결재 : 6번째) 입력 -->
 		<script type="text/javascript">
-			$(function(){
+			$(function() {
 				$('header nav ul li:nth-child(8) a').addClass('active');
 			});
 		</script>
