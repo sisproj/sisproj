@@ -128,7 +128,7 @@
 	     			<ul>
 	     			<c:forEach var="empVo" items="${empList }">
 	     				<c:if test="${empVo.deptNo == deptVo.deptNo }">
-	     					<li><i class="fa fa-user"></i>  ${empVo.empName } </a></li>
+	     					<li id="${empVo.empNo }"><i class="fa fa-user"></i>  ${empVo.empName } ${empVo.empPosition }(${empVo.empNo }) </a></li>
 	     				</c:if>
 	     			</c:forEach>
 	     			</ul>

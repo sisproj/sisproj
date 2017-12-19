@@ -11,17 +11,18 @@
     <%-- messenger JS--%>
     <script type="text/javascript">
         var chatKey = null;
+
         function startChat() {
             $('#messenger-main-container').html("").load('messengerStart.do');
         }
 
         function changeContent(chatKey) {
+            loadMemberListByChatKey(chatKey);
             var chatsRef = firebase.database().ref('chats/' + chatKey);
             chatsRef.once('value', function (snapshot) {
                 var title = snapshot.val().title;
                 $('#chatTitle').html(title);
             });
-
 
             $('#messenger-main-container').html("").load('messengerChat.do', {chatKey: chatKey});
             $('#sidebar-button').show().attr('name', 'hide-nav');
@@ -38,7 +39,7 @@
     <%-- firebase 채팅목록 처리 script--%>
     <script>
         /* TODO 세션에서 로그인한 사용자 ID를 가져와서 userId에 넣어야 함*/
-        var userId = "user2";
+        var userId = prompt("아이디", "user1");
         loadKeyListByUserId(userId);
 
         /* keyList 배열에 사용자의 채팅방 리스트를 담는 함수*/
@@ -58,6 +59,44 @@
         }
 
 
+        var memberList = [];
+
+        function loadMemberListByChatKey(chatKey) {
+            var membersRef = firebase.database().ref('members/' + chatKey);
+            membersRef.once('value', function (snapshot) {
+                snapshot.forEach(function (childSnapshot) {
+                    memberList.push(childSnapshot.key);
+                    var onclickStr = 'onclick="changeNameCard(\'' + childSnapshot.key + '\')"';
+                    var userImg = "<c:url value='/resources/images/avatar.png'/>";
+                    $('#memberList').append(
+                        '<div class="w3-bar-item w3-button">' +
+                        '<img src="' + userImg + '" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">' +
+                        '<div>' +
+                        '<div class="w3-small w3-center">' + name + '</div>' +
+                        '</div>' +
+                        '</div>'
+                    );
+                });
+            }).then(function () {
+                loadMembers(memberList);
+            });
+        }
+
+        function resetUnreadCount() {
+            var name, count;
+            console.log(chatKey);
+            var membersRef = firebase.database().ref('members/' + chatKey + "/" + userId);
+            membersRef.once('value', function (snapshot) {
+                count = snapshot.val().count;
+            }).then(function () {
+                membersRef.set({
+                    count: 0,
+                    state: "true"
+                })
+            });
+        }
+
+
         function formatDate(curDate) {
             var today, resultDate;
             today = new Date();
@@ -69,22 +108,11 @@
             var curDay = resultDate.getDate();
             var curHours = resultDate.getHours();
             var curMin = resultDate.getMinutes();
-            if(curMin < 10) {
+            if (curMin < 10) {
                 curMin = "0" + curMin;
             }
 
-            // Time (minutes * seconds * millisecond)
             if (timegap <= 24) {
-                /*if (Math.floor(timegap) == 0) {
-                    if (Math.floor(timegap * 24) == 0) {
-                        resultDate = "지금"
-                    } else {
-                        resultDate = Math.floor(timegap * 24) + ' 분 전';
-                    }
-                }
-                else {
-                    resultDate = Math.floor(timegap) + ' 시간 전';
-                }*/
                 resultDate = curHours + ":" + curMin
             }
             else {
@@ -104,7 +132,6 @@
 
                     var resultDate = formatDate(timestamp);
 
-
                     var onclickStr = 'onclick="changeContent(\'' + snapshot.key + '\')"';
                     var userImg = "<c:url value='/resources/images/avatar.png'/>";
                     $('#chatsList').append(
@@ -114,14 +141,39 @@
                         '<div class="w3-large w3-left">' + title + '</div>' +
                         '<div class="w3-right w3-small">' + resultDate + '</div>' +
                         '<br>' +
-                        '<span>' + lastMessage + '</span>' +
+                        '<div class="w3-left w3-small">' + lastMessage + '</div>' +
+                        '<div>' +
+                        '<div class="w3-badge w3-red w3-right w3-small" id="' + snapshot.key + 'Count"></div>' +
+                        '</div>' +
                         '</div>' +
                         '</a>'
-                    )
+                    );
+                });
+
+                var membersRef = firebase.database().ref('members/' + keyList[i] + "/" + userId);
+
+                /*처음 실행시 안읽은 메시지 표시*/
+                membersRef.once('value', function (snapshot) {
+                    var parentKey = snapshot.ref.parent.key;
+                    if (snapshot.val().count == 0) {
+                        $('#' + parentKey + 'Count').html('');
+                    } else {
+                        $('#' + parentKey + 'Count').html(snapshot.val().count);
+                    }
+                });
+
+
+                /* 채팅이 추가될때마다 안읽은 메시지 표시 */
+                membersRef.on('child_changed', function (snapshot) {
+                    var parentKey = snapshot.ref.parent.parent.key;
+                    if (snapshot.val() == 0) {
+                        $('#' + parentKey + 'Count').html('');
+                    } else {
+                        $('#' + parentKey + 'Count').html(snapshot.val());
+                    }
                 });
             }
         }
-
 
         <%-- firebase 채팅처리 script--%>
 
@@ -131,7 +183,11 @@
                 snapshot.forEach(function (data) {
                     showMessage(data)
                 });
+            }).then(function () {
+                $('#messenger-main').scrollTop(9999);
             });
+
+
         }
 
         function showMessage(data) {
@@ -141,6 +197,7 @@
             //TODO : userImg DB에서 가져온 사용자 이미지로 변경
             var userImg = "<c:url value='/resources/images/avatar.png'/>";
             var message = data.val().message;
+            var name = data.val().name;
 
             if (userId == data.val().name) {
                 $('#messengerContainer').append(
@@ -148,12 +205,12 @@
                     '<img src="' + userImg + '" alt="Avatar" class="right" style="width:100%;">' +
                     '<p>' + message + '</p>' +
                     '<span class="time-left w3-small">' + resultDate + '</span>'
-
                 )
             } else {
                 $('#messengerContainer').append(
                     '<div class="message-wrap">' +
                     '<img src="' + userImg + '" alt="Avatar" style="width:100%;">' +
+                    '<div><b>' + name + '</b></div>' +
                     '<p>' + message + '</p>' +
                     '<span class="time-right w3-small">' + resultDate + '</span>' +
                     '</div>'
@@ -170,35 +227,25 @@
             //Messages Child가 추가될때 마다 실행
             messeagesRef.on('child_added', function (data) {
                 var timestamp = data.val().timestamp;
-
-                var date = new Date(timestamp);
-                var hour = date.getHours();
-                var min = date.getMinutes();
-
-                console.log(data.val().name)
-
                 showMessage(data);
-
-                if (chatKey != null) {
-                    writeChats(userId);
-                }
             });
         }
 
 
         /* 마지막 채팅 변경 함수 */
-        function writeChats(userId) {
+        function changeLastChats() {
             var date = new Date();
             var timestamp = date.getTime();
-            var title = "user2";
             var lastMessage = $('#chatMsg').val();
+            var title = $('#chatTitle').html();
+            var userImg = "<c:url value='/resources/images/avatar.png'/>";
+
             firebase.database().ref('chats/' + chatKey).set({
                 title: title,
                 lastMessage: lastMessage,
                 timestamp: timestamp
             });
 
-            var userImg = "<c:url value='/resources/images/avatar.png'/>";
             var resultDate = formatDate(timestamp);
 
             $('#' + chatKey).html(
@@ -207,7 +254,10 @@
                 '<div class="w3-large w3-left">' + title + '</div>' +
                 '<div class="w3-right w3-small">' + resultDate + '</div>' +
                 '<br>' +
-                '<span>' + lastMessage + '</span>' +
+                '<div class="w3-left w3-small">' + lastMessage + '</div>' +
+                '<div>' +
+                '<div class="w3-badge w3-red w3-right w3-small" id="' + chatKey + 'Count"></div>' +
+                '</div>' +
                 '</div>'
             )
         }
@@ -224,6 +274,26 @@
                 message: message,
                 timestamp: timestamp
             });
+
+            changeLastChats();
+            updateUnreadCount(memberList);
+        }
+
+        function updateUnreadCount(memberList) {
+            var name, count;
+            for (var i = 0; i < memberList.length; i++) {
+                if (memberList[i] != userId) {
+                    var membersRef = firebase.database().ref('members/' + chatKey + "/" + memberList[i]);
+                    membersRef.once('value', function (snapshot) {
+                        count = snapshot.val().count;
+                    }).then(function () {
+                        membersRef.set({
+                            count: count + 1,
+                            state: "true"
+                        })
+                    });
+                }
+            }
         }
 
     </script>
