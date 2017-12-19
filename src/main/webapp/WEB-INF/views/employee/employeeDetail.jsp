@@ -39,21 +39,12 @@
 				<input type="text" name="jumin1" id="jumin1" maxlength="6"> -
 				<input type="text" name="jumin2" id="jumin2" maxlength="7">
 			</div> -->
-			<div id="diDe">
+			<%-- <div id="diDe">
 				<label for="dept">부서</label>
-				<input type="text" id="deptName" name="deptName" value="${vo.deptName }">
-			</div>
+				<input type="text" id="deptName" name="deptName" value="${param.deptName }">
+			</div> --%>
 			<div id="diPos">
 				<label for="position">직급</label>  
-			<!-- 	<select>
-					<option value="인턴">인턴</option>
-					<option value="대리">대리</option>
-					<option value="차장">차장</option>
-					<option value="과장">과장</option>
-					<option value="부장">부장</option>
-					<option value="부사장">부사장</option>
-					<option value="사장">사장</option>
-				</select>   -->
 				<input type="text" id="empPosition" name="empPosition" value="${vo.empPosition }">
 			</div>
 			<div id="diHobby">

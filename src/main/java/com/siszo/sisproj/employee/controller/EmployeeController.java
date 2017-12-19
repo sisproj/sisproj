@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.siszo.sisproj.common.FileuploadUtil;
 import com.siszo.sisproj.dept.model.DeptService;
-import com.siszo.sisproj.dept.model.DeptVO;
 import com.siszo.sisproj.employee.model.EmployeeService;
 import com.siszo.sisproj.employee.model.EmployeeVO;
 
@@ -61,7 +60,7 @@ public class EmployeeController {
 		String jumin1 = vo.getJumin1();
 		String jumin2 = vo.getJumin2();
 		
-		vo.setEmpHiredate(hiredate);
+		
 		logger.info("사원 등록 , 파라미터 vo={}",vo);
 		if(vo.getEmpEmail()!=null && !vo.getEmpEmail().isEmpty()) {
 			if(email2.equals("etc") && email1!=null && !email1.isEmpty() && email3!=null && !email3.isEmpty()) {
@@ -80,9 +79,10 @@ public class EmployeeController {
 				vo.setEmpSsn(jumin1+"-"+jumin2);
 			}
 		}*/
+		vo.setEmpHiredate(hiredate);
 		List<Map<String, Object>> list=null;
 		String empImg="";
-		long empImgSize=0;
+
 		try {
 			list=fileUtil.fileupload(request);
 			
@@ -90,7 +90,7 @@ public class EmployeeController {
 			if(list!=null && !list.isEmpty()){
 				for(Map<String, Object> map : list){
 					empImg=(String)map.get("filename");		
-					empImgSize=(Long)map.get("fileSize");
+					
 				}//for
 			}
 		} catch (IllegalStateException e) {
@@ -174,8 +174,6 @@ public class EmployeeController {
 		logger.info("사원상세보기 화면 보여주기,파라미터 empNo={}",empNo);
 		
 		EmployeeVO vo = employeeService.selectEmployeeByNo(empNo);
-		
-		DeptVO deVo = deptService.
 		
 		logger.info("사원 상세 화면 보여주기 결과 vo={}",vo);
 		model.addAttribute("vo",vo);

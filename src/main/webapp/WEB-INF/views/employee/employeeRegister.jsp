@@ -15,6 +15,32 @@
 			dayNamesMin:['일','월','화','수','목','금','토'],
 			monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
 		});
+		$('#frmEmp').submit(function() {
+		
+			var tel1 = $('#tel1 option:selected').val();
+			var tel2 = $('#tel2').val();
+			var tel3 = $('#tel3').val();
+			
+			if($('#tel2').val()!="" && $('#tel1 option:selected').val()!="" && $('#tel3').val()!="" ){
+				 $('#empTel').val($('#tel1 option:selected').val()+"-"+$('#tel2').val()+"-"+$('#tel3').val());
+			}else{
+				alert("휴대폰번호를 입력하세요");
+			}
+		
+			if($('#email2 option:selected').val()="etc" && $('#email1').val()!="" &&  $('#email3').val()!=""){
+				$('#empEmail').val($('#email1').val()+"@"+$('#email3').val());
+			}else if($('#email1').val()!="" && $('#email3').val()!=""){
+				$('#empEmail').val($('#email1').val()+"@"+$('#email3').val());
+			}else{
+				alert("이메일을 입력하세요");
+			}
+		
+			if($('#jumin1').val()!="" && $('#jumin2').val()){
+				$('#empSsn').val($('#jumin1').val()+"-"+$('#jumin2').val());
+			}else{
+				("주민번호를 입력하세요");
+			}
+		});
 	});
 </script>
 	<article id="headsection">
@@ -27,6 +53,9 @@
         <!-- 3. 내용 -->
      <div id="dimyPage">
       	<form id="frmEmp" name="frmEMP" method="post" action="<c:url value='/employee/employeeRegister.do'/>">
+      	  <input type="hidden" id="empTel" name="empTel"> 
+      	  <input type="hidden" id="empSsn" name="empSsn"> 
+      	  <input type="hidden" id="empEmail" name="empEmail"> 
       	  <fieldset>
        		<div id="diName">
       	 		<label for="name">이름</label><input type="text" id="empName" name="empName" maxlength="6">   
@@ -126,7 +155,7 @@
        		</div>
        		<div id="diFImg">
        		   <label for="upfile" style="margin-top: 5px;">사원사진 업로드</label>
-           	   <input type="file" id="upfile" name="upfile" style="margin-top: 5px;"/>	 
+           	   <input type="file" id="upfile" name="upfile"/>	 
            	</div>
        		<div id="diReg">
 				<input type="submit" id="btWrite" value="등록">
