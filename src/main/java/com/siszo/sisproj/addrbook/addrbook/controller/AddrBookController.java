@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.siszo.sisproj.addrbook.addrbook.model.AddrBookListVO;
 import com.siszo.sisproj.addrbook.addrbook.model.AddrBookService;
 import com.siszo.sisproj.addrbook.addrbook.model.AddrBookVO;
 import com.siszo.sisproj.addrbook.addrgroup.model.AddrGroupService;
@@ -30,7 +31,7 @@ public class AddrBookController {
 	@Autowired
 	private AddrGroupService groupService;
 	
-	@RequestMapping(value="/addrBookList.do")
+	@RequestMapping(value="/addrBookList.do", method=RequestMethod.GET)
 	public String list(Model model) {
 		logger.info("개인주소록 리스트 조회하기");
 		
@@ -74,9 +75,36 @@ public class AddrBookController {
 		return "common/message";
 	}
 	
-	@RequestMapping("/addrBookTrash.do")
-	public void trash() {
+	@RequestMapping(value="/addrBookTrash.do", method=RequestMethod.GET)
+	public void trash_get() {
 		logger.info("휴지통 화면 보여주기");
+	}
+	
+	@RequestMapping(value="/addrBookTrash.do", method=RequestMethod.POST)
+	public void trash() {
+		logger.info("휴지통 비우기");
+	}
+	
+	@RequestMapping(value="/goToTrash.do", method=RequestMethod.POST)
+	public String goToTrash(@ModelAttribute AddrBookListVO addrBookListvo, Model model) {
+		logger.info("삭제버튼 클릭시 휴지통으로 이동");
+		
+		List<AddrBookVO> list=addrBookListvo.getAddrItems();
+		
+		int cnt=addrBookService.updateIsDelYMulti(list);
+		logger.info("휴지통 이동 결과, cnt={}", cnt);
+		
+		String msg="",url="/addrBook/addrBookList.do";
+		if(cnt>0) {
+			msg="휴지통으로 이동 성공";
+		}else{
+			msg="휴지통으로 이동 실패";			
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "common/message";
 	}
 	
 }

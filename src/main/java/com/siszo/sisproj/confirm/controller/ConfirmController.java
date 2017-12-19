@@ -21,6 +21,8 @@ import com.siszo.sisproj.confirm.docform.model.DocumentFormService;
 import com.siszo.sisproj.confirm.docform.model.DocumentFormVO;
 import com.siszo.sisproj.confirm.model.DocumentService;
 import com.siszo.sisproj.confirm.model.DocumentVO;
+import com.siszo.sisproj.confirm.saveline.model.SaveLineService;
+import com.siszo.sisproj.confirm.saveline.model.SaveLineVO;
 
 @Controller
 @RequestMapping("/confirm")
@@ -31,6 +33,8 @@ public class ConfirmController {
 	private DocumentFormService dfService;
 	@Autowired
 	private DocumentService dService;
+	@Autowired
+	private SaveLineService slService;
 	
 	@RequestMapping("/main.do")
 	public String main() {
@@ -122,12 +126,37 @@ public class ConfirmController {
 	}
 	
 	@RequestMapping("/line.do")
-	public String line() {
+	public String line(Model model) {
 		logger.info("결재라인 선택화면 보여주기");
-
-		//ajax 배우고, 조직도 구현 후 구현: 왼쪽 리스트 클릭시 오른쪽 리스트 뿌리기		
+		int empNo = 20170001; 
+		
+//		List<SaveLineVO> slVoList = slService.selectSaveLineByEmpNo(empNo);
+//		
+//		model.addAttribute("slVoList",slVoList);
 		
 		return "confirm/line";
+	}
+
+	@RequestMapping("/choLine.do")
+	public String choline(@RequestParam(required=false) int empNo, @RequestParam(defaultValue="0") int saveNo, Model model) {
+		logger.info("결재자 선택 화면");
+		
+		String msg="", url="";
+		if(empNo==0 || saveNo==0) {
+			msg="잘못된 URL입니다.";
+			url="/confirm/main.do";
+			
+			model.addAttribute("msg",msg);
+			model.addAttribute("url",url);
+			
+			return "common/message";
+		}
+
+//		if(saveNo>0) {
+//			SaveLineVO savelineVo = slService.selectSaveLineBySaveNo(saveNo);
+//			model.addAttribute("savelineVo",savelineVo);
+//		}
+		return "confirm/choLine";
 	}
 	
 	@RequestMapping("/return.do")
@@ -140,12 +169,6 @@ public class ConfirmController {
 	public String edit() {
 		logger.info("문서 수정화면 보여주기");
 		return "confirm/edit";
-	}
-
-	@RequestMapping("")
-	public String choline() {
-		logger.info("결재자 선택 화면");
-		return "";
 	}
 	
 	//admin

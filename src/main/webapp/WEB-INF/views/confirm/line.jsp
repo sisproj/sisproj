@@ -30,7 +30,14 @@
     			$('#choice_cfer').hide();
     		});
     		
-    		$('#')
+    		$('#cf_ch_savedline ul li').click(function(){
+    			$('#confirmers').html('');
+    			$('#cf_ch_savedline ul li i').prop('class','fa fa-folder-o');
+    			$(this).find('i').prop('class','fa fa-folder-open-o');
+    			var saveNo = $(this).attr('id');
+    			alert(saveNo);
+    			$('#confirmers').load("<c:url value='/confirm/choLine.do?saveNo="+saveNo+"'/>");
+    		});
     	});
     </script>
 </head>
@@ -41,8 +48,11 @@
 		<div id="cf_ch_savedline">
 			<div class="dh"><i class="fa fa-sitemap">저장된 결재라인</i></div>
 			<ul>
-				<li><i class="fa fa-folder-open-o"></i> 기안용</li>
-				<li><i class="fa fa-folder-o"></i> 근태용</li>
+				<c:forEach var="slVo" items="${slVoList}">
+				<li id="${slVo.saveNo }">
+					<i class="fa fa-folder-open-o"></i> ${slVo.saveName }
+				</li>
+				</c:forEach>
 			</ul>
 		</div>
 		<div id="cf_ch_linech">	
