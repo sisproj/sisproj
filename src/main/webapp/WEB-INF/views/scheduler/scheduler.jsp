@@ -5,6 +5,7 @@
 
 <script type="text/javascript" charset="utf-8">
 		window.onload=function() {
+			
 			scheduler.config.xml_date = "%Y-%m-%d %h:%i";
 			scheduler.config.time_step = 30;
 			scheduler.config.multi_day = true;
@@ -13,7 +14,9 @@
 			scheduler.config.limit_time_select = true;
 			scheduler.config.details_on_dblclick = true;
 			scheduler.config.details_on_create = true;
-
+			
+			
+			
 			scheduler.templates.event_class = function(start, end, event){
 				var css = "";
 				if(event.subject) // if event has subject property then special class should be assigned
@@ -47,48 +50,83 @@
 			];
 
 			scheduler.config.lightbox.sections=[
-				{name:"내용", height:43, map_to:"text", type:"textarea" , focus:true},
-				{name:"카테고리", height:20, type:"select", options: subject, map_to:"subject" },
-				{name:"시간", height:72, type:"time", map_to:"auto" }
+				{name:"제목", height:22, map_to:"title", type:"textarea" , focus:true},
+				{name:"내용", height:43, map_to:"text", type:"textarea" },
+				{name:"장소", height:22, map_to:"place", type:"textarea"},
+				{name:"카테고리", height:20, type:"select", options: subject, map_to:"subject" }
+				/* {name:"시간", height:72, type:"time", map_to:"auto" } */
+				
 			];
-
+			
+			
 			scheduler.init('scheduler_here', new Date(), "day");
 			
-			scheduler.attachEvent("onEventSave",function(id,ev,is_new){
-				var end_date = scheduler.getEvent(id).end_date;
-				var start_date = scheduler.getEvent(id).start_date;
-				var text = ev.text;
-				var selection = ev.subject;
+			scheduler.attachEvent("onConfirmedBeforeEventDelete", function(id,ev){
+				var pschNo = ev.pschid;
+				location.href="schedulerDelete.do?pschNo="+pschNo;
+			});
 			
+			
+			  scheduler.attachEvent("onBeforeEventChanged", function(ev, e, is_new, original){
+				  
+			    var pschNo = ev.pschid;
+			    console.log(pschNo);
+			    if(pschNo != null) {
+			    	console.log(ev);
+			    	$('#pschStart').val(ev.start_date);
+			    	$('#pschEnd').val(ev.end_date);
+			    	$('#pschNo').val(ev.pschid);
+			    	$('#schfrm').attr("action", "schedulerEdit.do");	
+			    	$('#schfrm').submit();
+			    } else {
+			    	return true;
+			    }
+			 }); 
+			
+			scheduler.attachEvent("onEventSave",function(id,ev,is_new,original){
+				var start_date = scheduler.getEvent(id).start_date; //시작날짜
+				var end_date = scheduler.getEvent(id).end_date; //끝날짜
+				var title = ev.title; //제목
+				var text = ev.text; //내용
+				var place = ev.place; //장소
+				var selection = ev.subject; //카테고리
+			    if (!ev.title) {
+			        alert("제목을 입력하세요");
+			        return false;
+			    }
 			    if (!ev.text) {
 			        alert("내용을 입력하세요");
 			        return false;
-			    } else {
-			   	
+			    }
+			    else if (!ev.place) {
+			        alert("장소를 입력하세요");
+			        return false;
+			    }
+			    else {
+		        $('#pschNo').val(id);
 		        $('#pschStart').val(start_date);
 		        $('#pschEnd').val(end_date);
-		        $('#pschTitle').val(text);
-		        $('#pschNo').val(id);
+		        $('#pschText').val(text);
+		        $('#pschTitle').val(title);
+		        $('#pschPlace').val(place);
 		        $('#pschCateg').val(selection);
 		        $('#schfrm').submit();
-			    return true;
-			    }
+			    return true; 
+			   }
 			}); 
-		
-				
+			
 			scheduler.parse([
 				<c:if test="${empty list}">
 				 
 				</c:if>
 				<c:if test="${!empty list}">
 				<c:forEach var="i" begin="0" end="${list.size()-1}" step="1">
-				
-					{ start_date: "${list[i].pschStart}", end_date: "${list[i].pschEnd}", text:"${list[i].pschTitle}", subject: '${list[i].pschCateg}' },
+					{ start_date: "${list[i].pschStart}", end_date: "${list[i].pschEnd}", title:"${list[i].pschTitle}", subject: '${list[i].pschCateg}', place: '${list[i].pschPlace}', text: '${list[i].pschText}', pschid:"${list[i].pschNo}"},
 				</c:forEach>
 				</c:if>
 				], "json");
+			
 		}
-		
 
 
 	</script>
@@ -210,6 +248,10 @@ html, body {
 			id="pschTitle" name="pschTitle"> <input type="hidden"
 			id="pschCateg" name="pschCateg"> <input type="hidden"
 			id="pschNo" name="pschNo">
+			<input type="hidden"
+			id="pschPlace" name="pschPlace">
+			<input type="hidden"
+			id="pschText" name="pschText">
 	</form>
 	<div id="scheduler_here" class="dhx_cal_container"
 		style='width: 1400px; height: 700px;'>
@@ -231,7 +273,7 @@ html, body {
 <!-- 4. 상단 네비 색먹이기 // li태그 순서(전자결재 : 6번째) 입력 -->
 <script type="text/javascript">
         $(function () {
-            $('header nav ul li:nth-child(4) a').addClass('active');
+            $('header nav ul li:nth-child(3) a').addClass('active');
         });
     </script>
 <!-- 4. 상단 네비 색먹이기 끝-->

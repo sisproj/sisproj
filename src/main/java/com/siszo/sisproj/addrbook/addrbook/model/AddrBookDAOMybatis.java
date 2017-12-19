@@ -13,4 +13,19 @@ public class AddrBookDAOMybatis extends SqlSessionDaoSupport implements AddrBook
 	public List<AddrBookVO> selectAddrBookAll() {
 		return getSqlSession().selectList(namespace+".selectAddrBookAll");
 	}
+
+	@Override
+	public int insertAddrBook(AddrBookVO vo) {
+		return getSqlSession().insert(namespace+".insertAddrBook",vo);
+	}
+
+	@Override
+	public int updateIsDelY(int addrNo) {
+		return getSqlSession().update(namespace+".updateIsDelY", addrNo);
+	}
+
+	@Override
+	public int updateIsDelN(int addrNo) {
+		return getSqlSession().update(namespace+".updateIsDelN", addrNo);
+	}
 }

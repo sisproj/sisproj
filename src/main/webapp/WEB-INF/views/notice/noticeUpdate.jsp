@@ -26,16 +26,14 @@
 		</article>	
 		<article id="bodysection">
 			<!-- 3. 내용 -->
-	<div class="container">
+	<div class="container" style="max-width: 1045px;">
 		<div class="row">
 			<form method="post" action="updateAction.jsp?bbsID">
 				<table class="table table-striped"
-					style="text-align: center; border: 3px solid #eeeeee">
+					style="text-align: center; border: 1px solid #c5bdbd;">
 					<thead>
 						<tr>
-							<th colspan="2"
-								style="background-color: #eeeeee; text-align: center;">공지
-								사항 수정</th>
+							<th colspan="2"	style="background-color: #eeeeee; text-align: center;">공지사항 수정</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -66,3 +64,6 @@
 		<!-- 0. include부분 끝-->
 
 <%@include file="../inc/bottom.jsp" %>
+
+
+

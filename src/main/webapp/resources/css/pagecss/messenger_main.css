@@ -8,25 +8,12 @@
     top: 84px;
     right: 0;
     overflow-x: hidden;
-    padding-top: 60px;
 }
 
 #startChatButton {
     width: 80%;
     height: 50px;
     margin: 20px 10% 20px 10%;
-}
-
-.chats-wrap {
-    display: flex;
-    flex-wrap: nowrap;
-    width: 100%;
-    vertical-align: middle;
-}
-
-.chats-wrap img {
-    max-width: 60px;
-    max-height: 60px;
 }
 
 /*Header*/
@@ -41,6 +28,23 @@
 }
 
 /*Main*/
+#searchBar {
+    margin-bottom: 22px;
+}
+
+#userSearch{
+    background: url('https://www.w3schools.com/css/searchicon.png') no-repeat 10px 12px;
+    width: 80%;
+    font-size: 16px;
+    padding: 12px 20px 12px 40px;
+    border: 1px solid #ddd;
+}
+
+.start-button {
+    width: 20%;
+    height: 50px;
+}
+
 #messenger-main {
     max-height: 100%;
     overflow-y: scroll;
@@ -50,7 +54,12 @@
     margin: 0 auto;
     max-width: 800px;
     padding: 84px 20px 100px;
+}
 
+.messenger-start-container {
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 100px 20px 100px;
 }
 
 .message-wrap {
@@ -59,7 +68,6 @@
     border-radius: 5px;
     padding: 10px;
     margin: 10px 0;
-    -ms-overflow-style: none;
 }
 
 .darker {
@@ -84,18 +92,22 @@
 .message-wrap img.right {
     float: right;
     margin-left: 20px;
-    margin-right: 0;
+    margin-right:0;
 }
 
 .time-right {
+    margin-top: 16px;
     float: right;
     color: #aaa;
 }
 
 .time-left {
+    margin-top: 16px;
     float: left;
     color: #999;
 }
+
+
 
 /* 메시지 입력창 */
 .messenger-enter-container {

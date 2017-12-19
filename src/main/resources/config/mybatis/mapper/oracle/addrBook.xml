@@ -4,8 +4,28 @@
 
 <mapper namespace="config.mybatis.mapper.oracle.addrBook">	
 	<select id="selectAddrBookAll" resultType="addrBookVO">
-		select * from addrbook	
+		select * from addrBookView
+		where addr_isdel='N'	
 	</select>
+	
+	<insert id="insertAddrBook" parameterType="AddrBookVO">
+		<selectKey keyProperty="addrNo" resultType="int" order="BEFORE">
+			select addrbook_seq.nextval from dual
+		</selectKey>
+		insert into addrBook
+		values(#{addrNo}, #{addrName}, #{addrComp}, #{addrTel}, #{addrEmail}, #{addrGroupNo}, #{addrIsDel}, #{empNo})
+	</insert>
+	
+	<update id="updateIsDelY" parameterType="int">
+		update addrBook
+		set addr_isdel='Y'
+		where addr_no=#{addrNo}
+	</update>
+	<update id="updateIsDelN" parameterType="int">
+		update addrBook
+		set addr_isdel='N'
+		where addr_no=#{addrNo}
+	</update>
 </mapper>
 
 

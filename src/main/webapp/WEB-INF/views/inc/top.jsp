@@ -46,7 +46,7 @@
             <li><a href="<c:url value='/confirm/main.do'/>">전자결재</a></li>
             <li><a href="<c:url value='/commue/commueMonthList.do'/>">근태관리</a></li>
             <li><a href="<c:url value=''/>">웹하드</a></li>
-            <li><a href="<c:url value=''/>">공지사항</a></li>
+            <li><a href="<c:url value='/notice/noticeList.do'/>">공지사항</a></li>
             <li><a href="<c:url value=''/>">사내뉴스</a></li>
         </ul>
     </nav>
@@ -89,7 +89,7 @@
             <div id="asidebtn">
                 <ul>
                     <li><a href="#">출근</a></li>
-                    <li><a href="#">메신저</a></li>
+                    <li><a href="#" onclick="window.open('<c:url value="/messenger/messenger.do"/>', 'messengerWindow', 'toolbar=no,scrollbars=yes')">메신저</a></li>
                     <li><a href="<c:url value='/login.do'/>">로그 아웃</a></li>
                 </ul>
             </div>

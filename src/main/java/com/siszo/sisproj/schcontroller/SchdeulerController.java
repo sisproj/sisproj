@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.style.DefaultValueStyler;
+import org.springframework.scheduling.commonj.ScheduledTimerListener;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -57,7 +58,67 @@ public class SchdeulerController {
 		model.addAttribute("msg",msg);
 		
 		return "common/message";
+	}
+	
+	@RequestMapping(value="/schedulerDelete.do")
+	public String scheduler_delete(@RequestParam String pschNo, Model model){
+		logger.info("스케줄 삭제처리, 파라미터 pschNo={}",pschNo);
 		
+		int cnt = schedulerService.schedulerDelete(pschNo);
+		String msg="", url="";
+		if(cnt>0) {
+			msg="삭제처리 되었습니다.";
+			url="/scheduler/scheduler.do";
+		}else {
+			msg="삭제 실패했습니다.";
+			url="/scheduler/scheduler.do";
+		}
+		model.addAttribute("url",url);
+		model.addAttribute("msg",msg);
+		
+		return "common/message";
+	}
+	
+	/*@RequestMapping(value="/schedulerEdit.do")
+	public String scheduler_edit(@RequestParam String pschNo, Model model) {
+		logger.info("스케줄 수정처리, 파라미터 pschNo={}",pschNo);
+		
+		int cnt = schedulerService.schedulerUpdate(pschNo);
+		String msg="", url="";
+		if(cnt>0) {
+			msg="수정처리 되었습니다.";
+			url="/scheduler/scheduler.do";
+		}else {
+			msg="수정 실패했습니다.";
+			url="/scheduler/scheduler.do";
+		}
+		model.addAttribute("url",url);
+		model.addAttribute("msg",msg);
+		
+		return "common/message";
+		
+	}*/
+	
+	@RequestMapping(value="/schedulerEdit.do", method = RequestMethod.POST)
+	public String scheduler_edit(@ModelAttribute SchedulerVO vo, Model model) {
+		logger.info("스케줄 수정처리, 파라미터 vo={}", vo);
+		
+		vo.setPschStart(schUtil.ChangeDate(vo.getPschStart()));
+		vo.setPschEnd(schUtil.ChangeDate(vo.getPschEnd()));
+		
+		int cnt = schedulerService.schedulerUpdate(vo);
+		String msg="", url="";
+		if(cnt>0) {
+			msg="수정처리 되었습니다.";
+			url="/scheduler/scheduler.do";
+		}else {
+			msg="수정 실패했습니다.";
+			url="/scheduler/scheduler.do";
+		}
+		model.addAttribute("url",url);
+		model.addAttribute("msg",msg);
+		
+		return "common/message";
 		
 	}
 	

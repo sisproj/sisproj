@@ -17,5 +17,12 @@ public class SchedulerServiceimpl implements SchedulerService {
 	public List<SchedulerVO> schedulerSelectAll(int empNo){
 		return schedulerDao.schedulerSelectAll(empNo);
 	}
+	
+	public int schedulerDelete(String pschNo) {
+		return schedulerDao.schedulerDelete(pschNo);
+	}
+	public int schedulerUpdate(SchedulerVO vo) {
+		return schedulerDao.schedulerUpdate(vo);
+	}
 
 }

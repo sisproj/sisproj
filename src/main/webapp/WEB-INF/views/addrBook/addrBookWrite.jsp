@@ -4,7 +4,31 @@
 <%@include file="addrBookTop.jsp"%>
 <!-- 0. include부분 -->
 <script type="text/javascript">
-
+	$(function(){
+		$('frm [name=frmWrite]').submit(function(){
+			if($('#addrName').val()==''){
+				alert("이름을 입력하세요");
+				$('#addrName').focus();
+			}
+			if($('#hp2').val()=='' || $('#hp3').val()==''){
+				alert("핸드폰 번호를  입력하세요");
+			}else{
+				var hp=$('#hp1').val()+"-"+$('#hp2').val()+"-"$('#hp3').val();
+				$('#addrTel').val(hp);
+			}
+			
+			if($('#email2').val()=='etc'){
+				$('#email3').show();
+				$('#email3').focus();
+				var email=$('#email1').val()+"@"+$('#email3').val();
+				$('#addrEmail').val(email);
+			}else{
+				$('#email3').hide();			
+				var email=$('#email1').val()+"@"+$('#email2').val();
+				$('#addrEmail').val(email);
+			}
+		});
+	});
 </script>
 
     <!-- 3. 내용 -->
@@ -14,9 +38,12 @@
 		        <h3>연락처 추가</h3>
 		    </div>
 	        <div class="divAddrBody">
+	        	<form action="<c:url value='/addrBook/addrBookWrite.do'/>" method="post" name="frmWrite">
+	        	<input type="text" name="addrTel" id="addrTel">
+	        	<input type="text" name="addrEmail" id="addrEmail">
 				<div>
-					<label for="name">이름</label> 
-					<input type="text" name="name"	id="name" style="ime-mode: active">
+					<label for="addrName">이름</label> 
+					<input type="text" name="addrName"	id="addrName" style="ime-mode: active">
 				</div>
 				<div>
 			        <label for="hp1">핸드폰</label>
@@ -45,24 +72,26 @@
 			        <input type="text" name="email3" id="email3" title="직접입력인 경우 이메일주소 뒷자리" style="visibility:hidden">
 			    </div>
 			    <div>
-			    	<label for="company">회사</label>
-			    	<input type="text" name="company" id="company" title="회사명">
+			    	<label for="addrComp">회사</label>
+			    	<input type="text" name="addrComp" id="addrComp" title="회사명">
 			    </div>
 			    <div>
-			    	<label for="company">그룹</label>
-				    <select name="groupName" id="groupName">
-				    	<option value="가족">가족</option>
-				    	<option value="친구">친구</option>
-				    	<option value="거래처">거래처</option>
-				    	<option value="동아리">동아리</option>
+			    	<label for="addrGroupNo">그룹</label>
+				    <select name="addrGroupNo" id="addrGroupNo">
+				    	<option value="1">선택하세요</option>
+				    	<option value="2">가족</option>
+				    	<option value="3">친구</option>
+				    	<option value="4">거래처</option>
+				    	<option value="5">동아리</option>
 				    </select>
 			    </div>
 			    <div class="center">
 			         <input type="submit" id="wr_submit" value="등록">
 			    </div>
+			    </form>
 			</div>
 	        <div class="divPaging">
-	        	<p>이곳에 페이징 처리를 합시다</p>
+	        	<!-- <p>이곳에 페이징 처리를 합시다</p> -->
 	        </div>
         </div>
     </article>
