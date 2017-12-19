@@ -29,8 +29,6 @@
 
             $('#chatsList').find('a').attr("class", "w3-button w3-block w3-white w3-left-align");
             $('#' + chatKey).attr("class", "w3-button w3-block w3-white w3-left-align w3-light-grey");
-
-            resetUnreadCount();
         }
     </script>
 
@@ -46,6 +44,7 @@
 
         /* keyList 배열에 사용자의 채팅방 리스트를 담는 함수*/
         var keyList = [];
+
         function loadKeyListByUserId(userId) {
             var usersRef = firebase.database().ref('users/' + userId);
             usersRef.once('value', function (snapshot) {
@@ -59,13 +58,16 @@
             });
         }
 
+
+        var memberList = [];
+
         function loadMemberListByChatKey(chatKey) {
             var membersRef = firebase.database().ref('members/' + chatKey);
             membersRef.once('value', function (snapshot) {
                 snapshot.forEach(function (childSnapshot) {
+                    memberList.push(childSnapshot.key);
                     var onclickStr = 'onclick="changeNameCard(\'' + childSnapshot.key + '\')"';
                     var userImg = "<c:url value='/resources/images/avatar.png'/>";
-                    var name = childSnapshot.val().name;
                     $('#memberList').append(
                         '<div class="w3-bar-item w3-button">' +
                         '<img src="' + userImg + '" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">' +
@@ -75,11 +77,14 @@
                         '</div>'
                     );
                 });
+            }).then(function () {
+                loadMembers(memberList);
             });
         }
 
         function resetUnreadCount() {
             var name, count;
+            console.log(chatKey);
             var membersRef = firebase.database().ref('members/' + chatKey + "/" + userId);
             membersRef.once('value', function (snapshot) {
                 count = snapshot.val().count;
@@ -146,24 +151,43 @@
                 });
 
                 var membersRef = firebase.database().ref('members/' + keyList[i] + "/" + userId);
+
+                /*처음 실행시 안읽은 메시지 표시*/
+                membersRef.once('value', function (snapshot) {
+                    var parentKey = snapshot.ref.parent.key;
+                    if (snapshot.val().count == 0) {
+                        $('#' + parentKey + 'Count').html('');
+                    } else {
+                        $('#' + parentKey + 'Count').html(snapshot.val().count);
+                    }
+                });
+
+
+                /* 채팅이 추가될때마다 안읽은 메시지 표시 */
                 membersRef.on('child_changed', function (snapshot) {
-                    console.log(snapshot.val());
                     var parentKey = snapshot.ref.parent.parent.key;
-                    console.log(parentKey);
-                    console.log("#######");
-                    $('#' + parentKey + 'Count').html(snapshot.val());
+                    if (snapshot.val() == 0) {
+                        $('#' + parentKey + 'Count').html('');
+                    } else {
+                        $('#' + parentKey + 'Count').html(snapshot.val());
+                    }
                 });
             }
         }
 
         <%-- firebase 채팅처리 script--%>
+
         function loadMessages(chatKey) {
             var messeagesRef = firebase.database().ref('messages/' + chatKey);
             messeagesRef.once('value', function (snapshot) {
                 snapshot.forEach(function (data) {
                     showMessage(data)
                 });
+            }).then(function () {
+                $('#messenger-main').scrollTop(9999);
             });
+
+
         }
 
         function showMessage(data) {
@@ -252,20 +276,24 @@
             });
 
             changeLastChats();
-            updateUnreadCount();
+            updateUnreadCount(memberList);
         }
 
-        function updateUnreadCount() {
+        function updateUnreadCount(memberList) {
             var name, count;
-            var membersRef = firebase.database().ref('members/' + chatKey + "/" + userId);
-            membersRef.once('value', function (snapshot) {
-                count = snapshot.val().count;
-            }).then(function () {
-                membersRef.set({
-                    count: count + 1,
-                    state: "true"
-                })
-            });
+            for (var i = 0; i < memberList.length; i++) {
+                if (memberList[i] != userId) {
+                    var membersRef = firebase.database().ref('members/' + chatKey + "/" + memberList[i]);
+                    membersRef.once('value', function (snapshot) {
+                        count = snapshot.val().count;
+                    }).then(function () {
+                        membersRef.set({
+                            count: count + 1,
+                            state: "true"
+                        })
+                    });
+                }
+            }
         }
 
     </script>
