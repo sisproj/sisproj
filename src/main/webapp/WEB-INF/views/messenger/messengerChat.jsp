@@ -21,10 +21,12 @@
     <%--TODO 클릭한 회원 정보 카드--%>
     <div class="w3-white w3-margin">
         <div class="w3-light-grey">
-            테스트
+            <div class="w3-bar" id="memberList" style="overflow-x: hidden; overflow-y: scroll; height: 105px">
+                <%--채팅방 Member 프로필 이미지 출력--%>
+            </div>
         </div>
         <div class="w3-container w3-center">
-            <img src="<c:url value='/resources/images/avatar.png'/>" alt="Avatar" style="width:80%">
+            <img src="<c:url value='/resources/images/avatar.png'/>" alt="Avatar" style="width:50%">
             <h5>John Doe</h5>
 
             <div class="w3-section">
