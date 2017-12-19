@@ -1,7 +1,7 @@
 package com.siszo.sisproj.confirm.docform.model;
 
 //문서종류, 문서양식
-public class DocumentFormVO {
+public class DocumentFormVO{
 	private int formNo; //양식 번호
 	private String formName; //양식 이름
 	private int typeNo; //문서종류번호

@@ -45,7 +45,7 @@
 					</div>
 				</div>	
 				<!-- 상단 끝 -->
-				<form name="writeFrm" id="writeFrm" method="post" action="<c:url value='/confirm/writeOk.do'/>" enctype="multipart/form-data">
+				<form name="writeFrm" id="writeFrm" method="post" action="<c:url value='/confirm/write.do'/>" enctype="multipart/form-data">
 				<!-- 미드 -->
 					<div id="doc_type">
 						<div id="dt_head">
@@ -74,38 +74,7 @@
 							</div>
 						</div>
 						<div id="confirmer">
-							<div id="confirmer1">
-								<span></span>
-								<span>결재자1</span>
-							</div>
-							<div id="confirmer2">
-								<span></span>
-								<span>결재자2</span>
-							</div>
-							<div id="confirmer3">
-								<span></span>
-								<span>결재자3</span>
-							</div>
-							<div id="confirmer4">
-								<span></span>
-								<span>결재자4</span>
-							</div>
-							<div id="confirmer5">
-								<span></span>
-								<span>결재자5</span>
-							</div>
-							<div id="confirmer6">
-								<span></span>
-								<span>결재자6</span>
-							</div>
-							<div id="confirmer7">
-								<span></span>
-								<span>결재자7</span>
-							</div>
-							<div id="confirmer8">
-								<span></span>
-								<span>결재자8</span>
-							</div>
+						
 						</div>
 						<div class="clr"></div>
 						<div id="cf_info">
@@ -139,16 +108,15 @@
 						</select>
 						<div id="files"></div>
 					</div>
-					<!-- 바로 결재하는지 임시저장하는지 저장타입넘겨주는 input -->
-					<input type="text" name="savetype" id="savetype">
 					<div id="submitbtn">
 						<input type="button" id="submit" onclick="submitContents()" value="결재">&nbsp;&nbsp;
 						<input type="button" id="save" onclick="submitContents()" value="임시저장">	
 					</div>
 				</form>
-				<div id="choice_cfer">
+				<div id="choice_cfer" class='off'>
 					<c:import url='/confirm/line.do'/>
 				</div>
+				<div id="temp"></div>
 				<!-- 하단 끝 -->
 			<!-- writeform 끝-->	
 			<!-- 3. 내용 끝 -->
@@ -161,8 +129,106 @@
 <script type="text/javascript" src="<c:url value='/resources/js/pagejs/confirm_write.js'/>"></script>
 <script type="text/javascript">
 	$(function(){
+		//결재라인 지정 버튼 클릭 시 결재라인 지정 window fadeIn
 		$('#linebtn input[type=button]').click(function(){
-			$('#choice_cfer').toggle();
-		})
+			$('#cf_ch_savedline ul li i').prop('class','fa fa-folder-o');
+			$('#choice_cfer').fadeIn();
+			$('#choice_cfer').attr('class','on');
+		});
+
+		var order = 0;
+		//조직도에서 사원 리스트 더블클릭시 리스트에 추가
+		$('#organbody ul li ul li').dblclick(function(){
+			if($('#confirmers').attr('class')=='favorite'){
+				if(confirm('현재 선택된 결재라인이 제거됩니다.')){
+					$('#cf_ch_savedline ul li i').prop('class','fa fa-folder-o');
+					$('#confirmers').html('');
+					$('#confirmers').removeClass();
+					order=0;
+				} else {
+					return false;
+				}	
+			}
+			var status = $('#choice_cfer').attr('class');
+			var empNo = $(this).attr('id');
+			
+			var exist = 0;
+			$('#confirmers input[name=empNoo]').each(function(){
+				if($(this).val()==empNo){
+					exist=1;
+				}
+			});
+			if(status=='on' && exist==0){
+				if(order==8){alert('최대 8명까지 가능 합니다.'); return false;};
+				order+=1;
+				
+				$("#temp").load("<c:url value='/confirm/choLine.do?empNo="+empNo+"'/>", function(response, status, xhr) {
+					if(status=='success'){
+						$('#confirmers').append("<tr class='t"+order+"'><td>"+order+"</td></tr>");
+						var temp = $("#temp").html();
+						$('#confirmers tr.t'+order).append(temp);					
+					}
+				});
+			}
+		});
+		
+		//결재라인 지정 window 취소 버튼시 창 닫기
+		$('#cf_win_close').click(function(){
+			$('#choice_cfer').fadeOut();
+			$('#choice_cfer').attr('class','off');
+			$('#confirmers').html('');
+			order=0;
+		});
+		
+		//결재라인 지정 window에 선택된 결재자 더블클릭시 리스트에서 제거
+		$('body').on('dblclick','#confirmers tr',function(){
+			if($('#confirmers').attr('class')=='favorite'){
+				alert('저장된 리스트는 삭제 할 수 없습니다.');
+				return false;
+			} else {
+				$(this).remove();
+				order-=1;
+				giveOrder();
+			}
+		});
+		
+		//저장된 결재라인 리스트 클릭시 해당 리스트 추가
+		$('#cf_ch_savedline ul li').click(function(){
+			$('#confirmers').html('');
+			$('#confirmers').attr('class','favorite');
+			$('#cf_ch_savedline ul li i').prop('class','fa fa-folder-o');
+			$(this).find('i').prop('class','fa fa-folder-open-o');
+			var saveNo = $(this).attr('id');
+			$('#confirmers').load("<c:url value='/confirm/choLine.do?saveNo="+saveNo+"'/>", function(response, status, xhr) {
+				if(status=='success'){					
+					giveOrder();
+				}
+			});
+		});
+		
+		//결재 라인 지정 버튼 클릭시 양식에 추가
+		$('#ins_cfer').click(function(){
+			$('#doc_type #confirmer').html('');
+			$('#confirmers tr').each(function(){
+				var cf_empName = $(this).find('td.cf_empName').text();
+				var cf_empPo = $(this).find('td.cf_empPo').text();
+				var cf_empNo = $(this).find('input[name=empNoo]').val();
+				
+				$('#doc_type #confirmer').append("<div id='confirmer1'><span></span><span>"+cf_empName+" "+cf_empPo+"</span><input type='hidden' name='empNo' value='"+cf_empNo+"'></div>");
+				$('#choice_cfer').fadeOut();
+				$('#choice_cfer').attr('class','off');
+			});
+		});
+		
+		//함수 : 앞 인덱스 맞춰 주기
+		function giveOrder(){
+			$('#confirmers tr').each(function(index){
+				$(this).find('td:first-child').remove();
+			});
+			$('#confirmers tr').each(function(index){
+				$(this).prepend("<td>"+(index+1)+"</td>");
+				$(this).attr('class','t'+(index+1));
+			});
+		}
 	});
 </script>
