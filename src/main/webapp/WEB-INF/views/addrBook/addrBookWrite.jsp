@@ -6,9 +6,9 @@
 <script type="text/javascript">
 	$(function(){
 		$('frm [name=frmWrite]').submit(function(){
-			if($('#name').val()==''){
+			if($('#addrName').val()==''){
 				alert("이름을 입력하세요");
-				$('#name').focus();
+				$('#addrName').focus();
 			}
 			if($('#hp2').val()=='' || $('#hp3').val()==''){
 				alert("핸드폰 번호를  입력하세요");
@@ -39,12 +39,11 @@
 		    </div>
 	        <div class="divAddrBody">
 	        	<form action="<c:url value='/addrBook/addrBookWrite.do'/>" method="post" name="frmWrite">
-	        	<input type="text" name="addrName" id="addrName">
 	        	<input type="text" name="addrTel" id="addrTel">
 	        	<input type="text" name="addrEmail" id="addrEmail">
 				<div>
-					<label for="name">이름</label> 
-					<input type="text" name="name"	id="name" style="ime-mode: active">
+					<label for="addrName">이름</label> 
+					<input type="text" name="addrName"	id="addrName" style="ime-mode: active">
 				</div>
 				<div>
 			        <label for="hp1">핸드폰</label>
@@ -73,12 +72,12 @@
 			        <input type="text" name="email3" id="email3" title="직접입력인 경우 이메일주소 뒷자리" style="visibility:hidden">
 			    </div>
 			    <div>
-			    	<label for="company">회사</label>
-			    	<input type="text" name="company" id="company" title="회사명">
+			    	<label for="addrComp">회사</label>
+			    	<input type="text" name="addrComp" id="addrComp" title="회사명">
 			    </div>
 			    <div>
-			    	<label for="groupNo">그룹</label>
-				    <select name="groupNo" id="groupNo">
+			    	<label for="addrGroupNo">그룹</label>
+				    <select name="addrGroupNo" id="addrGroupNo">
 				    	<option value="1">선택하세요</option>
 				    	<option value="2">가족</option>
 				    	<option value="3">친구</option>
