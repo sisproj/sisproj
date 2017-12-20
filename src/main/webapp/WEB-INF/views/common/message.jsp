@@ -9,12 +9,12 @@
 </head>
 <body>
 	
-	<c:if test="${!empty msg}">
-		<script type="text/javascript">
+	<script type="text/javascript">
+		<c:if test="${!empty msg}">
 			alert("${msg }");
+		</c:if>
 		location.href="<c:url value='${url }'/>";
 	</script>
-		</c:if>
 </body>
 </html>
 
