@@ -13,7 +13,6 @@
 		<c:if test="${!empty msg}">
 			alert("${msg}");
 		</c:if>
-		
 		location.href="<c:url value='${url }'/>";
 	</script>
 </body>

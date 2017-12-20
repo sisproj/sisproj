@@ -16,4 +16,9 @@ public class OrganizationSeviceImpl implements OrganizationService{
 	public List<EmployeeVO> selectEmp() {
 		return orgDao.selectEmp();
 	}
+
+	@Override
+	public EmployeeVO selectEmpByEmpNo(int empNo) {
+		return orgDao.selectEmpByEmpNo(empNo);
+	}
 }

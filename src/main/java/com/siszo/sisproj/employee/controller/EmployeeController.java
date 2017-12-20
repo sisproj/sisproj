@@ -80,7 +80,9 @@ public class EmployeeController {
 				vo.setEmpSsn(jumin1+"-"+jumin2);
 			}
 		}*/
+		
 		vo.setEmpHiredate(hiredate);
+		
 		List<Map<String, Object>> list=null;
 		String empImg="";
 		try {
