@@ -79,29 +79,10 @@ public class SchdeulerController {
 		return "common/message";
 	}
 	
-	/*@RequestMapping(value="/schedulerEdit.do")
-	public String scheduler_edit(@RequestParam String pschNo, Model model) {
-		logger.info("스케줄 수정처리, 파라미터 pschNo={}",pschNo);
-		
-		int cnt = schedulerService.schedulerUpdate(pschNo);
-		String msg="", url="";
-		if(cnt>0) {
-			msg="수정처리 되었습니다.";
-			url="/scheduler/scheduler.do";
-		}else {
-			msg="수정 실패했습니다.";
-			url="/scheduler/scheduler.do";
-		}
-		model.addAttribute("url",url);
-		model.addAttribute("msg",msg);
-		
-		return "common/message";
-		
-	}*/
 	
 	@RequestMapping(value="/schedulerEdit.do", method = RequestMethod.POST)
 	public String scheduler_edit(@ModelAttribute SchedulerVO vo, Model model) {
-		logger.info("스케줄 수정처리, 파라미터 vo={}", vo);
+		logger.info("스케줄 시간 수정처리, 파라미터 vo={}", vo);
 		
 		vo.setPschStart(schUtil.ChangeDate(vo.getPschStart()));
 		vo.setPschEnd(schUtil.ChangeDate(vo.getPschEnd()));
@@ -122,5 +103,29 @@ public class SchdeulerController {
 		
 	}
 	
+	
+	@RequestMapping(value="/schedulerEditContent.do")
+	public String scheduler_editContent(@ModelAttribute SchedulerVO vo, Model model) {
+		logger.info("스케줄 내용 수정처리, 파라미터 vo={}", vo);
+		
+		vo.setPschStart(schUtil.ChangeDate(vo.getPschStart()));
+		vo.setPschEnd(schUtil.ChangeDate(vo.getPschEnd()));
+		
+		int cnt = schedulerService.schedulerContentUpdate(vo);
+		logger.info("스케줄 내용 수정결과 cnt={}", cnt);
+		String msg="", url="";
+		if(cnt>0) {
+			msg="수정처리 되었습니다.";
+			url="/scheduler/scheduler.do";
+		}else {
+			msg="수정 실패했습니다.";
+			url="/scheduler/scheduler.do";
+		}
+		model.addAttribute("url",url);
+		model.addAttribute("msg",msg);
+		
+		return "common/message";
+		
+	}
 
 }

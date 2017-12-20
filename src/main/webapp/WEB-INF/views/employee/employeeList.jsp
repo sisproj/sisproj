@@ -68,10 +68,11 @@
 		</table>
 		
 	</div>
-	<div style="text-align: center;width: 90%;">
-		<%@include file="../addrBook/paging.jsp" %>
-	</div>
-</div>    	
+		<div style="text-align: center;width: 90%;">
+			<%@include file="../addrBook/paging.jsp" %>
+		</div>
+</div> 
+   	
     </article>
         <!-- 3. 내용 끝 -->
 <script type="text/javascript">

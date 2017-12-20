@@ -24,5 +24,8 @@ public class SchedulerServiceimpl implements SchedulerService {
 	public int schedulerUpdate(SchedulerVO vo) {
 		return schedulerDao.schedulerUpdate(vo);
 	}
+	public int schedulerContentUpdate(SchedulerVO vo) {
+		return schedulerDao.schedulerContentUpdate(vo);
+	}
 
 }
