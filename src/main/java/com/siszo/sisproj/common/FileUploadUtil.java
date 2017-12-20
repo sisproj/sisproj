@@ -14,8 +14,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Component
-public class FileuploadUtil {
-    private static final Logger logger = LoggerFactory.getLogger(FileuploadUtil.class);
+public class FileUploadUtil {
+    private static final Logger logger = LoggerFactory.getLogger(FileUploadUtil.class);
 
     @Resource(name = "fileUploadProperties")
     private Properties fileProperties;

@@ -32,7 +32,7 @@ public class EmployeeController {
 	private EmployeeService employeeService;
 	
 	@Autowired
-	private FileuploadUtil fileUtil;
+	private FileUploadUtil fileUtil;
 	
 	@Autowired
 	private DeptService deptService;
