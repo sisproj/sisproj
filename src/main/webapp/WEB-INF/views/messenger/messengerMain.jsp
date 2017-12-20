@@ -8,12 +8,24 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="<c:url value='/resources/css/pagecss/messenger_main.css'/>">
 
+    <%-- Bootstrap tokenfield --%>
+    <link rel="stylesheet" href="<c:url value='/resources/css/bootstrap/bootstrap.min.css'/>">
+    <script src="<c:url value='/resources/js/bootstrap/bootstrap-tokenfield.js'/>"></script>
+    
+    <link rel="stylesheet" href="<c:url value='/resources/css/bootstrap/bootstrap-tokenfield.css'/>">
+    <link rel="stylesheet" href="<c:url value='/resources/css/bootstrap/tokenfield-typeahead.css'/>">
+
+
     <%-- messenger JS--%>
     <script type="text/javascript">
         var chatKey = null;
 
-        function startChat() {
+        function loadOrganization() {
             $('#messenger-main-container').html("").load('messengerStart.do');
+        }
+
+        function chatStart() {
+            $('#nameTokenField').tokenfield();
         }
 
         function changeContent(chatKey) {
@@ -353,7 +365,7 @@
         </h3>
     </div>
     <div class="w3-large w3-text-grey" style="font-weight:bold">
-        <button id="startChatButton" class="w3-button w3-indigo w3-hover-black" onclick="startChat()">대화 하기</button>
+        <button id="startChatButton" class="w3-button w3-indigo w3-hover-black" onclick="loadOrganization()">대화 하기</button>
         <ul class="w3-hoverable" id="chatsList">
             <%--로그인한 user의 채팅방 목록을 여기다 뿌려줌--%>
         </ul>
