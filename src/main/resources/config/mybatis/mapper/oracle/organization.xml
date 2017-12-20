@@ -12,6 +12,13 @@
 	<select id="selectEmpByEmpNo" parameterType="int" resultType="EmployeeVO">
 		select * from emp where emp_No=#{empNo}
 	</select>
+	<select id="selectMulti" parameterType="string" resultType="EmployeeVO">
+		select * from EMPDEPTVIEW
+		where emp_name=#{keyword}
+		or dept_name=#{keyword}
+		or emp_position=#{keyword}
+		order by dept_no
+	</select>
 </mapper>
 
 
