@@ -1,6 +1,7 @@
 package com.siszo.sisproj.addrbook.addrbook.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,8 +13,13 @@ public class AddrBookServiceImpl implements AddrBookService{
 	private AddrBookDAO addrBookDao;
 
 	@Override
-	public List<AddrBookVO> selectAddrBookAll() {
-		return addrBookDao.selectAddrBookAll();
+//	public List<AddrBookVO> selectAddrBookAll(int groupNo) {
+	public List<AddrBookVO> selectAddrBookAll(Map<String, Integer> map) {
+		return addrBookDao.selectAddrBookAll(map);
+	}
+	@Override
+	public List<AddrBookVO> selectAddrBookIsDelY() {
+		return addrBookDao.selectAddrBookIsDelY();
 	}
 
 	@Override
@@ -39,6 +45,7 @@ public class AddrBookServiceImpl implements AddrBookService{
 		
 		return cnt;
 	}
+	
 	@Override
 	@Transactional
 	public int updateIsDelNMulti(List<AddrBookVO> list) {
@@ -57,4 +64,9 @@ public class AddrBookServiceImpl implements AddrBookService{
 		
 		return cnt;
 	}
+	@Override
+	public int deleteAddrBook() {
+		return addrBookDao.deleteAddrBook();
+	}
+	
 }

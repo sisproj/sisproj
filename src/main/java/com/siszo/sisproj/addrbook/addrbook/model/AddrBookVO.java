@@ -6,7 +6,7 @@ public class AddrBookVO {
 	private String addrComp;
 	private String addrTel;
 	private String addrEmail;
-	private String addrGroupNo;
+	private int addrGroupNo;
 	private String addrIsDel;
 	private int empNo;
 	
@@ -40,10 +40,10 @@ public class AddrBookVO {
 	public void setAddrEmail(String addrEmail) {
 		this.addrEmail = addrEmail;
 	}
-	public String getAddrGroupNo() {
+	public int getAddrGroupNo() {
 		return addrGroupNo;
 	}
-	public void setAddrGruopNo(String addrGroupNo) {
+	public void setAddrGruopNo(int addrGroupNo) {
 		this.addrGroupNo = addrGroupNo;
 	}
 	public String getAddrIsDel() {
