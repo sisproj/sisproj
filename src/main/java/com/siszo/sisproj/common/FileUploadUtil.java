@@ -17,10 +17,14 @@ import java.util.*;
 public class FileUploadUtil {
     private static final Logger logger = LoggerFactory.getLogger(FileUploadUtil.class);
 
+    //파일업로드 경로 관련 상수
+    public static final int PDS_UPLOAD = 1;  //자료실 업로드인 경우
+    public static final int IMAGE_UPLOAD = 2;  //상품등록시 이미지 업로드인 경우
+
     @Resource(name = "fileUploadProperties")
     private Properties fileProperties;
 
-    public List<Map<String, Object>> fileupload(HttpServletRequest request) throws IllegalStateException, IOException {
+    public List<Map<String, Object>> fileupload(HttpServletRequest request, int uploadGb) throws IllegalStateException, IOException {
         //파일업로드 처리
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 
@@ -44,7 +48,7 @@ public class FileUploadUtil {
                 long fileSize = tempFile.getSize();
 
                 //업로드 처리
-                String uploadPath = getUploadPath(request);
+                String uploadPath = getUploadPath(request, uploadGb);
 
                 File file = new File(uploadPath, fileName);
                 tempFile.transferTo(file);
@@ -62,21 +66,32 @@ public class FileUploadUtil {
         return list;
     }
 
-    public String getUploadPath(HttpServletRequest request) {
-        String upPath;
+    public String getUploadPath(HttpServletRequest request, int uploadGb) {
+        String upPath = "";
 
         String type = fileProperties.getProperty("file.upload.type");
         if (type.equals("test")) {
             //테스트시 경로
-            upPath = fileProperties.getProperty("file.upload.path.test");
+            if (uploadGb == PDS_UPLOAD) {
+                upPath = fileProperties.getProperty("file.upload.path.test");
+            } else if (uploadGb == IMAGE_UPLOAD) {
+                upPath
+                        = fileProperties.getProperty("imageFile.upload.path.test");
+            }
+
             logger.info("test 경로:" + upPath);
         } else {
             //배포시 경로
-            upPath = fileProperties.getProperty("file.upload.path");
+            if (uploadGb == PDS_UPLOAD) {
+                upPath = fileProperties.getProperty("file.upload.path");
+            } else if (uploadGb == IMAGE_UPLOAD) {
+                upPath = fileProperties.getProperty("imageFile.upload.path");
+            }
             logger.info("배포시 경로:" + upPath);
 
             //실제 물리적인 경로 구하기
-            upPath = request.getSession().getServletContext().getRealPath(upPath);
+            upPath
+                    = request.getSession().getServletContext().getRealPath(upPath);
             logger.info("배포시 실제 물리적 경로:" + upPath);
         }
 

@@ -144,6 +144,8 @@ form#writeFrm #doc_type{
 	display: block;
 	box-sizing:border-box;
 	padding: 5px;
+	text-align: center;
+	font-size: 0.9em;
 }
 #writeFrm #doc_type #confirmer div span:first-child{
 	height: 70%;
@@ -227,4 +229,7 @@ form#writeFrm #doc_type{
 	height: 540px;
 	box-shadow:3px 3px 7px #555;
 	display: none;
+}
+#temp {
+	display:none;
 }

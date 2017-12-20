@@ -13,17 +13,29 @@ public class EmployeeVO {
 	private String empZipcode;
 	private String empAddr;
 	private String empAddr2;
-	private Timestamp empHiredate;
 	private String empHobby;
 	private String empSchool;
 	private String empMajor;
-	private Timestamp empOutdate;
 	private String empImg;
 	private String empLev;
 	private int empSal;
 	private String empBookMark;
 	private int deptNo;
 	private String empPosition;
+	private Timestamp empHiredate;
+	private Timestamp empOutdate;
+	private long empImgSize;
+	
+	private String tel1;
+	private String tel2;
+	private String tel3;
+	private String email1;
+	private String email2;
+	private String email3;
+	private String jumin1;
+	private String jumin2;
+	
+	
 	public String getEmpPosition() {
 		return empPosition;
 	}
@@ -150,14 +162,71 @@ public class EmployeeVO {
 	public void setDeptNo(int deptNo) {
 		this.deptNo = deptNo;
 	}
+	
+	public long getEmpImgSize() {
+		return empImgSize;
+	}
+	public void setEmpImgSize(long empImgSize) {
+		this.empImgSize = empImgSize;
+	}
 	@Override
 	public String toString() {
 		return "EmployeeVO [empNo=" + empNo + ", empName=" + empName + ", empEName=" + empEName + ", empPwd=" + empPwd
 				+ ", empTel=" + empTel + ", empSsn=" + empSsn + ", empEmail=" + empEmail + ", empZipcode=" + empZipcode
-				+ ", empAddr=" + empAddr + ", empAddr2=" + empAddr2 + ", empHiredate=" + empHiredate + ", empHobby="
-				+ empHobby + ", empSchool=" + empSchool + ", empMajor=" + empMajor + ", empOutdate=" + empOutdate
-				+ ", empImg=" + empImg + ", empLev=" + empLev + ", empSal=" + empSal + ", empBookMark=" + empBookMark
-				+ ", deptNo=" + deptNo + ", empPosition=" + empPosition + "]";
+				+ ", empAddr=" + empAddr + ", empAddr2=" + empAddr2 + ", empHobby=" + empHobby + ", empSchool="
+				+ empSchool + ", empMajor=" + empMajor + ", empImg=" + empImg + ", empLev=" + empLev + ", empSal="
+				+ empSal + ", empBookMark=" + empBookMark + ", deptNo=" + deptNo + ", empPosition=" + empPosition
+				+ ", empHiredate=" + empHiredate + ", empOutdate=" + empOutdate + ", empImgSize=" + empImgSize
+				+ ", tel1=" + tel1 + ", tel2=" + tel2 + ", tel3=" + tel3 + ", email1=" + email1 + ", email2=" + email2
+				+ ", email3=" + email3 + ", jumin1=" + jumin1 + ", jumin2=" + jumin2 + "]";
+	}
+	public String getTel1() {
+		return tel1;
+	}
+	public void setTel1(String tel1) {
+		this.tel1 = tel1;
+	}
+	public String getTel2() {
+		return tel2;
+	}
+	public void setTel2(String tel2) {
+		this.tel2 = tel2;
+	}
+	public String getTel3() {
+		return tel3;
+	}
+	public void setTel3(String tel3) {
+		this.tel3 = tel3;
+	}
+	public String getEmail1() {
+		return email1;
+	}
+	public void setEmail1(String email1) {
+		this.email1 = email1;
+	}
+	public String getEmail2() {
+		return email2;
+	}
+	public void setEmail2(String email2) {
+		this.email2 = email2;
+	}
+	public String getEmail3() {
+		return email3;
+	}
+	public void setEmail3(String email3) {
+		this.email3 = email3;
+	}
+	public String getJumin1() {
+		return jumin1;
+	}
+	public void setJumin1(String jumin1) {
+		this.jumin1 = jumin1;
+	}
+	public String getJumin2() {
+		return jumin2;
+	}
+	public void setJumin2(String jumin2) {
+		this.jumin2 = jumin2;
 	}
 	
 }

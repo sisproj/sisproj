@@ -31,11 +31,11 @@ function daumPostcode() {
 		}
 
 		// 우편번호와 주소 정보를 해당 필드에 넣는다.
-		document.getElementById('zipcode').value = data.zonecode; //5자리 새우편번호 사용
-		document.getElementById('address1').value = fullAddr;
+		document.getElementById('empZipcode').value = data.zonecode; //5자리 새우편번호 사용
+		document.getElementById('empAddr').value = fullAddr;
 
 		// 커서를 상세주소 필드로 이동한다.
-		document.getElementById('address2').focus();
+		document.getElementById('empAddr2').focus();
 	    }
 	}).open();
 }

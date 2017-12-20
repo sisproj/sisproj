@@ -1,6 +1,7 @@
 package com.siszo.sisproj.confirm.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.siszo.sisproj.confirm.confirmline.model.ConfirmLineService;
+import com.siszo.sisproj.confirm.confirmline.model.ConfirmLineVO;
 import com.siszo.sisproj.confirm.docform.model.DocumentFormService;
 import com.siszo.sisproj.confirm.docform.model.DocumentFormVO;
 import com.siszo.sisproj.confirm.model.DocumentService;
@@ -34,7 +37,11 @@ public class ConfirmController {
 	@Autowired
 	private DocumentService dService;
 	@Autowired
+	private ConfirmLineService clService;
+	@Autowired
 	private SaveLineService slService;
+	
+	private int empNo = 20170001; //임시회원번호 김연아
 	
 	@RequestMapping("/main.do")
 	public String main() {
@@ -128,21 +135,20 @@ public class ConfirmController {
 	@RequestMapping("/line.do")
 	public String line(Model model) {
 		logger.info("결재라인 선택화면 보여주기");
-		int empNo = 20170001; 
 		
-//		List<SaveLineVO> slVoList = slService.selectSaveLineByEmpNo(empNo);
-//		
-//		model.addAttribute("slVoList",slVoList);
+		List<SaveLineVO> slVoList = slService.selectSaveLineByEmpNo(empNo);
+		
+		model.addAttribute("slVoList",slVoList);
 		
 		return "confirm/line";
 	}
 
 	@RequestMapping("/choLine.do")
-	public String choline(@RequestParam(required=false) int empNo, @RequestParam(defaultValue="0") int saveNo, Model model) {
-		logger.info("결재자 선택 화면");
+	public String choline(@RequestParam(defaultValue="0") int empNo, @RequestParam(defaultValue="0") int saveNo, Model model) {
+		logger.info("결재자 선택 화면, 파라미터 empNo={}, saveNo={}",empNo,saveNo);
 		
 		String msg="", url="";
-		if(empNo==0 || saveNo==0) {
+		if(empNo==0 && saveNo==0) {
 			msg="잘못된 URL입니다.";
 			url="/confirm/main.do";
 			
@@ -151,11 +157,28 @@ public class ConfirmController {
 			
 			return "common/message";
 		}
-
-//		if(saveNo>0) {
-//			SaveLineVO savelineVo = slService.selectSaveLineBySaveNo(saveNo);
-//			model.addAttribute("savelineVo",savelineVo);
-//		}
+		
+		//왼쪽 결재라인 그룹 선택시
+		if(saveNo>0) {
+			SaveLineVO savelineVo = slService.selectSaveLineBySaveNo(saveNo);
+			
+			String confirmers = savelineVo.getSaveConfirmer();
+			String[] empNos = confirmers.split("-");
+			
+			List<ConfirmLineVO> empNoList = new ArrayList<ConfirmLineVO>();
+			for(int i=0; i<empNos.length; i++) {
+				empNoList.add(clService.selectConfirmerByEmpNo(Integer.parseInt(empNos[i])));
+			}
+			
+			model.addAttribute("empNoList", empNoList);
+		}
+		
+		//조직도에서 결재자 선택시
+		if(empNo>0) {
+			ConfirmLineVO clVo = clService.selectConfirmerByEmpNo(empNo);
+			model.addAttribute("clVo", clVo);
+		}
+		
 		return "confirm/choLine";
 	}
 	
