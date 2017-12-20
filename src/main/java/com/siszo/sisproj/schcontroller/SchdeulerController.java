@@ -29,10 +29,11 @@ public class SchdeulerController {
 	
 
 	@RequestMapping(value="/scheduler.do")
-	public void scheduler(@RequestParam (defaultValue="0")int empNo, Model model) {
+	public String scheduler(@RequestParam (defaultValue="0")int empNo, Model model) {
 		List<SchedulerVO> list = schedulerService.schedulerSelectAll(empNo);
 		logger.info("스케줄화면 출력 listsize={}",list.size());
 		model.addAttribute("list",list);
+		return "scheduler/scheduler";
 	}
 	
 	private SchedulerUtility schUtil = new SchedulerUtility();
@@ -46,12 +47,12 @@ public class SchdeulerController {
 		logger.info("등록여부 cnt={}",cnt);
 		
 		String msg="", url="";
-		if(cnt<1)
+		if(cnt>0)
 		{
-			msg="등록 실패";
+			msg="등록 성공";
 			url="/scheduler/scheduler.do";
 		}else {
-			msg="등록 성공";
+			msg="등록 실패";
 			url="/scheduler/scheduler.do";
 		}
 		model.addAttribute("url",url);

@@ -1,8 +1,16 @@
 <%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+	
 <%@include file="../inc/top.jsp"%>
-
+	<!-- scheduler -->
+    <script src="<c:url value="/resources/codebase/dhtmlxscheduler.js"/>"></script>
+    <link rel="stylesheet" href="<c:url value="/resources/codebase/dhtmlxscheduler.css"/>">
+    <!-- google map -->
+   <script src="//maps.google.com/maps/api/js?sensor=false&key=AIzaSyAixzCJO-GWZfFwOVEaVZBD-VKvmfgMK98"></script> 
+	<script src="<c:url value='/resources/codebase/ext/dhtmlxscheduler_map_view.js'/> "></script>
+	<!-- PDF로 보내기 -->
+	<script src="<c:url value='/resources/codebase/ext/dhtmlxscheduler_pdf.js'/>"></script>
 
 <script type="text/javascript" charset="utf-8">
 		window.onload=function() {
@@ -27,10 +35,11 @@
 			
 			scheduler.config.map_initial_position =new google.maps.LatLng(37.4946366,126.8354642);
 			scheduler.config.map_error_position = new google.maps.LatLng(37.4946366,126.8354642);
-			scheduler.config.map_initial_zoom = 3;
+			scheduler.config.map_initial_zoom = 5;
 			
 			
 			scheduler.templates.event_class = function(start, end, event){
+				
 				var css = "";
 				if(event.subject) // if event has subject property then special class should be assigned
 					css += "event_"+event.subject;
@@ -43,6 +52,7 @@
 				scheduler.attachEvent("onBeforeViewChange", function(old_mode, old_date, new_mode, new_date) {
 					scheduler.config.map_start = scheduler.date.month_start(new Date((new_date || old_date).valueOf()));
 					scheduler.config.map_end = scheduler.date.add(scheduler.config.map_start, 1, "month");
+					
 					return true;
 				});
 
@@ -57,12 +67,6 @@
 					return format(start) + " — " + format(end);
 				};
 				
-				
-			
-			
-			
-			
-			
 
 			var subject = [ //카테고리 항목 지정
 				{ key: '출장', label: '출장' },
@@ -106,10 +110,12 @@
 					var ev = scheduler.getEvent(id);
 					var pschNo = ev.pschid;
 					$('#pschNo').val(pschNo);
-					console.log(ev);
+					console.log(scheduler.map);
 					
 					if(ev.content==null){ //스케줄 신규등록일시
 						 scheduler.attachEvent("onEventSave",function(id,ev,is_new,original){ //세이브버튼 클릭 시(신규등록)
+						 
+						 
 					    if (!ev.text) {
 					        alert("제목을 입력하세요");
 					        return false;
@@ -123,14 +129,13 @@
 					        return false;
 					    }
 					    else {
-							 var start_date = scheduler.getEvent(id).start_date; //시작날짜
-							 var end_date = scheduler.getEvent(id).end_date; //끝날짜
+							 var start_date = ev.start_date; //시작날짜
+							 var end_date = ev.end_date; //끝날짜
 							 var text = ev.text; //제목
 							 var content = ev.content; //내용
 							 var event_location = ev.event_location; //장소
 							 var selection = ev.subject; //카테고리
 							 var pschNo=ev.pschid; //아이디
-							
 							$('#pschNo').val(id);
 					        $('#pschStart').val(start_date);
 					        $('#pschEnd').val(end_date);
@@ -139,7 +144,9 @@
 					        $('#pschEventLocation').val(event_location);
 					        $('#pschCateg').val(selection);
 					  	 	$('#schfrm').submit();
-						    return true; 
+						    return true;  
+						    
+						    
 					    } 
 					    
 					}); 
@@ -324,6 +331,7 @@ html, body {
 	<div id="scheduler_here" class="dhx_cal_container"
 		style='width: 1400px; height: 700px;'>
 		<div class="dhx_cal_navline">
+			<div class='dhx_cal_export pdf' id='export_pdf' title='Export to PDF' onclick='scheduler.toPDF("http://dhtmlxscheduler.appspot.com/export/pdf", "color")'>&nbsp;</div>
 			<div class="dhx_cal_prev_button">&nbsp;</div>
 			<div class="dhx_cal_next_button">&nbsp;</div>
 			<div class="dhx_cal_today_button"></div>
