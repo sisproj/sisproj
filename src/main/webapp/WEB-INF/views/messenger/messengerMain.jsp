@@ -10,9 +10,25 @@
 
     <%-- messenger JS--%>
     <script type="text/javascript">
-        function changeContent(key) {
-            $('#messenger-main-container').html("").load('messengerChat.do', {key: key});
+        var chatKey = null;
+
+        function startChat() {
+            $('#messenger-main-container').html("").load('messengerStart.do');
+        }
+
+        function changeContent(chatKey) {
+            loadMemberListByChatKey(chatKey);
+            var chatsRef = firebase.database().ref('chats/' + chatKey);
+            chatsRef.once('value', function (snapshot) {
+                var title = snapshot.val().title;
+                $('#chatTitle').html(title);
+            });
+
+            $('#messenger-main-container').html("").load('messengerChat.do', {chatKey: chatKey});
             $('#sidebar-button').show().attr('name', 'hide-nav');
+
+            $('#chatsList').find('a').attr("class", "w3-button w3-block w3-white w3-left-align");
+            $('#' + chatKey).attr("class", "w3-button w3-block w3-white w3-left-align w3-light-grey");
         }
     </script>
 
@@ -22,110 +38,233 @@
 
     <%-- firebase 채팅목록 처리 script--%>
     <script>
-        $(document).ready(function () {
-            $('#sidebar-button').hide(); //우측 버튼 숨김
+        /* TODO 세션에서 로그인한 사용자 ID를 가져와서 userId에 넣어야 함*/
+        var userId = prompt("아이디", "user1");
+        loadKeyListByUserId(userId);
 
-            /* TODO 세션에서 로그인한 사용자 ID를 가져와서 userId에 넣어야 함*/
-            var userId = "user1";
-            loadKeyListByUserId(userId);
+        /* keyList 배열에 사용자의 채팅방 리스트를 담는 함수*/
+        var keyList = [];
 
-            /* keyList 배열에 사용자의 채팅방 리스트를 담는 함수*/
-            var keyList = [];
+        function loadKeyListByUserId(userId) {
+            var usersRef = firebase.database().ref('users/' + userId);
+            usersRef.once('value', function (snapshot) {
+                snapshot.forEach(function (childSnapshot) {
+                    var childKey = childSnapshot.key;
+                    keyList.push(childKey);
+                    appendMessages(childKey);
+                });
+            }).then(function () { //불러오기 끝난후 실행
+                loadChats(keyList);
+            });
+        }
 
-            function loadKeyListByUserId(userId) {
-                var usersRef = firebase.database().ref('users/' + userId);
-                usersRef.once('value', function (snapshot) {
-                    snapshot.forEach(function (childSnapshot) {
-                        var childKey = childSnapshot.key;
-                        keyList.push(childKey);
-                    });
-                }).then(function () { //불러오기 끝난후 실행
-                    loadChats(keyList);
+
+        var memberList = [];
+
+        function loadMemberListByChatKey(chatKey) {
+            var membersRef = firebase.database().ref('members/' + chatKey);
+            membersRef.once('value', function (snapshot) {
+                snapshot.forEach(function (childSnapshot) {
+                    memberList.push(childSnapshot.key);
+                    var onclickStr = 'onclick="changeNameCard(\'' + childSnapshot.key + '\')"';
+                    var userImg = "<c:url value='/resources/images/avatar.png'/>";
+                    $('#memberList').append(
+                        '<div class="w3-bar-item w3-button">' +
+                        '<img src="' + userImg + '" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">' +
+                        '<div>' +
+                        '<div class="w3-small w3-center">' + name + '</div>' +
+                        '</div>' +
+                        '</div>'
+                    );
+                });
+            }).then(function () {
+                loadMembers(memberList);
+            });
+        }
+
+        function resetUnreadCount() {
+            var name, count;
+            console.log(chatKey);
+            var membersRef = firebase.database().ref('members/' + chatKey + "/" + userId);
+            membersRef.once('value', function (snapshot) {
+                count = snapshot.val().count;
+            }).then(function () {
+                membersRef.set({
+                    count: 0,
+                    state: "true"
+                })
+            });
+        }
+
+
+        function formatDate(curDate) {
+            var today, resultDate;
+            today = new Date();
+            resultDate = new Date(curDate);
+            timegap = (today - resultDate) / (60 * 60 * 1000);
+
+            var curYear = resultDate.getFullYear();
+            var curMonth = (resultDate.getMonth() + 1);
+            var curDay = resultDate.getDate();
+            var curHours = resultDate.getHours();
+            var curMin = resultDate.getMinutes();
+            if (curMin < 10) {
+                curMin = "0" + curMin;
+            }
+
+            if (timegap <= 24) {
+                resultDate = curHours + ":" + curMin
+            }
+            else {
+                resultDate = curYear + '-' + curMonth + '-' + curDay;
+            }
+            return resultDate;
+        }
+
+        /* 가져온 채팅방 리스트를 왼쪽 사이드네비에 뿌려주는 함수 */
+        function loadChats(keyList) {
+            for (var i = 0; i < keyList.length; i++) {
+                var chatsRef = firebase.database().ref('chats/' + keyList[i]);
+                chatsRef.once('value', function (snapshot) {
+                    var title = snapshot.val().title;
+                    var lastMessage = snapshot.val().lastMessage;
+                    var timestamp = snapshot.val().timestamp;
+
+                    var resultDate = formatDate(timestamp);
+
+                    var onclickStr = 'onclick="changeContent(\'' + snapshot.key + '\')"';
+                    var userImg = "<c:url value='/resources/images/avatar.png'/>";
+                    $('#chatsList').append(
+                        '<a class="w3-button w3-block w3-white w3-left-align" id="' + snapshot.key + '" style="padding: 5px"' + onclickStr + '>' +
+                        '<img src="' + userImg + '" class="w3-bar-item w3-circle" style="width:85px; float: left;">' +
+                        '<div class="w3-bar-item">' +
+                        '<div class="w3-large w3-left">' + title + '</div>' +
+                        '<div class="w3-right w3-small">' + resultDate + '</div>' +
+                        '<br>' +
+                        '<div class="w3-left w3-small">' + lastMessage + '</div>' +
+                        '<div>' +
+                        '<div class="w3-badge w3-red w3-right w3-small" id="' + snapshot.key + 'Count"></div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</a>'
+                    );
+                });
+
+                var membersRef = firebase.database().ref('members/' + keyList[i] + "/" + userId);
+
+                /*처음 실행시 안읽은 메시지 표시*/
+                membersRef.once('value', function (snapshot) {
+                    var parentKey = snapshot.ref.parent.key;
+                    if (snapshot.val().count == 0) {
+                        $('#' + parentKey + 'Count').html('');
+                    } else {
+                        $('#' + parentKey + 'Count').html(snapshot.val().count);
+                    }
+                });
+
+
+                /* 채팅이 추가될때마다 안읽은 메시지 표시 */
+                membersRef.on('child_changed', function (snapshot) {
+                    var parentKey = snapshot.ref.parent.parent.key;
+                    if (snapshot.val() == 0) {
+                        $('#' + parentKey + 'Count').html('');
+                    } else {
+                        $('#' + parentKey + 'Count').html(snapshot.val());
+                    }
                 });
             }
+        }
+
+        <%-- firebase 채팅처리 script--%>
+
+        function loadMessages(chatKey) {
+            var messeagesRef = firebase.database().ref('messages/' + chatKey);
+            messeagesRef.once('value', function (snapshot) {
+                snapshot.forEach(function (data) {
+                    showMessage(data)
+                });
+            }).then(function () {
+                $('#messenger-main').scrollTop(9999);
+            });
 
 
-            /* 가져온 채팅방 리스트를 왼쪽 사이드네비에 뿌려주는 함수 */
-            function loadChats(keyList) {
-                for (var i = 0; i < keyList.length; i++) {
-                    var chatsRef = firebase.database().ref('chats/' + keyList[i]);
-                    chatsRef.once('value', function (snapshot) {
-                        var title = snapshot.val().title;
-                        var lastMessage = snapshot.val().lastMessage;
+        }
 
-                        var onclickStr = 'onclick="changeContent(\'' + snapshot.key + '\')"';
-                        $('#chatsList').append(
-                            '<a href="#" class="w3-bar-item w3-button" id="' + snapshot.key + '" ' + onclickStr + '>' +
-                            title + '<br>' +
-                            lastMessage +
-                            '</a>'
-                        )
-                    });
-                }
+        function showMessage(data) {
+            var timestamp = data.val().timestamp;
+            var resultDate = formatDate(timestamp);
+
+            //TODO : userImg DB에서 가져온 사용자 이미지로 변경
+            var userImg = "<c:url value='/resources/images/avatar.png'/>";
+            var message = data.val().message;
+            var name = data.val().name;
+
+            if (userId == data.val().name) {
+                $('#messengerContainer').append(
+                    '<div class="message-wrap darker">' +
+                    '<img src="' + userImg + '" alt="Avatar" class="right" style="width:100%;">' +
+                    '<p>' + message + '</p>' +
+                    '<span class="time-left w3-small">' + resultDate + '</span>'
+                )
+            } else {
+                $('#messengerContainer').append(
+                    '<div class="message-wrap">' +
+                    '<img src="' + userImg + '" alt="Avatar" style="width:100%;">' +
+                    '<div><b>' + name + '</b></div>' +
+                    '<p>' + message + '</p>' +
+                    '<span class="time-right w3-small">' + resultDate + '</span>' +
+                    '</div>'
+                );
             }
-        });
-    </script>
 
-    <%-- firebase 채팅처리 script--%>
-    <script>
-        /* TODO userId 세션에서 가져와야함*/
-        var userId = "user1";
+            //채팅 입력시 스크롤 맨 아래로
+            $('#messenger-main').scrollTop($(this).height());
+        }
 
-        function loadMessages(key) {
+        function appendMessages(chatKey) {
             /* key에 해당하는 채팅방의 메시지를 가져와 화면에 뿌려줌*/
-            var messeagesRef = firebase.database().ref('messages/' + key);
+            var messeagesRef = firebase.database().ref('messages/' + chatKey);
             //Messages Child가 추가될때 마다 실행
             messeagesRef.on('child_added', function (data) {
                 var timestamp = data.val().timestamp;
-
-                var date = new Date(timestamp);
-                var hour = date.getHours();
-                var min = date.getMinutes();
-
-                if (userId === data.val().name) {
-                    $('#messengerContainer').append(
-                        '<div class="message-wrap darker">' +
-                        '<img src="<c:url value='/resources/images/airplain.png'/>" alt="Avatar" class="right" style="width:100%;">' +
-                        '<p>' + data.val().message + '</p>' +
-                        '<span class="time-right">' + hour + ':' + min + '</span>' +
-                        '</div>'
-                    );
-                } else {
-                    $('#messengerContainer').append(
-                        '<div class="message-wrap">' +
-                        '<img src="<c:url value='/resources/images/airplain.png'/>" alt="Avatar" style="width:100%;">' +
-                        '<p>' + data.val().message + '</p>' +
-                        '<span class="time-right">11:00</span>' +
-                        '</div>'
-                    );
-                }
-
-                //채팅 입력시 스크롤 맨 아래로
-                $('#messenger-main').scrollTop($(this).height());
+                showMessage(data);
             });
         }
 
 
         /* 마지막 채팅 변경 함수 */
-        function writeChats(userId) {
+        function changeLastChats() {
             var date = new Date();
             var timestamp = date.getTime();
+            var lastMessage = $('#chatMsg').val();
+            var title = $('#chatTitle').html();
+            var userImg = "<c:url value='/resources/images/avatar.png'/>";
+
             firebase.database().ref('chats/' + chatKey).set({
-                title: "user2",
-                lastMessage: $('#chatMsg').val(),
+                title: title,
+                lastMessage: lastMessage,
                 timestamp: timestamp
             });
 
+            var resultDate = formatDate(timestamp);
+
             $('#' + chatKey).html(
-                'user2' + '<br>' +
-                $('#chatMsg').val() + '<br>' +
-                timestamp
+                '<img src="' + userImg + '" class="w3-bar-item w3-circle" style="width:85px; float: left;">' +
+                '<div class="w3-bar-item">' +
+                '<div class="w3-large w3-left">' + title + '</div>' +
+                '<div class="w3-right w3-small">' + resultDate + '</div>' +
+                '<br>' +
+                '<div class="w3-left w3-small">' + lastMessage + '</div>' +
+                '<div>' +
+                '<div class="w3-badge w3-red w3-right w3-small" id="' + chatKey + 'Count"></div>' +
+                '</div>' +
+                '</div>'
             )
         }
 
 
         /* firebase DB에 채팅 메시지를 push */
-        function writeMessage(userId) {
+        function writeMessage() {
             var date = new Date();
             var timestamp = date.getTime();
 
@@ -136,14 +275,34 @@
                 timestamp: timestamp
             });
 
-            writeChats(userId);
+            changeLastChats();
+            updateUnreadCount(memberList);
         }
+
+        function updateUnreadCount(memberList) {
+            var name, count;
+            for (var i = 0; i < memberList.length; i++) {
+                if (memberList[i] != userId) {
+                    var membersRef = firebase.database().ref('members/' + chatKey + "/" + memberList[i]);
+                    membersRef.once('value', function (snapshot) {
+                        count = snapshot.val().count;
+                    }).then(function () {
+                        membersRef.set({
+                            count: count + 1,
+                            state: "true"
+                        })
+                    });
+                }
+            }
+        }
+
     </script>
 
 
     <%-- 화면 크기조절 script --%>
     <script>
         $(document).ready(function () {
+            $('#sidebar-button').hide(); //우측 버튼 숨김
             $('#sidebar-button').click(function () {
                 var status = $(this).attr('name');
 
@@ -185,26 +344,26 @@
 <!-- 왼쪽 SideMenu-->
 <nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top w3-border-right" style="z-index:3;width:400px">
     <div class="w3-container w3-display-container w3-padding-16">
-        <h3 class="w3-wide"><b><a href="<c:url value='/messenger/messenger.do'/>">LOGO</a></b></h3>
+        <h3 class="w3-wide">
+            <b>
+                <a href="<c:url value='/messenger/messenger.do'/>">
+                    <img src="<c:url value='/resources/images/logo.png'/> " width="300px"/>
+                </a>
+            </b>
+        </h3>
     </div>
-    <div class="w3-padding-64 w3-large w3-text-grey" id="chatsList" style="font-weight:bold">
-        <button id="startChatButton" class="w3-button w3-blue w3-hover-black">채팅 시작</button>
-
-        <div class="chats-wrap w3-bar-item w3-button">
-            <img src="<c:url value='/resources/images/airplain.png'/>" alt="Avatar" style="width:100%;">
-            <a href="#" class="chat-wrap">
-                <div>대화 명1</div>
-                <div>마지막 메시지</div>
-            </a>
-        </div>
-        <a class="w3-button w3-block w3-white w3-left-align active" id="myBtn">대화 명3</a>
+    <div class="w3-large w3-text-grey" style="font-weight:bold">
+        <button id="startChatButton" class="w3-button w3-indigo w3-hover-black" onclick="startChat()">대화 하기</button>
+        <ul class="w3-hoverable" id="chatsList">
+            <%--로그인한 user의 채팅방 목록을 여기다 뿌려줌--%>
+        </ul>
     </div>
 </nav>
 
 <!-- Header -->
 <div class="messenger-header w3-card">
     <header class="w3-container w3-xlarge">
-        <p class="w3-left w3-bar-item w3-padding-24 w3-wide">대화 명</p>
+        <p class="w3-left w3-bar-item w3-padding-24" id="chatTitle">대화 하기</p>
         <p class="w3-right">
             <a href="#" class="w3-bar-item w3-button w3-padding-24 w3-right" name="hide-nav" id="sidebar-button">
                 <i class="fa fa-bars"></i>
@@ -214,6 +373,8 @@
 </div>
 
 <!-- Main -->
-<div id="messenger-main-container"></div>
+<div id="messenger-main-container">
+    <%--선택한 채팅방의 채팅 내용을 여기다 뿌려줌--%>
+</div>
 </body>
 </html>

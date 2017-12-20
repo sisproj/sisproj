@@ -15,24 +15,6 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/mainStyle.css"/>">
     <link rel="stylesheet" href="<c:url value="/resources/css/pagecss/confirm_line.css"/>">
 
-    <!-- jquery -->
-    <script src="<c:url value="/resources/jquery/jquery-3.2.1.min.js"/>"></script>
-    <script src="<c:url value="/resources/jquery/jquery.easing.1.3.js"/>"></script>
-    <script type="text/javascript">
-    	$(function(){
-    		$('#cf_ch_line #cf_ch_linech table tr td').mouseover(function(){
-    			$(this).parent().css('background-color','#d1d1d1');
-    		});
-    		$('#cf_ch_line #cf_ch_linech table tr td').mouseout(function(){
-    			$(this).parent().css('background-color','');
-    		});
-    		$('#cf_win_close').click(function(){
-    			$('#choice_cfer').hide();
-    		});
-    		
-    		$('#')
-    	});
-    </script>
 </head>
 <body>
 	<div id="cf_ch_line">
@@ -41,8 +23,11 @@
 		<div id="cf_ch_savedline">
 			<div class="dh"><i class="fa fa-sitemap">저장된 결재라인</i></div>
 			<ul>
-				<li><i class="fa fa-folder-open-o"></i> 기안용</li>
-				<li><i class="fa fa-folder-o"></i> 근태용</li>
+				<c:forEach var="slVo" items="${slVoList}">
+				<li id="${slVo.saveNo }">
+					<i class="fa fa-folder-o"></i> ${slVo.saveName }
+				</li>
+				</c:forEach>
 			</ul>
 		</div>
 		<div id="cf_ch_linech">	

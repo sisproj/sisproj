@@ -3,9 +3,12 @@
 	pageEncoding="utf-8"%>
 <%@include file="../inc/top.jsp"%>
 
+
 <script type="text/javascript" charset="utf-8">
 		window.onload=function() {
+			
 			scheduler.config.xml_date = "%Y-%m-%d %h:%i";
+			scheduler.config.prevent_cache = true;
 			scheduler.config.time_step = 30;
 			scheduler.config.multi_day = true;
 			scheduler.locale.labels.section_subject = "Subject";
@@ -13,31 +16,55 @@
 			scheduler.config.limit_time_select = true;
 			scheduler.config.details_on_dblclick = true;
 			scheduler.config.details_on_create = true;
+			
+			
+			scheduler.locale.labels.map_tab = "Map";
+			scheduler.locale.labels.section_location = "Location";
+			scheduler.config.map_resolve_event_location = true;
 
+			scheduler.xy.map_date_width = 180; // date column width
+			scheduler.xy.map_description_width = 350; // description column width	
+			
+			scheduler.config.map_initial_position =new google.maps.LatLng(37.4946366,126.8354642);
+			scheduler.config.map_error_position = new google.maps.LatLng(37.4946366,126.8354642);
+			scheduler.config.map_initial_zoom = 3;
+			
+			
 			scheduler.templates.event_class = function(start, end, event){
 				var css = "";
 				if(event.subject) // if event has subject property then special class should be assigned
 					css += "event_"+event.subject;
-				if(event.id == scheduler.	getState().select_id){
+				if(event.id == scheduler.getState().select_id){
 					css += " selected";
 				}
 				return css; // default return
-
-				/*
-					Note that it is possible to create more complex checks
-					events with the same properties could have different CSS classes depending on the current view:
-
-					var mode = scheduler.getState().mode;
-					if(mode == "day"){
-						// custom logic here
-					}
-					else {
-						// custom logic here
-					}
-				*/
+				
 			};
+				scheduler.attachEvent("onBeforeViewChange", function(old_mode, old_date, new_mode, new_date) {
+					scheduler.config.map_start = scheduler.date.month_start(new Date((new_date || old_date).valueOf()));
+					scheduler.config.map_end = scheduler.date.add(scheduler.config.map_start, 1, "month");
+					return true;
+				});
 
-			var subject = [
+				// defining add function for prev/next arrows
+				scheduler.date.add_map = function(date, inc) {
+					return scheduler.date.add(date, inc, "month");
+				};
+
+				// defining date header
+				var format = scheduler.date.date_to_str("%Y-%m-%d");
+				scheduler.templates.map_date = function(start, end, mode) {
+					return format(start) + " — " + format(end);
+				};
+				
+				
+			
+			
+			
+			
+			
+
+			var subject = [ //카테고리 항목 지정
 				{ key: '출장', label: '출장' },
 				{ key: '회의', label: '회의' },
 				{ key: '외근', label: '외근' },
@@ -46,50 +73,131 @@
 				{ key: '기타', label: '기타' }
 			];
 
-			scheduler.config.lightbox.sections=[
-				{name:"내용", height:43, map_to:"text", type:"textarea" , focus:true},
+			scheduler.config.lightbox.sections=[  //라이트박스 설정
+				{name:"제목", height:22, map_to:"text", type:"textarea" ,focus:true},
+				{name:"장소", height:22, map_to:"event_location", type:"textarea"},
+				{name:"내용", height:43, map_to:"content", type:"textarea" },
 				{name:"카테고리", height:20, type:"select", options: subject, map_to:"subject" },
 				{name:"시간", height:72, type:"time", map_to:"auto" }
-			];
-
-			scheduler.init('scheduler_here', new Date(), "day");
-			
-			scheduler.attachEvent("onEventSave",function(id,ev,is_new){
-				var end_date = scheduler.getEvent(id).end_date;
-				var start_date = scheduler.getEvent(id).start_date;
-				var text = ev.text;
-				var selection = ev.subject;
-			
-			    if (!ev.text) {
-			        alert("내용을 입력하세요");
-			        return false;
-			    } else {
-			   	
-		        $('#pschStart').val(start_date);
-		        $('#pschEnd').val(end_date);
-		        $('#pschTitle').val(text);
-		        $('#pschNo').val(id);
-		        $('#pschCateg').val(selection);
-		        $('#schfrm').submit();
-			    return true;
-			    }
-			}); 
-		
 				
-			scheduler.parse([
+			];
+			
+			scheduler.init('scheduler_here', new Date(), "week");
+			
+			scheduler.attachEvent("onConfirmedBeforeEventDelete", function(id,ev){ //삭제버튼 눌렀을때
+				var pschNo = ev.pschid;
+				location.href="schedulerDelete.do?pschNo="+pschNo;
+			});
+			
+			  scheduler.attachEvent("onBeforeEventChanged", function(ev, e, is_new, original){ //드래그해서 값이변경됬을떄(날짜수정)
+			    var pschNo = ev.pschid;
+			    if(pschNo != null) {
+			    	$('#pschStart').val(ev.start_date);
+			    	$('#pschEnd').val(ev.end_date);
+			    	$('#pschNo').val(ev.pschid);
+			    	$('#schfrm').attr("action", "schedulerEdit.do");	
+			    	$('#schfrm').submit();
+			    } else {
+			    	return true;
+			    }
+			 }); 
+			
+			  scheduler.attachEvent("onBeforeLightbox", function(id) { //라이트박스 열었을때
+					var ev = scheduler.getEvent(id);
+					var pschNo = ev.pschid;
+					$('#pschNo').val(pschNo);
+					console.log(ev);
+					
+					if(ev.content==null){ //스케줄 신규등록일시
+						 scheduler.attachEvent("onEventSave",function(id,ev,is_new,original){ //세이브버튼 클릭 시(신규등록)
+					    if (!ev.text) {
+					        alert("제목을 입력하세요");
+					        return false;
+					    }
+					    else if (!ev.content) {
+					        alert("내용을 입력하세요");
+					        return false;
+					    }
+					    else if (!ev.event_location) {
+					        alert("장소를 입력하세요");
+					        return false;
+					    }
+					    else {
+							 var start_date = scheduler.getEvent(id).start_date; //시작날짜
+							 var end_date = scheduler.getEvent(id).end_date; //끝날짜
+							 var text = ev.text; //제목
+							 var content = ev.content; //내용
+							 var event_location = ev.event_location; //장소
+							 var selection = ev.subject; //카테고리
+							 var pschNo=ev.pschid; //아이디
+							
+							$('#pschNo').val(id);
+					        $('#pschStart').val(start_date);
+					        $('#pschEnd').val(end_date);
+					        $('#pschContent').val(content);
+					        $('#pschText').val(text);
+					        $('#pschEventLocation').val(event_location);
+					        $('#pschCateg').val(selection);
+					  	 	$('#schfrm').submit();
+						    return true; 
+					    } 
+					    
+					}); 
+					
+					}else if(ev.content!=null){ //값이있을시(수정)
+						 scheduler.attachEvent("onEventSave",function(id,ev,is_new,original){ //세이브버튼 클릭 시(기존 값 수정)
+							    if (!ev.text) {
+								        alert("제목을 입력하세요");
+								        return false;
+								}
+							    else if (!ev.content) {
+								        alert("내용을 입력하세요");
+								        return false;
+								}
+								else if (!ev.event_location) {
+								        alert("장소를 입력하세요");
+								        return false;
+								}
+								else {
+								 var start_date = ev.start_date; //시작날짜
+								 var end_date = ev.end_date; //끝날짜
+								 var text = ev.text; //제목
+								 var content = ev.content; //내용
+								 var event_location = ev.event_location; //장소
+								 var selection = ev.subject; //카테고리
+						        $('#pschText').val(text);
+						        $('#pschContent').val(content);
+						        $('#pschStart').val(start_date);
+						        $('#pschEnd').val(end_date);
+						        $('#pschEventLocation').val(event_location);
+						        $('#pschCateg').val(selection);
+						        
+						      $('#schfrm').attr("action", "schedulerEditContent.do");	
+						    	$('#schfrm').submit(); 
+						    }
+						});
+					 }
+					return true; 
+			});			     
+			  
+				
+			console.log("${list}");
+			
+			scheduler.parse([//화면에 뿌려주기.
 				<c:if test="${empty list}">
 				 
 				</c:if>
 				<c:if test="${!empty list}">
 				<c:forEach var="i" begin="0" end="${list.size()-1}" step="1">
-				
-					{ start_date: "${list[i].pschStart}", end_date: "${list[i].pschEnd}", text:"${list[i].pschTitle}", subject: '${list[i].pschCateg}' },
+					{ start_date: "${list[i].pschStart}", end_date: "${list[i].pschEnd}",
+						text:"${list[i].pschText}", event_location: "${list[i].pschEventLocation}",
+						content: '${list[i].pschContent}', subject: '${list[i].pschCateg}', 
+						pschid:"${list[i].pschNo}"},
 				</c:forEach>
 				</c:if>
 				], "json");
-		}
-		
-
+			
+			}
 
 	</script>
 <style type="text/css">
@@ -113,7 +221,7 @@ html, body {
 	opacity: 0.7;
 }
 
-.dhx_cal_event .dhx_title {
+.dhx_cal_event .dhx_content {
 	line-height: 12px;
 }
 
@@ -205,11 +313,13 @@ html, body {
 <article id="bodysection">
 	<!-- 3. 내용 -->
 	<form name="schfrm" id="schfrm" method="post" action="schedulerOK.do">
-		<input type="hidden" id="pschStart" name="pschStart"> <input
-			type="hidden" id="pschEnd" name="pschEnd"> <input type="hidden"
-			id="pschTitle" name="pschTitle"> <input type="hidden"
-			id="pschCateg" name="pschCateg"> <input type="hidden"
-			id="pschNo" name="pschNo">
+		<input type="hidden" id="pschStart" name="pschStart"> 
+		<input type="hidden" id="pschEnd" name="pschEnd">
+		<input type="hidden" id="pschContent" name="pschContent"><!-- 내용 -->
+		<input type="hidden" id="pschCateg" name="pschCateg">
+		<input type="hidden" id="pschNo" name="pschNo">
+		<input type="hidden" id="pschEventLocation" name="pschEventLocation">
+		<input type="hidden" id="pschText" name="pschText"><!-- 제목 -->
 	</form>
 	<div id="scheduler_here" class="dhx_cal_container"
 		style='width: 1400px; height: 700px;'>
@@ -221,6 +331,7 @@ html, body {
 			<div class="dhx_cal_tab" name="day_tab" style="right: 204px;"></div>
 			<div class="dhx_cal_tab" name="week_tab" style="right: 140px;"></div>
 			<div class="dhx_cal_tab" name="month_tab" style="right: 76px;"></div>
+			<div class="dhx_cal_tab" name="map_tab" style="right:280px;"></div>
 		</div>
 		<div class="dhx_cal_header"></div>
 		<div class="dhx_cal_data"></div>
@@ -231,7 +342,7 @@ html, body {
 <!-- 4. 상단 네비 색먹이기 // li태그 순서(전자결재 : 6번째) 입력 -->
 <script type="text/javascript">
         $(function () {
-            $('header nav ul li:nth-child(4) a').addClass('active');
+            $('header nav ul li:nth-child(3) a').addClass('active');
         });
     </script>
 <!-- 4. 상단 네비 색먹이기 끝-->

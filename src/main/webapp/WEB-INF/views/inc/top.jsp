@@ -31,6 +31,9 @@
     
     <script src="<c:url value="/resources/codebase/dhtmlxscheduler.js"/>"></script>
     <link rel="stylesheet" href="<c:url value="/resources/codebase/dhtmlxscheduler.css"/>">
+    
+   <script src="//maps.google.com/maps/api/js?sensor=false&key=AIzaSyAixzCJO-GWZfFwOVEaVZBD-VKvmfgMK98"></script> 
+	<script src="<c:url value='/resources/codebase/ext/dhtmlxscheduler_map_view.js'/> "></script>
    
 </head>
 <body>
@@ -89,7 +92,7 @@
             <div id="asidebtn">
                 <ul>
                     <li><a href="#">출근</a></li>
-                    <li><a href="#">메신저</a></li>
+                    <li><a href="#" onclick="window.open('<c:url value="/messenger/messenger.do"/>', 'messengerWindow', 'toolbar=no,scrollbars=yes')">메신저</a></li>
                     <li><a href="<c:url value='/login.do'/>">로그 아웃</a></li>
                 </ul>
             </div>

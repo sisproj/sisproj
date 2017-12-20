@@ -56,6 +56,23 @@
 	<select id="selectConfirmSEQ" resultType="int">
 		select confirm_seq.nextval from dual
 	</select>
+	
+	<select id="selectSaveLineByEmpNo" parameterType="int" resultType="SaveLineVO">
+		select * from save_line where emp_no = #{empNo}
+	</select>
+	
+	<select id="selectSaveLineBySaveNo" parameterType="int" resultType="SaveLineVO">
+		select * from save_line where save_no = #{saveNo}
+	</select>
+	
+	<select id="selectConfirmerByEmpNo" parameterType="int" resultType="ConfirmLineVO">
+		select e.emp_no, e.emp_name, e.emp_position, d.dept_name
+		from emp e
+		join dept d
+		on e.dept_no = d.dept_no
+		where emp_no = #{empNo}
+	</select>
+	
 </mapper>
 
 

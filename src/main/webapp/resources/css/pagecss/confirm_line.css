@@ -15,7 +15,6 @@
 		border-right: 1px solid #fff;
 		float:left;
 		padding: 10px;
-		background-color: #eee;
 	}
 	#cf_ch_line #cf_ch_savedline .dh{
 		box-sizing:border-box;
@@ -48,6 +47,7 @@
 		border-left: 1px solid #fff;
 		padding: 10px;
 		float:left;
+		overflow:auto;
 	}
 	#cf_ch_linebtn {
 		margin-top: 8px;
@@ -105,5 +105,9 @@
 		text-align: center;
 	}
 	#cf_ch_line #cf_ch_linech table tr{
-	cursor:pointer;
+		cursor:pointer;
+		height: 25px;
+	}
+	#cf_ch_line #cf_ch_linech table tr:hover{
+		background-color: #d1d1d1;
 	}

@@ -8,29 +8,26 @@
 		<selectKey keyProperty="empNo" resultType="int" order="BEFORE">
 			select emp_seq.nextval from dual
 		</selectKey>
-		insert into emp(emp_no,emp_name,emp_ename,emp_tel,emp_ssn,emp_email,emp_zipcode
-		,emp_addr,emp_addr2,emp_hiredate,emp_school,
-		emp_major,emp_img,emp_sal,dept_no,emp_position,emp_lev)
-		values(#{empNo},#{empName},#{empEName},#{empTel},#{empSsn},#{empEmail},#{empZipcode}
-		,#{empAddr},#{empAddr2},#{empHiredate},#{empSchool},#{empMajor},
-		#{empImg},#{empSal},#{deptNo},#{empPosition},#{empLev});
+		insert into emp(emp_no,emp_name,emp_ename,emp_tel,emp_ssn,emp_email,emp_zipcode,emp_addr,emp_addr2,emp_hiredate,emp_hobby,emp_school,emp_major,emp_img,emp_sal,dept_no,emp_position,emp_lev)
+		values(#{empNo},#{empName},#{empEName},#{empTel},#{empSsn},#{empEmail},#{empZipcode},#{empAddr},#{empAddr2},#{empHiredate},#{empHobby}#{empSchool},#{empMajor},#{empImg},#{empSal},#{deptNo},#{empPosition},#{empLev})
 	</insert>
+	
 	<select id="selectEmployeeByNo" parameterType="int" resultType="EmployeeVO">
-		select * from emp e,dept d where e.DEPT_NO = d.DEPT_NO and e.emp_No=#{empNo}
+		select * from emp where emp_no=#{empNo}
 	</select>
+	
 	<select id="selectAllEmployee" resultType="EmployeeVO">
 		select * from emp
 	</select>
-	<update id="editEmployee" parameterType="int">
-		update emp set empName=#{empName},
-		empEName=#{empEName},empTel=#{empTel},empSsn=#{empSsn},
-		empEmail=#{empEmail},empZipcode=#{empZipcode},empAddr=#{empAddr},
-		empAddr2=#{empAddr2},empHiredate=#{empHiredate},empSchool=#{empSchool},
-		empMajor=#{empMajor},empImg=#{empImg},empSal=#{empSal},
-		deptNo=#{deptNo},empPosition=#{empPosition},empLev=#{empLev}
-		where empNo=#{empNo}
-	</update>
 	
+	<update id="editEmployee" parameterType="EmployeeVO">
+		update emp set emp_name=#{empName},
+		emp_eName=#{empEName},emp_tel=#{empTel},emp_ssn=#{empSsn},
+		emp_email=#{empEmail},emp_zipcode=#{empZipcode},emp_addr=#{empAddr},
+		emp_addr2=#{empAddr2},emp_hiredate=#{empHiredate},emp_school=#{empSchool},
+		emp_major=#{empMajor},emp_img=#{empImg},emp_sal=#{empSal},
+		dept_no=#{deptNo},emp_position=#{empPosition},emp_lev=#{empLev}
+	</update>
 </mapper>
 
 

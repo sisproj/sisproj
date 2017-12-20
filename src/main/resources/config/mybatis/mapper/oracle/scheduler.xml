@@ -4,13 +4,29 @@
 
 <mapper namespace="config.mybatis.mapper.oracle.scheduler">
 	<insert id="schedulerInsert" parameterType="SchedulerVO">
-		insert into pschedule(psch_No,psch_Title,psch_Start,psch_End,psch_Categ,emp_no)
-		values(#{pschNo},#{pschTitle},#{pschStart},#{pschEnd}, #{pschCateg},20170001) 
+		insert into pschedule(psch_No,psch_Text,psch_content,psch_eventlocation,psch_Start,psch_End,psch_Categ,emp_no)
+		values(#{pschNo},#{pschText},#{pschContent},#{pschEventLocation},#{pschStart},#{pschEnd}, #{pschCateg},20170001) 
 	</insert>
 	<!-- emp_no는 추후 수정 -->
 	<select id="schedulerSelectAll" resultType="SchedulerVO" parameterType="int">
 		select * from pschedule <!-- where emp_no=#{empNo} -->
 	</select>
+	
+	<delete id="schedulerDelete" parameterType="string">
+		delete from pschedule where psch_no=#{pschNo}
+	</delete>
+	
+	<update id="schedulerUpdate" parameterType="SchedulerVO">
+		update pschedule
+		set psch_start=#{pschStart},psch_end=#{pschEnd}
+		where psch_no=#{pschNo} 
+	</update>
+	
+	<update id="schedulerContentUpdate" parameterType="SchedulerVO">
+		update pschedule
+		set psch_Text=#{pschText},psch_Content=#{pschContent},psch_eventlocation=#{pschEventLocation},psch_Categ=#{pschCateg},psch_start=#{pschStart},psch_end=#{pschEnd}
+		where psch_no=#{pschNo} 
+	</update>
 
 </mapper>
 
