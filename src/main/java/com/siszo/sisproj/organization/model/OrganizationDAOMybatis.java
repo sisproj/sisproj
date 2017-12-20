@@ -14,5 +14,10 @@ public class OrganizationDAOMybatis extends SqlSessionDaoSupport implements Orga
 	@Override
 	public List<EmployeeVO> selectEmp() {
 		return getSqlSession().selectList(namespace+".selectEmp");
+	}
+
+	@Override
+	public EmployeeVO selectEmpByEmpNo(int empNo) {
+		return getSqlSession().selectOne(namespace+".selectEmpByEmpNo", empNo);
 	} 
 }
