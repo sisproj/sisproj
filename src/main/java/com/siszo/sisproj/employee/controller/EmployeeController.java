@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.siszo.sisproj.common.FileuploadUtil;
+import com.siszo.sisproj.common.FileUploadUtil;
 import com.siszo.sisproj.dept.model.DeptService;
 import com.siszo.sisproj.dept.model.DeptVO;
 import com.siszo.sisproj.employee.model.EmployeeService;
@@ -83,15 +83,12 @@ public class EmployeeController {
 		vo.setEmpHiredate(hiredate);
 		List<Map<String, Object>> list=null;
 		String empImg="";
-		long empImgSize=0;
 		try {
-			list=fileUtil.fileupload(request);
-			
+			list=fileUtil.fileupload(request,FileUploadUtil.PDS_UPLOAD);			
 			//파일 업로드 한 경우
 			if(list!=null && !list.isEmpty()){
 				for(Map<String, Object> map : list){
-					empImg=(String)map.get("filename");		
-					empImgSize=(Long)map.get("fileSize");
+					empImg=(String)map.get("fileName");		
 				}//for
 			}
 		} catch (IllegalStateException e) {
@@ -102,7 +99,6 @@ public class EmployeeController {
 		
 		//db작업
 		vo.setEmpImg(empImg);
-		vo.setEmpImgSize(empImgSize);
 		
 		int cnt=employeeService.insertEmployee(vo);
 		
@@ -184,7 +180,6 @@ public class EmployeeController {
 	public void employeeDetailSerach_post(@RequestParam String empName,
 			@RequestParam String empPosition,Model model) {
 		logger.info("사원 상세 검색 결과 보여주기 empName={},empPosition={}",empName,empPosition);
-		
 	}
 	
 }

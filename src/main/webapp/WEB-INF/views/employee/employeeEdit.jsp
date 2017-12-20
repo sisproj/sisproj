@@ -171,12 +171,12 @@
 			            	<c:if test="${email[1]=='hotmail.com'}">
 			            		selected
 			            	</c:if>
-			            >gmail.com</option> 
+			            >hotmail.com</option> 
 			            <option value="yahoo.com"
 			            	<c:if test="${email[1]=='yahoo.com'}">
 			            		selected
 			            	</c:if>
-			            >gmail.com</option> 
+			            >yahoo.com</option> 
 			            
 			            <c:set var="isEtc" value="false"/>
 			            <c:choose>
@@ -226,6 +226,10 @@
 		$('#btL').click(function() {
 			location.href="<c:url value='/employee/employeeList.do' />"
 		});
+		
+		var email = ${(vo.empEmail).split("@")};
+		
+		var tel = ${(vo.empTel).split("-")};
 	});
 </script>
 <%@include file="employeeBottom.jsp" %>
