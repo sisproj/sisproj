@@ -26,9 +26,26 @@
 		</article>	
 		<article id="bodysection">
 			<!-- 3. 내용 -->
-			<div class="container" style="max-width: 1045px;">
+	<script type="text/javascript">
+		function send(form){
+			if(form.title.value=""){
+				alert("제목을 입력하세요");
+				form.title.focus();
+				return false;
+			}else if(form.content.value=""){
+				alert("내용을 입력하세요");
+				form.content.focus();
+				return false;
+			}
+		
+		return true;
+		}
+	</script>
+	<div class="container" style="max-width: 1045px;">
 				<div class="row">
-					<form method="post" action="writeAction.jsp">
+					<form name="fromWrite" method="post" 
+						action="<c:url value='/notice/noticeWrite.do'/>"
+						onsubmit="return send(this)">
 						<table class="table table-striped"
 							style="text-align: center; border: 1px solid #c5bdbd;">
 							<thead>
@@ -39,19 +56,23 @@
 							<tbody>
 								<tr>
 									<td><input type="text" class="form-control"
-										placeholder="글 제목" name="bbsTitle" maxlength="50"></td>
+										placeholder="글 제목" name="title" maxlength="50"></td>
 								</tr>
 								<tr class="active">
 									<td><textarea class="form-control" placeholder="글 내용"
-											name="bbsContent" maxlength="2048" style="height: 480px;"></textarea></td>
+										id="content" name="content" maxlength="2048" style="height: 480px;"></textarea></td>
 								</tr>
 							</tbody>
 						</table>
 						<input type="submit" class="btn btn-primary pull-right" value="글쓰기">
+						<input type="Button" class="btn btn-primary pull-right" value="목록으로"
+							onclick
+						="location.href='<c:url value="/notice/noticeList.do"/>'"/>
 					</form>
 				</div>
 			</div>
 	<!-- 3. 내용 끝 -->
+
 		</article>
 		<!-- 4. 상단 네비 색먹이기 // li태그 순서(전자결재 : 6번째) 입력 -->
 		<script type="text/javascript">
