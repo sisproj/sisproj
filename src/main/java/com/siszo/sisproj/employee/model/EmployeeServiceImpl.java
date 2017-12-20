@@ -15,12 +15,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public int insertEmployee(EmployeeVO vo) {
 		return employeeDao.insertEmployee(vo); 
 	}
-
-	@Override
-	public EmployeeVO selectEmployeeByNo(int empNo) {
-		return employeeDao.selectEmployeeByNo(empNo);
-	}
-
+	
 	@Override
 	public List<EmployeeVO> selectAllEmployee() {
 		return employeeDao.selectAllEmployee();
@@ -33,11 +28,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public List<EmployeeVO> selectEmployeeByEmpPosition(String empName) {
-		 List<EmployeeVO> list=employeeDao.selectEmployeeByEmpName(empName);
-		 
+		 List<EmployeeVO> list=employeeDao.selectEmployeeByEmpName(empName);		 
 		 
 		 return list;
 		 
+	}
+
+	@Override
+	public EmployeeVO selectEmployeeByNo(int empNo) {
+		return employeeDao.selectEmployeeByNo(empNo);	
 	}
 	
 		

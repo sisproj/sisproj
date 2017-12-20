@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.siszo.sisproj.common.FileuploadUtil;
 import com.siszo.sisproj.dept.model.DeptService;
+import com.siszo.sisproj.dept.model.DeptVO;
 import com.siszo.sisproj.employee.model.EmployeeService;
 import com.siszo.sisproj.employee.model.EmployeeVO;
 
@@ -82,7 +83,7 @@ public class EmployeeController {
 		vo.setEmpHiredate(hiredate);
 		List<Map<String, Object>> list=null;
 		String empImg="";
-
+		long empImgSize=0;
 		try {
 			list=fileUtil.fileupload(request);
 			
@@ -90,7 +91,7 @@ public class EmployeeController {
 			if(list!=null && !list.isEmpty()){
 				for(Map<String, Object> map : list){
 					empImg=(String)map.get("filename");		
-					
+					empImgSize=(Long)map.get("fileSize");
 				}//for
 			}
 		} catch (IllegalStateException e) {
@@ -101,7 +102,7 @@ public class EmployeeController {
 		
 		//db작업
 		vo.setEmpImg(empImg);
-	
+		vo.setEmpImgSize(empImgSize);
 		
 		int cnt=employeeService.insertEmployee(vo);
 		
@@ -117,6 +118,21 @@ public class EmployeeController {
 		
 		return "common/message";
 	}
+	@RequestMapping("/employeeDetail.do")
+	public String employeeDetail(@RequestParam(defaultValue="0") int empNo,Model model) {
+		logger.info("사원상세보기 화면 보여주기,파라미터 empNo={}",empNo);
+		
+		EmployeeVO vo = employeeService.selectEmployeeByNo(empNo);
+		
+		List<DeptVO> list = deptService.selectDeptName();
+		
+		logger.info("사원 상세 화면 보여주기 결과 vo={}",vo);
+		model.addAttribute("vo",vo);
+		model.addAttribute("list",list);
+		
+		return "employee/employeeDetail";
+	}
+	//완료
 	
 	@RequestMapping(value="/employeeEdit.do",method=RequestMethod.GET)
 	public String employeeEdit_get(@RequestParam(defaultValue="0") int empNo,Model model) {
@@ -124,10 +140,11 @@ public class EmployeeController {
 		EmployeeVO vo =  employeeService.selectEmployeeByNo(empNo);
 		
 		model.addAttribute("vo",vo);
-		logger.info("회원 수정 화면 상세보기 결과값  vo={}",vo);
+		logger.info("회원 수정 화면 결과값  vo={}",vo);
 		
 		return "employee/employeeEdit";
 	}
+	
 	@RequestMapping(value="/employeeEdit.do",method=RequestMethod.POST)
 	public String employeeEdit_post(@ModelAttribute EmployeeVO vo ,Model model) {
 		logger.info("사원 수정 된 파라미터 vo={}",vo);			
@@ -169,15 +186,5 @@ public class EmployeeController {
 		logger.info("사원 상세 검색 결과 보여주기 empName={},empPosition={}",empName,empPosition);
 		
 	}
-	@RequestMapping("/employeeDetail.do")
-	public String employeeDetail(@RequestParam(defaultValue="0") int empNo,Model model) {
-		logger.info("사원상세보기 화면 보여주기,파라미터 empNo={}",empNo);
-		
-		EmployeeVO vo = employeeService.selectEmployeeByNo(empNo);
-		
-		logger.info("사원 상세 화면 보여주기 결과 vo={}",vo);
-		model.addAttribute("vo",vo);
-		
-		return "employee/employeeDetail";
-	}
+	
 }

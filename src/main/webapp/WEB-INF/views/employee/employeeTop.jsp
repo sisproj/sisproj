@@ -7,8 +7,7 @@
             <ul>
                 <!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
                  <li><a href="<c:url value='/employee/employeeRegister.do'/>"><i class="fa fa-address-card-o" aria-hidden="true"></i>&nbsp;<span>사원 등록</span></a></li>
-                <li><a href="<c:url value='/employee/employeeList.do'/>"><i class="fa fa-list-alt" aria-hidden="true"></i>&nbsp;<span>사원 리스트 </span></a></li>             
-                <li><a href="<c:url value='/employee/employeeEdit.do'/>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;<span>사원정보 수정</span></a></li>
+                <li><a href="<c:url value='/employee/employeeList.do'/>"><i class="fa fa-list-alt" aria-hidden="true"></i>&nbsp;<span>사원 리스트 </span></a></li>                         
             </ul>
             <!-- 1.왼쪽 사이드 메뉴 지정 끝-->
             <div id="listbtn"><p><i class="fa fa-chevron-circle-left" style="text-align: center;"></i></p></div>
