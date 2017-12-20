@@ -39,9 +39,7 @@ $(function(){
 	});
 	$('#link_cho #link_doc').change(function(){
 		var link = $('#link_cho #link_doc :selected').val();
-		if(link != '0'){
-			$('#cf_info #linkdoc').val(link);	
-		}
+		$('#cf_info #linkdoc').val(link);	
 	});
 	
 	$('#submitbtn #submit').click(function(){

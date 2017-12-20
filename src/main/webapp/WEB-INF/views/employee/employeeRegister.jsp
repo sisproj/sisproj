@@ -11,70 +11,6 @@
 				location.href="<c:url value='/employee/employeeList.do' />";
 			}
 		});
-		$('#frmEmp').submit(function(){
-			if($('#empName').val()==""){
-				alert('이름을 입력하세요');
-				$('#empName').focus();
-				return false;
-			}else if($('#empEName').val()==""){
-				alert('를 입력하세요');
-				$('#empEName').focus();
-				return false;
-			}else if($('#empSsn').val()==""){
-				alert('주민번호를 입력하세요.');
-				$('#empSsn').focus();
-				return false;
-			}else if($('#empEmail').val()==""){
-				alert('이메일을 입력하세요.');
-				$("#empEmail").focus();
-				return false;
-			}else if($('#empZipcode').val()==""){
-				alert('우편번호를 입력하세요.');
-				$("#empZipcode").focus();
-				return false;
-			}else if($('#empAddr').val()==""){
-				alert('주소를 입력하세요.');
-				$("#empAddr").focus();
-				return false;
-			}else if($('#empAddr2').val()==""){
-				alert('상세주소를 입력하세요.');
-				$("#empAddr2").focus();
-				return false;
-			}else if($('#empHiredate1').val()==""){
-				alert('입사일을 입력하세요.');
-				$("#empHiredate1").focus();
-				return false;
-			}else if($('#empHobby').val()==""){
-				alert('취미를 입력하세요.');
-				$("#empHobby").focus();
-				return false;
-			}else if($('#empSchool').val()==""){
-				alert('출신학교를 입력하세요.');
-				$("#empSchool").focus();
-				return false;
-			}else if($('#empMajor').val()==""){
-				alert('전공을 입력하세요.');
-				$("#empMajor").focus();
-				return false;
-			}else if($('#empSal').val()==""){
-				alert('월급을 입력하세요.');
-				$("#empSal").focus();
-				return false;
-			}else if($('#deptNo').val()==""){
-				alert('부서를 선택하세요.');
-				$("#deptNo").focus();
-				return false;
-			}else if($('#empPosition').val()==""){
-				alert('직급을 선택하세요.');
-				$("#empPosition").focus();
-				return false;
-			}	
-			/* else if($('#empImg').val()==""){
-				alert('이미지를 등록하세요.');
-				$("#empImg").focus();
-				return false;
-			} */
-		});
 		$('#empHiredate1').datepicker({
 			dateFormat:'yy-mm-dd',
 			changeYear:true,
@@ -93,6 +29,7 @@
 			var email2 = $('#email2 option:selected').val();
 			var email3 = $('#email3').val();
 			var email="";
+			
 			if($('#email2').val()=="etc"){
 				if($('#email1').val()!="" && $('#email3').val()!=""){
 					email=email1+"@"+email3;
@@ -105,15 +42,12 @@
 			var tel1=$('#tel1 option:selected').val();
 			var tel2=$('#tel2').val();
 			var tel3=$('#tel3').val();
+			var tel="";
 			
-			if($('#tel2').val()=="" || $('#tel3').val()==""){
-					alert("전화번호를 입력하셔야 합니다.");
-			}else{
-				var tel=tel1+"-"+tel2+"-"+tel3;
+			if($('#tel2').val()!="" && $('#tel3').val()!=""){
+				 tel=tel1+"-"+tel2+"-"+tel3;
 				$('#empTel').val(tel);
-			}
-			
-			
+			}			
 			var jumin1=$('#jumin1').val();
 			var jumin2=$('#jumin2').val();
 			
@@ -122,8 +56,79 @@
 				$('#empSsn').val(ssn);
 			}
 		 });
-		
-		 
+		$('#frmEmp').submit(function(){
+			if($('#empName').val()==""){
+				alert('이름을 입력하세요');
+				$('#empName').focus();
+				return false;
+			}else if($('#empEName').val()==""){
+				alert('영어이름를 입력하세요');
+				$('#empEName').focus();
+				return false;
+			}else if($('#jumin1').val()=="" || $('#jumin2').val()==""){
+				alert('주민번호를 입력하세요.');
+				$('#empSsn').focus();
+				return false;
+			}else if($('#empHobby').val()==""){
+				alert('취미를 입력하세요.');
+				$("#empHobby").focus();
+				return false;
+			}else if($('#empEmail').val()==""){
+				alert('이메일을 입력하세요.');
+				$("#empEmail").focus();
+				return false;
+			}else if($('#empZipcode').val()==""){
+				alert('우편번호를 입력하세요.');
+				$("#empZipcode").focus();
+				return false;
+			}else if($('#empAddr').val()==""){
+				alert('주소를 입력하세요.');
+				$("#empAddr").focus();
+				return false;
+			}else if($('#empAddr2').val()==""){
+				alert('상세주소를 입력하세요.');
+				$("#empAddr2").focus();
+				return false;
+			}else if($('#empSchool').val()==""){
+				alert('출신학교를 입력하세요.');
+				$("#empSchool").focus();
+				return false;
+			}else if($('#empMajor').val()==""){
+				alert('전공을 입력하세요.');
+				$("#empMajor").focus();
+				return false;
+			}else if($('#empSal').val()==""){
+				alert('월급을 입력하세요.');
+				$("#empSal").focus();
+				return false;
+			}else if($('#tel2').val()=="" || $('#tel3').val()==""){
+				alert('전화번호를 입력하세요.');
+				$("#tel2").focus();
+				return false;			
+			}else if($('#empHiredate1').val()==""){
+				alert('입사일을 입력하세요.');
+				$("#empHiredate1").focus();
+				return false;
+			}else if($('#empEmail').val()==""){
+				alert('이메일을 입력하세요.');
+				$("#empEmail").focus();
+				return false;
+			}
+			/* else if($('#empImg').val()==""){
+				alert('이미지를 등록하세요.');
+				$("#empImg").focus();
+				return false;
+			}else if($('#deptNo').val()==""){
+			alert('부서를 선택하세요.');
+			$("#deptNo").focus();
+			return false;
+			}else if($('#empPosition').val()==""){
+			alert('직급을 선택하세요.');
+			$("#empPosition").focus();
+			return false;
+			}
+			} */
+		});	 
 	});
 </script>
 	<article id="headsection">
@@ -144,7 +149,7 @@
        		<div id="diName">
       	 		<label for="name">이름</label><input type="text" id="empName" name="empName" maxlength="6">   
        		</div>
-	       <!-- 	   <input type="image" src="" alt="이미지 등록" id="empImg" name="empImg">      -->  		    
+	       <!-- <input type="image" src="" alt="이미지 등록" id="empImg" name="empImg">     -->
        		<div id="diEnName">
        		<label for="enName">영어이름</label> <input type="text" id="empEName" name="empEName">
        		</div>
@@ -238,7 +243,7 @@
 			</div>
        		<div id="diFImg">
        		   <label for="upfile" style="margin-top: 5px;">사원사진 업로드</label>
-           	   <input type="file" id="empImg" name="empImg" style="margin-top: 5px;"/>	 
+           	   <input type="file" id="empImg" name="fileupload" style="margin-top: 5px;"/>	 
            	</div>
        		<div id="diReg">
 				<input type="submit" id="btWrite" value="등록">
