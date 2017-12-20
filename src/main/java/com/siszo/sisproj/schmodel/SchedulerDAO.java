@@ -9,4 +9,5 @@ public interface SchedulerDAO {
 	public List<SchedulerVO> schedulerSelectAll(int empNo);
 	public int schedulerDelete(String pschNo);
 	public int schedulerUpdate(SchedulerVO vo);
+	public int schedulerContentUpdate(SchedulerVO vo);
 }

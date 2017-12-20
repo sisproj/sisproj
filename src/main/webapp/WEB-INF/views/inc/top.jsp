@@ -31,6 +31,9 @@
     
     <script src="<c:url value="/resources/codebase/dhtmlxscheduler.js"/>"></script>
     <link rel="stylesheet" href="<c:url value="/resources/codebase/dhtmlxscheduler.css"/>">
+    
+   <script src="//maps.google.com/maps/api/js?sensor=false&key=AIzaSyAixzCJO-GWZfFwOVEaVZBD-VKvmfgMK98"></script> 
+	<script src="<c:url value='/resources/codebase/ext/dhtmlxscheduler_map_view.js'/> "></script>
    
 </head>
 <body>

@@ -4,7 +4,7 @@
 <script>
     var chatKey = "${chatKey}";
     loadMessages(chatKey);
-
+    resetUnreadCount();
     // 채팅 TextArea 엔터키 입력시
     $('#chatMsg').keypress(function (e) {
         var code = e.keyCode;

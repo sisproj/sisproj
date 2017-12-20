@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@include file="addrBookTop.jsp"%>
-<<script type="text/javascript">
+<script type="text/javascript">
+$(function(){
 	$('#divDeleteMulti').click(function(){
 		var len=$('td input[type=checkbox]:checked').length;
 		if(len==0){
@@ -11,6 +12,7 @@
 		$('#frmList').prop('action','<c:url value="/addrBook/goToTrash.do"/>');
 		$('#frmList').submit();
 	});
+});	
 </script>
     <!-- 3. 내용 -->
     <article id="bodysection">
@@ -63,11 +65,11 @@
 		        		</c:forEach>
 		        	</table>
 		        </div>
-		        <div class="divPaging">
+		    	<div class="divPaging">
 		        	<jsp:include page="paging.jsp"></jsp:include>
 		        </div>
-	        </div>
-        </form>
+	        </div>        
+	    </form>
     </article>
     <!-- 3. 내용 끝 -->
 

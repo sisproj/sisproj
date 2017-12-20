@@ -27,5 +27,8 @@ public class SchedulerDAOMybatis extends SqlSessionDaoSupport implements Schedul
 	public int schedulerUpdate(SchedulerVO vo) {
 		return getSqlSession().update(namespace+".schedulerUpdate",vo);
 	}
+	public int schedulerContentUpdate(SchedulerVO vo) {
+		return getSqlSession().update(namespace+".schedulerContentUpdate",vo);
+	}
 
 }
