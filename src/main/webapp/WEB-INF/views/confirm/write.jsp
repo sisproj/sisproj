@@ -38,13 +38,14 @@
 						<span class="sd1">연계문서선택</span>
 						<select id="link_doc" class="sd2">
 							<!-- if(내 문서들 출력) -->
-							<option value="0">선택하세요</option>
+							<option value="">선택하세요</option>
 							<option value="(20171010102031001) 사내 인트라넷 시스템 도입의 건">사내 인트라넷 시스템 도입의 건</option>
 							<option value="(20171010102033022) 사내 인트라넷 시스템 도입에 대한 지출">사내 인트라넷 시스템 도입에 대한 지출</option>
 						</select>
 					</div>
 				</div>	
 				<!-- 상단 끝 -->
+
 				<form name="writeFrm" id="writeFrm" method="post" action="<c:url value='/confirm/write.do'/>" enctype="multipart/form-data">
 				<!-- 미드 -->
 					<div id="doc_type">
@@ -75,7 +76,7 @@
 						</div>
 						<div id="confirmer">
 						
-						</div>
+						</div>					
 						<div class="clr"></div>
 						<div id="cf_info">
 							<div class="dr">
