@@ -9,6 +9,9 @@
 	<select id="selectEmp" resultType="EmployeeVO">
 		select * from emp
 	</select>
+	<select id="selectEmpByEmpNo" parameterType="int" resultType="EmployeeVO">
+		select * from emp where emp_No=#{empNo}
+	</select>
 </mapper>
 
 

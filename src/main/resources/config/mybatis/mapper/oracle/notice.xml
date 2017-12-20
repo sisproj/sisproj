@@ -3,7 +3,16 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="config.mybatis.mapper.oracle.notice">
-	
+
+	<insert id="insertNotice" parameterType="NoticeVO">
+		<selectKey resultType="int" keyProperty="notiNo" order="BEFORE">
+			select notiNo_seq.nextval from dual
+		</selectKey>
+		insert into notice(notiNo, notiTitle, empNo, notiContent, notiRegdate,
+		notiNo, notiFilename, notiFilesize, notiOfilename, notiDowncnt, notiReadcnt) 
+		values(#{notiNo}, #{notiTitle}, #{empNo}, #{notiContent}, #{notiRegdate},
+        #{notiNo}, #{notiFilename},#{notiFilesize}, #{notiOfilename}, #{notiDowncnt}, #{noti_readcnt})
+	</insert>
 
 </mapper>
 
