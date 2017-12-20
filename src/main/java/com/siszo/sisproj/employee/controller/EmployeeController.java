@@ -44,8 +44,8 @@ public class EmployeeController {
 		return "employee/employeeRegister";
 	}	
 	@RequestMapping(value="/employeeRegister.do",method=RequestMethod.POST)
-	public String employeeRegister_post(HttpServletRequest request,@ModelAttribute EmployeeVO vo,
-			@RequestParam String empHiredate1,Model model) {
+	public String employeeRegister_post(@ModelAttribute EmployeeVO vo,
+			@RequestParam String empHiredate1,HttpServletRequest request,Model model) {
 		logger.info("사원 등록 , 파라미터 vo={}, empHiredate1={}",vo, empHiredate1);
 		
 		Timestamp hiredate =Timestamp.valueOf(empHiredate1+" 00:00:00");
@@ -86,7 +86,7 @@ public class EmployeeController {
 		List<Map<String, Object>> list=null;
 		String empImg="";
 		try {
-			list=fileUtil.fileupload(request,FileUploadUtil.PDS_UPLOAD);			
+			list=fileUtil.fileupload(request,FileUploadUtil.EMP_IMAGE_UPLOAD);			
 			//파일 업로드 한 경우
 			if(list!=null && !list.isEmpty()){
 				for(Map<String, Object> map : list){
@@ -98,7 +98,7 @@ public class EmployeeController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}		
-		
+		logger.info("vo.getEmpImg={}",vo.getEmpImg());
 		//db작업
 		vo.setEmpImg(empImg);
 		
@@ -130,8 +130,6 @@ public class EmployeeController {
 		
 		return "employee/employeeDetail";
 	}
-	//완료
-	
 	@RequestMapping(value="/employeeEdit.do",method=RequestMethod.GET)
 	public String employeeEdit_get(@RequestParam(defaultValue="0") int empNo,Model model) {
 		logger.info("사원수정 화면 보여주기, 파라미터 값 empNo={}",empNo);			
@@ -143,10 +141,59 @@ public class EmployeeController {
 		return "employee/employeeEdit";
 	}
 	
+	
+	@RequestMapping("/employeeList.do")
+	public String employeeList(Model model) {
+		logger.info("사원 리스트 화면 보여주기");	
+		
+		List<EmployeeVO> list = employeeService.selectAllEmployee();
+		logger.info("사원 전체 조회 결과  list.Size()={}",list.size());
+		
+		model.addAttribute("list",list);
+		
+		return "employee/employeeList";
+	}
+	@RequestMapping(value="/employeeDetailSearch.do",method=RequestMethod.GET)
+	public String employeeDetailSerach_get(Model model) {
+		logger.info("사원 상세검색 화면 보여주기");
+		
+		List<DeptVO> list = deptService.selectDeptName();
+		logger.info("사원 부서이름 구하기 list.size()={}",list.size());
+		
+		model.addAttribute("list",list);
+		
+		return "employee/employeeDetailSearch";
+	}
+	
+	//완료
+	
 	@RequestMapping(value="/employeeEdit.do",method=RequestMethod.POST)
-	public String employeeEdit_post(@ModelAttribute EmployeeVO vo ,Model model) {
+	public String employeeEdit_post(@ModelAttribute EmployeeVO vo,@RequestParam String empHiredate1 
+			,HttpServletRequest request,Model model) {
 		logger.info("사원 수정 된 파라미터 vo={}",vo);			
 		
+		Timestamp hiredate =Timestamp.valueOf(empHiredate1+" 00:00:00");
+		
+		vo.setEmpHiredate(hiredate);
+		
+		List<Map<String, Object>> list=null;
+		String empImg="";
+		try {
+			list=fileUtil.fileupload(request,FileUploadUtil.EMP_IMAGE_UPLOAD);			
+			//파일 업로드 한 경우
+			if(list!=null && !list.isEmpty()){
+				for(Map<String, Object> map : list){
+					empImg=(String)map.get("fileName");		
+				}//for
+			}
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+		logger.info("vo.getEmpImg={}",vo.getEmpImg());
+		//db작업
+		vo.setEmpImg(empImg);
 		int cnt= employeeService.editEmployee(vo);
 		String msg="",url="";
 		if(cnt>0) {
@@ -161,22 +208,6 @@ public class EmployeeController {
 		model.addAttribute("url",url);
 		
 		return "common/message";
-	}
-	
-	@RequestMapping("/employeeList.do")
-	public String employeeList(Model model) {
-		logger.info("사원 리스트 화면 보여주기");	
-		
-		List<EmployeeVO> list = employeeService.selectAllEmployee();
-		logger.info("사원 전체 조회 결과  list.Size()={}",list.size());
-		
-		model.addAttribute("list",list);
-		
-		return "employee/employeeList";
-	}
-	@RequestMapping(value="/employeeDetailSearch.do",method=RequestMethod.GET)
-	public void employeeDetailSerach_get() {
-		logger.info("사원 상세검색 화면 보여주기");
 	}
 	@RequestMapping(value="/employeeDetailSearch.do",method=RequestMethod.POST)
 	public void employeeDetailSerach_post(@RequestParam String empName,
