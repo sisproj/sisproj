@@ -20,6 +20,8 @@ public class FileUploadUtil {
     //파일업로드 경로 관련 상수
     public static final int PDS_UPLOAD = 1;  //자료실 업로드인 경우
     public static final int EMP_IMAGE_UPLOAD = 2;  //상품등록시 이미지 업로드인 경우
+    public static final int ATTACHFILE = 3;  //전자결재 첨부파일 처리
+    public static final int USER_SIGN = 4;  //전자결재 첨부파일 처리
 
     @Resource(name = "fileUploadProperties")
     private Properties fileProperties;
@@ -76,6 +78,10 @@ public class FileUploadUtil {
                 upPath = fileProperties.getProperty("file.upload.path.test");
             } else if (uploadGb == EMP_IMAGE_UPLOAD) {
                 upPath = fileProperties.getProperty("empImageFile.upload.path.test");
+            } else if (uploadGb == ATTACHFILE) {
+                upPath = fileProperties.getProperty("confirm.attachfile.path.test");
+            } else if (uploadGb == USER_SIGN) {
+                upPath = fileProperties.getProperty("confirm.user_sign.path.test");
             }
 
             logger.info("test 경로:" + upPath);
@@ -85,6 +91,10 @@ public class FileUploadUtil {
                 upPath = fileProperties.getProperty("file.upload.path");
             } else if (uploadGb == EMP_IMAGE_UPLOAD) {
                 upPath = fileProperties.getProperty("empImageFile.upload.path");
+            } else if (uploadGb == ATTACHFILE) {
+                upPath = fileProperties.getProperty("confirm.attachfile.path");
+            } else if (uploadGb == USER_SIGN) {
+                upPath = fileProperties.getProperty("confirm.user_sign.path");
             }
             logger.info("배포시 경로:" + upPath);
 
