@@ -45,16 +45,14 @@ $(function(){
 	});
 	
 	$('#submitbtn #submit').click(function(){
-		$('#savetype').val($(this).attr('id'));
 		submitContents();
-		$('#savetype').val('confirm');
+		$('#writeFrm').prop("action","<c:url value='/confirm/myConfirmOk.do'/>");
 		/*$('#writeFrm').submit();*/
 	});
 	
 	$('#submitbtn #save').click(function(){
-		$('#savetype').val($(this).attr('id'));
 		submitContents();
-		$('#savetype').val('save');
+		$('#writeFrm').prop("action","<c:url value='/confirm/tempSave.do'/>");
 		/*$('#writeFrm').submit();*/
 	});
 });
