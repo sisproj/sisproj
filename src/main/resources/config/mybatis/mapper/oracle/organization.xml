@@ -14,9 +14,9 @@
 	</select>
 	<select id="selectMulti" parameterType="string" resultType="EmployeeVO">
 		select * from EMPDEPTVIEW
-		where emp_name=#{keyword}
-		or dept_name=#{keyword}
-		or emp_position=#{keyword}
+		where emp_name like '%' || #{keyword} || '%'
+		or dept_name like '%' || #{keyword} || '%'
+		or emp_position like '%' || #{keyword} || '%'
 		order by dept_no
 	</select>
 </mapper>
