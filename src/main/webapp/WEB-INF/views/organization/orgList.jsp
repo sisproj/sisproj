@@ -63,12 +63,12 @@
 						dataType:"json",
 						type:"get",
 						success:function(res){
-							var info=res.empName+" "+res.empPosition+"("+empNo+")";
-							$('#divImg img').attr('alt').val(res.empName);
-							$('#divImg img').attr('src').val("<c:url value='/emp_images/"+res.empName+"'/>");
+							var info=res.empName+" "+res.empPosition+"("+res.empNo+")";
+							$('#divImg img').attr('alt',res.empName);
+							$('#divImg img').attr('src',"<c:url value='/emp_images/"+res.empImg+"'/>");
 							$('#div1').html(info);
-							$('#div2').html(res.empTel);
-							$('#div3 i').append(res.empEmail);
+							$('#div2 i').html(res.empTel);
+							$('#div3 i').html(res.empEmail);
 						},
 						error:function(xhr, status, error){
 							alert("에러 : "+status+"=>"+error);
@@ -140,11 +140,11 @@
 		/* 조직도에서 개인정보 띄우는 창 */
 		#divEmpInfo{
 			width: 280px;
-			height: 400px;
+			height: 440px;
 			border: 1px solid #333;
 			background: rgb(255,253,230);
 			position: absolute;
-			left: 299px;
+			left: 298px;
 			display: none;
 		}
 		#divEmpImg{
@@ -163,6 +163,10 @@
 		#divEmp{
 			margin: 0;
 			height: 118px;
+		}
+		#divEmp div{
+			text-align: center;
+			padding: 5px;
 		}
 		#divclose{
 			overflow: hidden;
@@ -184,9 +188,9 @@
      	</div>
      	<div id="divEmp">
 	     	<div id="div1"></div>
-	     	<div id="div2"></div>
-	     	<div id="div3"><a href="#" title="이메일 보내기"><i class="fa fa-envelope-o"></i></a></div>
-	     	<div><a href="#" title="쪽지보내기"><i class="fa fa-paper-plane"></i></a> <a href="#" title="대화하기"><i class="fa fa-comments-o"></i></a></div>
+	     	<div id="div2"><i class="fa fa-phone"></i>&nbsp;</div>
+	     	<div id="div3"><a href="#" title="이메일 보내기"><i class="fa fa-envelope-o"></i>&nbsp;</a></div>
+	     	<div><a href="#" title="쪽지보내기"><i class="fa fa-paper-plane"></i>  쪽지 보내기</a>   <a href="#" title="대화하기"><i class="fa fa-comments-o"></i>  대화하기</a></div>
      	</div>
      </div>
      
