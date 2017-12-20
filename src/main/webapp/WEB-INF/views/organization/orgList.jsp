@@ -47,6 +47,18 @@
 					$('#divEmpInfo').show();
 				});
 			});
+			
+			$('#orgSearchIcon').click(function(){
+				var searchKey = $('#orgSearch').val();
+				$('#organbody li').each(function(index, item){
+					var sentence = $(this).text();
+					var cnt = sentence.indexOf(searchKey);
+					if(cnt>=0){
+						$('#organbody ul ul li').hide();
+						$(this).show();
+					}
+				})
+			});
 		}); 
 	</script>
 	<style>
