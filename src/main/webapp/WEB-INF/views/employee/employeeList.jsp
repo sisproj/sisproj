@@ -9,43 +9,31 @@
 <article id="bodysection">
 <div id="dimyPage">
 	<form id="searchEmp" name="searchEmp" method="get" action="employee/employeeList.do">
-			<div class="divSearch">
-		   	<form name="frmSearch" method="post"action="<c:url value='/reBoard/list.do'/>">
+	        <div id="dimyP">
 		        <select name="searchCondition">
-		            <option value="title"
-		            	<c:if test="${param.searchCondition=='title' }"> 
+		            <option value="empname"
+		            	<c:if test="${param.searchCondition=='empName' }"> 
 		            		selected
 		            	</c:if>
 		            	>제목</option>
-		            <option value="content"
-		            	<c:if test="${param.searchCondition=='content' }"> 
+		            <option value="deptName"
+		            	<c:if test="${param.searchCondition=='deptName' }"> 
 		            		selected
 		            	</c:if>    
 		            >내용</option>
-		            <option value="name" 
-		            	<c:if test="${param.searchCondition=='name' }"> 
+		            <option value="posName" 
+		            	<c:if test="${param.searchCondition=='posName' }"> 
 		            		selected
 		            	</c:if>
 		            >작성자</option>
 		        </select>   
 		        <input type="text" name="searchKeyword" title="검색어 입력" value="${param.searchKeyword }">   
 				<input type="submit" value="검색">
-		    </form>
-		</div>
-		<div id="dimyP">
-			<select>
-				<option value="사원이름">사원이름</option>
-				<option value="부서">부서</option>
-				<option value="직급">직급</option>
-			</select>
-			<input type="text" id="search" name="serach">
-			<input type="submit" id="btSear" value="검색">
-			<!-- <input type="button" id="btDeSe" name="btDeSe" value="상세조회"> -->
-			<select id="pl" style="float: right;">
-				<option value="10">10명</option>
-				<option value="20">20명</option>
-			</select>
-		</div>
+			    <select id="pl" style="float: right;">
+					<option value="10">10명</option>
+					<option value="20">20명</option>
+				</select>
+			</div>
 	</form>
 	<div id="diempList">
 		<div id="coLi">
@@ -79,7 +67,7 @@
 						<!-- 사원번호로 사원 디테일 이동 -->
 						<td><a href="<c:url value='/employee/employeeDetail.do?empNo=${vo.empNo }'/>">${vo.empName }</a></td>
 						<td>인사팀</td>
-						<td>${vo.empPosition }</td>
+						<td>${vo.posName }</td>
 						<td>재직</td>
 				</c:if>
 					<!-- if걸어서 관리자 일때만 나오게 함 관리자권한으로 되면 버튼 사라지고 그자리에 관리자로 바꿈 -->

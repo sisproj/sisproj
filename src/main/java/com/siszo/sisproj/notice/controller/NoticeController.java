@@ -1,4 +1,4 @@
-package com.siszo.sisproj.notice.controller;
+/*package com.siszo.sisproj.notice.controller;
 
 import java.util.List;
 
@@ -47,7 +47,7 @@ public class NoticeController {
 			Model model) {
 		logger.info("공지사항 글쓰기 처리-파라미터, vo={}", noticeVo);
 		
-		/*int empNo=(Integer)session.getAttribute("empNo");*/
+		int empNo=(Integer)session.getAttribute("empNo");
 		int empNo=20170001;
 		noticeVo.setEmpNo(empNo);
 		
@@ -112,3 +112,4 @@ public class NoticeController {
 }
 
 
+*/

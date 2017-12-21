@@ -8,25 +8,25 @@
 		<selectKey keyProperty="empNo" resultType="int" order="BEFORE">
 			select emp_seq.nextval from dual
 		</selectKey>
-		insert into emp(emp_no,emp_name,emp_ename,emp_tel,emp_ssn,emp_email,emp_zipcode,emp_addr,emp_addr2,emp_hiredate,emp_hobby,emp_school,emp_major,emp_img,emp_sal,dept_no,emp_position)
-		values(#{empNo},#{empName},#{empEName},#{empTel},#{empSsn},#{empEmail},#{empZipcode},#{empAddr},#{empAddr2},#{empHiredate},#{empHobby},#{empSchool},#{empMajor},#{empImg},#{empSal},#{deptNo},#{empPosition})
+		insert into empView(emp_no,emp_name,emp_ename,emp_tel,emp_ssn,emp_email,emp_zipcode,emp_addr,emp_addr2,emp_hiredate,emp_hobby,emp_school,emp_major,emp_img,emp_sal,dept_no,pos_no)
+		values(#{empNo},#{empName},#{empEName},#{empTel},#{empSsn},#{empEmail},#{empZipcode},#{empAddr},#{empAddr2},#{empHiredate},#{empHobby},#{empSchool},#{empMajor},#{empImg},#{empSal},#{deptNo},#{posNo})
 	</insert>
 	
 	<select id="selectEmployeeByNo" parameterType="int" resultType="EmployeeVO">
-		select * from emp where emp_no=#{empNo}
+		select * from empView where emp_no=#{empNo}
 	</select>
 	
 	<select id="selectAllEmployee" resultType="EmployeeVO">
-		select * from emp
+		select * from empView
 	</select>
 	
 	<update id="editEmployee" parameterType="EmployeeVO">
-		update emp set emp_name=#{empName},
+		update empView set emp_name=#{empName},
 		emp_eName=#{empEName},emp_tel=#{empTel},emp_ssn=#{empSsn},
 		emp_email=#{empEmail},emp_zipcode=#{empZipcode},emp_addr=#{empAddr},
 		emp_addr2=#{empAddr2},emp_hiredate=#{empHiredate},emp_school=#{empSchool},
 		emp_major=#{empMajor},emp_img=#{empImg},emp_sal=#{empSal},
-		dept_no=#{deptNo},emp_position=#{empPosition}
+		dept_no=#{deptNo},pos_no=#{posNo}
 		where emp_no = #{empNo}
 	</update>
 </mapper>
