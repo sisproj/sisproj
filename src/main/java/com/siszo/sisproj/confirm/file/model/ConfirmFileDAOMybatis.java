@@ -7,5 +7,8 @@ import org.springframework.stereotype.Repository;
 public class ConfirmFileDAOMybatis extends SqlSessionDaoSupport implements ConfirmFileDAO{
 	private String namespace="config.mybatis.mapper.oracle.confirm";
 	
-	
+	@Override
+	public int insertConfirmFile(ConfirmFileVO vo) {
+		return getSqlSession().insert(namespace+".insertConfirmFile",vo);
+	}
 }

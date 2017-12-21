@@ -1,11 +1,12 @@
 package com.siszo.sisproj.confirm.file.model;
 
-public class ConfirmFileVO {
+public class ConfirmFileVO{
 	private int fileNo; //파일번호
 	private String fileName; //파일이름
 	private String fileOriName; //원래파일이름
-	private String fileSize; //파일용량
+	private long fileSize; //파일용량
 	private String cfNo; //해당파일 문서번호
+	
 	public int getFileNo() {
 		return fileNo;
 	}
@@ -24,17 +25,17 @@ public class ConfirmFileVO {
 	public void setFileOriName(String fileOriName) {
 		this.fileOriName = fileOriName;
 	}
-	public String getFileSize() {
-		return fileSize;
-	}
-	public void setFileSize(String fileSize) {
-		this.fileSize = fileSize;
-	}
 	public String getCfNo() {
 		return cfNo;
 	}
 	public void setCfNo(String cfNo) {
 		this.cfNo = cfNo;
+	}
+	public long getFileSize() {
+		return fileSize;
+	}
+	public void setFileSize(long fileSize) {
+		this.fileSize = fileSize;
 	}
 	@Override
 	public String toString() {

@@ -16,7 +16,6 @@ nhn.husky.EZCreator.createInIFrame({
 $(function(){
 	$('#fileQty').change(function(){
 		var qty = $(this).val();
-		alert("선택된 파일 개수 : "+qty+"개");
 
 		if(qty==1){
 			$('#files').html("<input type='file' name='file1' id='file1'>");
@@ -37,20 +36,29 @@ $(function(){
 		var title = $(this).val();
 		$('#cf_info #doctitle').val(title);
 	});
+	
 	$('#link_cho #link_doc').change(function(){
-		var link = $('#link_cho #link_doc :selected').val();
-		$('#cf_info #linkdoc').val(link);	
+		var linkdocNo = $('#link_cho #link_doc :selected').val();
+		var linkdocName = $('#link_cho #link_doc :selected').text();
+		if(linkdocNo!=''){
+			$('#cf_info #linkCfNo').val(linkdocNo);	
+			$('#cf_info #linkdoc').val("("+linkdocNo+")"+linkdocName);	
+		} else {
+			$('#cf_info #linkCfNo').val('');	
+			$('#cf_info #linkdoc').val('');				
+		}
 	});
 	
-	$('#submitbtn #submit').click(function(){
+	$('#submitbtn #confirmbtn').click(function(){
 		submitContents();
-		$('#writeFrm').prop("action","<c:url value='/confirm/myConfirmOk.do'/>");
-		/*$('#writeFrm').submit();*/
+		$('#writeFrm').prop("action","/sisproj/confirm/myConfirmOk.do");
+		alert($('#writeFrm').prop("action"));
+		$('#writeFrm').submit();
 	});
 	
-	$('#submitbtn #save').click(function(){
+	$('#submitbtn #savebtn').click(function(){
 		submitContents();
-		$('#writeFrm').prop("action","<c:url value='/confirm/tempSave.do'/>");
-		/*$('#writeFrm').submit();*/
+		$('#writeFrm').prop("action","/sisproj/confirm/tempSave.do");
+		$('#writeFrm').submit();
 	});
 });
