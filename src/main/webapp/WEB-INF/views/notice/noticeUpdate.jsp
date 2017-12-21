@@ -26,9 +26,45 @@
 		</article>	
 		<article id="bodysection">
 			<!-- 3. 내용 -->
+	<script type="text/javascript">
+	
+	$(function(){
+		$('#btUpdate').click(function(){
+			if($('#notiTitle').val()==''){
+				alert("제목을 입력하세요");
+				$('#notiTitle').focus();
+				return false;
+			}
+			if($('#notiContent').val()==''){
+				alert("내용을 입력하세요");
+				$('#notiContent').focus();
+				return false;
+			}
+			return true;
+		});
+	});
+	
+	/* 	function send(form){
+			if(form.notiTitle.value=""){
+				alert("제목을 입력하세요");
+				form.notiTitle.focus();
+				return false;
+			}else if(form.notiContent.value=""){
+				alert("내용을 입력하세요");
+				form.notiContent.focus();
+				return false;
+			}
+		
+		return true; 
+		}*/
+	</script>
 	<div class="container" style="max-width: 1045px;">
 		<div class="row">
-			<form method="post" action="updateAction.jsp?bbsID">
+			<form name="formUpdate" method="post"
+				action="<c:url value='/notice/noticeUpdate.do'/>"
+				onsubmit="return send(this)">
+				<input type="hidden" name="notiNo" value="${vo.notiNo }">
+				<input type="hidden" name="empNo" value="${vo.empNo }">
 				<table class="table table-striped"
 					style="text-align: center; border: 1px solid #c5bdbd;">
 					<thead>
@@ -39,11 +75,13 @@
 					<tbody>
 						<tr>
 							<td><input type="text" class="form-control"
-								placeholder="글 제목" name="bbsTitle" maxlength="50" values=""></td>
+								placeholder="글 제목" name="notiTitle" id="notiTitle" maxlength="50" 
+								value="${vo.notiTitle }"></td>
 						</tr>
 						<tr>
 							<td class="active"><textarea class="form-control" placeholder="글 내용"
-									name="bbsContent" maxlength="2048" style="height: 480px;" values=""></textarea></td>
+								name="notiContent" id="notiContent" maxlength="2048" style="height: 480px;">${vo.notiContent }
+							</textarea></td>
 						</tr>
 					</tbody>
 				</table>

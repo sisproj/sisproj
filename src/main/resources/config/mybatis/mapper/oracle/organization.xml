@@ -7,17 +7,18 @@
 		select * from dept order by dept_No
 	</select>
 	<select id="selectEmp" resultType="EmployeeVO">
-		select * from emp
+		select * from empView order by pos_no
 	</select>
 	<select id="selectEmpByEmpNo" parameterType="int" resultType="EmployeeVO">
-		select * from emp where emp_No=#{empNo}
+		select * from empView where emp_No=#{empNo} order by pos_no
 	</select>
 	<select id="selectMulti" parameterType="string" resultType="EmployeeVO">
-		select * from EMPDEPTVIEW
+		select * from EMPVIEW
 		where emp_name like '%' || #{keyword} || '%'
 		or dept_name like '%' || #{keyword} || '%'
-		or emp_position like '%' || #{keyword} || '%'
-		order by dept_no
+		or pos_name like '%' || #{keyword} || '%'
+		or emp_no like '%' || #{keyword} || '%'
+		order by pos_no
 	</select>
 </mapper>
 

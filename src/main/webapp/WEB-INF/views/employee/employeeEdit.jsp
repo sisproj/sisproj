@@ -55,11 +55,12 @@
 			}			
 			var jumin1=$('#jumin1').val();
 			var jumin2=$('#jumin2').val();
-			
+			var ssn="";
 			if($('#jumin1').val()!="" && $('#jumin2').val()!="") {
-				var ssn=jumin1+"-"+jumin2;
+				 ssn=jumin1+"-"+jumin2;
 				$('#empSsn').val(ssn);
 			}
+			
 			if($('#empName').val()==""){
 				alert('이름을 입력하세요');
 				$('#empName').focus();
@@ -154,6 +155,14 @@
       	 		<label for="name">이름</label>
       	 		<input type="text" id=" empName" name=" empName" value="${vo.empName }">   
        		</div>
+       		<div id="empImg">
+	       			<c:if test="${!empty vo.empImg }">
+		       	   		<img src="${pageContext.request.contextPath}/emp_images/${vo.empImg }" alt="${vo.empName }(${vo.empNo }) "/>       		    
+					</c:if>
+					<c:if test="${empty vo.empImg }">
+						<img alt="해당 사원의 사진이 없습니다" src="${pageContext.request.contextPath}/emp_images/defaultImages.jpg">
+					</c:if>
+			</div>	
 	       	  <!--  <input type="image" src="" alt="이미지 등록" id="empImg">       		     -->
        		<div id="diEnName">
        		<label for="enName">영어이름</label> 
@@ -161,42 +170,46 @@
        		</div>
        		<div id="diDe">
      			<label for="deptName">부서</label>
-				<c:forEach var="deVo" items="${list }">
+				<c:forEach var="vo" items="${list }">
 					<select>
-						<option value="${deVo.deptNo }">
-					${deVo.deptName }</option>
+						<option value="${vo.deptNo }">
+					${vo.deptName }</option>
 					</select>				
 				</c:forEach>
 			</div>
 			<div id="diPos">
-				<label for="empPosition">직급</label>  
-				<select id="empPosition" name="empPosition">
-				<option value="인턴" 
-				<c:if test="${vo.empPosition=='인턴' }">
+				<label for="posNo">직급</label>  
+				<select id="posNo" name="posNo">
+				<option value="8" 
+				<c:if test="${vo.posName=='인턴' }">
 				selected</c:if>
 				>인턴</option>
-				<option value="대리" 
-				<c:if test="${vo.empPosition=='대리' }">
+				<option value="7" 
+				<c:if test="${vo.posName=='사원' }">
 				selected</c:if>
-				>대리</option>
-				<option value="차장" 
-				<c:if test="${vo.empPosition=='차장' }">
+				>인턴</option>
+				<option value="6" 
+				<c:if test="${vo.posName=='대리' }">
 				selected</c:if>
-				>차장</option>
-				<option value="과장" 
-				<c:if test="${vo.empPosition=='과장' }">
+				>대리</option>			
+				<option value="5" 
+				<c:if test="${vo.posName=='과장' }">
 				selected</c:if>
 				>과장</option>
-				<option value="부장" 
-				<c:if test="${vo.empPosition=='부장' }">
+				<option value="4" 
+				<c:if test="${vo.posName=='부장' }">
 				selected</c:if>
 				>부장</option>
-				<option value="부사장" 
-				<c:if test="${vo.empPosition=='부사장' }">
+				<option value="3" 
+				<c:if test="${vo.posName=='전무' }">
+				selected</c:if>
+				>차장</option>
+				<option value="2" 
+				<c:if test="${vo.posName=='이사' }">
 				selected</c:if>
 				>부사장</option>
-				<option value="사장" 
-				<c:if test="${vo.empPosition=='사장' }">
+				<option value="1" 
+				<c:if test="${vo.posName=='사장' }">
 				selected</c:if>
 				>사장</option>
 				</select>  
@@ -345,10 +358,10 @@
 		        	</c:if>	>
 	        	</div>
 	        	<div id="diFImg">
-	       		   <label for="upfile" style="margin-top: 5px;">사원사진 업로드</label>
-	           	   <input type="file" id="empImg" name="fileup" style="margin-top: 5px;"/>	 
+	       		   <label for="upfile" style="margin-top: 5px;">사원사진</label>
+	           	   <input type="file" id="fileup" name="fileup" style="margin-top: 5px;"/>	 
            		</div>
-	        	<div>
+	        	<div style="text-align: center;">
 	        		<input type="submit" id="btS" name="btS" value="수정">
 	        		<input type="button" id="btC" name="btC" value="취소">
 	        		<input type="button" id="btL" name="btL" value="목록">	        			        		 

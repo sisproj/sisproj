@@ -10,6 +10,10 @@
 			$('#organbody').hide();
 			$('#organbody ul ul li').hide();
 			$('.deptMinus').hide();
+			$('#noneImg').hide();
+			if($('#orgSearch').val()==''){
+				$('#searchResult').hide();				
+			}
 			
 		    $('#orgUp').click(function() {
 				$('#organ').css('height', '500px');
@@ -41,7 +45,7 @@
 				});
 			});
 			
-			$('#orgSearchIcon').click(function(){
+		/* 	$('#orgSearchIcon').click(function(){
 				var searchKey = $('#orgSearch').val();
 				$('#organbody li').each(function(index, item){
 					var sentence = $(this).text();
@@ -51,9 +55,13 @@
 						$(this).show();
 					}
 				})
-			});
-			$('#organbody ul ul li').each(function(){
-				$(this).click(function(){
+			}); */
+				$('#organbody ul li ul li').click(function(){
+					if($('#choice_cfer').length){
+		                  if($('#choice_cfer').attr('class')=='on'){
+		                     return false;
+		                  }
+		               }
 					var empNo="empNo="+$(this).attr('id');
 					$.ajax({
 						url:"<c:url value='/organization/empInfo.do'/>",
@@ -62,12 +70,15 @@
 						type:"get",
 						success:function(res){
 							$('#divEmpInfo').show();
-							var info=res.empName+" "+res.empPosition+"("+res.empNo+")";
+							var dept=res.deptName+"팀 "+res.posName;
+							var info=res.empName+" ("+res.empNo+")";
 							$('#divEmpImg img').prop('alt', res.empName);
 							$('#divEmpImg img').prop('src', "<c:url value='/emp_images/"+res.empImg+"'/>");
 							if(res.empImg==null){
 								$('#divEmpImg img').hide();
+								$('#noneImg').show();
 							}
+							$('#div0').html(dept);
 							$('#div1').html(info);
 							$('#div2 i').html(" "+res.empTel);
 							$('#div3 i').html(" "+res.empEmail);
@@ -76,7 +87,37 @@
 							alert("에러 : "+status+"=>"+error);
 						}
 					});
-				});				
+					event.preventDefault();
+				});	
+			
+			$('#orgSearchIcon').click(function(){
+				var keyword="keyword="+$('#orgSearch').val();
+				if($('#orgSearch').val()==''){
+					$('#searchResult').hide();
+				}else{
+					$.ajax({
+						url:"<c:url value='/organization/orgSearch.do'/>",
+						data:keyword,
+						contentType: "application/json; charset=UTF-8",
+						dataType:"json",
+						type:"get",
+						success:function(res){
+							if(res.length>0 ){
+								$('#searchResult').show();
+								$('#searchResult ul li ul').html("");
+								$.each(res, function(idx, item){
+									$('#searchResult ul li ul').append("<li id='"+item.empNo+"'><i class='fa fa-user'></i> "+item.empName+" "+item.deptName+"팀 "+item.posName+" ("+item.empNo+")</li>");
+								});							
+							}else{
+								$('#searchResult ul li ul').html("<li>해당직원이 없습니다.</li>");
+							}
+						},
+						error:function(xhr, status, error){
+							alert("에러 : "+status+"=>"+error);
+						}						
+					});					
+				}
+				
 			});
 			
 			$('#divClose').click(function(){
@@ -142,7 +183,7 @@
 		/* 조직도에서 개인정보 띄우는 창 */
 		#divEmpInfo{
 			width: 280px;
-			height: 440px;
+			height: 460px;
 			border: 1px solid #333;
 			background: rgb(255,253,230);
 			position: absolute;
@@ -191,9 +232,10 @@
      	<div id="divClose"><a href="#"><i class="fa fa-times"></i></a></div>
      	<div id="divEmpImg">
      		<img alt="" src="">     		
-     		<i class="fa fa-user"></i>
+     		<i id="noneImg" class="fa fa-user"></i>
      	</div>
      	<div id="divEmp">
+     		<div id="div0"></div>
 	     	<div id="div1"></div>
 	     	<div id="div2"><i class="fa fa-phone"></i></div>
 	     	<div id="div3"><a href="#" title="이메일 보내기"><i class="fa fa-envelope-o"></i></a></div>
@@ -212,6 +254,18 @@
          <i id="orgDown" class="fa fa-chevron-down"></i>
 	</div>
      <div id="organbody">
+     
+	     <!-- 조직도에서 검색했을 경우 결과를 보여줌 -->
+	     <div	id="searchResult">
+	     	<ul>
+	     		<li><i class="fa fa-exclamation-circle"></i>  검색 결과
+	     			<ul></ul>
+	     		</li>
+	     	</ul>
+	     	<hr>
+	     </div>
+	     <!-- 조직도 : 검색 결과 끝 -->
+	     
      	<c:forEach var="deptVo" items="${deptList}">
 	     	<ul >
 	     		<li class="deptName"><i id="deptPlus-${deptVo.deptNo }" class="fa fa-plus-square deptPlus"></i>
@@ -220,7 +274,7 @@
 	     			<ul>
 	     			<c:forEach var="empVo" items="${empList }">
 	     				<c:if test="${empVo.deptNo == deptVo.deptNo }">
-	     					<li id="${empVo.empNo }"><i class="fa fa-user"></i>  ${empVo.empName } ${empVo.empPosition }(${empVo.empNo }) </a></li>
+	     					<li id="${empVo.empNo }"><i class="fa fa-user"></i>  ${empVo.empName } ${empVo.posName }(${empVo.empNo }) </a></li>
 	     				</c:if>
 	     			</c:forEach>
 	     			</ul>

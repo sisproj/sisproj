@@ -21,4 +21,9 @@ public class OrganizationSeviceImpl implements OrganizationService{
 	public EmployeeVO selectEmpByEmpNo(int empNo) {
 		return orgDao.selectEmpByEmpNo(empNo);
 	}
+
+	@Override
+	public List<EmployeeVO> selectMulti(String keyword) {
+		return orgDao.selectMulti(keyword);
+	}
 }

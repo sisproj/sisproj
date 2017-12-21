@@ -80,7 +80,7 @@ action="<c:url value='/reBoard/list.do'/>">
 										<td>${vo.notiNo}</td>									
 										<td style="text-align:left">
 												<a href
-						="<c:url value='/notice/noticeDetail.do?no=${vo.notiNo}'/>">
+						="<c:url value='/notice/noticeDetail.do?notiNo=${vo.notiNo}'/>">
 													<!-- 제목이 긴 경우 일부만 보여주기 -->
 													<c:if test="${fn:length(vo.notiTitle)>30 }">
 														${fn:substring(vo.notiTitle,0,30) }...
