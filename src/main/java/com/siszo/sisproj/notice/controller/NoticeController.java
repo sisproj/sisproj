@@ -1,6 +1,7 @@
-/*package com.siszo.sisproj.notice.controller;
+package com.siszo.sisproj.notice.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -10,9 +11,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.siszo.sisproj.common.FileUploadUtil;
 import com.siszo.sisproj.common.PaginationInfo;
@@ -47,7 +50,7 @@ public class NoticeController {
 			Model model) {
 		logger.info("공지사항 글쓰기 처리-파라미터, vo={}", noticeVo);
 		
-		int empNo=(Integer)session.getAttribute("empNo");
+		//int empNo=(Integer)session.getAttribute("empNo");
 		int empNo=20170001;
 		noticeVo.setEmpNo(empNo);
 		
@@ -103,13 +106,110 @@ public class NoticeController {
 		logger.info("공지사항 글 수정하기");
 	}
 	
+	
 	@RequestMapping("/noticeDetail.do")
-	public void noticeDetail() {
-		logger.info("공지사항 상세보기");
+	public String detail(@RequestParam(defaultValue="0") int notiNo,
+			HttpServletRequest request,	ModelMap model) {
+		logger.info("상세보기 파라미터 notiNo={}", notiNo);
+		
+		String msg="", url="";
+		if(notiNo==0) {
+			model.addAttribute("msg", "잘못된 url입니다.");
+			model.addAttribute("url", "/notice/noticeList.do");
+			return "common/message";
+		}
+		
+		NoticeVO vo =noticeService.selectByNo(notiNo);
+		logger.info("상세보기 결과, vo={}", vo);
+		
+		String content=vo.getNotiContent();
+		if(content!=null && !content.isEmpty()) {
+			content=content.replace("\r\n", "<br>");
+			vo.setNotiContent(content);
+		}
+		
+		/*String fileInfo="", downInfo="";
+		String fileName=vo.getNotiFilename();
+		if(fileName!=null && !fileName.isEmpty()) {
+			fileInfo=Utility.getFileInfo(vo.getNotiOfilename(), 
+					vo.getNotiFilesize(), request);
+			
+			downInfo="다운 : "+vo.getDownCount();
+		}*/
+		
+		model.addAttribute("vo", vo);
+		/*model.addAttribute("fileInfo", fileInfo);
+		model.addAttribute("downInfo", downInfo);*/
+		
+		return "notice/noticeDetail";
+	}
+	
+	
+	@RequestMapping(value="/noticeUpdate.do", method=RequestMethod.GET)
+	public String noticeUpdate_get(@RequestParam(defaultValue="0") int notiNo,
+			HttpServletRequest request,
+			ModelMap model) {
+		logger.info("수정화면 조회 파라미터 no={}", notiNo);
+		
+		String msg="", url="";
+		if(notiNo==0) {
+			model.addAttribute("msg", "잘못된 url입니다.");
+			model.addAttribute("url", "/notice/noticeList.do");
+			return "common/message";
+		}
+		
+		NoticeVO vo =noticeService.selectByNo(notiNo);
+		logger.info("수정화면 조회 결과, vo={}", vo);
+		
+		String content=vo.getNotiContent();
+		if(content!=null && !content.isEmpty()) {
+			content=content.replace("\r\n", "<br>");
+			vo.setNotiContent(content);
+		}
+		
+		/*String fileInfo="";
+		if(vo.getNotiFilename()!=null && !vo.getNotiFilename().isEmpty()) {
+			fileInfo=Utility.getFileInfo(vo.getNotiOfilename(), 
+						vo.getNotiFilesize(),request);
+		}
+		
+		model.addAttribute("fileInfo", fileInfo);*/
+		model.addAttribute("vo", vo);
+		
+		return "notice/noticeUpdate";
+	}
+	
+	@RequestMapping(value="/noticeUpdate.do", method=RequestMethod.POST)
+	public String noticeUpdate_post(@ModelAttribute NoticeVO vo,			
+			HttpServletRequest request,	Model model) {
+		logger.info("글수정 처리-파라미터, vo={}", vo);
+		
+		/*//파일 업로드 처리
+		List<Map<String, Object>> fileList=null;
+		String fileName="", originalFileName="";
+		long fileSize=0;*/
+				
+		//db작업
+		String msg="";
+		String url="/notice/noticeUpdate.do?notiNo="+vo.getNotiNo();	
+		
+		int cnt =noticeService.updateNotice(vo);
+		logger.info("글수정 결과, cnt={}", cnt);
+		
+		if(cnt>0) {
+			msg="글수정되었습니다.";
+			url="/notice/noticeUpdate.do?notiNo="+vo.getNotiNo();
+		}else {
+			msg="글수정 실패";							
+		}
+			
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "common/message";		
 	}
 	
 	
 }
 
 
-*/

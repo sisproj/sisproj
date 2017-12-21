@@ -1,7 +1,11 @@
 package com.siszo.sisproj.confirm.model;
 
+import java.util.List;
+
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
+
+import com.siszo.sisproj.confirm.common.ConfirmSearchVO;
 
 
 @Repository
@@ -16,6 +20,22 @@ public class DocumentDAOMybatis extends SqlSessionDaoSupport implements Document
 	@Override
 	public int insertConfirmDoc(DocumentVO vo) {
 		return getSqlSession().insert(namespace+".insertConfirmDoc",vo);
-	}	
+	}
+
+	@Override
+	public List<DocumentVO> selectAllDoc(ConfirmSearchVO svo) {
+		return getSqlSession().selectList(namespace+".selectAllDoc",svo);
+	}
+
+	@Override
+	public int totalRecordCountDoc(ConfirmSearchVO svo) {
+		return getSqlSession().selectOne(namespace+".totalRecordCountDoc",svo);
+	}
+
+	@Override
+	public List<DocumentVO> completeDocSelByEmpNo(int empNo) {
+		return getSqlSession().selectList(namespace+".completeDocSelByEmpNo",empNo);
+	}
+	
 	
 }

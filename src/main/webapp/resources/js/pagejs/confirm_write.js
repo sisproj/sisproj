@@ -32,7 +32,7 @@ $(function(){
 		$('#fileinfo').text('새로 첨부할 파일');
 	});
 
-	$('#link_cho #doc_title').change(function(){
+	$('#link_cho #doc_title').keyup(function(){
 		var title = $(this).val();
 		$('#cf_info #doctitle').val(title);
 	});
@@ -50,15 +50,16 @@ $(function(){
 	});
 	
 	$('#submitbtn #confirmbtn').click(function(){
-		submitContents();
-		$('#writeFrm').prop("action","/sisproj/confirm/myConfirmOk.do");
-		alert($('#writeFrm').prop("action"));
-		$('#writeFrm').submit();
+		if(confirm('바로 다음 결재자에게 상신됩니다. 진행 하시겠습니까?')){
+			submitContents();
+			$('#writeFrm').prop("action","/sisproj/confirm/confirmOk.do");
+			$('#writeFrm').submit();
+		}
 	});
 	
 	$('#submitbtn #savebtn').click(function(){
 		submitContents();
-		$('#writeFrm').prop("action","/sisproj/confirm/tempSave.do");
+		$('#writeFrm').prop("action","/sisproj/confirm/tempsaveOk.do");
 		$('#writeFrm').submit();
 	});
 });

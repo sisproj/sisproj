@@ -25,12 +25,9 @@
 	background-color: #eee;
 	box-sizing:border-box;
 	padding-bottom: 10px;
+	text-align:center;
 }
-#pagingbtn div{
-	width: 395px;
-	margin: 0 auto;
-}
-#pagingbtn span{
+#pagingbtn span, #pagingbtn a{
 	display: inline-block;
 	width: 24px;
 	line-height: 24px;
@@ -43,7 +40,7 @@
 	box-shadow:2px 2px 3px #333;
 	font-size: 0.8em;
 }
-#pagingbtn span:hover,
+#pagingbtn a:hover,
 #pagingbtn span.thispage{
 	background-color:#09f;
 	box-shadow:2px 2px 3px transparent;	
@@ -51,11 +48,19 @@
 #pagingbtn span:first-child{
 	margin-left: 0;	
 }
-#pagingbtn span i {
+#pagingbtn a i {
 	line-height: 24px;
 	color: fff;
 	text-align: center;
 	font-size: 0.8em;
+}
+#pagingbtn #firstbtn,
+#pagingbtn #lastbtn{
+	background-color: #333;
+}
+#pagingbtn #prevbtn,
+#pagingbtn #nextbtn{
+	background-color: #306;
 }
 #awaittb {
 	width: 100%;
@@ -92,7 +97,8 @@
 }
 #awaittb td:nth-child(1){
 	font-size: 0.8em;
-	text-align: center;
+	padding-left: 10px;
+	text-align: left;
 }
 #awaittb td:nth-child(2){
 	padding-left: 10px;

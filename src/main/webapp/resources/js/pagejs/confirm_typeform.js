@@ -1,13 +1,13 @@
 	$(function(){
-		$('#formName').change(function(){
+		$('#formName').keyup(function(){
 			var title = $(this).val();
 			$('#doc_type #dt_head input[name=doctype]').val(title);
 		});
-		$('#formLife').change(function(){
+		$('#formLife').keyup(function(){
 			var title = $(this).val();
 			$('#doc_info #doclife').val(title);
 		});
-		$('#formSecu').change(function(){
+		$('#formSecu').keyup(function(){
 			var title = $(this).val();
 			$('#doc_info #docsecu').val(title);
 		});

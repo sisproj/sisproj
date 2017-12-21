@@ -17,5 +17,10 @@ public class ConfirmLineDAOMybatis extends SqlSessionDaoSupport implements Confi
 		return getSqlSession().insert(namespace+".insertConfirmLine", vo);
 	}
 
+	@Override
+	public int myConfirmOk(ConfirmLineVO vo) {
+		return getSqlSession().update(namespace+".myConfirmOk",vo);
+	}
+
 	
 }
