@@ -1,31 +1,85 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@include file="../common/common.jsp" %>
+<%
+    session.setAttribute("id", "20170001");
+%>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>SIS - Standard Intranet System</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="<c:url value='/resources/css/pagecss/messenger_main.css'/>">
 
     <%-- Bootstrap tokenfield --%>
-    <link rel="stylesheet" href="<c:url value='/resources/css/bootstrap/bootstrap.min.css'/>">
-    <script src="<c:url value='/resources/js/bootstrap/bootstrap-tokenfield.js'/>"></script>
-    
+    <%--<link rel="stylesheet" href="<c:url value='/resources/css/bootstrap/bootstrap.min.css'/>">--%>
     <link rel="stylesheet" href="<c:url value='/resources/css/bootstrap/bootstrap-tokenfield.css'/>">
     <link rel="stylesheet" href="<c:url value='/resources/css/bootstrap/tokenfield-typeahead.css'/>">
+    <script src="<c:url value='/resources/js/bootstrap/bootstrap-tokenfield.js'/>"></script>
 
+    <link rel="stylesheet" href="<c:url value='/resources/css/pagecss/messenger_main.css'/>">
 
     <%-- messenger JS--%>
     <script type="text/javascript">
+        $(document).ready(function () {
+            userId = $('#sessionId').val();
+            loadKeyListByUserId(userId);
+            loadOrganization();
+        });
+
+        var userId = "";
         var chatKey = null;
+
+
+
+
+        function firebaseSetUser() {
+
+        }
 
         function loadOrganization() {
             $('#messenger-main-container').html("").load('messengerStart.do');
         }
 
         function chatStart() {
-            $('#nameTokenField').tokenfield();
+            var empIdArr = $('#choiceEmfpId').val().split(",");
+            empIdArr.push(userId);
+            empIdArr.sort();
+
+            /* Users 설정 - 선택된 사용자에게 채팅방 할당 */
+            var chat = "chat";
+            for (var i = 0; i < empIdArr.length; i++) {
+                chat += empIdArr[i].substring(4);
+            }
+
+            for (var i = 0; i < empIdArr.length; i++) {
+                var usersRef = firebase.database().ref('users/' + empIdArr[i] + '/' + "chatlist" + "/" + chat);
+                usersRef.set("true");
+            }
+
+            /* Chats 설정 - 만들어진 채팅방 초기 설정*/
+            var date = new Date();
+            var timestamp = date.getTime();
+            var chatsRef = firebase.database().ref('chats/' + chat);
+            chatsRef.set({
+                title: empIdArr,
+                lastMessage: "",
+                timestamp: timestamp
+            });
+
+
+            /* Members 설정 - 해당 채팅방에 사용자 정보 */
+            for (var i = 0; i < empIdArr.length; i++) {
+                var membersRef = firebase.database().ref('members/' + chat + '/' + empIdArr[i]);
+                membersRef.set({
+                    count : 0,
+                    state: "true"
+                });
+            }
+
+            console.log(userId);
+            loadKeyListByUserId(userId);
+            $('#messenger-main-container').html("").load('messengerChat.do', {chatKey: chat});
+
         }
 
         function changeContent(chatKey) {
@@ -50,15 +104,11 @@
 
     <%-- firebase 채팅목록 처리 script--%>
     <script>
-        /* TODO 세션에서 로그인한 사용자 ID를 가져와서 userId에 넣어야 함*/
-        var userId = prompt("아이디", "user1");
-        loadKeyListByUserId(userId);
-
         /* keyList 배열에 사용자의 채팅방 리스트를 담는 함수*/
         var keyList = [];
 
         function loadKeyListByUserId(userId) {
-            var usersRef = firebase.database().ref('users/' + userId);
+            var usersRef = firebase.database().ref('users/' + userId + "/chatlist");
             usersRef.once('value', function (snapshot) {
                 snapshot.forEach(function (childSnapshot) {
                     var childKey = childSnapshot.key;
@@ -89,8 +139,6 @@
                         '</div>'
                     );
                 });
-            }).then(function () {
-                loadMembers(memberList);
             });
         }
 
@@ -365,7 +413,8 @@
         </h3>
     </div>
     <div class="w3-large w3-text-grey" style="font-weight:bold">
-        <button id="startChatButton" class="w3-button w3-indigo w3-hover-black" onclick="loadOrganization()">대화 하기</button>
+        <button id="startChatButton" class="w3-button w3-indigo w3-hover-black" onclick="loadOrganization()">대화 추가
+        </button>
         <ul class="w3-hoverable" id="chatsList">
             <%--로그인한 user의 채팅방 목록을 여기다 뿌려줌--%>
         </ul>
@@ -375,6 +424,7 @@
 <!-- Header -->
 <div class="messenger-header w3-card">
     <header class="w3-container w3-xlarge">
+        <input type="hidden" value="${sessionScope.get('id')}" id="sessionId">
         <p class="w3-left w3-bar-item w3-padding-24" id="chatTitle">대화 하기</p>
         <p class="w3-right">
             <a href="#" class="w3-bar-item w3-button w3-padding-24 w3-right" name="hide-nav" id="sidebar-button">
