@@ -17,7 +17,6 @@
 		values(#{notiNo}, #{notiTitle}, #{empNo}, #{notiContent})
 	</insert>
 	
-<<<<<<< HEAD
 	<!-- private int notiNo;
 	private String notiTitle;
 	private int empNo;
@@ -66,14 +65,11 @@
 		update notice
 			set noti_title=#{notiTitle}, emp_no=#{empNo},
 			noti_content=#{notiContent}
-		where noti_no=#{notlNo}
+		where noti_no=#{notiNo}
 	
 	</update>
+
 	
-	
-	
-=======
->>>>>>> branch 'master' of https://github.com/sisproj/sisproj.git
 </mapper>
 
 

@@ -63,6 +63,8 @@
 			<form name="formUpdate" method="post"
 				action="<c:url value='/notice/noticeUpdate.do'/>"
 				onsubmit="return send(this)">
+				<input type="hidden" name="notiNo" value="${vo.notiNo }">
+				<input type="hidden" name="empNo" value="${vo.empNo }">
 				<table class="table table-striped"
 					style="text-align: center; border: 1px solid #c5bdbd;">
 					<thead>

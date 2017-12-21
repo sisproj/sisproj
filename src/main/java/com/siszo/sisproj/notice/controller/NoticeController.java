@@ -1,7 +1,5 @@
-/*package com.siszo.sisproj.notice.controller;
+package com.siszo.sisproj.notice.controller;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -52,7 +50,7 @@ public class NoticeController {
 			Model model) {
 		logger.info("공지사항 글쓰기 처리-파라미터, vo={}", noticeVo);
 		
-		int empNo=(Integer)session.getAttribute("empNo");
+		//int empNo=(Integer)session.getAttribute("empNo");
 		int empNo=20170001;
 		noticeVo.setEmpNo(empNo);
 		
@@ -186,10 +184,10 @@ public class NoticeController {
 			HttpServletRequest request,	Model model) {
 		logger.info("글수정 처리-파라미터, vo={}", vo);
 		
-		//파일 업로드 처리
+		/*//파일 업로드 처리
 		List<Map<String, Object>> fileList=null;
 		String fileName="", originalFileName="";
-		long fileSize=0;
+		long fileSize=0;*/
 				
 		//db작업
 		String msg="";
@@ -215,4 +213,3 @@ public class NoticeController {
 }
 
 
-*/
