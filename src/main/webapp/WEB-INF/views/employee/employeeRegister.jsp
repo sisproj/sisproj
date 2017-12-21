@@ -24,7 +24,7 @@
 				$('#email3').val('');
 			}
 		});
-		   $('#frmEmp').submit(function () {
+		$('#frmEmp').submit(function(){
 			var email1 = $('#email1').val();
 			var email2 = $('#email2 option:selected').val();
 			var email3 = $('#email3').val();
@@ -45,7 +45,7 @@
 			var tel="";
 			
 			if($('#tel2').val()!="" && $('#tel3').val()!=""){
-				 tel=tel1+"-"+tel2+"-"+tel3;
+				tel=tel1+"-"+tel2+"-"+tel3;
 				$('#empTel').val(tel);
 			}			
 			var jumin1=$('#jumin1').val();
@@ -55,8 +55,6 @@
 				var ssn=jumin1+"-"+jumin2;
 				$('#empSsn').val(ssn);
 			}
-		 });
-		$('#frmEmp').submit(function(){
 			if($('#empName').val()==""){
 				alert('이름을 입력하세요');
 				$('#empName').focus();
@@ -113,12 +111,15 @@
 				alert('이메일을 입력하세요.');
 				$("#empEmail").focus();
 				return false;
-			}
-			/* else if($('#empImg').val()==""){
+			}else if($('#empImg').val()==""){
 				alert('이미지를 등록하세요.');
 				$("#empImg").focus();
 				return false;
-			}else if($('#deptNo').val()==""){
+			}else{
+				alert('등록 실패!');
+			}
+			 
+			 /*else if($('#deptNo').val()==""){
 			alert('부서를 선택하세요.');
 			$("#deptNo").focus();
 			return false;
@@ -142,9 +143,9 @@
      <div id="dimyPage">
       	<form id="frmEmp" name="frmEMP" method="post" 
       	action="<c:url value='/employee/employeeRegister.do'/>" enctype="multipart/form-data">
-      	<!-- <input type="text" name="empTel" id="empTel">
-      	<input type="text" name="empSsn" id="empSsn">
-      	<input type="text" name="empEmail" id="empEmail"> -->
+        <input type="hidden" name="empTel" id="empTel">
+      	<input type="hidden" name="empSsn" id="empSsn">
+      	<input type="hidden" name="empEmail" id="empEmail">
       	  <fieldset>
        		<div id="diName">
       	 		<label for="name">이름</label><input type="text" id="empName" name="empName" maxlength="6">   
@@ -212,7 +213,8 @@
 				<input type="text" name="empSal" id="empSal"> 			 				 
 			</div>
 			<div id="diTel">
-	       		<label for="hp1">핸드폰</label><select name="tel1" id="tel1" title="휴대폰 앞자리">
+	       		<label for="hp1">핸드폰</label>
+	       		<select name="tel1" id="tel1" title="휴대폰 앞자리">
 	       			<option value="010">010</option>
 		            <option value="011">011</option>
 		            <option value="016">016</option>

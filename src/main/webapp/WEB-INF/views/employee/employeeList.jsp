@@ -9,16 +9,38 @@
 <article id="bodysection">
 <div id="dimyPage">
 	<form id="searchEmp" name="searchEmp" method="get" action="employee/employeeList.do">
+			<div class="divSearch">
+		   	<form name="frmSearch" method="post"action="<c:url value='/reBoard/list.do'/>">
+		        <select name="searchCondition">
+		            <option value="title"
+		            	<c:if test="${param.searchCondition=='title' }"> 
+		            		selected
+		            	</c:if>
+		            	>제목</option>
+		            <option value="content"
+		            	<c:if test="${param.searchCondition=='content' }"> 
+		            		selected
+		            	</c:if>    
+		            >내용</option>
+		            <option value="name" 
+		            	<c:if test="${param.searchCondition=='name' }"> 
+		            		selected
+		            	</c:if>
+		            >작성자</option>
+		        </select>   
+		        <input type="text" name="searchKeyword" title="검색어 입력" value="${param.searchKeyword }">   
+				<input type="submit" value="검색">
+		    </form>
+		</div>
 		<div id="dimyP">
 			<select>
 				<option value="사원이름">사원이름</option>
-				<option value="사원번호">사원번호</option>
 				<option value="부서">부서</option>
 				<option value="직급">직급</option>
 			</select>
 			<input type="text" id="search" name="serach">
 			<input type="submit" id="btSear" value="검색">
-			<input type="button" id="btDeSe" name="btDeSe" value="상세조회">
+			<!-- <input type="button" id="btDeSe" name="btDeSe" value="상세조회"> -->
 			<select id="pl" style="float: right;">
 				<option value="10">10명</option>
 				<option value="20">20명</option>
@@ -48,6 +70,9 @@
 			</tr>
 			<!-- for문 사원 리스트 시작 -->
 			<c:forEach var="vo" items="${list}">	
+				<c:if test="${empty list}">
+					<td colspan="5">사원 데이터가 없습니다</td>
+				</c:if>
 				<c:if test="${empty vo.empOutdate }">
 					<tr>				
 						<td>${vo.empNo }</td>

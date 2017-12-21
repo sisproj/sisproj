@@ -54,21 +54,23 @@
 			});
 			$('#organbody ul ul li').each(function(){
 				$(this).click(function(){
-					$('#divEmpInfo').show();
 					var empNo="empNo="+$(this).attr('id');
-					alert(empNo);
 					$.ajax({
 						url:"<c:url value='/organization/empInfo.do'/>",
 						data:empNo,
 						dataType:"json",
 						type:"get",
 						success:function(res){
+							$('#divEmpInfo').show();
 							var info=res.empName+" "+res.empPosition+"("+res.empNo+")";
-							$('#divImg img').attr('alt',res.empName);
-							$('#divImg img').attr('src',"<c:url value='/emp_images/"+res.empImg+"'/>");
+							$('#divEmpImg img').prop('alt', res.empName);
+							$('#divEmpImg img').prop('src', "<c:url value='/emp_images/"+res.empImg+"'/>");
+							if(res.empImg==null){
+								$('#divEmpImg img').hide();
+							}
 							$('#div1').html(info);
-							$('#div2 i').html(res.empTel);
-							$('#div3 i').html(res.empEmail);
+							$('#div2 i').html(" "+res.empTel);
+							$('#div3 i').html(" "+res.empEmail);
 						},
 						error:function(xhr, status, error){
 							alert("에러 : "+status+"=>"+error);
@@ -148,17 +150,22 @@
 			display: none;
 		}
 		#divEmpImg{
-			border: 1px solid #333;
 			width: 200px;
 			height: 200px;
 			padding: 0;
 			border-radius: 100px;
 			overflow: hidden;
 			margin: 40px;
+			background: #fff;
+			text-align: center;
 		}
 		#divEmpImg img{
 			width: 100%;
-			margin-top: 20px;
+		}
+		#divEmpImg i{
+			font-size: 13em;
+			margin-top: 25px;
+			color: rgb(221,221,221);
 		}
 		#divEmp{
 			margin: 0;
@@ -179,31 +186,30 @@
 </head>
 <body>
      
-    <!--  조직도에서 사원클릭시 개인정보 보여줌  -->
-    
+    <!--  조직도에서 사원클릭시 개인정보 보여줌  -->    
      <div id="divEmpInfo">
      	<div id="divClose"><a href="#"><i class="fa fa-times"></i></a></div>
      	<div id="divEmpImg">
-     		<img alt="" src="">
+     		<img alt="" src="">     		
+     		<i class="fa fa-user"></i>
      	</div>
      	<div id="divEmp">
 	     	<div id="div1"></div>
-	     	<div id="div2"><i class="fa fa-phone"></i>&nbsp;</div>
-	     	<div id="div3"><a href="#" title="이메일 보내기"><i class="fa fa-envelope-o"></i>&nbsp;</a></div>
-	     	<div><a href="#" title="쪽지보내기"><i class="fa fa-paper-plane"></i>  쪽지 보내기</a>   <a href="#" title="대화하기"><i class="fa fa-comments-o"></i>  대화하기</a></div>
+	     	<div id="div2"><i class="fa fa-phone"></i></div>
+	     	<div id="div3"><a href="#" title="이메일 보내기"><i class="fa fa-envelope-o"></i></a></div>
+	     	<div><a href="#" title="쪽지보내기"><i class="fa fa-paper-plane"></i>  쪽지 보내기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <a href="#" title="대화하기"><i class="fa fa-comments-o"></i>  대화하기</a></div>
      	</div>
      </div>
-     
      <!-- 조직도 : 사원정보 끝 -->
      
 	<div id="organtitle">
          <i class="fa fa-sitemap"></i>
          <div class="orgSearch">
-          <input type="text" id="orgSearch" name="orgSearch" placeholder="부서/이름/아이디/직급/직책">
+          <input type="text" id="orgSearch" name="orgSearch" placeholder="부서/이름/직급">
           <a href="#" id="orgSearchIcon"><i class="fa fa-search"></i></a>
          </div>
-         <i id="orgUp" class="fa fa-chevron-up" aria-hidden="true"></i>
-         <i id="orgDown" class="fa fa-chevron-down" aria-hidden="true"></i>
+         <i id="orgUp" class="fa fa-chevron-up"></i>
+         <i id="orgDown" class="fa fa-chevron-down"></i>
 	</div>
      <div id="organbody">
      	<c:forEach var="deptVo" items="${deptList}">
