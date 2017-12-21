@@ -38,11 +38,11 @@
 						<tbody>
 							<tr>
 								<td style="width: 20%;">글 제목</td>
-								<td colspan="2"></td>
+								<td colspan="2">${vo.notiTitle}</td>
 							</tr>
 							<tr>
 								<td>작성자</td>
-								<td colspan="2"></td>
+								<td colspan="2">${vo.empNo}</td>
 							</tr>
 							<tr>
 								<td>작성일자</td>
@@ -50,12 +50,12 @@
 							</tr>
 							<tr>
 								<td>내용</td>
-								<td colspan="2" style="min-heigh: 200px; text-align: left;"></td>
+								<td colspan="2" style="max-height: 400px; height: 380px; text-align: left;">${vo.notiContent}</td>
 							</tr>
 						</tbody>
 					</table>
 					<a href="noticeList.do" class="btn btn-primary">목록</a>
-					<a href="noticeUpdate.do?bbsID=" class="btn btn-primary">수정</a>
+					<a href="noticeUpdate.do?notiNo=${param.notiNo}" class="btn btn-primary">수정</a>
 					<a href="deleteAction.jsp?bbsID=" class="btn btn-primary">삭제</a>
 					<a href="noticeWrite.do" class="btn btn-primary pull-right">글쓰기</a>
 				</div>

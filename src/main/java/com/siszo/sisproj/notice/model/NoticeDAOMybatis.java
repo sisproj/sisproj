@@ -26,4 +26,16 @@ public class NoticeDAOMybatis extends SqlSessionDaoSupport
 	public int selectTotalRecordCount(SearchVO searchVo) {
 		return getSqlSession().selectOne(namespace+".selectTotalRecordCount", searchVo);
 	}
+
+	@Override
+	public NoticeVO selectByNo(int notiNo) {
+		return getSqlSession().selectOne(namespace+".selectByNo", notiNo);
+	}
+
+	@Override
+	public int updateNotice(NoticeVO vo) {
+		return getSqlSession().update(namespace+".updateNotice", vo);
+	}
+	
+	
 }

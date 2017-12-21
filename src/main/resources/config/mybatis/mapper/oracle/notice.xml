@@ -17,6 +17,7 @@
 		values(#{notiNo}, #{notiTitle}, #{empNo}, #{notiContent})
 	</insert>
 	
+<<<<<<< HEAD
 	<!-- private int notiNo;
 	private String notiTitle;
 	private int empNo;
@@ -57,6 +58,22 @@
 		<include refid="searchWhere"></include>	
 	</select>
 	
+	<select id="selectByNo" parameterType="int" resultType="NoticeVO">
+		select * from notice where noti_no=#{notiNo}
+	</select>
+	
+	<update id="updateNotice" parameterType="NoticeVO">
+		update notice
+			set noti_title=#{notiTitle}, emp_no=#{empNo},
+			noti_content=#{notiContent}
+		where noti_no=#{notlNo}
+	
+	</update>
+	
+	
+	
+=======
+>>>>>>> branch 'master' of https://github.com/sisproj/sisproj.git
 </mapper>
 
 

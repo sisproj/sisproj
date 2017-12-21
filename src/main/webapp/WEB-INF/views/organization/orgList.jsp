@@ -62,7 +62,7 @@
 						type:"get",
 						success:function(res){
 							$('#divEmpInfo').show();
-							var info=res.empName+" "+res.empPosition+"("+res.empNo+")";
+							var info=res.empName+" "+res.posName+"("+res.empNo+")";
 							$('#divEmpImg img').prop('alt', res.empName);
 							$('#divEmpImg img').prop('src', "<c:url value='/emp_images/"+res.empImg+"'/>");
 							if(res.empImg==null){
@@ -142,7 +142,7 @@
 		/* 조직도에서 개인정보 띄우는 창 */
 		#divEmpInfo{
 			width: 280px;
-			height: 440px;
+			height: 460px;
 			border: 1px solid #333;
 			background: rgb(255,253,230);
 			position: absolute;
@@ -194,6 +194,7 @@
      		<i class="fa fa-user"></i>
      	</div>
      	<div id="divEmp">
+     		<div id="div0"></div>
 	     	<div id="div1"></div>
 	     	<div id="div2"><i class="fa fa-phone"></i></div>
 	     	<div id="div3"><a href="#" title="이메일 보내기"><i class="fa fa-envelope-o"></i></a></div>
@@ -220,7 +221,7 @@
 	     			<ul>
 	     			<c:forEach var="empVo" items="${empList }">
 	     				<c:if test="${empVo.deptNo == deptVo.deptNo }">
-	     					<li id="${empVo.empNo }"><i class="fa fa-user"></i>  ${empVo.empName } ${empVo.empPosition }(${empVo.empNo }) </a></li>
+	     					<li id="${empVo.empNo }"><i class="fa fa-user"></i>  ${empVo.empName } ${empVo.posName }(${empVo.empNo }) </a></li>
 	     				</c:if>
 	     			</c:forEach>
 	     			</ul>

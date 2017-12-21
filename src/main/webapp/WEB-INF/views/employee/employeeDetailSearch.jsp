@@ -12,7 +12,7 @@
 	$(function () {
 	 	$('#empName').val();
 		$('#deptName option:selected').val();
-		$('#empPosition option:selected').val();
+		$('#posName option:selected').val();
 		
 	});
 </script>
@@ -20,7 +20,7 @@
 <body>
 <div id="dimyPage">
 	<form id="frmDeSe" name="frmDeSe" method="get" 
-	action="<c:url value='/employee/employeeDetailSearch.do?empName="+${empName }&empPosition=${empPosition }"'/>">
+	action="<c:url value='/employee/employeeDetailSearch.do?empName="+${empName }&posName=${posName }"'/>">
 		<label for="empName">사원이름</label>
 		<input type="text" id="empName" name="empName">			
 		<label for="deptName">부서이름</label>
@@ -32,7 +32,7 @@
 			</c:forEach>
 		</select><br> 
 		<label>직급</label>	
-		<select id="empPosition">
+		<select id="posName">
 					<option value="사원">사원<option>
 					<option value="대리">대리</option>
 					<option value="차장">차장</option>
