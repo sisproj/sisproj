@@ -57,6 +57,20 @@
 		<include refid="searchWhere"></include>	
 	</select>
 	
+	<select id="selectByNo" parameterType="int" resultType="NoticeVO">
+		select * from notice where noti_no=#{notiNo}
+	</select>
+	
+	<update id="updateNotice" parameterType="NoticeVO">
+		update notice
+			set noti_title=#{notiTitle}, emp_no=#{empNo},
+			noti_content=#{notiContent}
+		where noti_no=#{notlNo}
+	
+	</update>
+	
+	
+	
 </mapper>
 
 

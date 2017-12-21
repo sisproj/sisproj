@@ -45,7 +45,6 @@
 	<!-- 3. 내용 -->
 	<script type="text/javascript">
 	
-	
 	$(function(){
 		$('#btWrite').click(function(){
 			if($('#notiTitle').val()==''){

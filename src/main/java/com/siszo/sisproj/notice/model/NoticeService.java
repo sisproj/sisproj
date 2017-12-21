@@ -8,4 +8,7 @@ public interface NoticeService {
 	public int insertNotice(NoticeVO vo);
 	public List<NoticeVO> selectAll(SearchVO searchVo);
 	public int selectTotalRecordCount(SearchVO searchVo);
+	public NoticeVO selectByNo(int notiNo);
+	public int updateNotice(NoticeVO vo);	
+	
 }
