@@ -14,21 +14,6 @@ public class Utility {
 
         return fileInfo;
     }
-    
-    //input[type=text] 부분 db에서 가져 올때 태그 or 특수문자 변환작업
-    public static String changeTag(String contents) {
-    	if(contents==null || contents.isEmpty()) {
-    		contents="";
-    	} else {
-    		contents = contents.replace("<","&lt;");
-    		contents = contents.replace(">","&gt;");
-    		contents = contents.replace("\"", "&quot;");
-    		contents = contents.replace("\'", "&#39;");
-    		contents = contents.replace("\r\n", "<br>");
-    	}
-    	System.out.println("contents="+contents);
-    	return contents;
-    }
 }//class
 
 

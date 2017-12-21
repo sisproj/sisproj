@@ -39,8 +39,9 @@
 						<select id="link_doc" class="sd2">
 							<!-- if(내 문서들 출력) -->
 							<option value="">선택하세요</option>
-							<option value="20171221301333496">사내 인트라넷 시스템 도입의 건</option>
-							<option value="20171010102033022">사내 인트라넷 시스템 도입에 대한 지출</option>
+							<c:forEach var="selVo" items="${docuVo }">
+								<option value="${selVo.cfNo }">${selVo.cfTitle }</option>								
+							</c:forEach>
 						</select>
 					</div>
 				</div>	
