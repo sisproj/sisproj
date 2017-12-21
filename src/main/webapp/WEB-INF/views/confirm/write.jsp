@@ -39,8 +39,8 @@
 						<select id="link_doc" class="sd2">
 							<!-- if(내 문서들 출력) -->
 							<option value="">선택하세요</option>
-							<option value="(20171010102031001) 사내 인트라넷 시스템 도입의 건">사내 인트라넷 시스템 도입의 건</option>
-							<option value="(20171010102033022) 사내 인트라넷 시스템 도입에 대한 지출">사내 인트라넷 시스템 도입에 대한 지출</option>
+							<option value="20171221301333496">사내 인트라넷 시스템 도입의 건</option>
+							<option value="20171010102033022">사내 인트라넷 시스템 도입에 대한 지출</option>
 						</select>
 					</div>
 				</div>	
@@ -51,10 +51,11 @@
 					<div id="doc_type">
 						<div id="dt_head">
 							<input type="text" name="formName" value="${vo.formName }" readonly>
+							<input type="hidden" name="formNo" value="${param.formNo }">
 						</div>
 						<p id="userinfo">
 							기안자 : <input type="text" name="username" value="사용자(부서이름)" readonly>
-							<input type="hidden" name="empNo" value="회원번호">
+							<input type="hidden" name="empNo" value="${empNo }">
 						</p>
 						<div id="doc_info">
 							<div>
@@ -82,7 +83,7 @@
 							<div class="dr">
 								<label for="linkdoc" class="sd1">연계문서</label>	
 								<input type="text" name="linkdoc" id="linkdoc" value="" readonly>
-								<input type="hidden" name="linkCfNo">
+								<input type="hidden" name="linkCfNo" id="linkCfNo">
 							</div>
 							<div class="dr">
 								<label for="doctitle" class="sd1">제목</label>	
@@ -109,9 +110,10 @@
 						</select>
 						<div id="files"></div>
 					</div>
+					<input type="hidden" name="allConfirmers" id="allConfirmers">
 					<div id="submitbtn">
-						<input type="button" id="submit" onclick="submitContents()" value="결재">&nbsp;&nbsp;
-						<input type="button" id="save" onclick="submitContents()" value="임시저장">	
+						<input type="button" id="confirmbtn" onclick="submitContents()" value="결재">&nbsp;&nbsp;
+						<input type="button" id="savebtn" onclick="submitContents()" value="임시저장">	
 					</div>
 				</form>
 				<div id="choice_cfer" class='off'>
@@ -140,7 +142,14 @@
 		var order = 0;
 		//조직도에서 사원 리스트 더블클릭시 리스트에 추가
 		$('#organbody ul li ul li').dblclick(function(){
-			if($('#confirmers').attr('class')=='favorite'){
+			var empNo = $(this).attr('id');
+			var sessempNo = '${empNo}';
+			var status = $('#choice_cfer').attr('class');
+			if($('#confirmers').attr('class')=='favorite' && empNo == sessempNo){
+				alert('자기자신은 선택할 수 없습니다.');
+				return false;
+			}
+			if($('#confirmers').attr('class')=='favorite' && empNo != sessempNo && status=='on'){
 				if(confirm('현재 선택된 결재라인이 제거됩니다.')){
 					$('#cf_ch_savedline ul li i').prop('class','fa fa-folder-o');
 					$('#confirmers').html('');
@@ -149,27 +158,38 @@
 				} else {
 					return false;
 				}	
+			}			
+			
+			if(order<1 && $('#confirmers').attr('class')!='favorite' && status=='on'){
+				//초기 본인 세팅
+				$('#confirmers').prepend("<tr class='t1'><td>1</td></tr>");
+				$("#temp").load("<c:url value='/confirm/choLine.do?empNo="+sessempNo+"'/>", function(response, status, xhr) {
+					if(status=='success'){
+						var temp = $("#temp").html();
+						$('#confirmers tr.t1').append(temp);					
+					}
+				});
+				order+=1;
 			}
-			var status = $('#choice_cfer').attr('class');
-			var empNo = $(this).attr('id');
 			
 			var exist = 0;
-			$('#confirmers input[name=empNoo]').each(function(){
+			$('#confirmers input[type=hidden]').each(function(){
 				if($(this).val()==empNo){
 					exist=1;
 				}
 			});
-			if(status=='on' && exist==0){
+
+			//현재 접속자와 조직도에서 선택한 사람이 같지 않을 경우에만 처리
+			if(status=='on' && exist==0 && empNo != sessempNo){
 				if(order==8){alert('최대 8명까지 가능 합니다.'); return false;};
-				order+=1;
-				
 				$("#temp").load("<c:url value='/confirm/choLine.do?empNo="+empNo+"'/>", function(response, status, xhr) {
 					if(status=='success'){
 						$('#confirmers').append("<tr class='t"+order+"'><td>"+order+"</td></tr>");
 						var temp = $("#temp").html();
-						$('#confirmers tr.t'+order).append(temp);					
+						$('#confirmers tr.t'+order).append(temp);				
 					}
 				});
+				order+=1;	
 			}
 		});
 		
@@ -183,8 +203,12 @@
 		
 		//결재라인 지정 window에 선택된 결재자 더블클릭시 리스트에서 제거
 		$('body').on('dblclick','#confirmers tr',function(){
+			var thissel = $(this).find('input[type=hidden]').val();
 			if($('#confirmers').attr('class')=='favorite'){
 				alert('저장된 리스트는 삭제 할 수 없습니다.');
+				return false;
+			} else if(thissel == '${empNo}'){
+				alert('본인은 삭제 할 수 없습니다.');
 				return false;
 			} else {
 				$(this).remove();
@@ -213,14 +237,32 @@
 			$('#confirmers tr').each(function(){
 				var cf_empName = $(this).find('td.cf_empName').text();
 				var cf_empPo = $(this).find('td.cf_empPo').text();
-				var cf_empNo = $(this).find('input[name=empNoo]').val();
+				var cf_empNo = $(this).find('input[type=hidden]').val();
 				
-				$('#doc_type #confirmer').append("<div id='confirmer1'><span></span><span>"+cf_empName+" "+cf_empPo+"</span><input type='hidden' name='empNo' value='"+cf_empNo+"'></div>");
+				$('#doc_type #confirmer').append("<div id='confirmer1'><span></span><span>"+cf_empName+" "+cf_empPo+"</span><input type='hidden' name='allConfirmer' value='"+cf_empNo+"'></div>");
 				$('#choice_cfer').fadeOut();
 				$('#choice_cfer').attr('class','off');
 			});
+			
+			getConfirmers();
 		});
 		
+		//유효성
+		$('#writeFrm').submit(function(){
+			if($('input[name=cfTitle]').val()==''){
+				alert('결재문서의 제목을 입력하세요');
+				$('#doc_title').focus();
+				return false;
+			} else if($('textarea[name=cfContent]').val()=='<p><br></p>'){
+				alert('결재문서의 내용을 입력하세요');
+				$('textarea[name=cfContent]').focus();
+				return false;
+			} else if($('#allConfirmers').val()==''){
+				alert('결재라인을 지정하세요');
+				$('#linebtn input[type=button]').focus();
+				return false;				
+			}
+		})
 		//함수 : 앞 인덱스 맞춰 주기
 		function giveOrder(){
 			$('#confirmers tr').each(function(index){
@@ -230,6 +272,16 @@
 				$(this).prepend("<td>"+(index+1)+"</td>");
 				$(this).attr('class','t'+(index+1));
 			});
+		}
+		
+		//함수 : 결재자들 모아 hidden에 처리
+		function getConfirmers(){
+			$('#allConfirmers').val('');
+			var empNos = "";
+			$('#confirmer1 input[name=allConfirmer]').each(function(idx, item){
+				empNos += ($(this).val()+",");
+			});
+			$('#allConfirmers').val(empNos);
 		}
 	});
 </script>

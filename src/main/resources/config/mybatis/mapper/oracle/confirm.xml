@@ -73,6 +73,26 @@
 		where emp_no = #{empNo}
 	</select>
 	
+	<insert id="insertConfirmDoc" parameterType="DocumentVO">
+		insert into confirm(cf_no, form_no, emp_no, link_cf_no, cf_title, cf_content, cf_isfile, cf_Status)
+		values(#{cfNo}, #{formNo}, #{empNo}, #{linkCfNo}, #{cfTitle}, #{cfContent}, #{cfIsfile}, #{cfStatus})
+	</insert>
+	
+	<insert id="insertConfirmFile" parameterType="ConfirmFileVO">
+		<selectKey keyProperty="fileNo" resultType="int" order="BEFORE">
+			select confirm_file_seq.nextval from dual
+		</selectKey>
+		insert into confirm_file(file_no, file_name, file_ori_name, file_size, cf_no)
+		values(#{fileNo}, #{fileName}, #{fileOriName}, #{fileSize}, #{cfNo})
+	</insert>
+	
+	<insert id="insertConfirmLine" parameterType="ConfirmLineVO">
+		<selectKey keyProperty="lineNo" resultType="int" order="BEFORE">
+			select confirm_line_seq.nextval from dual
+		</selectKey>
+		insert into confirm_line(line_no, emp_no, line_stat, cf_no)
+		values(#{lineNo}, #{empNo}, #{lineStat}, #{cfNo})
+	</insert>
 </mapper>
 
 

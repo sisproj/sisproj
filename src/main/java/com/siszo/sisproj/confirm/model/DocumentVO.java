@@ -15,6 +15,7 @@ public class DocumentVO extends DocumentFormVO{
 	private String cfContent; //기안내용
 	private String cfIsfile; //파일여부
 	private String cfStatus; //현재상태
+	private String allConfirmers;
 	
 	public String getCfNo() {
 		return cfNo;
@@ -76,16 +77,21 @@ public class DocumentVO extends DocumentFormVO{
 	public void setCfStatus(String cfStatus) {
 		this.cfStatus = cfStatus;
 	}
-	
+	public String getAllConfirmers() {
+		return allConfirmers;
+	}
+	public void setAllConfirmers(String allConfirmers) {
+		this.allConfirmers = allConfirmers;
+	}
 	@Override
 	public String toString() {
 		return "DocumentVO [cfNo=" + cfNo + ", formNo=" + formNo + ", empNo=" + empNo + ", empName=" + empName
 				+ ", cfRegdate=" + cfRegdate + ", linkCfNo=" + linkCfNo + ", cfTitle=" + cfTitle + ", cfContent="
-				+ cfContent + ", cfIsfile=" + cfIsfile + ", cfStatus=" + cfStatus + ", getTypeNo()=" + getTypeNo()
-				+ ", getTypeType()=" + getTypeType() + ", getFormName()=" + getFormName() + ", getFormSecu()="
-				+ getFormSecu() + ", getFormLife()=" + getFormLife() + ", getFormEx()=" + getFormEx() + ", toString()="
-				+ super.toString() + "]";
+				+ cfContent + ", cfIsfile=" + cfIsfile + ", cfStatus=" + cfStatus + ", allConfirmers=" + allConfirmers
+				+ ", toString()=" + super.toString() + "]";
 	}
+	
+	
 	
 	
 }
