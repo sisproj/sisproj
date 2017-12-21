@@ -3,6 +3,7 @@ package com.siszo.sisproj.confirm.model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class DocumentServiceImpl implements DocumentService {
 	
@@ -12,5 +13,10 @@ public class DocumentServiceImpl implements DocumentService {
 	@Override
 	public int selectConfirmSEQ() {
 		return dDao.selectConfirmSEQ();
+	}
+
+	@Override
+	public int insertConfirmDoc(DocumentVO vo) {
+		return dDao.insertConfirmDoc(vo);
 	}
 }
