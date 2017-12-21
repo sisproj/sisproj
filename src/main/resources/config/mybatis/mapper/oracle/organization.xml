@@ -16,7 +16,7 @@
 		select * from EMPVIEW
 		where emp_name like '%' || #{keyword} || '%'
 		or dept_name like '%' || #{keyword} || '%'
-		or emp_position like '%' || #{keyword} || '%'
+		or pos_name like '%' || #{keyword} || '%'
 		or emp_no like '%' || #{keyword} || '%'
 		order by pos_no
 	</select>

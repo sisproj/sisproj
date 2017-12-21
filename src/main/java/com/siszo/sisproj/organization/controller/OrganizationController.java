@@ -1,5 +1,7 @@
 package com.siszo.sisproj.organization.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -53,5 +55,16 @@ public class OrganizationController {
 		logger.info("사원번호로 사원 조회 결과 vo={}",vo);
 		
 		return vo;
+	}
+	
+	@RequestMapping(value="/orgSearch.do",produces="application/json; charset=utf-8")
+	@ResponseBody
+	public List<EmployeeVO> selectMulti(@RequestParam String keyword){
+		logger.info("조직도에서 검색, 파라미터 keyword={}", keyword);
+		
+		List<EmployeeVO> list=orgService.selectMulti(keyword);
+		logger.info("조직도 내 검색 결과 list.size()={} ", list.size());
+		
+		return list;
 	}
 }
