@@ -161,7 +161,7 @@
 			</div>
 			<!-- 부서는 계속 추가하게 만들기 -->
 			<div id="diDe">
-				<label for="dept">부서</label>
+				<label for="deptNo">부서</label>
 				<select id="deptNo" name="deptNo">
 					<option value="101">기획</option>
 					<option value="201">인사</option>
@@ -171,21 +171,20 @@
 					<option value="601">영업</option>
 					<option value="701">법무</option>
 				</select>
-				<!-- <input type="text" id="dept" name="dept"> -->
 			</div>
 			<!--직급은 계속 추가하게 만들기 -->
 			<div id="diPos">
-				<label for="position">직급</label>
-				<select id="empPosition" name="empPosition">
-					<option value="사원">사원<option>
-					<option value="대리">대리</option>
-					<option value="차장">차장</option>
-					<option value="과장">과장</option>
-					<option value="부장">부장</option>
-					<option value="부사장">부사장</option>
-					<option value="사장">사장</option>
+				<label for="posNo">직급</label>
+				<select id="posNo" name="posNo">					
+					<option value="8">인턴</option>
+					<option value="7">사원</option>
+					<option value="6">대리</option>
+					<option value="5">과장</option>
+					<option value="4">부장</option>
+					<option value="3">이사</option>
+					<option value="2">전무</option>
+					<option value="1">사장</option>
 				</select>  
-				<!-- <input type="text" id="position" name="positiion"> -->
 			</div>
 			<div id="diHobby">
 				<label for="hobby">취미</label>   	

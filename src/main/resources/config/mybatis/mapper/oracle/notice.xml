@@ -17,6 +17,7 @@
 		values(#{notiNo}, #{notiTitle}, #{empNo}, #{notiContent})
 	</insert>
 	
+<<<<<<< HEAD
 	<!-- private int notiNo;
 	private String notiTitle;
 	private int empNo;
@@ -71,6 +72,8 @@
 	
 	
 	
+=======
+>>>>>>> branch 'master' of https://github.com/sisproj/sisproj.git
 </mapper>
 
 

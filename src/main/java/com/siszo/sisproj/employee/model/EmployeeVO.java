@@ -21,26 +21,11 @@ public class EmployeeVO {
 	private int empSal;
 	private String empBookMark;
 	private int deptNo;
-	private String empPosition;
+	private String deptName;
+	private String posName;
+	private int posNo;
 	private Timestamp empHiredate;
 	private Timestamp empOutdate;
-	
-/*	private String tel1;
-	private String tel2;
-	private String tel3;
-	private String email1;
-	private String email2;
-	private String email3;
-	private String jumin1;
-	private String jumin2;*/
-	
-	
-	public String getEmpPosition() {
-		return empPosition;
-	}
-	public void setEmpPosition(String empPosition) {
-		this.empPosition = empPosition;
-	}
 	public int getEmpNo() {
 		return empNo;
 	}
@@ -101,12 +86,6 @@ public class EmployeeVO {
 	public void setEmpAddr2(String empAddr2) {
 		this.empAddr2 = empAddr2;
 	}
-	public Timestamp getEmpHiredate() {
-		return empHiredate;
-	}
-	public void setEmpHiredate(Timestamp empHiredate) {
-		this.empHiredate = empHiredate;
-	}
 	public String getEmpHobby() {
 		return empHobby;
 	}
@@ -124,12 +103,6 @@ public class EmployeeVO {
 	}
 	public void setEmpMajor(String empMajor) {
 		this.empMajor = empMajor;
-	}
-	public Timestamp getEmpOutdate() {
-		return empOutdate;
-	}
-	public void setEmpOutdate(Timestamp empOutdate) {
-		this.empOutdate = empOutdate;
 	}
 	public String getEmpImg() {
 		return empImg;
@@ -161,63 +134,47 @@ public class EmployeeVO {
 	public void setDeptNo(int deptNo) {
 		this.deptNo = deptNo;
 	}
-
+	public String getDeptName() {
+		return deptName;
+	}
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+	public String getPosName() {
+		return posName;
+	}
+	public void setPosName(String posName) {
+		this.posName = posName;
+	}
+	public int getPosNo() {
+		return posNo;
+	}
+	public void setPosNo(int posNo) {
+		this.posNo = posNo;
+	}
+	public Timestamp getEmpHiredate() {
+		return empHiredate;
+	}
+	public void setEmpHiredate(Timestamp empHiredate) {
+		this.empHiredate = empHiredate;
+	}
+	public Timestamp getEmpOutdate() {
+		return empOutdate;
+	}
+	public void setEmpOutdate(Timestamp empOutdate) {
+		this.empOutdate = empOutdate;
+	}
 	@Override
 	public String toString() {
 		return "EmployeeVO [empNo=" + empNo + ", empName=" + empName + ", empEName=" + empEName + ", empPwd=" + empPwd
 				+ ", empTel=" + empTel + ", empSsn=" + empSsn + ", empEmail=" + empEmail + ", empZipcode=" + empZipcode
 				+ ", empAddr=" + empAddr + ", empAddr2=" + empAddr2 + ", empHobby=" + empHobby + ", empSchool="
 				+ empSchool + ", empMajor=" + empMajor + ", empImg=" + empImg + ", empLev=" + empLev + ", empSal="
-				+ empSal + ", empBookMark=" + empBookMark + ", deptNo=" + deptNo + ", empPosition=" + empPosition
-				+ ", empHiredate=" + empHiredate + ", empOutdate=" + empOutdate + "]";
+				+ empSal + ", empBookMark=" + empBookMark + ", deptNo=" + deptNo + ", deptName=" + deptName
+				+ ", posName=" + posName + ", posNo=" + posNo + ", empHiredate=" + empHiredate + ", empOutdate="
+				+ empOutdate + "]";
 	}
-	/*public String getTel1() {
-		return tel1;
-	}
-	public void setTel1(String tel1) {
-		this.tel1 = tel1;
-	}
-	public String getTel2() {
-		return tel2;
-	}
-	public void setTel2(String tel2) {
-		this.tel2 = tel2;
-	}
-	public String getTel3() {
-		return tel3;
-	}
-	public void setTel3(String tel3) {
-		this.tel3 = tel3;
-	}
-	public String getEmail1() {
-		return email1;
-	}
-	public void setEmail1(String email1) {
-		this.email1 = email1;
-	}
-	public String getEmail2() {
-		return email2;
-	}
-	public void setEmail2(String email2) {
-		this.email2 = email2;
-	}
-	public String getEmail3() {
-		return email3;
-	}
-	public void setEmail3(String email3) {
-		this.email3 = email3;
-	}
-	public String getJumin1() {
-		return jumin1;
-	}
-	public void setJumin1(String jumin1) {
-		this.jumin1 = jumin1;
-	}
-	public String getJumin2() {
-		return jumin2;
-	}
-	public void setJumin2(String jumin2) {
-		this.jumin2 = jumin2;
-	}*/
+	
+
 	
 }
