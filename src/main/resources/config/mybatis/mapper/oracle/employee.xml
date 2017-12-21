@@ -29,6 +29,17 @@
 		dept_no=#{deptNo},pos_no=#{posNo}
 		where emp_no = #{empNo}
 	</update>
+	
+	<update id="employeeOut" parameterType="EmployeeVO">
+		update empView set emp_name=#{empName},
+		emp_eName=#{empEName},emp_tel=#{empTel},emp_ssn=#{empSsn},
+		emp_email=#{empEmail},emp_zipcode=#{empZipcode},emp_addr=#{empAddr},
+		emp_addr2=#{empAddr2},emp_hiredate=#{empHiredate},emp_school=#{empSchool},
+		emp_major=#{empMajor},emp_outdate=systimestamp,emp_img=#{empImg},emp_sal=#{empSal},
+		dept_no=#{deptNo},pos_no=#{posNo}
+		where emp_no = #{empNo}
+	</update>
+	
 </mapper>
 
 

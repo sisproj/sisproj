@@ -115,8 +115,6 @@
 				alert('이미지를 등록하세요.');
 				$("#empImg").focus();
 				return false;
-			}else{
-				alert('등록 실패!');
 			}
 			 
 			 /*else if($('#deptNo').val()==""){
@@ -190,12 +188,16 @@
 				<label for="hobby">취미</label>   	
 				<input type="text" name="empHobby" id="empHobby">
 			</div>
-	        <div id="diZipcode">
+	        <div>
 		        <label for="zipcode" id="zipcodel">우편번호</label>
-		        <input type="text" name="empZipcode" id="empZipcode" title="우편번호">
+		        <input type="text" name="empZipcode" id="empZipcode" title="우편번호" style="width:130px;">
 		        <input type="button" value="우편번호 찾기" id="btnZipcode" title="새창열림" onclick="daumPostcode()">
+		    </div>
+		    <div>
 				<label for="address" id="address">주소</label>
-				<input type="text" name="empAddr" id="empAddr">	
+				<input type="text" name="empAddr" id="empAddr">
+			</div>
+			<div>	
 				<label for="addressDetail" id="addressDetail">상세주소</label>
 				<input type="text" name="empAddr2" id="empAddr2">
 			</div>
@@ -244,7 +246,7 @@
 			</div>
        		<div id="diFImg">
        		   <label for="upfile" style="margin-top: 5px;">사원사진 업로드</label>
-           	   <input type="file" id="empImg" name="fileupload" style="margin-top: 5px;"/>	 
+           	   <input type="file" id="fileupload" name="fileupload" style="margin-top: 5px;"/>	 
            	</div>
        		<div id="diReg">
 				<input type="submit" id="btWrite" value="등록">

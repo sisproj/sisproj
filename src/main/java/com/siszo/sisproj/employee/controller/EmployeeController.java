@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.siszo.sisproj.common.FileUploadUtil;
 import com.siszo.sisproj.dept.model.DeptService;
 import com.siszo.sisproj.dept.model.DeptVO;
+import com.siszo.sisproj.employee.model.EmployeeListVO;
 import com.siszo.sisproj.employee.model.EmployeeService;
 import com.siszo.sisproj.employee.model.EmployeeVO;
 
@@ -135,8 +136,11 @@ public class EmployeeController {
 		logger.info("사원수정 화면 보여주기, 파라미터 값 empNo={}",empNo);			
 		EmployeeVO vo =  employeeService.selectEmployeeByNo(empNo);
 		
+		List<DeptVO> list= deptService.selectDeptName();
 		model.addAttribute("vo",vo);
-		logger.info("회원 수정 화면 결과값  vo={}",vo);
+		model.addAttribute("list",list);
+		
+		logger.info("회원 수정 화면 결과값  vo={}",vo);	
 		
 		return "employee/employeeEdit";
 	}
@@ -165,8 +169,6 @@ public class EmployeeController {
 		return "employee/employeeDetailSearch";
 	}
 	
-	//완료
-	
 	@RequestMapping(value="/employeeEdit.do",method=RequestMethod.POST)
 	public String employeeEdit_post(@ModelAttribute EmployeeVO vo,@RequestParam String empHiredate1 
 			,HttpServletRequest request,Model model) {
@@ -178,22 +180,25 @@ public class EmployeeController {
 		
 		List<Map<String, Object>> list=null;
 		String empImg="";
-		try {
-			list=fileUtil.fileupload(request,FileUploadUtil.EMP_IMAGE_UPLOAD);			
-			//파일 업로드 한 경우
-			if(list!=null && !list.isEmpty()){
-				for(Map<String, Object> map : list){
-					empImg=(String)map.get("fileName");		
-				}//for
-			}
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}		
-		logger.info("vo.getEmpImg={}",vo.getEmpImg());
+		if(vo.getEmpImg()!=null && !vo.getEmpImg().isEmpty()) {
+			try {
+				list=fileUtil.fileupload(request,FileUploadUtil.EMP_IMAGE_UPLOAD);			
+				//파일 업로드 한 경우
+				if(list!=null && !list.isEmpty()){
+					for(Map<String, Object> map : list){
+						empImg=(String)map.get("fileName");		
+					}//for
+				}
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}		
+			vo.setEmpImg(empImg);
+			logger.info("vo.getEmpImg={}",vo.getEmpImg());
+		}	
 		//db작업
-		vo.setEmpImg(empImg);
+		
 		int cnt= employeeService.editEmployee(vo);
 		String msg="",url="";
 		if(cnt>0) {
@@ -209,6 +214,29 @@ public class EmployeeController {
 		
 		return "common/message";
 	}
+	//완료
+	@RequestMapping("/employeeOut.do")
+	public String employeeOut(@ModelAttribute EmployeeListVO vo,Model model) {
+		logger.info("사원 퇴사시킬 사원 번호 ,파라미터 vo={}",vo);
+		
+		List<EmployeeVO> list = vo.getEmpItems();
+		int cnt=employeeService.employeeOut(list);
+		logger.info("선택한 사원 퇴사 결과, cnt={}",cnt);		
+		
+		String msg="",url="/employee/employeeList.do";
+		
+		if(cnt>0) {
+			msg="사원 퇴사 완료";
+		}else {
+			msg="사원 퇴사 실패";
+		}
+		
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+		return "common/message";
+	}
+	
 	@RequestMapping(value="/employeeDetailSearch.do",method=RequestMethod.POST)
 	public void employeeDetailSerach_post(@RequestParam String empName,
 			@RequestParam String posName,Model model) {

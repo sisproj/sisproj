@@ -8,4 +8,5 @@ public interface EmployeeService {
 	public List<EmployeeVO> selectAllEmployee();
 	public int editEmployee(EmployeeVO vo);
 	public List<EmployeeVO> selectEmployeeByEmpPosition(String empName);
+	public int employeeOut(List<EmployeeVO> list);
 }

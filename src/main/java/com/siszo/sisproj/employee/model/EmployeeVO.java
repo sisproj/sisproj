@@ -26,6 +26,7 @@ public class EmployeeVO {
 	private int posNo;
 	private Timestamp empHiredate;
 	private Timestamp empOutdate;
+	
 	public int getEmpNo() {
 		return empNo;
 	}
