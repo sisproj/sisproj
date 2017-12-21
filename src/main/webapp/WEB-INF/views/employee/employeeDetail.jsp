@@ -42,22 +42,17 @@
 	       		<div id="diEnName">
 	       			<label for="enName">영어이름</label> <input type="text" id="empEName" name="empEName" value="${vo.empEName }">
 	       		</div>
-	       		<!-- <div id="diJumin">
-			        <label for="jumin">주민번호</label>	
-					<input type="text" name="jumin1" id="jumin1" maxlength="6"> -
-					<input type="text" name="jumin2" id="jumin2" maxlength="7">
-				</div> -->
-				<c:forEach var="deVo" items="${list }">
+				<c:forEach var="vo" items="${list }">
 					<c:if test="${deVo.deptNo==vo.deptNo }">
 					 <div id="diDe">
 						<label for="dept">부서</label>
-						<input type="text" id="deptName" name="deptName" value="${deVo.deptName }">
+						<input type="text" id="deptName" name="deptName" value="${vo.deptName }">
 					</div> 
 					</c:if>
 				</c:forEach>
 				<div id="diPos">
 					<label for="position">직급</label>  
-					<input type="text" id="empPosition" name="empPosition" value="${vo.empPosition }">
+					<input type="text" id="posName" name="posName" value="${vo.posName }">
 				</div>
 				<div id="diHobby">
 					<label for="hobby">취미</label>   	
