@@ -89,6 +89,40 @@
 					});
 					event.preventDefault();
 				});	
+				$('#searchResult ul li ul li').click(function(){
+					if($('#choice_cfer').length){
+		                  if($('#choice_cfer').attr('class')=='on'){
+		                     return false;
+		                  }
+		               }
+					var searchEmpNo="searchEmpNo="+$(this).attr('id');
+					$.ajax({
+						url:"<c:url value='/organization/empInfo.do'/>",
+						data: searchEmpNo,
+						dataType:"json",
+						type:"get",
+						success:function(res){
+							alert(searchEmpNo);
+							$('#divEmpInfo').show();
+							var dept=res.deptName+"팀 "+res.posName;
+							var info=res.empName+" ("+res.empNo+")";
+							$('#divEmpImg img').prop('alt', res.empName);
+							$('#divEmpImg img').prop('src', "<c:url value='/emp_images/"+res.empImg+"'/>");
+							if(res.empImg==null){
+								$('#divEmpImg img').hide();
+								$('#noneImg').show();
+							}
+							$('#div0').html(dept);
+							$('#div1').html(info);
+							$('#div2 i').html(" "+res.empTel);
+							$('#div3 i').html(" "+res.empEmail);
+						},
+						error:function(xhr, status, error){
+							alert("에러 : "+status+"=>"+error);
+						}
+					});
+					event.preventDefault();
+				});	
 			
 			$('#orgSearchIcon').click(function(){
 				var keyword="keyword="+$('#orgSearch').val();
@@ -114,8 +148,9 @@
 						},
 						error:function(xhr, status, error){
 							alert("에러 : "+status+"=>"+error);
-						}						
-					});					
+						}							
+					});
+					event.preventDefault();
 				}
 				
 			});
@@ -247,7 +282,7 @@
 	<div id="organtitle">
          <i class="fa fa-sitemap"></i>
          <div class="orgSearch">
-          <input type="text" id="orgSearch" name="orgSearch" placeholder="부서/이름/직급">
+          <input type="text" id="orgSearch" name="orgSearch" placeholder="부서/이름/사원번호/직급/직책">
           <a href="#" id="orgSearchIcon"><i class="fa fa-search"></i></a>
          </div>
          <i id="orgUp" class="fa fa-chevron-up"></i>
