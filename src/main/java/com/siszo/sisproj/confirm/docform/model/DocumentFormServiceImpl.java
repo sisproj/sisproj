@@ -6,8 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.siszo.sisproj.common.Utility;
-import com.siszo.sisproj.confirm.model.DocumentVO;
+import com.siszo.sisproj.confirm.common.ConfirmUtility;
 
 @Service
 public class DocumentFormServiceImpl implements DocumentFormService {
@@ -23,9 +22,9 @@ public class DocumentFormServiceImpl implements DocumentFormService {
 	@Override
 	public DocumentFormVO selectDocFormByFormNo(int formNo) {
 		DocumentFormVO vo = dfDao.selectDocFormByFormNo(formNo);
-		vo.setTypeType(Utility.changeTag(vo.getTypeType()));
-		vo.setFormName(Utility.changeTag(vo.getFormName()));
-		vo.setFormEx(Utility.changeTag(vo.getFormEx()));
+		vo.setTypeType(ConfirmUtility.changeTag(vo.getTypeType()));
+		vo.setFormName(ConfirmUtility.changeTag(vo.getFormName()));
+		vo.setFormEx(ConfirmUtility.changeTag(vo.getFormEx()));
 		return vo;
 	}
 
@@ -45,9 +44,9 @@ public class DocumentFormServiceImpl implements DocumentFormService {
 		for(int i=0; i<list.size(); i++) {
 			DocumentFormVO vo = list.get(i);
 			
-			vo.setTypeType(Utility.changeTag(vo.getTypeType()));
-			vo.setFormName(Utility.changeTag(vo.getFormName()));
-			vo.setFormEx(Utility.changeTag(vo.getFormEx()));
+			vo.setTypeType(ConfirmUtility.changeTag(vo.getTypeType()));
+			vo.setFormName(ConfirmUtility.changeTag(vo.getFormName()));
+			vo.setFormEx(ConfirmUtility.changeTag(vo.getFormEx()));
 		}
 		return list;
 	}
@@ -58,7 +57,7 @@ public class DocumentFormServiceImpl implements DocumentFormService {
 		for(int i=0; i<list.size(); i++) {
 			DocumentFormVO vo = list.get(i);
 			
-			vo.setTypeType(Utility.changeTag(vo.getTypeType()));
+			vo.setTypeType(ConfirmUtility.changeTag(vo.getTypeType()));
 		}
 		return list;
 	}

@@ -8,24 +8,24 @@
     </article>
 <article id="bodysection">
 <div id="dimyPage">
-	<form id="searchEmp" name="searchEmp" method="get" action="employee/employeeList.do">
+	<form id="searchEmp" name="searchEmp" method="post" action="employee/employeeList.do">
 	        <div id="dimyP">
 		        <select name="searchCondition">
 		            <option value="empname"
 		            	<c:if test="${param.searchCondition=='empName' }"> 
 		            		selected
 		            	</c:if>
-		            	>제목</option>
+		            	>사원이름</option>
 		            <option value="deptName"
 		            	<c:if test="${param.searchCondition=='deptName' }"> 
 		            		selected
 		            	</c:if>    
-		            >내용</option>
+		            >사원부서</option>
 		            <option value="posName" 
 		            	<c:if test="${param.searchCondition=='posName' }"> 
 		            		selected
 		            	</c:if>
-		            >작성자</option>
+		            >사원직급</option>
 		        </select>   
 		        <input type="text" name="searchKeyword" title="검색어 입력" value="${param.searchKeyword }">   
 				<input type="submit" value="검색">
@@ -34,69 +34,91 @@
 					<option value="20">20명</option>
 				</select>
 			</div>
-	</form>
+
 	<div id="diempList">
 		<div id="coLi">
 		<table id="allList" border="1">
 			<colgroup>
+				<col width="5%">
 				<col width="15%">
 				<col width="15%">
 				<col width="15%">
 				<col width="15%">
 				<col width="15%">
 				<col width="15%">
-				<col width="10%">
+				<col width="5%">
 			</colgroup>
 			<tr>
+				<th><input type="checkbox" id="chkAll" name="chkAll"></th>
 				<th style="width: 10%">사원번호</th>
 				<th>사원이름</th>
 				<th>사원부서</th>
 				<th>사원직급</th>
+				<th>전화번호</th>
 				<th>재직여부</th>
-				<th>권한부여</th>
-				<th></th>			
+				<th></th>				
 			</tr>
 			<!-- for문 사원 리스트 시작 -->
-			<c:forEach var="vo" items="${list}">	
+			<c:forEach var="vo" items="${list}" varStatus="status">	
 				<c:if test="${empty list}">
-					<td colspan="5">사원 데이터가 없습니다</td>
+					<td colspan="7">사원 데이터가 없습니다</td>
 				</c:if>
-				<c:if test="${empty vo.empOutdate }">
-					<tr>				
+				<%-- <c:if test="${empty vo.empOutdate }"> --%>
+					<tr>	
+						<td><input type="checkbox" name="empItems[${status.index}].empNo" value="${vo.empNo }"></td>			
 						<td>${vo.empNo }</td>
 						<!-- 사원번호로 사원 디테일 이동 -->
 						<td><a href="<c:url value='/employee/employeeDetail.do?empNo=${vo.empNo }'/>">${vo.empName }</a></td>
-						<td>인사팀</td>
+						<td>${vo.deptName }</td>
 						<td>${vo.posName }</td>
+						<td>${vo.empTel }</td>
+					<c:if test="${empty vo.empOutdate }" >
 						<td>재직</td>
-				</c:if>
-					<!-- if걸어서 관리자 일때만 나오게 함 관리자권한으로 되면 버튼 사라지고 그자리에 관리자로 바꿈 -->
-						<td id="PoCh"><a href="#"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></td>
-					<!-- 	<td>관리자</td> -->
-						<td></td>
+					</c:if>
+					<c:if test="${!empty vo.empOutdate }">
+						<td>퇴직</td>
+					</c:if>
+					<td></td>
 					</tr>
 			</c:forEach>	
 			<!-- for문 끝 -->
 			<!-- 페이징 처리 해야하는 곳 10명,25명 단위로 계산 부트스트랩 사용 페이징 스타일-->
 		</table>
-		
+	</div>
+	<div style="float: right;"> 
+		<input type="button" id="btCh" name="btCh" value="퇴사" style="width: 90%;">
 	</div>
 		<div style="text-align: center;width: 90%;">
 			<%@include file="../addrBook/paging.jsp" %>
+			<input type="button" id="btCh" name="btCh" value="퇴사">
 		</div>
+  </form> 	
 </div> 
-   	
     </article>
         <!-- 3. 내용 끝 -->
 <script type="text/javascript">
 	$(function () {
-		$('#PoCh').click(function(){
-			confirm("관리자로 올리시겠습니까?");
-		});
 		$('#btDeSe').click(function(){
 			window.open('<c:url value='/employee/employeeDetailSearch.do'/>','chk',
 					'left=0,top=0,width=500,height=250,locations=yes,resizable=yes');
 		});
+			$('input[name=chkAll]').click(function(){
+
+				$('input[type=checkbox]').prop('checked', this.checked);
+				
+			});
+			
+			$('#btCh').click(function(){
+				//선택한 사원 퇴사
+				var len =$('td input[type=checkbox]:checked').length;
+				if(len==0){
+					alert('퇴사시킬 사원을 먼저 체크하세요');
+					return;
+				}
+				
+				$('#searchEmp').prop('action','<c:url value="/employee/employeeOut.do"/>');
+				$('#searchEmp').submit();			
+			});
 	});
 </script>
 

@@ -38,6 +38,24 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public EmployeeVO selectEmployeeByNo(int empNo) {
 		return employeeDao.selectEmployeeByNo(empNo);	
 	}
+
+	@Override
+	public int employeeOut(List<EmployeeVO> list) {
+		int cnt=0;
+		try {
+			for(EmployeeVO vo :list) {
+				int empNo=vo.getEmpNo();
+				//체크한 사원만 퇴사
+				if(empNo!=0) {
+					cnt = employeeDao.employeeSelect(empNo);
+				}
+			}//for			
+		}catch(RuntimeException e) {
+			cnt=0;
+			e.printStackTrace();
+		}
+		return cnt;
+	}
 	
 		
 }

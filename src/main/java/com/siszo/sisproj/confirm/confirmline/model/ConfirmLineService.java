@@ -9,4 +9,5 @@ public interface ConfirmLineService {
 
 	public ConfirmLineVO selectConfirmerByEmpNo(int empNo);
 	public int insertConfirmers(List<ConfirmLineVO> list);
+	public int myConfirmOk(ConfirmLineVO vo);
 }

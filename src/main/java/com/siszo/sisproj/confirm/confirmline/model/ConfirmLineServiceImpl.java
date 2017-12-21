@@ -31,4 +31,9 @@ public class ConfirmLineServiceImpl implements ConfirmLineService {
 		}
 		return cnt;
 	}
+	
+	@Override
+	public int myConfirmOk(ConfirmLineVO vo) {
+		return clDao.myConfirmOk(vo);
+	}
 }
