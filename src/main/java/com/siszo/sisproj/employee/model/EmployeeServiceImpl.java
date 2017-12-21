@@ -29,7 +29,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public List<EmployeeVO> selectEmployeeByEmpPosition(String empName) {
 		 List<EmployeeVO> list=employeeDao.selectEmployeeByEmpName(empName);		 
-		 
+	 
 		 return list;
 		 
 	}

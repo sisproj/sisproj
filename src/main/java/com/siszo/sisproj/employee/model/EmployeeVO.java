@@ -24,16 +24,15 @@ public class EmployeeVO {
 	private String empPosition;
 	private Timestamp empHiredate;
 	private Timestamp empOutdate;
-	private long empImgSize;
 	
-	private String tel1;
+/*	private String tel1;
 	private String tel2;
 	private String tel3;
 	private String email1;
 	private String email2;
 	private String email3;
 	private String jumin1;
-	private String jumin2;
+	private String jumin2;*/
 	
 	
 	public String getEmpPosition() {
@@ -162,13 +161,7 @@ public class EmployeeVO {
 	public void setDeptNo(int deptNo) {
 		this.deptNo = deptNo;
 	}
-	
-	public long getEmpImgSize() {
-		return empImgSize;
-	}
-	public void setEmpImgSize(long empImgSize) {
-		this.empImgSize = empImgSize;
-	}
+
 	@Override
 	public String toString() {
 		return "EmployeeVO [empNo=" + empNo + ", empName=" + empName + ", empEName=" + empEName + ", empPwd=" + empPwd
@@ -176,11 +169,9 @@ public class EmployeeVO {
 				+ ", empAddr=" + empAddr + ", empAddr2=" + empAddr2 + ", empHobby=" + empHobby + ", empSchool="
 				+ empSchool + ", empMajor=" + empMajor + ", empImg=" + empImg + ", empLev=" + empLev + ", empSal="
 				+ empSal + ", empBookMark=" + empBookMark + ", deptNo=" + deptNo + ", empPosition=" + empPosition
-				+ ", empHiredate=" + empHiredate + ", empOutdate=" + empOutdate + ", empImgSize=" + empImgSize
-				+ ", tel1=" + tel1 + ", tel2=" + tel2 + ", tel3=" + tel3 + ", email1=" + email1 + ", email2=" + email2
-				+ ", email3=" + email3 + ", jumin1=" + jumin1 + ", jumin2=" + jumin2 + "]";
+				+ ", empHiredate=" + empHiredate + ", empOutdate=" + empOutdate + "]";
 	}
-	public String getTel1() {
+	/*public String getTel1() {
 		return tel1;
 	}
 	public void setTel1(String tel1) {
@@ -227,6 +218,6 @@ public class EmployeeVO {
 	}
 	public void setJumin2(String jumin2) {
 		this.jumin2 = jumin2;
-	}
+	}*/
 	
 }

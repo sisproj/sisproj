@@ -41,13 +41,6 @@
 				});
 			});
 			
-			$('#divEmpInfo').hide();
-			$('#organBody ul li ul li').each(function(){
-				$(this).click(function(){
-					$('#divEmpInfo').show();
-				});
-			});
-			
 			$('#orgSearchIcon').click(function(){
 				var searchKey = $('#orgSearch').val();
 				$('#organbody li').each(function(index, item){
@@ -58,6 +51,36 @@
 						$(this).show();
 					}
 				})
+			});
+			$('#organbody ul ul li').each(function(){
+				$(this).click(function(){
+					var empNo="empNo="+$(this).attr('id');
+					$.ajax({
+						url:"<c:url value='/organization/empInfo.do'/>",
+						data:empNo,
+						dataType:"json",
+						type:"get",
+						success:function(res){
+							$('#divEmpInfo').show();
+							var info=res.empName+" "+res.empPosition+"("+res.empNo+")";
+							$('#divEmpImg img').prop('alt', res.empName);
+							$('#divEmpImg img').prop('src', "<c:url value='/emp_images/"+res.empImg+"'/>");
+							if(res.empImg==null){
+								$('#divEmpImg img').hide();
+							}
+							$('#div1').html(info);
+							$('#div2 i').html(" "+res.empTel);
+							$('#div3 i').html(" "+res.empEmail);
+						},
+						error:function(xhr, status, error){
+							alert("에러 : "+status+"=>"+error);
+						}
+					});
+				});				
+			});
+			
+			$('#divClose').click(function(){
+				$('#divEmpInfo').hide();
 			});
 		}); 
 	</script>
@@ -116,20 +139,77 @@
 			display: inline-block;
 			line-height: 25px;
 		}
+		/* 조직도에서 개인정보 띄우는 창 */
 		#divEmpInfo{
+			width: 280px;
+			height: 440px;
+			border: 1px solid #333;
+			background: rgb(255,253,230);
+			position: absolute;
+			left: 298px;
 			display: none;
+		}
+		#divEmpImg{
+			width: 200px;
+			height: 200px;
+			padding: 0;
+			border-radius: 100px;
+			overflow: hidden;
+			margin: 40px;
+			background: #fff;
+			text-align: center;
+		}
+		#divEmpImg img{
+			width: 100%;
+		}
+		#divEmpImg i{
+			font-size: 13em;
+			margin-top: 25px;
+			color: rgb(221,221,221);
+		}
+		#divEmp{
+			margin: 0;
+			height: 118px;
+		}
+		#divEmp div{
+			text-align: center;
+			padding: 5px;
+		}
+		#divclose{
+			overflow: hidden;
+			margin: 10px;
+		}
+		#divClose i{
+			float: right;
 		}
 	</style>
 </head>
 <body>
+     
+    <!--  조직도에서 사원클릭시 개인정보 보여줌  -->    
+     <div id="divEmpInfo">
+     	<div id="divClose"><a href="#"><i class="fa fa-times"></i></a></div>
+     	<div id="divEmpImg">
+     		<img alt="" src="">     		
+     		<i class="fa fa-user"></i>
+     	</div>
+     	<div id="divEmp">
+	     	<div id="div1"></div>
+	     	<div id="div2"><i class="fa fa-phone"></i></div>
+	     	<div id="div3"><a href="#" title="이메일 보내기"><i class="fa fa-envelope-o"></i></a></div>
+	     	<div><a href="#" title="쪽지보내기"><i class="fa fa-paper-plane"></i>  쪽지 보내기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <a href="#" title="대화하기"><i class="fa fa-comments-o"></i>  대화하기</a></div>
+     	</div>
+     </div>
+     <!-- 조직도 : 사원정보 끝 -->
+     
 	<div id="organtitle">
          <i class="fa fa-sitemap"></i>
          <div class="orgSearch">
-          <input type="text" id="orgSearch" name="orgSearch" placeholder="부서/이름/아이디/직급/직책">
+          <input type="text" id="orgSearch" name="orgSearch" placeholder="부서/이름/직급">
           <a href="#" id="orgSearchIcon"><i class="fa fa-search"></i></a>
          </div>
-         <i id="orgUp" class="fa fa-chevron-up" aria-hidden="true"></i>
-         <i id="orgDown" class="fa fa-chevron-down" aria-hidden="true"></i>
+         <i id="orgUp" class="fa fa-chevron-up"></i>
+         <i id="orgDown" class="fa fa-chevron-down"></i>
 	</div>
      <div id="organbody">
      	<c:forEach var="deptVo" items="${deptList}">
@@ -148,24 +228,7 @@
 	     	</ul>
      	</c:forEach>     	
      </div>
-     
-    <!--  조직도에서 사원클릭시 개인정보 보여줌  -->
-    <!-- 
-     <div id="divEmpInfo">
-     	<div id="divClose"><i class="fa fa-times"></i></div>
-     	<div id="divEmpImg">
-     		<img alt="사원이름" src="사원이미지">
-     	</div>
-     	<div id="divEmp">
-	     	<div>사원이름(사원번호) 사원직급</div>
-	     	<div>사원 전화번호</div>
-	     	<div><i class="fa fa-envelope-o"></i>사원 이메일</div>
-	     	<div><i class="fa fa-paper-plane"></i>쪽지 아이콘, <i class="fa fa-comments-o"></i>메신저 아이콘</div>
-     	</div>
-     </div>
-      -->
-     <!-- 조직도 : 사원정보 끝 -->
-     
+   
 </body>
 </html>
      

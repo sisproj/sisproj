@@ -8,8 +8,8 @@
 		<selectKey keyProperty="empNo" resultType="int" order="BEFORE">
 			select emp_seq.nextval from dual
 		</selectKey>
-		insert into emp(emp_no,emp_name,emp_ename,emp_tel,emp_ssn,emp_email,emp_zipcode,emp_addr,emp_addr2,emp_hiredate,emp_hobby,emp_school,emp_major,emp_img,emp_sal,dept_no,emp_position,emp_lev)
-		values(#{empNo},#{empName},#{empEName},#{empTel},#{empSsn},#{empEmail},#{empZipcode},#{empAddr},#{empAddr2},#{empHiredate},#{empHobby}#{empSchool},#{empMajor},#{empImg},#{empSal},#{deptNo},#{empPosition},#{empLev})
+		insert into emp(emp_no,emp_name,emp_ename,emp_tel,emp_ssn,emp_email,emp_zipcode,emp_addr,emp_addr2,emp_hiredate,emp_hobby,emp_school,emp_major,emp_img,emp_sal,dept_no,emp_position)
+		values(#{empNo},#{empName},#{empEName},#{empTel},#{empSsn},#{empEmail},#{empZipcode},#{empAddr},#{empAddr2},#{empHiredate},#{empHobby},#{empSchool},#{empMajor},#{empImg},#{empSal},#{deptNo},#{empPosition})
 	</insert>
 	
 	<select id="selectEmployeeByNo" parameterType="int" resultType="EmployeeVO">
@@ -26,7 +26,8 @@
 		emp_email=#{empEmail},emp_zipcode=#{empZipcode},emp_addr=#{empAddr},
 		emp_addr2=#{empAddr2},emp_hiredate=#{empHiredate},emp_school=#{empSchool},
 		emp_major=#{empMajor},emp_img=#{empImg},emp_sal=#{empSal},
-		dept_no=#{deptNo},emp_position=#{empPosition},emp_lev=#{empLev}
+		dept_no=#{deptNo},emp_position=#{empPosition}
+		where emp_no = #{empNo}
 	</update>
 </mapper>
 

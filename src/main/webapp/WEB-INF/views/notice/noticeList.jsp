@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@include file="../inc/top.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/bootstrap/bootstrap.min.css'/>">
 <script type="text/javascript" src="<c:url value='/resources/js/bootstrap/bootstrap.min.js'/>"></script>
 <!-- 0. include부분 -->
@@ -26,6 +29,32 @@
 		</article>	
 		<article id="bodysection">
 			<!-- 3. 내용 -->
+<script type="text/javascript">	
+	function pageFunc(curPage){
+		document.frmPage.currentPage.value=curPage;
+		frmPage.submit();
+	}
+</script>
+
+<!-- 페이징 처리에 필요한 form 태그 -->
+<form name="frmPage" method="post" 
+action="<c:url value='/reBoard/list.do'/>">
+	<input type="hidden" name="searchCondition" 
+		value="${param.searchCondition }">
+	<input type="hidden" name="searchKeyword" 
+		value="${param.searchKeyword }">
+	<input type="hidden" name="currentPage">
+</form>
+
+<c:if test="${!empty param.searchKeyword }">
+	<!-- 검색의 경우 -->
+	<p>검색어 : ${searchVO.searchKeyword}, ${pagingInfo.totalRecord }건 검색되었습니다.</p>
+</c:if>
+<c:if test="${empty param.searchKeyword }">
+	<!-- 전체 조회의 경우 -->
+	<p>전체 조회 결과, ${pagingInfo.totalRecord }건 조회되었습니다.</p>
+</c:if>
+
 			<div class="container" style="max-width: 1045px;">
 				<div class="row">
 					<table class="table table-striped" style="text-align: center; border-collapse:collapse; border: 1px solid #c5bdbd;">
@@ -39,105 +68,88 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1</td>									
-								<td>안녕하세요.</td>									
-								<td>홍길동</td>									
-								<td>2015-05-05</td>								
-								<td>0</td>								
-							</tr>
-							<tr>
-								<td>2</td>									
-								<td>2안녕하세요.</td>									
-								<td>2홍길동</td>									
-								<td>2015-05-05</td>								
-								<td>0</td>								
-							</tr>
-							<tr>
-								<td>3</td>									
-								<td>3안녕하세요.</td>									
-								<td>3홍길동</td>									
-								<td>2015-05-05</td>								
-								<td>0</td>								
-							</tr>
-							<tr>
-								<td>4</td>									
-								<td>3안녕하세요.</td>									
-								<td>3홍길동</td>									
-								<td>2015-05-05</td>								
-								<td>0</td>								
-							</tr>
-							<tr>
-								<td>5</td>									
-								<td>3안녕하세요.</td>									
-								<td>3홍길동</td>									
-								<td>2015-05-05</td>								
-								<td>0</td>								
-							</tr>
-							<tr>
-								<td>6</td>									
-								<td>3안녕하세요.</td>									
-								<td>3홍길동</td>									
-								<td>2015-05-05</td>								
-								<td>0</td>								
-							</tr>
-							<tr>
-								<td>7</td>									
-								<td>3안녕하세요.</td>									
-								<td>3홍길동</td>									
-								<td>2015-05-05</td>								
-								<td>0</td>								
-							</tr>
-							<tr>
-								<td>8</td>									
-								<td>3안녕하세요.</td>									
-								<td>3홍길동</td>									
-								<td>2015-05-05</td>								
-								<td>0</td>								
-							</tr>
-							<tr>
-								<td>9</td>									
-								<td>3안녕하세요.</td>									
-								<td>3홍길동</td>									
-								<td>2015-05-05</td>								
-								<td>0</td>								
-							</tr>
-							<tr>
-								<td>10</td>									
-								<td>3안녕하세요.</td>									
-								<td>3홍길동</td>									
-								<td>2015-05-05</td>								
-								<td>0</td>								
-							</tr>
-							<tr>
-								<td>11</td>									
-								<td>3안녕하세요.</td>									
-								<td>3홍길동</td>									
-								<td>2015-05-05</td>								
-								<td>0</td>								
-							</tr>
-							<tr>
-								<td>12</td>									
-								<td>3안녕하세요.</td>									
-								<td>3홍길동</td>									
-								<td>2015-05-05</td>								
-								<td>0</td>								
-							</tr>
-							<tr>
-								<td>13</td>									
-								<td>3안녕하세요.</td>									
-								<td>3홍길동</td>									
-								<td>2015-05-05</td>								
-								<td>0</td>								
-							</tr>
+							<c:if test="${empty list}">
+								<tr>
+									<td colspan="5">해당하는 데이터가 없습니다.</td>
+								</tr>
+							</c:if>
+							<c:if test="${!empty list}">
+								<!-- 공지사항 내용 반복분 시작 -->
+								<c:forEach var="vo" items="${list }">
+									<tr>
+										<td>${vo.notiNo}</td>									
+										<td style="text-align:left">
+												<a href
+						="<c:url value='/notice/noticeDetail.do?no=${vo.notiNo}'/>">
+													<!-- 제목이 긴 경우 일부만 보여주기 -->
+													<c:if test="${fn:length(vo.notiTitle)>30 }">
+														${fn:substring(vo.notiTitle,0,30) }...
+													</c:if>
+													<c:if test="${fn:length(vo.notiTitle)<=30 }">						
+														${vo.notiTitle}
+													</c:if>
+												</a>
+										</td>									
+										<td>${vo.empNo }</td>									
+										<td>2015-05-05</td>								
+										<td>0</td>								
+									</tr>								
+								</c:forEach>
+							</c:if>
 						</tbody>
 					</table>
-					<a href="#" class="btn btn-success btn-arrow-left">이전</a>
-					<a href="#" class="btn btn-success btn-arrow-left">다음</a>
+				</div>
+				<div class="divPage" style="text-align: center;">
+					<c:if test="${pagingInfo.firstPage>1 }">
+						<a href="#" class="btn btn-success btn-arrow-left"
+							onclick="pageFunc(${pagingInfo.firstPage-1})">이전</a>
+					</c:if>
+					
+					<!-- [1][2][3][4][5][6][7][8][9][10] -->
+					<c:forEach var="i" begin="${pagingInfo.firstPage}" 
+						end="${pagingInfo.lastPage}">
+						<c:if test="${i==pagingInfo.currentPage}">
+							<span style="font-weight:bold;color:blue">${i }</span>
+						</c:if>
+						<c:if test="${i!=pagingInfo.currentPage}">
+							<a href="#" onclick="pageFunc(${i })">
+							[${i }]</a>
+				 		</c:if>				
+					</c:forEach>
+					
+					<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage}">
+						<a href="#" class="btn btn-success btn-arrow-left"
+							onclick="pageFunc(${pagingInfo.lastPage+1})">다음</a>
+					</c:if>
+					
 					<a href="noticeWrite.do" class="btn btn-primary pull-right">글쓰기</a>
 				</div>
-			</div>
-	
+			</div>	
+<div class="divSearch">
+   	<form name="frmSearch" method="post" 
+   	action="<c:url value='/notice/noticeList.do'/>">
+        <select name="searchCondition">
+            <option value="noticeTitle"
+            	<c:if test="${param.searchCondition=='noticeTitle' }"> 
+            		selected
+            	</c:if>
+            	>제목</option>
+            <option value="noticeContent"
+            	<c:if test="${param.searchCondition=='noticeContent' }"> 
+            		selected
+            	</c:if>    
+            >내용</option>
+            <option value="empNo" 
+            	<c:if test="${param.searchCondition=='empNo' }"> 
+            		selected
+            	</c:if>
+            >작성자</option>
+        </select>   
+        <input type="text" name="searchKeyword" title="검색어 입력"
+        	value="${param.searchKeyword }">   
+		<input type="submit" value="검색">
+    </form>
+</div>
 			<!-- 3. 내용 끝 -->
 		</article>
 		<!-- 4. 상단 네비 색먹이기 // li태그 순서(전자결재 : 6번째) 입력 -->

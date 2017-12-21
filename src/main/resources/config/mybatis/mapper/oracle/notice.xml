@@ -3,17 +3,60 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="config.mybatis.mapper.oracle.notice">
+	<sql id="searchWhere">
+		<if test="searchKeyword !=null and searchKeyword!=''">
+			where ${searchCondition} like '%' || #{searchKeyword} || '%'
+		</if>
+	</sql>
 
 	<insert id="insertNotice" parameterType="NoticeVO">
 		<selectKey resultType="int" keyProperty="notiNo" order="BEFORE">
-			select notiNo_seq.nextval from dual
+			select notino_seq.nextval from dual
 		</selectKey>
-		insert into notice(notiNo, notiTitle, empNo, notiContent, notiRegdate,
-		notiNo, notiFilename, notiFilesize, notiOfilename, notiDowncnt, notiReadcnt) 
-		values(#{notiNo}, #{notiTitle}, #{empNo}, #{notiContent}, #{notiRegdate},
-        #{notiNo}, #{notiFilename},#{notiFilesize}, #{notiOfilename}, #{notiDowncnt}, #{noti_readcnt})
+		insert into notice(noti_no, noti_title, emp_no, noti_content) 
+		values(#{notiNo}, #{notiTitle}, #{empNo}, #{notiContent})
 	</insert>
+	
+	<!-- private int notiNo;
+	private String notiTitle;
+	private int empNo;
+	private String notiContent;
+	private Timestamp notiRegdate;
+	private String notiFilename;
+	private String notiFilesize;
+	private String notiOfilename;
+	private int notiDowncnt;
+	private int notiReadcnt; -->
 
+<!-- insert into notice(noti_no, noti_title, emp_no, noti_content, noti_regdate,
+		noti_filename, noti_filesize, noti_ofilename, noti_downcnt, noti_readcnt) 
+		values(notice_seq.nextval, 'test', 20170001,'글내용', sysdate,
+		'파일이름','파일사이즈','원본파일이름',0,0); -->
+
+
+	<select id="selectAll" parameterType="SearchVO" 
+		resultType="NoticeVO" >
+		select *
+		from
+		(
+		    select rownum as RNUM, blist.*
+		    from(
+		        select * from notice 
+		        <include refid="searchWhere"></include>
+		        order by noti_no desc		        
+		    ) blist
+		) 
+		<![CDATA[
+		where RNUM > #{firstRecordIndex} 
+		and RNUM<=#{firstRecordIndex}+ #{recordCountPerPage} ]]>	
+	</select>
+	
+	<select id="selectTotalRecordCount" resultType="int" 
+		parameterType="SearchVO">
+		select count(*) from notice
+		<include refid="searchWhere"></include>	
+	</select>
+	
 </mapper>
 
 

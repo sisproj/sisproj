@@ -22,18 +22,25 @@
 <article id="bodysection">
         <!-- 3. 내용 -->
     <div id="dimyPage">
-   		<form id="frmEmp" name="frmEMP" method="post"
-      		 action="<c:url value='/employee/employeeEdit.do?empNo=${vo.empNo }'/>">
+   		<form id="frmEmp" name="frmEMP" method="post" 
+   		action="<c:url value='/employee/employeeEdit.do?empNo=${vo.empNo }'/>">
 	      	  <fieldset>
 	      	    <div id="diId">
 	      	 		<label for="name">사원번호</label><input type="text" id="empNo" name="empNo" value="${vo.empNo }">   
 	       		</div>
 	       		<div id="diName">
-	      	 		<label for="name">이름</label><input type="text" id="empName" name="empName" maxlength="6" value="${vo.empName }">   
-	       		</div>
-		       	   <input type="image" src="${vo.empImg }" alt="이미지 등록" id="empImg" name="empImg">       		    
+	      	 		<label for="name">이름</label><input type="text" id="empName" name="empName" maxlength="6" value="${vo.empName }">  
+	      	 	</div> 
+	       		<div id="empImg">
+	       			<c:if test="${!empty vo.empImg }">
+		       	   		<img src="${pageContext.request.contextPath}/emp_images/${vo.empImg }" alt="${vo.empName }(${vo.empNo }) "/>       		    
+					</c:if>
+					<c:if test="${empty vo.empImg }">
+						<img alt="해당 사원의 사진이 없습니다" src="${pageContext.request.contextPath}/emp_images/defaultImages.jpg">
+					</c:if>
+				</div>	
 	       		<div id="diEnName">
-	       		<label for="enName">영어이름</label> <input type="text" id="empEName" name="empEName" value="${vo.empEName }">
+	       			<label for="enName">영어이름</label> <input type="text" id="empEName" name="empEName" value="${vo.empEName }">
 	       		</div>
 	       		<!-- <div id="diJumin">
 			        <label for="jumin">주민번호</label>	
