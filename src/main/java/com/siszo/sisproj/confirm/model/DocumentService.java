@@ -1,5 +1,9 @@
 package com.siszo.sisproj.confirm.model;
 
+import java.util.List;
+
+import com.siszo.sisproj.confirm.common.ConfirmSearchVO;
+
 public interface DocumentService {
 	//결재 문서 상태 플래그
 	public static final String TEMPORARY_SAVE = "임시저장"; //임시 저장
@@ -13,4 +17,7 @@ public interface DocumentService {
 	
 	public int selectConfirmSEQ();
 	public int insertConfirmDoc(DocumentVO vo);
+	public List<DocumentVO> selectAllDoc(ConfirmSearchVO svo);
+	public int totalRecordCountDoc(ConfirmSearchVO svo);
+	public List<DocumentVO> completeDocSelByEmpNo(int empNo);
 }

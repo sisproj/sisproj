@@ -66,8 +66,8 @@
 	</select>
 	
 	<select id="selectConfirmerByEmpNo" parameterType="int" resultType="ConfirmLineVO">
-		select e.emp_no, e.emp_name, e.emp_position, d.dept_name
-		from emp e
+		select e.emp_no, e.emp_name, e.pos_name, d.dept_name
+		from empView e
 		join dept d
 		on e.dept_no = d.dept_no
 		where emp_no = #{empNo}
@@ -93,6 +93,32 @@
 		insert into confirm_line(line_no, emp_no, line_stat, cf_no)
 		values(#{lineNo}, #{empNo}, #{lineStat}, #{cfNo})
 	</insert>
+	
+	<select id="selectAllDoc" parameterType="ConfirmSearchVO" resultType="DocumentVO">
+		select * from (
+		    select rownum as RNUM, blist.* from
+		    (
+		        select * from confirm 
+		        where cf_status = #{listType}
+		        and (cf_no like '%' || #{searchKeyword} || '%' or cf_title like '%' || #{searchKeyword} || '%' or cf_content like '%' || #{searchKeyword} || '%')
+		        order by cf_no desc
+		    ) blist
+		)
+	    <![CDATA[
+		where RNUM>#{firstRecordIndex} and RNUM<=#{firstRecordIndex}+#{recordCountPerPage} ]]>
+	</select>
+	
+	<select id="totalRecordCountDoc" resultType="int" parameterType="ConfirmSearchVO">
+		select count(*) from confirm where cf_status=#{listType} and (cf_no like '%' || #{searchKeyword} || '%' or cf_title like '%' || #{searchKeyword} || '%' or cf_content like '%' || #{searchKeyword} || '%')
+	</select>
+	
+	<select id="completeDocSelByEmpNo" parameterType="int" resultType="DocumentVO">
+		select * from confirm where emp_no=#{empNo} and cf_status='결재완료' order by cf_no desc
+	</select>
+	
+	<update id="myConfirmOk" parameterType="ConfirmLineVO">
+		update confirm_line set line_stat=#{lineStat} where cf_no=#{cfNo} and emp_no = #{empNo}
+	</update>
 </mapper>
 
 

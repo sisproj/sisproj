@@ -8,5 +8,5 @@ public interface EmployeeDAO {
 	public int editEmployee(EmployeeVO vo);
 	public List<EmployeeVO> selectAllEmployee();
 	public List<EmployeeVO> selectEmployeeByEmpName(String empName);
-	
+	public int employeeSelect(int empNo);
 }

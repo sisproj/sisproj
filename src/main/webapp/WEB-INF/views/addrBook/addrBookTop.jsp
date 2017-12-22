@@ -6,10 +6,34 @@
 <script type="text/javascript">
 	$(function(){
 		$('#myAddressUp').hide();
+		$('#groupList').hide();
 		$('.myAddress').click(function(){
 			$('#myAddressDown').toggle();			
 			$('#myAddressUp').toggle();
-			$('#addressList ul').slideToggle();
+			$('#groupList').show();
+			var empNo="empNo="+20170001;
+			var groupList="";
+			$.ajax({
+				url:"<c:url value='/addrBook/groupList.do'/>",
+				data:empNo,
+				dataType:"json",
+				type:"get",
+				success:function(res){
+					groupList+="전체주소록<br>";
+					groupList+="<hr>";
+					if(res.length>0 ){					
+						$.each(res, function(idx, item){
+							$(groupList).append("└ "+item.groupNameme+"<br>");
+						});							
+					}					
+					$('#groupList').html(groupList);
+				},
+				error:function(xhr, status, error){
+					alert("에러 : "+status+"=>"+error);
+				}
+			});
+			
+			/* $('#addressList ul').slideToggle(); */
 		});
 
 		$('.addrStaro, .addrStar').click(function(){
@@ -123,12 +147,15 @@
 		.addrStaro{display:inline;}
     </style>
 <!-- 0. include부분 -->
+	<!-- 내주소록 클릭시 그룹리스트 보여주기 -->
+		<div id="groupList"></div>
+	<!-- 내주소록 그룹 리스트 끝 -->
         <nav>
             <ul>
                 <!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
                 <li id="addressList"><a href="#"><i class="fa fa-address-book-o"></i>&nbsp;<span>내 주소록</span>
-                	<i id="myAddressUp" class="myAddress fa fa-chevron-up"></i>
-                	<i id="myAddressDown" class="myAddress fa fa-chevron-down"></i></a>
+                	<i id="myAddressUp" class="myAddress fa fa-chevron-left"></i>
+                	<i id="myAddressDown" class="myAddress fa fa-chevron-right"></i></a>
                 	<ul>
                 		<li><a href="<c:url value='/addrBook/addrBookList.do'/>">전체 주소록</a>
                 			<ul>
