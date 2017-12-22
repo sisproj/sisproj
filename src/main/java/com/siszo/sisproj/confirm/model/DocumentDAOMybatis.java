@@ -5,7 +5,9 @@ import java.util.List;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.siszo.sisproj.confirm.comment.model.CommentVO;
 import com.siszo.sisproj.confirm.common.ConfirmSearchVO;
+import com.siszo.sisproj.employee.model.EmployeeVO;
 
 
 @Repository
@@ -38,8 +40,13 @@ public class DocumentDAOMybatis extends SqlSessionDaoSupport implements Document
 	}
 
 	@Override
-	public String selectEmpNameByEmpNo(int empNo) {
-		return getSqlSession().selectOne(namespace+".selectEmpNameByEmpNo",empNo);
+	public EmployeeVO selectByEmpNo(int empNo) {
+		return getSqlSession().selectOne(namespace+".selectByEmpNo",empNo);
+	}
+
+	@Override
+	public DocumentVO selectDocByCfNo(String cfNo) {
+		return getSqlSession().selectOne(namespace+".selectDocByCfNo",cfNo);
 	}
 	
 	

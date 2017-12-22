@@ -123,6 +123,42 @@
 	<select id="selectEmpNameByEmpNo" parameterType="int" resultType="String">
 		select emp_name from emp where emp_no=#{empNo}
 	</select>
+	
+	<select id="selectByEmpNo" parameterType="int" resultType="EmployeeVO">
+		select * from empview where emp_no = #{empNo}
+	</select>
+	
+	<select id="selectDocByCfNo" parameterType="String" resultType="DocumentVO">
+		select c.*, f.* 
+		from confirm c
+		join doc_form f
+		on c.form_no = f.form_no
+		where c.cf_no=#{cfNo}
+	</select>
+	
+	<select id="selectCfLineByCfNo" parameterType="String" resultType="ConfirmLineVO">
+		select l.*, e.emp_name 
+		from confirm_line l
+		join emp e
+		on l.EMP_NO = e.EMP_NO
+		where cf_no=#{cfNo} order by line_no
+	</select>
+	
+	<select id="selectCfFileByCfNo" parameterType="String" resultType="ConfirmFileVO">
+		select * from confirm_file where cf_no=#{cfNo}
+	</select>
+	
+	<select id="selectCommCNTByCfNo" parameterType="String" resultType="int">
+		select count(*) from comm where cf_no=#{cfNo}
+	</select>
+	
+	<select id="selectCommByCfNo" parameterType="String" resultType="ConfirmFileVO">
+		select c.*, e.EMP_NAME
+		from comm c
+		join emp e
+		on c.MEM_NO = e.EMP_NO
+		where cf_no=#{cfNo}
+	</select>
 </mapper>
 
 

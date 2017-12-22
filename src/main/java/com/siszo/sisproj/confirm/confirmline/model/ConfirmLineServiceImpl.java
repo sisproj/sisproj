@@ -19,4 +19,9 @@ public class ConfirmLineServiceImpl implements ConfirmLineService {
 	public int myConfirmOk(ConfirmLineVO vo) {
 		return clDao.myConfirmOk(vo);
 	}
+
+	@Override
+	public List<ConfirmLineVO> selectCfLineByCfNo(String cfNo) {
+		return clDao.selectCfLineByCfNo(cfNo);
+	}
 }

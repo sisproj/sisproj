@@ -64,7 +64,7 @@
 						<div id="doc_info">
 							<div>
 								<label for ="docno" class="sd1">문서 번호</label> <!-- 날짜+부서번호+양식번호+문서시퀀스 -->
-								<input type="text" name="cfNo" id="docno" value="${today }301333${seq}" readonly>
+								<input type="text" name="cfNo" id="docno" value="${today }301${vo.formNo }${seq}" readonly>
 							</div>
 							<div>
 								<label for="docreg" class="sd1">기안 일자</label>

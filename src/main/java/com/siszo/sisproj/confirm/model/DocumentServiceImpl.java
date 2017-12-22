@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.siszo.sisproj.confirm.comment.model.CommentVO;
 import com.siszo.sisproj.confirm.common.ConfirmSearchVO;
 import com.siszo.sisproj.confirm.confirmline.model.ConfirmLineDAO;
 import com.siszo.sisproj.confirm.confirmline.model.ConfirmLineVO;
 import com.siszo.sisproj.confirm.file.model.ConfirmFileDAO;
 import com.siszo.sisproj.confirm.file.model.ConfirmFileVO;
+import com.siszo.sisproj.employee.model.EmployeeVO;
 
 
 @Service
@@ -45,12 +47,6 @@ public class DocumentServiceImpl implements DocumentService {
 	public List<DocumentVO> completeDocSelByEmpNo(int empNo) {
 		return dDao.completeDocSelByEmpNo(empNo);
 	}
-
-	@Override
-	public String selectEmpNameByEmpNo(int empNo) {
-		return dDao.selectEmpNameByEmpNo(empNo);
-	}
-
 
 	@Override
 	@Transactional
@@ -98,5 +94,15 @@ public class DocumentServiceImpl implements DocumentService {
 		}
 		
 		return result;
+	}
+
+	@Override
+	public EmployeeVO selectByEmpNo(int empNo) {
+		return dDao.selectByEmpNo(empNo);
+	}
+
+	@Override
+	public DocumentVO selectDocByCfNo(String cfNo) {
+		return dDao.selectDocByCfNo(cfNo);
 	}
 }

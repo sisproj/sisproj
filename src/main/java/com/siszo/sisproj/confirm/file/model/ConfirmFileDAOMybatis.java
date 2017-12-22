@@ -1,5 +1,7 @@
 package com.siszo.sisproj.confirm.file.model;
 
+import java.util.List;
+
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -11,4 +13,10 @@ public class ConfirmFileDAOMybatis extends SqlSessionDaoSupport implements Confi
 	public int insertConfirmFile(ConfirmFileVO vo) {
 		return getSqlSession().insert(namespace+".insertConfirmFile",vo);
 	}
+
+	@Override
+	public List<ConfirmFileVO> selectCfFileByCfNo(String cfNo) {
+		return getSqlSession().selectList(namespace+".selectCfFileByCfNo",cfNo);
+	}
+
 }

@@ -22,17 +22,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.siszo.sisproj.common.FileUploadUtil;
 import com.siszo.sisproj.common.PaginationInfo;
+import com.siszo.sisproj.confirm.comment.model.CommentService;
+import com.siszo.sisproj.confirm.comment.model.CommentVO;
 import com.siszo.sisproj.confirm.common.ConfirmSearchVO;
 import com.siszo.sisproj.confirm.common.ConfirmUtility;
 import com.siszo.sisproj.confirm.confirmline.model.ConfirmLineService;
 import com.siszo.sisproj.confirm.confirmline.model.ConfirmLineVO;
 import com.siszo.sisproj.confirm.docform.model.DocumentFormService;
 import com.siszo.sisproj.confirm.docform.model.DocumentFormVO;
+import com.siszo.sisproj.confirm.file.model.ConfirmFileService;
 import com.siszo.sisproj.confirm.file.model.ConfirmFileVO;
 import com.siszo.sisproj.confirm.model.DocumentService;
 import com.siszo.sisproj.confirm.model.DocumentVO;
 import com.siszo.sisproj.confirm.saveline.model.SaveLineService;
 import com.siszo.sisproj.confirm.saveline.model.SaveLineVO;
+import com.siszo.sisproj.employee.model.EmployeeVO;
 
 @Controller
 @RequestMapping("/confirm")
@@ -47,6 +51,10 @@ public class ConfirmController {
 	private ConfirmLineService clService;
 	@Autowired
 	private SaveLineService slService;
+	@Autowired
+	private ConfirmFileService cfService;
+	@Autowired
+	private CommentService commService;
 	
 	@Autowired
 	private FileUploadUtil fileUtil;
@@ -293,7 +301,8 @@ public class ConfirmController {
 		
 		//이름 넣어주기 + 제목 길이 처리
 		for(DocumentVO imvo : docuList) {
-			String empName = dService.selectEmpNameByEmpNo(imvo.getEmpNo());
+			EmployeeVO eVo = dService.selectByEmpNo(imvo.getEmpNo());
+			String empName = eVo.getEmpName();
 			imvo.setEmpName(empName);
 
 			String str = imvo.getCfTitle();
@@ -312,6 +321,9 @@ public class ConfirmController {
 		model.addAttribute("docuList",docuList);
 		
 		return "confirm/await";
+		
+
+		//처리해야함 : 해당 결재라인을 전체 조회해서 List얻음 -> 얻고 나서 line_no 순으로 for문으로 돌리면서 대기인 사람과 본인 만 해당 문서 보여주기
 	}
 	
 	@RequestMapping("/complete.do")
@@ -357,27 +369,51 @@ public class ConfirmController {
 	@RequestMapping("/detail.do")
 	public String detail(@RequestParam (defaultValue="") String cfNo, Model model) {
 		logger.info("상세페이지 보여주기, 파라미터={}", cfNo);
-		/* 
-			1. cfNo의 결재 문서 confirm테이블에서 가져옴 
-				= DocumentVO = docuVo (*)
-		*/
-		/*
-			2. cfNo의 결재라인 confirm_line 테이블에서 가져옴 
-				= List<ConfirmLineVO> (*)
-		*/
-		/*
-			3. 연계문서가 있다면 (docuVo.linkCfNo) confirm테이블에서 가져옴
-				= DocumentVO = docuVo2 (cfNo, cfTitle)
-		*/
-		/*
-			4. 파일이 있다면 (docuVo.isFile=="Y") confirm_file테이블 에서 가져옴
-				= List<ConfirmFileVO>
-		*/
-		/*
-			5. 의견이 있다면 (comm테이블에서 cfNo로 셀렉) comm테이블에서 가져옴
-				= List<CommentVO>
-		*/
 		
+		//1. cfNo의 결재 문서 confirm테이블에서 가져옴 + 양식정보도 가져와서 vo에 삽입 = DocumentVO = docuVo (*)
+		DocumentVO docVo = dService.selectDocByCfNo(cfNo);
+		logger.info("해당 문서 조회, docuVo={}",docVo);
+		
+		//2. 해당 기안자 조회 해서 EmployeeVO 구함(기안자, 부서이름 조회용)
+		EmployeeVO eVo = dService.selectByEmpNo(docVo.getEmpNo());
+		logger.info("해당 문서 작성자 조회, eVo={}",eVo);
+		
+		//3. cfNo의 결재라인 confirm_line 테이블에서 가져옴 = List<ConfirmLineVO> (*)
+		List<ConfirmLineVO> clVoList = clService.selectCfLineByCfNo(cfNo);
+		logger.info("해당 문서 결재라인 조회, clVoList.size()={}", clVoList.size());
+		
+		//4. 연계문서가 있다면 (docuVo.linkCfNo) confirm테이블에서 가져옴= DocumentVO = docuVo2 (cfNo, cfTitle)
+		DocumentVO linkDoc = new DocumentVO();
+		if(docVo.getLinkCfNo()!=null && !docVo.getLinkCfNo().isEmpty()) {
+			linkDoc = dService.selectDocByCfNo(docVo.getLinkCfNo());
+			logger.info("해당 문서의 연계문서, linkDoc={}",linkDoc);
+		}
+		
+		//5. 파일이 있다면 (docuVo.isFile=="Y") confirm_file테이블 에서 가져옴= List<ConfirmFileVO>
+		List<ConfirmFileVO> fileList = new ArrayList<ConfirmFileVO>();
+		if(docVo.getCfIsfile().equals(DocumentService.HAVE_FILES)) {
+			fileList = cfService.selectCfFileByCfNo(cfNo);
+			logger.info("해당 문서의 파일 리스트, fileList.size()={}",fileList.size());
+		}
+		
+		//6. 의견이 있다면 (comm테이블에서 cfNo로 셀렉) comm테이블에서 가져옴= List<CommentVO>
+		int isComment = commService.selectCommCNTByCfNo(cfNo);
+		List<CommentVO> commVoList = new ArrayList<CommentVO>();
+		if(isComment>0) {
+			commVoList = commService.selectCommByCfNo(cfNo);
+			logger.info("해당 문서의 의견 리스트, commVoList.size()={}",commVoList.size());
+		}
+		
+		model.addAttribute("docVo", docVo);
+		model.addAttribute("eVo", eVo);
+		model.addAttribute("clVoList", clVoList);
+		model.addAttribute("linkDoc", linkDoc);
+		model.addAttribute("fileList", fileList);
+		model.addAttribute("commVoList", commVoList);
+		//결재 상태 확인용 상태플래그
+		model.addAttribute("CL_AWAIT",ConfirmLineService.CL_AWAIT);
+		model.addAttribute("CL_COMPLETE",ConfirmLineService.CL_COMPLETE);
+		model.addAttribute("CL_RETURN",ConfirmLineService.CL_RETURN);
 		
 		return "confirm/detail";
 	}

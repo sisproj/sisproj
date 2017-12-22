@@ -9,6 +9,7 @@ public class ConfirmLineVO {
 	private String empName; //결재자(이름) (join emp.emp_no)
 	private String posName; //결재자 직급 (join position.pos_name)
 	private String deptName; //결재자 부서명 (join dept.dept_name)
+	private String signName; //결재자 서명(join sign.sign_name)
 	private String lineStat; //결재 상태
 	private String cfNo; //결재문서 번호
 	private Timestamp lineRegdate; //결재변경일자
@@ -61,10 +62,17 @@ public class ConfirmLineVO {
 	public void setPosName(String posName) {
 		this.posName = posName;
 	}
+	public String getSignName() {
+		return signName;
+	}
+	public void setSignName(String signName) {
+		this.signName = signName;
+	}
 	@Override
 	public String toString() {
 		return "ConfirmLineVO [lineNo=" + lineNo + ", empNo=" + empNo + ", empName=" + empName + ", posName=" + posName
-				+ ", deptName=" + deptName + ", lineStat=" + lineStat + ", cfNo=" + cfNo + ", lineRegdate="
-				+ lineRegdate + "]";
+				+ ", deptName=" + deptName + ", signName=" + signName + ", lineStat=" + lineStat + ", cfNo=" + cfNo
+				+ ", lineRegdate=" + lineRegdate + "]";
 	}
+	
 }

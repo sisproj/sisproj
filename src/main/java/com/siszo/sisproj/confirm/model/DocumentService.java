@@ -2,9 +2,11 @@ package com.siszo.sisproj.confirm.model;
 
 import java.util.List;
 
+import com.siszo.sisproj.confirm.comment.model.CommentVO;
 import com.siszo.sisproj.confirm.common.ConfirmSearchVO;
 import com.siszo.sisproj.confirm.confirmline.model.ConfirmLineVO;
 import com.siszo.sisproj.confirm.file.model.ConfirmFileVO;
+import com.siszo.sisproj.employee.model.EmployeeVO;
 
 public interface DocumentService {
 	//결재 문서 상태 플래그
@@ -23,5 +25,6 @@ public interface DocumentService {
 	public List<DocumentVO> selectAllDoc(ConfirmSearchVO svo);
 	public int totalRecordCountDoc(ConfirmSearchVO svo);
 	public List<DocumentVO> completeDocSelByEmpNo(int empNo);
-	public String selectEmpNameByEmpNo(int empNo);
+	public EmployeeVO selectByEmpNo(int empNo);
+	public DocumentVO selectDocByCfNo(String cfNo);
 }
