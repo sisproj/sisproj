@@ -10,5 +10,9 @@ public interface NoticeDAO {
 	public int selectTotalRecordCount(SearchVO searchVo);
 	public NoticeVO selectByNo(int notiNo);
 	public int updateNotice(NoticeVO vo);
+	/*public int deleteNotice(int notiNo);*/
 	
+/*	public int deleteNotice(NoticeVO vo);*/
+	
+
 }
