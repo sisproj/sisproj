@@ -96,7 +96,7 @@ public class AddrBookController {
 		return "addrBook/addrBookTrash";
 	}
 	
-	@RequestMapping(value="/addrBookTrash.do", method=RequestMethod.POST)
+	@RequestMapping(value="/addrBookClear.do", method=RequestMethod.POST)
 	public String trash(Model model) {
 		logger.info("휴지통 비우기");
 		
