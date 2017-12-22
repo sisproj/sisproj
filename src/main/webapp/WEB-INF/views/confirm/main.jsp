@@ -27,25 +27,25 @@
 		<article id="bodysection">
 			<!-- 3. 내용 -->
 				<div class="cf_infobox">
-					<a href="#">
+					<a href="<c:url value='/confirm/tempsave.do'/>">
 						<ul>
 							<li>0</li>
 							<li>임시 저장함</li>
 						</ul>	
 					</a>
-					<a href="#">
+					<a href="<c:url value='/confirm/await.do'/>">
 						<ul>
 							<li>0</li>
 							<li>결재 대기함</li>
 						</ul>	
 					</a>
-					<a href="#">
+					<a href="<c:url value='/confirm/return.do'/>">
 						<ul>
 							<li>0</li>
 							<li>결재 반려함</li>
 						</ul>
 					</a>
-					<a href="#">
+					<a href="<c:url value='/confirm/complete.do'/>">
 						<ul>
 							<li>0</li>
 							<li>결재 완료함</li>

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ include file="../inc/top.jsp" %>
-<link href="<c:url value='/resources/css/pagecss/confirm_complete.css'/>" rel="stylesheet" type="text/css">
+<link href="<c:url value='/resources/css/pagecss/confirm_tempsave.css'/>" rel="stylesheet" type="text/css">
 <!-- 0. include부분 -->
 			<nav>
 				<ul>
@@ -24,54 +24,68 @@
 			<!-- 2. 페이지 이름 지정 끝 -->
 		</article>	
 		<article id="bodysection">
+			<form name="frmPaging" method="post" action="<c:url value='/confirm/tempsave.do'/>">
+				<!-- 페이징 처리용 -->
+				<input type="hidden" name="searchKeyword" value="${param.searchKeyword }">
+				<input type="hidden" name="currentPage">
+			</form>
 			<!-- 3. 내용 -->
 			<div id="wrap">
 				<div id="search" class="bold">
-					검색어 : <input type="text" name="searchKey" id="searchKey" placeholder="문서번호, 제목, 내용">
+					검색어 : <input type="text" name="searchKey" id="searchKey" placeholder="문서번호, 제목, 내용" value="${param.searchKeyword }">
 					<input type="button" value="검색">
 				</div>
 				<table id="awaittb">
 					<thead>
 						<tr>
+							<th><input type="checkbox" id="allSelect" value="문서번호받기"></th>
 							<th>문서번호</th>
 							<th>제목</th>
-							<th>양식이름</th>
 							<th>기안일</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>20171211102030001</td>
-							<td><a href="#">시행기안문</a></td>
-							<td>기안서</td>
-							<td>20171211</td>
-						</tr>
-						<tr>
-							<td>20171211102030001</td>
-							<td>시행기안문</td>
-							<td>기안서</td>
-							<td>20171211</td>
-						</tr>
+						<c:if test="${empty docuList }">
+							<tr><td colspan="4" rowspan="2">문서가 없습니다</td></tr>
+						</c:if>
+						<c:if test="${!empty docuList }">
+							<c:forEach var="docuVo" items="${docuList }" varStatus="status">
+								<tr>
+									<td><input type="checkbox" name="docuItems[${status.index }].cfNo" value="${docuVo.cfNo }"></td>
+									<td>${docuVo.cfNo }</td>
+									<td><a href="#">${docuVo.cfTitle }</a></td>
+									<td><fmt:formatDate value="${docuVo.cfRegdate }" pattern="yyyy-MM-dd"/></td>
+								</tr>
+							</c:forEach>
+						</c:if>
 					</tbody>
 				</table>
-				<div id="pagingbtn">
-					<div>
-					<a href="#"><span><i class="fa fa-arrow-left"></i></span></a>
-					<a href="#"><span><i class="fa fa-chevron-left"></i></span></a>
-					<a href="#"><span>1</span></a>
-					<a href="#"><span>2</span></a>
-					<a href="#"><span>3</span></a>
-					<a href="#"><span>4</span></a>
-					<a href="#"><span>5</span></a>
-					<a href="#"><span>6</span></a>
-					<a href="#"><span>7</span></a>
-					<a href="#"><span>8</span></a>
-					<a href="#"><span>9</span></a>
-					<a href="#"><span>10</span></a>
-					<a href="#"><span><i class="fa fa-chevron-right"></i></span></a>
-					<a href="#"><span><i class="fa fa-arrow-right"></i></span></a>
+				<c:if test="${!empty docuList}">
+					<div id="pagingbtn">
+						<c:if test="${pageInfo.currentPage!=1 }">
+							<a id="firstbtn" href="#" onclick="movePage(1)"><i class="fa fa-arrow-left"></i></a>
+						</c:if>
+						<c:if test="${pageInfo.firstPage>1 }">
+							<a id="prevbtn" href="#" onclick="movePage(${pageInfo.firstPage-1})"><i class="fa fa-chevron-left"></i></a>
+						</c:if>
+						
+						<c:forEach var="i" begin="${pageInfo.firstPage }" end="${pageInfo.lastPage }">
+							<c:if test="${i==pageInfo.currentPage }">
+								<span class="thispage">${i }</span>					
+							</c:if>
+							<c:if test="${i!=pageInfo.currentPage }">
+								<a href="#" onclick="movePage(${i })">${i }</a>				
+							</c:if>
+						</c:forEach>
+						
+						<c:if test="${pageInfo.lastPage < pageInfo.totalPage }">
+							<a id=nextbtn href="#" onclick="movePage(${pageInfo.lastPage+1})"><i class="fa fa-chevron-right"></i></a>
+						</c:if>
+						<c:if test="${pageInfo.currentPage!=pageInfo.totalPage  }">
+							<a id=lastbtn href="#" onclick="movePage(${pageInfo.totalPage })"><i class="fa fa-arrow-right"></i></a>
+						</c:if>
 					</div>
-				</div>
+				</c:if>
 			</div>
 			<!-- 3. 내용 끝 -->
 		</article>
@@ -81,3 +95,4 @@
 		<!-- 0. include부분 끝-->
 
 <%@ include file="../inc/bottom.jsp" %>
+<script type="text/javascript" src="<c:url value='/resources/js/pagejs/confirm_list.js'/>"></script>

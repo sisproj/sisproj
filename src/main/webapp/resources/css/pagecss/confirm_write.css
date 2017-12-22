@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /*버튼*/
-#writeFrm #submitbtn{
+#submitbtn{
 	width: 95%;
 	padding:10px;
 	text-align: right;
@@ -14,7 +14,7 @@
 	width: 100px;
 	height: 30px;				
 }
-#writeFrm #submitbtn input{
+#submitbtn input{
 	width: 70px;
 	height: 30px;
 }
@@ -145,7 +145,8 @@ form#writeFrm #doc_type{
 	box-sizing:border-box;
 	padding: 5px;
 	text-align: center;
-	font-size: 0.9em;
+    font-size: 0.7em;
+    font-weight: bold;
 }
 #writeFrm #doc_type #confirmer div span:first-child{
 	height: 70%;

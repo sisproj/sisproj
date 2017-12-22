@@ -47,8 +47,11 @@
 				</div>	
 				<!-- 상단 끝 -->
 
-				<form name="writeFrm" id="writeFrm" method="post" action="<c:url value='/confirm/write.do'/>" enctype="multipart/form-data">
+				<form name="writeFrm" id="writeFrm" method="post"
+					action="<c:url value='/confirm/confirmOk.do'/>" enctype="multipart/form-data">
 				<!-- 미드 -->
+					<input type="text" name="cfStatus" id="writeType">
+					<input type="text" name="allConfirmers" id="allConfirmers">
 					<div id="doc_type">
 						<div id="dt_head">
 							<input type="text" name="formName" value="${vo.formName }" readonly>
@@ -111,12 +114,11 @@
 						</select>
 						<div id="files"></div>
 					</div>
-					<input type="hidden" name="allConfirmers" id="allConfirmers">
-					<div id="submitbtn">
-						<input type="button" id="confirmbtn" onclick="submitContents()" value="결재">&nbsp;&nbsp;
-						<input type="button" id="savebtn" onclick="submitContents()" value="임시저장">	
-					</div>
 				</form>
+				<div id="submitbtn">
+					<input type="button" id="confirmbtn" value="결재">&nbsp;&nbsp;
+					<input type="button" id="savebtn" value="임시저장">	
+				</div>
 				<div id="choice_cfer" class='off'>
 					<c:import url='/confirm/line.do'/>
 				</div>

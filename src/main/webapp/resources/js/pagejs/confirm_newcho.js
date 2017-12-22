@@ -19,4 +19,11 @@ $(function(){
 		$('#cf_choice #doc_form .dd').css('background-color', '');
 		$(this).css('background-color', '#d1d1d1');
 	});
+	
+	$('#choicebtn').submit(function(){
+		if($('#choicebtn #form_no').val()==""){
+			alert('결재 문서 양식이 지정 되지 않았습니다.');
+			return false;
+		}
+	});
 });

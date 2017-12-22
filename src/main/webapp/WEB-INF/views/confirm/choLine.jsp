@@ -7,7 +7,7 @@
 		<tr>
 			<td></td>
 			<td>${clVo.deptName }</td>
-			<td class='cf_empPo'>${clVo.empPosition }</td>
+			<td class='cf_empPo'>${clVo.posName }</td>
 			<td class='cf_empName'>${clVo.empName }</td>
 			<input type='hidden' name='confirmerNo' class='confirmerNo' value='${clVo.empNo }'>
 		</tr>		
@@ -15,7 +15,7 @@
 </c:if>
 <c:if test="${!empty clVo }">
 	<td>${clVo.deptName }</td>
-	<td class='cf_empPo'>${clVo.empPosition }</td>
+	<td class='cf_empPo'>${clVo.posName }</td>
 	<td class='cf_empName'>${clVo.empName }</td>
 	<input type='hidden' name='confirmerNo' class='confirmerNo' value='${clVo.empNo }'>
 </c:if>

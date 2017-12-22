@@ -4,6 +4,11 @@
 	outline: none;
 }
 /* 결재서명등록 */
+#cf_settings{
+	width: 100%;
+	max-width:1100px;
+	margin: 0 auto;	
+}
 #cf_settings > div > h3{
 	box-sizing:border-box;
 	padding-left: 10px;

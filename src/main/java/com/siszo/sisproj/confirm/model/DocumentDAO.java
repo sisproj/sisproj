@@ -10,4 +10,5 @@ public interface DocumentDAO {
 	public List<DocumentVO> selectAllDoc(ConfirmSearchVO svo);
 	public int totalRecordCountDoc(ConfirmSearchVO svo);
 	public List<DocumentVO> completeDocSelByEmpNo(int empNo);
+	public String selectEmpNameByEmpNo(int empNo);
 }

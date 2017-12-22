@@ -1,10 +1,10 @@
 package com.siszo.sisproj.confirm.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,24 +14,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.siszo.sisproj.common.FileUploadUtil;
 import com.siszo.sisproj.common.PaginationInfo;
-import com.siszo.sisproj.common.SearchVO;
 import com.siszo.sisproj.confirm.common.ConfirmSearchVO;
 import com.siszo.sisproj.confirm.common.ConfirmUtility;
 import com.siszo.sisproj.confirm.confirmline.model.ConfirmLineService;
 import com.siszo.sisproj.confirm.confirmline.model.ConfirmLineVO;
 import com.siszo.sisproj.confirm.docform.model.DocumentFormService;
 import com.siszo.sisproj.confirm.docform.model.DocumentFormVO;
-import com.siszo.sisproj.confirm.file.model.ConfirmFileService;
 import com.siszo.sisproj.confirm.file.model.ConfirmFileVO;
 import com.siszo.sisproj.confirm.model.DocumentService;
 import com.siszo.sisproj.confirm.model.DocumentVO;
@@ -51,8 +47,6 @@ public class ConfirmController {
 	private ConfirmLineService clService;
 	@Autowired
 	private SaveLineService slService;
-	@Autowired
-	private ConfirmFileService cfService;
 	
 	@Autowired
 	private FileUploadUtil fileUtil;
@@ -114,86 +108,6 @@ public class ConfirmController {
 		return "confirm/write";
 	}
 	
-	@RequestMapping("/tempsaveOk.do")
-	public String tempsaveOk(@ModelAttribute DocumentVO docuVo, @RequestParam String allConfirmers, HttpServletRequest request, Model model) {
-		logger.info("새 결재 진행 - 결재 문서 작성 임시 저장 처리, 파라미터 docuVo={}", docuVo);
-		docuVo.setCfStatus(DocumentService.TEMPORARY_SAVE);
-		//파일 업로드 처리
-		List<Map<String, Object>> fileList = null;
-		String fileName = "", fileOriName="";
-		long fileSize=0;
-		List<ConfirmFileVO> uploadFileList = new ArrayList<ConfirmFileVO>(); 
-		
-		try {
-			fileList = fileUtil.fileupload(request, FileUploadUtil.ATTACHFILE);
-			
-			//파일 업로드 한경우
-			if(fileList!=null && !fileList.isEmpty()) {
-				for(Map<String, Object> map : fileList) {
-					fileOriName = (String) map.get("originalFileName");
-					fileName = (String) map.get("fileName");
-					fileSize = (Long) map.get("fileSize");
-					
-					ConfirmFileVO cfVo = new ConfirmFileVO();
-					cfVo.setFileOriName(fileOriName);
-					cfVo.setFileName(fileName);
-					cfVo.setFileSize(fileSize);
-					cfVo.setCfNo(docuVo.getCfNo());
-					
-					uploadFileList.add(cfVo);
-				}
-				docuVo.setCfIsfile(DocumentService.HAVE_FILES);
-			} else {
-				docuVo.setCfIsfile(DocumentService.NOT_HAVE_FILES);
-			}
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		logger.info("파일 처리 이후 docuVo 내용, docuVo={}",docuVo);
-		
-		List<ConfirmLineVO> clVoList = new ArrayList<ConfirmLineVO>();
-		String[] confirmers = allConfirmers.split(",");
-		for(int i=0; i<confirmers.length; i++) {
-			if(!confirmers[i].equals("") || !confirmers[i].isEmpty()) {
-				ConfirmLineVO clVo = new ConfirmLineVO();
-				clVo.setEmpNo(Integer.parseInt(confirmers[i]));
-				clVo.setLineStat(ConfirmLineService.CL_AWAIT);
-				clVo.setCfNo(docuVo.getCfNo());
-				
-				clVoList.add(clVo);
-				logger.info("clVo={}", clVo);
-			}
-		}
-		logger.info("결재자, allConfirmers={}", allConfirmers);
-		logger.info("결재자 인원 수, clVoList.size()={}", clVoList.size());
-		
-		
-		String msg="", url="";
-		//문서 insert
-		int cnt = dService.insertConfirmDoc(docuVo);
-		logger.info("문서 insert 처리 결과 cnt={}",cnt);			
-		
-		if(cnt>0) {
-			//문서 등록이 처리 되었다면 결재자 및 해당 파일도 db저장
-			int res = cfService.multiInsertCfFile(uploadFileList);
-			int cfRes = clService.insertConfirmers(clVoList);
-			if(uploadFileList.size()==res && cfRes>0) {
-				msg = "임시 저장함에 저장 되었습니다.";
-				url = "/confirm/tempsave.do";
-			} else {
-				msg = "저장 실패!";
-				url = "/confirm/write.do?formNo="+docuVo.getFormNo();
-			}
-		}
-		
-		model.addAttribute("msg",msg);
-		model.addAttribute("url",url);
-		
-		return "common/message";
-	}
-	
 	@RequestMapping("/tempsave.do")
 	public String tempsave(@ModelAttribute ConfirmSearchVO svo, Model model) {
 		logger.info("임시저장함 보여주기, 파라미터 searchVo={}",svo);
@@ -213,10 +127,19 @@ public class ConfirmController {
 		
 		List<DocumentVO> docuList = dService.selectAllDoc(svo);
 		logger.info("임시저장함 목록 조회 결과, docuList.size()={}",docuList.size());
+
+		//제목 길이 처리
+		for(DocumentVO imvo : docuList) {
+			String str = imvo.getCfTitle();
+			String title = ConfirmUtility.titleLength(str, 44);
+			
+			imvo.setCfTitle(title);
+		}
 		
 		int totalRecord = dService.totalRecordCountDoc(svo);
 		logger.info("임시저장함 문서 개수 조회 결과, totalRecord={}",totalRecord);
 		pageInfo.setTotalRecord(totalRecord);		
+		
 		logger.info("검색어 searchKeyword={}",svo.getSearchKeyword());
 		
 		model.addAttribute("pageInfo",pageInfo);
@@ -232,16 +155,19 @@ public class ConfirmController {
 	}
 	
 	@RequestMapping("/confirmOk.do")
-	public String confirmOk(@ModelAttribute DocumentVO docuVo, @RequestParam String allConfirmers, HttpServletRequest request, Model model) {
-		logger.info("새 결재 진행 - 결재 문서 작성 본인 결재 후 상신 처리, 파라미터 docuVo={}", docuVo);
-		docuVo.setCfStatus(DocumentService.CONFIRM_AWAIT);
+	public String confirmOk_post(@ModelAttribute DocumentVO docuVo, @RequestParam String allConfirmers,	HttpServletRequest request, Model model) {
+		//임시저장인지 결재 처리인지 플래그 vo에 세팅
+		String writeType = docuVo.getCfStatus();
+		logger.info("새 결재 진행 - 결재 문서 작성 처리, 파라미터 docuVo={}, 저장처리 방식 : writeType={}", docuVo, writeType);
 		
 		//파일 업로드 처리
 		List<Map<String, Object>> fileList = null;
 		String fileName = "", fileOriName="";
 		long fileSize=0;
 		List<ConfirmFileVO> uploadFileList = new ArrayList<ConfirmFileVO>();
-		
+		boolean fileResult=true;
+
+		String msg="", url="";
 		try {
 			fileList = fileUtil.fileupload(request, FileUploadUtil.ATTACHFILE);
 			//파일 업로드 한경우
@@ -264,59 +190,81 @@ public class ConfirmController {
 				docuVo.setCfIsfile(DocumentService.NOT_HAVE_FILES);
 			}
 			logger.info("파일 처리 이후 docuVo 내용, docuVo={}",docuVo);
+			logger.info("업로드 파일 리스트, uploadFileList.size()={}",uploadFileList.size());
 			
 		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
+			fileResult=false;
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			fileResult=false;
 			e.printStackTrace();
 		}
-
-		//결재자
-		List<ConfirmLineVO> clVoList = new ArrayList<ConfirmLineVO>();
-		String[] confirmers = allConfirmers.split(",");
-		for(int i=0; i<confirmers.length; i++) {
-			if(!confirmers[i].equals("") || !confirmers[i].isEmpty()) {
-				ConfirmLineVO clVo = new ConfirmLineVO();
-				
-				clVo.setEmpNo(Integer.parseInt(confirmers[i]));
-				clVo.setLineStat(ConfirmLineService.CL_AWAIT);
-				clVo.setCfNo(docuVo.getCfNo());
-				
-				clVoList.add(clVo);
-				logger.info("clVo={}", clVo);
+		
+		//파일 등록하지 않았거나, 파일처리 오류 안났을때 디비 저장
+		if(fileResult==true) {
+			//결재자 리스트 생성
+			List<ConfirmLineVO> clVoList = new ArrayList<ConfirmLineVO>();
+			String[] confirmers = allConfirmers.split(",");
+			for(int i=0; i<confirmers.length; i++) {
+				if(!confirmers[i].equals("") || !confirmers[i].isEmpty()) {
+					ConfirmLineVO clVo = new ConfirmLineVO();
+					
+					clVo.setEmpNo(Integer.parseInt(confirmers[i]));
+					clVo.setLineStat(ConfirmLineService.CL_AWAIT);
+					clVo.setCfNo(docuVo.getCfNo());
+					
+					clVoList.add(clVo);
+					logger.info("clVo={}", clVo);
+				}
 			}
-		}
-		logger.info("결재자, allConfirmers={}", allConfirmers);
-		logger.info("결재자 인원 수, clVoList.size()={}", clVoList.size());
-		
-		String msg="", url="";
-		//문서 insert
-		int cnt = dService.insertConfirmDoc(docuVo);
-		logger.info("문서 insert 처리 결과 cnt={}",cnt);			
-		
-		if(cnt>0) {
-			//문서 등록이 처리 되었다면 결재자 및 해당 파일도 db저장
-			int res = cfService.multiInsertCfFile(uploadFileList);
-			int cfRes = clService.insertConfirmers(clVoList);
+			logger.info("결재자, allConfirmers={}", allConfirmers);
+			logger.info("결재자 인원 수, clVoList.size()={}", clVoList.size());
 			
-			ConfirmLineVO myConfirm = new ConfirmLineVO();
-			myConfirm.setCfNo(docuVo.getCfNo());
-			myConfirm.setLineStat(ConfirmLineService.CL_COMPLETE);
-			myConfirm.setEmpNo(empNo);
 			
-			int Imconfirm = clService.myConfirmOk(myConfirm);
-			
-			if(uploadFileList.size()==res && cfRes>0 && Imconfirm>0) {
-				msg = "결재 후 상신 되었습니다.";
-				url = "/confirm/await.do";
+			//db작업 -- 문서인서트(docuVo), 해당파일정보인서트(uploadFileList), 결재자 등록처리(clVoList), 
+			int cnt = dService.insertConfirmDoc(docuVo, uploadFileList, clVoList);
+			logger.info("결재 문서 등록 처리 결과 cnt={}", cnt);
+			if(cnt>0) {
+				//nextcf(내 결재 완료 후 상신)/tempsave(임시저장)
+				if(writeType.equals(DocumentService.CONFIRM_AWAIT)) {
+					//결재완료 후 상신
+					ConfirmLineVO myConfirm = new ConfirmLineVO();
+					myConfirm.setCfNo(docuVo.getCfNo());
+					myConfirm.setLineStat(ConfirmLineService.CL_COMPLETE);
+					myConfirm.setEmpNo(empNo);
+					
+					cnt = clService.myConfirmOk(myConfirm);
+					if(cnt>0) {
+						msg = "결재 후 상신 되었습니다.";
+						url = "/confirm/detail.do?cfNo="+docuVo.getCfNo();						
+					} else {
+						msg = "내 결재 실패!!";
+						url = "/confirm/write.do?formNo="+docuVo.getFormNo();						
+					}
+				} else if(writeType.equals(DocumentService.TEMPORARY_SAVE)) {
+					//임시저장 처리
+					msg = "임시 저장함에 저장 되었습니다.";
+					url = "/confirm/detail.do?cfNo="+docuVo.getCfNo();	
+				}
 			} else {
-				msg = "저장 실패!";
-				url = "/confirm/write.do?formNo="+docuVo.getFormNo();
+				msg = "데이터 저장 실패";
+				url = "/confirm/write.do?formNo="+docuVo.getFormNo();	
+				//데이터 저장 실패시 파일 있다면 삭제 처리
+				if(docuVo.getCfIsfile()==DocumentService.HAVE_FILES) {
+					String path = fileUtil.getUploadPath(request, FileUploadUtil.ATTACHFILE);
+					for(ConfirmFileVO delfileVo : uploadFileList) {
+						File delFile = new File(path, delfileVo.getFileName());
+						if(delFile.exists()) {
+							boolean bool = delFile.delete();
+							logger.info("등록 실패시 파일도 삭제 여부 bool={}",bool);
+						}
+					}
+				}
 			}
+		} else {
+			msg = "파일업로드 실패";
+			url = "/confirm/write.do?formNo="+docuVo.getFormNo();
 		}
-		
 		model.addAttribute("msg",msg);
 		model.addAttribute("url",url);
 		
@@ -324,20 +272,113 @@ public class ConfirmController {
 	}
 	
 	@RequestMapping("/await.do")
-	public String await() {
-		logger.info("결재대기함 화면 보여주기");
+	public String await(@ModelAttribute ConfirmSearchVO svo, Model model) {
+		logger.info("결재대기함 화면 보여주기, 파라미터 searchVo={}",svo);
+		//결재대기함 플래그 VO에 입력
+		svo.setListType(DocumentService.CONFIRM_AWAIT);
+		
+		//paging 처리에 필요한 변수
+		PaginationInfo pageInfo = new PaginationInfo();
+		pageInfo.setBlockSize(ConfirmUtility.BLOCK_SIZE);
+		pageInfo.setRecordCountPerPage(ConfirmUtility.RECORD_COUNT_PER_PAGE);
+		pageInfo.setCurrentPage(svo.getCurrentPage());
+		
+		//searchVo에 값 세팅
+		svo.setRecordCountPerPage(ConfirmUtility.RECORD_COUNT_PER_PAGE);
+		svo.setFirstRecordIndex(pageInfo.getFirstRecordIndex());
+		logger.info("searchVo 최종값={}", svo);
+
+		List<DocumentVO> docuList = dService.selectAllDoc(svo);
+		logger.info("결재대기함 목록 조회 결과, docuList.size()={}",docuList.size());
+		
+		//이름 넣어주기 + 제목 길이 처리
+		for(DocumentVO imvo : docuList) {
+			String empName = dService.selectEmpNameByEmpNo(imvo.getEmpNo());
+			imvo.setEmpName(empName);
+
+			String str = imvo.getCfTitle();
+			String title = ConfirmUtility.titleLength(str, 36);
+			
+			imvo.setCfTitle(title);
+		}
+		
+		int totalRecord = dService.totalRecordCountDoc(svo);
+		logger.info("결재대기함 문서 개수 조회 결과, totalRecord={}",totalRecord);
+		
+		pageInfo.setTotalRecord(totalRecord);		
+		logger.info("검색어 searchKeyword={}",svo.getSearchKeyword());
+		
+		model.addAttribute("pageInfo",pageInfo);
+		model.addAttribute("docuList",docuList);
+		
 		return "confirm/await";
 	}
 	
 	@RequestMapping("/complete.do")
-	public String complete() {
-		logger.info("결재완료함 화면 보여주기");
+	public String complete(@ModelAttribute ConfirmSearchVO svo, Model model) {
+		logger.info("결재완료함 화면 보여주기, 파라미터 searchVo={}",svo);
+		//결재완료함 플래그 VO에 입력
+		svo.setListType(DocumentService.CONFIRM_COMPLETE);
+		
+		//paging 처리에 필요한 변수
+				PaginationInfo pageInfo = new PaginationInfo();
+				pageInfo.setBlockSize(ConfirmUtility.BLOCK_SIZE);
+				pageInfo.setRecordCountPerPage(ConfirmUtility.RECORD_COUNT_PER_PAGE);
+				pageInfo.setCurrentPage(svo.getCurrentPage());
+				
+				//searchVo에 값 세팅
+				svo.setRecordCountPerPage(ConfirmUtility.RECORD_COUNT_PER_PAGE);
+				svo.setFirstRecordIndex(pageInfo.getFirstRecordIndex());
+				logger.info("searchVo 최종값={}", svo);
+
+				List<DocumentVO> docuList = dService.selectAllDoc(svo);
+				logger.info("결재완료함 목록 조회 결과, docuList.size()={}",docuList.size());
+				
+				//제목 길이 처리
+				for(DocumentVO imvo : docuList) {
+					String str = imvo.getCfTitle();
+					String title = ConfirmUtility.titleLength(str, 44);
+					
+					imvo.setCfTitle(title);
+				}
+				
+				int totalRecord = dService.totalRecordCountDoc(svo);
+				logger.info("결재완료함 문서 개수 조회 결과, totalRecord={}",totalRecord);
+				
+				pageInfo.setTotalRecord(totalRecord);		
+				logger.info("검색어 searchKeyword={}",svo.getSearchKeyword());
+				
+				model.addAttribute("pageInfo",pageInfo);
+				model.addAttribute("docuList",docuList);
+		
 		return "confirm/complete";
 	}
 	
 	@RequestMapping("/detail.do")
-	public String detail() {
-		logger.info("상세페이지 - detail.jsp 보여주기");
+	public String detail(@RequestParam (defaultValue="") String cfNo, Model model) {
+		logger.info("상세페이지 보여주기, 파라미터={}", cfNo);
+		/* 
+			1. cfNo의 결재 문서 confirm테이블에서 가져옴 
+				= DocumentVO = docuVo (*)
+		*/
+		/*
+			2. cfNo의 결재라인 confirm_line 테이블에서 가져옴 
+				= List<ConfirmLineVO> (*)
+		*/
+		/*
+			3. 연계문서가 있다면 (docuVo.linkCfNo) confirm테이블에서 가져옴
+				= DocumentVO = docuVo2 (cfNo, cfTitle)
+		*/
+		/*
+			4. 파일이 있다면 (docuVo.isFile=="Y") confirm_file테이블 에서 가져옴
+				= List<ConfirmFileVO>
+		*/
+		/*
+			5. 의견이 있다면 (comm테이블에서 cfNo로 셀렉) comm테이블에서 가져옴
+				= List<CommentVO>
+		*/
+		
+		
 		return "confirm/detail";
 	}
 	
@@ -392,8 +433,42 @@ public class ConfirmController {
 	}
 	
 	@RequestMapping("/return.do")
-	public String return_get() {
-		logger.info("결재 반려함 보여주기");
+	public String return_get(@ModelAttribute ConfirmSearchVO svo, Model model) {
+		logger.info("결재반려함 화면 보여주기, 파라미터 searchVo={}",svo);
+		//결재반려함 플래그 VO에 입력
+		svo.setListType(DocumentService.CONFIRM_RETURN);
+		
+		//paging 처리에 필요한 변수
+		PaginationInfo pageInfo = new PaginationInfo();
+		pageInfo.setBlockSize(ConfirmUtility.BLOCK_SIZE);
+		pageInfo.setRecordCountPerPage(ConfirmUtility.RECORD_COUNT_PER_PAGE);
+		pageInfo.setCurrentPage(svo.getCurrentPage());
+		
+		//searchVo에 값 세팅
+		svo.setRecordCountPerPage(ConfirmUtility.RECORD_COUNT_PER_PAGE);
+		svo.setFirstRecordIndex(pageInfo.getFirstRecordIndex());
+		logger.info("searchVo 최종값={}", svo);
+
+		List<DocumentVO> docuList = dService.selectAllDoc(svo);
+		logger.info("결재반려함 목록 조회 결과, docuList.size()={}",docuList.size());
+		
+		//제목 길이 처리
+		for(DocumentVO imvo : docuList) {
+			String str = imvo.getCfTitle();
+			String title = ConfirmUtility.titleLength(str, 44);
+			
+			imvo.setCfTitle(title);
+		}
+		
+		int totalRecord = dService.totalRecordCountDoc(svo);
+		logger.info("결재반려함 문서 개수 조회 결과, totalRecord={}",totalRecord);
+		
+		pageInfo.setTotalRecord(totalRecord);		
+		logger.info("검색어 searchKeyword={}",svo.getSearchKeyword());
+		
+		model.addAttribute("pageInfo",pageInfo);
+		model.addAttribute("docuList",docuList);
+		
 		return "confirm/return";
 	}
 

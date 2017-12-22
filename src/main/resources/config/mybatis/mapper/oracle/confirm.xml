@@ -119,6 +119,10 @@
 	<update id="myConfirmOk" parameterType="ConfirmLineVO">
 		update confirm_line set line_stat=#{lineStat} where cf_no=#{cfNo} and emp_no = #{empNo}
 	</update>
+	
+	<select id="selectEmpNameByEmpNo" parameterType="int" resultType="String">
+		select emp_name from emp where emp_no=#{empNo}
+	</select>
 </mapper>
 
 

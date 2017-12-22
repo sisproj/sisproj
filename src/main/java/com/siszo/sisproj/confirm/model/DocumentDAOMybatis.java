@@ -36,6 +36,11 @@ public class DocumentDAOMybatis extends SqlSessionDaoSupport implements Document
 	public List<DocumentVO> completeDocSelByEmpNo(int empNo) {
 		return getSqlSession().selectList(namespace+".completeDocSelByEmpNo",empNo);
 	}
+
+	@Override
+	public String selectEmpNameByEmpNo(int empNo) {
+		return getSqlSession().selectOne(namespace+".selectEmpNameByEmpNo",empNo);
+	}
 	
 	
 }
