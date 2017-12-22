@@ -56,7 +56,9 @@
 					</table>
 					<a href="noticeList.do" class="btn btn-primary">목록</a>
 					<a href="noticeUpdate.do?notiNo=${param.notiNo}" class="btn btn-primary">수정</a>
-					<a href="deleteAction.jsp?bbsID=" class="btn btn-primary">삭제</a>
+					<%-- <a href="noticeDelete.do?notiNo=${param.notiNo}" class="btn btn-primary">삭제</a> --%>
+					<!-- <a href="#" class="btn btn-primary" id="deleteNotice">삭제</a> -->
+					<a href="#" class="btn btn-primary" onclick="del(${param.notiNo })">삭제</a>
 					<a href="noticeWrite.do" class="btn btn-primary pull-right">글쓰기</a>
 				</div>
 			</div>
@@ -66,7 +68,26 @@
 		<script type="text/javascript">
 			$(function(){
 				$('header nav ul li:nth-child(8) a').addClass('active');
+				
+				/* $('#deleteNotice').click(function() {
+					var result = confirm("삭제하시겠습니까?","");
+					console.log(result);
+					if(result) {
+						location.href 
+					= "noticeDelete.do?notiNo=${param.notiNo}";						
+					}
+				
+				}) */
+								
 			});
+			
+			function del(notiNo){
+				if(confirm("삭제하시겠습니까?")){
+					location.href
+					="<c:url value='/notice/noticeDelete.do?notiNo="+notiNo +"'/>";
+				}
+			}
+			
 		</script>
 		<!-- 4. 상단 네비 색먹이기 끝-->
 		<!-- 0. include부분 끝-->

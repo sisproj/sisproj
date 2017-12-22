@@ -27,6 +27,7 @@
 				$('#orgDown').hide();
 				$('#orgUp').show();
 				$('#organbody').hide();
+				$('#divEmpInfo').hide();
 			});
 
 			$('.deptPlus').each(function(){
@@ -44,86 +45,12 @@
 					$(this).hide();
 				});
 			});
-			
-		/* 	$('#orgSearchIcon').click(function(){
-				var searchKey = $('#orgSearch').val();
-				$('#organbody li').each(function(index, item){
-					var sentence = $(this).text();
-					var cnt = sentence.indexOf(searchKey);
-					if(cnt>=0){
-						$('#organbody ul ul li').hide();
-						$(this).show();
-					}
-				})
-			}); */
-				$('#organbody ul li ul li').click(function(){
-					if($('#choice_cfer').length){
-		                  if($('#choice_cfer').attr('class')=='on'){
-		                     return false;
-		                  }
-		               }
-					var empNo="empNo="+$(this).attr('id');
-					$.ajax({
-						url:"<c:url value='/organization/empInfo.do'/>",
-						data:empNo,
-						dataType:"json",
-						type:"get",
-						success:function(res){
-							$('#divEmpInfo').show();
-							var dept=res.deptName+"팀 "+res.posName;
-							var info=res.empName+" ("+res.empNo+")";
-							$('#divEmpImg img').prop('alt', res.empName);
-							$('#divEmpImg img').prop('src', "<c:url value='/emp_images/"+res.empImg+"'/>");
-							if(res.empImg==null){
-								$('#divEmpImg img').hide();
-								$('#noneImg').show();
-							}
-							$('#div0').html(dept);
-							$('#div1').html(info);
-							$('#div2 i').html(" "+res.empTel);
-							$('#div3 i').html(" "+res.empEmail);
-						},
-						error:function(xhr, status, error){
-							alert("에러 : "+status+"=>"+error);
-						}
-					});
-					event.preventDefault();
-				});	
-				$('#searchResult ul li ul li').click(function(){
-					if($('#choice_cfer').length){
-		                  if($('#choice_cfer').attr('class')=='on'){
-		                     return false;
-		                  }
-		               }
-					var searchEmpNo="searchEmpNo="+$(this).attr('id');
-					$.ajax({
-						url:"<c:url value='/organization/empInfo.do'/>",
-						data: searchEmpNo,
-						dataType:"json",
-						type:"get",
-						success:function(res){
-							alert(searchEmpNo);
-							$('#divEmpInfo').show();
-							var dept=res.deptName+"팀 "+res.posName;
-							var info=res.empName+" ("+res.empNo+")";
-							$('#divEmpImg img').prop('alt', res.empName);
-							$('#divEmpImg img').prop('src', "<c:url value='/emp_images/"+res.empImg+"'/>");
-							if(res.empImg==null){
-								$('#divEmpImg img').hide();
-								$('#noneImg').show();
-							}
-							$('#div0').html(dept);
-							$('#div1').html(info);
-							$('#div2 i').html(" "+res.empTel);
-							$('#div3 i').html(" "+res.empEmail);
-						},
-						error:function(xhr, status, error){
-							alert("에러 : "+status+"=>"+error);
-						}
-					});
-					event.preventDefault();
-				});	
-			
+
+			$('#organbody ul li ul li').click(function(){
+				/* alert("789"); */
+				empInfomation(this);
+			});	
+				
 			$('#orgSearchIcon').click(function(){
 				var keyword="keyword="+$('#orgSearch').val();
 				if($('#orgSearch').val()==''){
@@ -139,12 +66,17 @@
 							if(res.length>0 ){
 								$('#searchResult').show();
 								$('#searchResult ul li ul').html("");
+								$('#searchResult ul li').prepend("<i class='fa fa-exclamation-circle'></i>  검색 결과("+res.length+")");
 								$.each(res, function(idx, item){
-									$('#searchResult ul li ul').append("<li id='"+item.empNo+"'><i class='fa fa-user'></i> "+item.empName+" "+item.deptName+"팀 "+item.posName+" ("+item.empNo+")</li>");
+									$('#searchResult ul li ul')
+									.append("<li id='"+item.empNo+"'><i class='fa fa-user'></i> "
+											+item.empName+" "+item.deptName+"팀 "+item.posName+"</li>");
 								});							
 							}else{
 								$('#searchResult ul li ul').html("<li>해당직원이 없습니다.</li>");
 							}
+							
+							empSetting();
 						},
 						error:function(xhr, status, error){
 							alert("에러 : "+status+"=>"+error);
@@ -158,7 +90,49 @@
 			$('#divClose').click(function(){
 				$('#divEmpInfo').hide();
 			});
-		}); 
+		}); ///////////
+		
+		function empSetting(){
+			$('#organbody ul li ul li').click(function(){
+				/* alert("456"); */	
+				empInfomation(this);
+			});			
+		}
+		
+		function empInfomation(item){
+			/* alert("123"); */
+			if($('#choice_cfer').length){
+                  if($('#choice_cfer').attr('class')=='on'){
+                     return false;
+                  }
+               }
+			var empNo="empNo="+$(item).attr('id');
+			/* alert(empNo); */
+			$.ajax({
+				url:"<c:url value='/organization/empInfo.do'/>",
+				data:empNo,
+				dataType:"json",
+				type:"get",
+				success:function(res){
+					$('#divEmpInfo').show();
+					var dept=res.deptName+"팀 "+res.posName;
+					var info=res.empName+" ("+res.empNo+")";
+					$('#divEmpImg img').prop('alt', res.empName);
+					$('#divEmpImg img').prop('src', "<c:url value='/emp_images/"+res.empImg+"'/>");
+					if(res.empImg==null){
+						$('#divEmpImg img').hide();
+						$('#noneImg').show();
+					}
+					$('#div0').html(dept);
+					$('#div1').html(info);
+					$('#div2 i').html(" "+res.empTel);
+					$('#div3 i').html(" "+res.empEmail);
+				},
+				error:function(xhr, status, error){
+					alert("에러 : "+status+"=>"+error);
+				}
+			});
+		}
 	</script>
 	<style>
 		#organ {
@@ -219,7 +193,7 @@
 		#divEmpInfo{
 			width: 280px;
 			height: 460px;
-			border: 1px solid #333;
+			border: 1px solid rgb(245,245,245);
 			background: rgb(255,253,230);
 			position: absolute;
 			left: 298px;
@@ -249,7 +223,7 @@
 		}
 		#divEmp div{
 			text-align: center;
-			padding: 5px;
+			padding: 3px;
 		}
 		#divclose{
 			overflow: hidden;
@@ -293,11 +267,11 @@
 	     <!-- 조직도에서 검색했을 경우 결과를 보여줌 -->
 	     <div	id="searchResult">
 	     	<ul>
-	     		<li><i class="fa fa-exclamation-circle"></i>  검색 결과
+	     		<li><!-- <i class="fa fa-exclamation-circle"></i>  검색 결과 -->
 	     			<ul></ul>
 	     		</li>
 	     	</ul>
-	     	<hr>
+	     	<!-- <br><hr><br> -->
 	     </div>
 	     <!-- 조직도 : 검색 결과 끝 -->
 	     
