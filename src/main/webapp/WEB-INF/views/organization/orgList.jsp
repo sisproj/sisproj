@@ -66,12 +66,13 @@
 							if(res.length>0 ){
 								$('#searchResult').show();
 								$('#searchResult ul li ul').html("");
-								$('#searchResult ul li').prepend("<i class='fa fa-exclamation-circle'></i>  검색 결과("+res.length+")");
+							 	$('#searchResult ul li').html("");								
+								$('#searchResult ul li').html("<i class='fa fa-exclamation-circle'></i>  검색 결과("+res.length+")<ul></ul>");
 								$.each(res, function(idx, item){
 									$('#searchResult ul li ul')
 									.append("<li id='"+item.empNo+"'><i class='fa fa-user'></i> "
 											+item.empName+" "+item.deptName+"팀 "+item.posName+"</li>");
-								});							
+								});
 							}else{
 								$('#searchResult ul li ul').html("<li>해당직원이 없습니다.</li>");
 							}
