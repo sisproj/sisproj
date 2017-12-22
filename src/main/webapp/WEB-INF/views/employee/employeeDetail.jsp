@@ -22,6 +22,7 @@
 <article id="bodysection">
         <!-- 3. 내용 -->
     <div id="dimyPage">
+    	<div id="diInput">
    		<form id="frmEmp" name="frmEMP" method="post" 
    		action="<c:url value='/employee/employeeEdit.do?empNo=${vo.empNo }'/>">
 	      	  <fieldset>
@@ -31,14 +32,6 @@
 	       		<div id="diName">
 	      	 		<label for="name">이름</label><input type="text" id="empName" name="empName" maxlength="6" value="${vo.empName }">  
 	      	 	</div> 
-	       		<div id="empImg" style="overflow: hidden;">
-	       			<c:if test="${!empty vo.empImg }">
-		       	   		<img src="${pageContext.request.contextPath}/emp_images/${vo.empImg }" alt="${vo.empName }(${vo.empNo }) "/>       		    
-					</c:if>
-					<c:if test="${empty vo.empImg }">
-						<img alt="해당 사원의 사진이 없습니다" src="${pageContext.request.contextPath}/emp_images/defaultImages.jpg">
-					</c:if>
-				</div>	
 	       		<div id="diEnName">
 	       			<label for="enName">영어이름</label> <input type="text" id="empEName" name="empEName" value="${vo.empEName }">
 	       		</div>		
@@ -101,6 +94,18 @@
 				</div>
 		  </fieldset>	
 	   </form> 
+	   </div>
+	   <div id="diImg1">
+	        <div id="diImg2">
+	       			<c:if test="${!empty vo.empImg }">
+		       	   		<img src="${pageContext.request.contextPath}/emp_images/${vo.empImg }"
+		       	   		 alt="${vo.empName }(${vo.empNo })" />       		    
+					</c:if>
+					<c:if test="${empty vo.empImg }">
+						<i class="fa fa-user"></i>
+					</c:if>
+			</div>
+		</div>	
     </div>
 </article>
 <%@include file="employeeBottom.jsp" %>

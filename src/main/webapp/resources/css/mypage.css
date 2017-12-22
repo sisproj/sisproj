@@ -57,15 +57,26 @@
 	border-bottom: 2px solid #e2e2e2;
 	}
 
-	 #dimyPage #empImg{
+	 #dimyPage #diImg2{
 		background-color:white;
 		border:2px solid gray;
+		border-radius:100px;
 		width: 200px;
 		height: 200px;
 		left:800px;
-		top:55px;
+		top:20px;
 		position: absolute;
+		overflow: hidden;
 	} 
+	#dimyPage #diImg1 div{
+		text-align: center;
+		margin-top: 20px;
+	}
+	#dimyPage #diImg1 i{
+		font-size: 13em;
+		text-align:center;
+		margin-top: 20px;
+	}
 	#dimyPage fieldset	{
 		width: 90%;
 		padding: 0;
