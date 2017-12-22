@@ -65,10 +65,13 @@
 		update notice
 			set noti_title=#{notiTitle}, emp_no=#{empNo},
 			noti_content=#{notiContent}
-		where noti_no=#{notiNo}
-	
+		where noti_no=#{notiNo}	
 	</update>
-
+	
+	<!-- <delete id="noticeDelete" parameterType="int">
+		delete from notice where noti_no={notiNo}
+	</delete>
+ -->
 	
 </mapper>
 
