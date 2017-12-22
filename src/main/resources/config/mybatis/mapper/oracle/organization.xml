@@ -7,10 +7,15 @@
 		select * from dept order by dept_No
 	</select>
 	<select id="selectEmp" resultType="EmployeeVO">
-		select * from empView order by pos_no
+		select * from empView
+		where emp_outdate is null
+		order by pos_no
 	</select>
 	<select id="selectEmpByEmpNo" parameterType="int" resultType="EmployeeVO">
-		select * from empView where emp_No=#{empNo} order by pos_no
+		select * from empView 
+		where emp_No=#{empNo} 
+		and emp_outdate is null
+		order by pos_no
 	</select>
 	<select id="selectMulti" parameterType="string" resultType="EmployeeVO">
 		select * from EMPVIEW
@@ -18,6 +23,7 @@
 		or dept_name like '%' || #{keyword} || '%'
 		or pos_name like '%' || #{keyword} || '%'
 		or emp_no like '%' || #{keyword} || '%'
+		and emp_outdate is null
 		order by pos_no
 	</select>
 </mapper>
