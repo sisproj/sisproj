@@ -43,6 +43,7 @@ header nav ul li a {
 	text-align: center;
 	border-radius:10px 10px 0 0;
 	color: #fff;
+	font-size: 16px;
 }
 header nav ul li a.active{
 	color: #036;
@@ -153,6 +154,7 @@ aside nav li a{
 	line-height: 50px;
 	padding-left: 25%;
 	box-sizing:border-box;
+	font-size: 16px;
 }
 
 aside nav li:hover{
