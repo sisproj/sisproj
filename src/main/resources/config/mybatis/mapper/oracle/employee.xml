@@ -3,7 +3,14 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="config.mybatis.mapper.oracle.employee">
-	
+	<sql id="searchWhere">
+		<if test="searchKeyword!=null and searchKeyword!=''">
+			where ${searchCondition} like '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="searchKeyword==null and searchKeyword==''">
+			where empNo = ${empNo}
+		</if>
+	</sql>
 	<insert id="insertEmployee">
 		<selectKey keyProperty="empNo" resultType="int" order="BEFORE">
 			select emp_seq.nextval from dual
@@ -15,20 +22,36 @@
 	<select id="selectEmployeeByNo" parameterType="int" resultType="EmployeeVO">
 		select * from empView where emp_no=#{empNo}
 	</select>
-	
-	<select id="selectAllEmployee" resultType="EmployeeVO">
-		select * from empView
-	</select>
-	
+
 	<update id="editEmployee" parameterType="EmployeeVO">
 		update empView set emp_name=#{empName},
 		emp_eName=#{empEName},emp_tel=#{empTel},emp_ssn=#{empSsn},
 		emp_email=#{empEmail},emp_zipcode=#{empZipcode},emp_addr=#{empAddr},
 		emp_addr2=#{empAddr2},emp_hiredate=#{empHiredate},emp_school=#{empSchool},
-		emp_major=#{empMajor},emp_img=#{empImg},emp_sal=#{empSal},
+		emp_major=#{empMajor}
+		<if test="empImg!=null and !empImg.isEmpty()">
+		,emp_img=#{empImg}
+		</if>
+		,emp_sal=#{empSal},
 		dept_no=#{deptNo},pos_no=#{posNo}
 		where emp_no = #{empNo}
 	</update>
+	
+	<update id="employeeOut" parameterType="int">
+		update empView set emp_outdate=sysdate
+		where emp_no = #{empNo}
+	</update>
+	
+	<select id="selectTotalRecordCount" resultType="int" parameterType="SearchVO" >
+		select count(*) from empView
+		 <include refid="searchWhere"></include>  
+	</select>
+	
+	<select id="selectAllEmployee" resultType="EmployeeVO" parameterType="SearchVO">
+		select * from empView 
+		<include refid="searchWhere"></include>
+		order by pos_No
+	</select>
 </mapper>
 
 

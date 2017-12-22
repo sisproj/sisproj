@@ -33,8 +33,7 @@ public class DownloadView extends AbstractView{
 		if(file==null || !file.exists() || !file.canRead()) {
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out = response.getWriter();
-			out.println(
-"<script>alert('파일이 존재하지 않거나 손상되었습니다.');history.back();</script>");
+			out.println("<script>alert('파일이 존재하지 않거나 손상되었습니다.');history.back();</script>");
 			
 			return;
 		}

@@ -13,6 +13,12 @@ $(function(){
 		$('#frmTrash').prop('action','<c:url value="/addrBook/restore.do"/>');
 		$('#frmTrash').submit();
 	});
+	$('#divClear').click(function(){
+		if(confirm('영구 삭제 하시겠습니까?')){
+			$('#frmTrash').prop('action','<c:url value="/addrBook/addrBookClear.do"/>');
+			$('#frmTrash').submit();
+		}
+	});
 });
 </script>
         <!-- 3. 내용 -->
@@ -20,7 +26,7 @@ $(function(){
     <form name="frmTrash" id="frmTrash" action='<c:url value="/addrBook/addrBookTrash.do"/>' method="post">
         <div id="divBodysection">
 	        <div class="divAddrHeader">
-		        <a href="#"><div><i class="fa fa-trash"></i><span> 휴지통 비우기</span></div></a>		        
+		        <a href="#"><div id="divClear"><i class="fa fa-trash"></i><span> 휴지통 비우기</span></div></a>		        
 		        <a href="#"><div id="divRestore"><i class="fa fa-share-square-o"></i><span> 주소록으로 되돌리기</span></div></a>		        
 		        <div id="selectMenu">
 		        	<select>

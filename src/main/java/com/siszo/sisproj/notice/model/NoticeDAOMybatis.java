@@ -36,6 +36,17 @@ public class NoticeDAOMybatis extends SqlSessionDaoSupport
 	public int updateNotice(NoticeVO vo) {
 		return getSqlSession().update(namespace+".updateNotice", vo);
 	}
+
+	/*@Override
+	public int deleteNotice(int notiNo) {
+		return getSqlSession().delete(namespace+".deleteNotice", notiNo);
+	}*/
 	
+	
+/*	@Override
+	public int deleteNotice(NoticeVO vo) {
+		return getSqlSession().delete(namespace+".deleteNotice", vo);
+	}
+*/	
 	
 }

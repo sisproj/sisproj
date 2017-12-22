@@ -137,11 +137,13 @@
         <!-- 3. 내용 -->
         <!-- 사원로그인시 부서/직급/월급/사원번호 수정 불가 if걸기 -->
     <div id="dimyPage">
+    	<div id="diInput">
       	<form id="frmEmp" name="frmEnp"    	
       	action="<c:url value='/employee/employeeEdit.do?empNo=${vo.empNo }'/>" method="post" enctype="multipart/form-data">
-      	<input type="text" name="empTel" id="empTel">
-      	<input type="text" name="empSsn" id="empSsn">
-      	<input type="text" name="empEmail" id="empEmail">
+      	<input type="text" name="empTel" id="empTel" value="${vo.empTel }">
+      	<input type="text" name="empSsn" id="empSsn" value="${vo.empSsn }">
+      	<input type="text" name="empEmail" id="empEmail" value="${vo.empEmail }">
+      	<input type="text" name="oldFileName" id="oldFileName" value="${vo.empImg}">
       	  <fieldset>
   		    <div id="diId">
       	 		<label for="name">사원번호</label>
@@ -155,27 +157,44 @@
       	 		<label for="name">이름</label>
       	 		<input type="text" id=" empName" name=" empName" value="${vo.empName }">   
        		</div>
-       		<div id="empImg">
-	       			<c:if test="${!empty vo.empImg }">
-		       	   		<img src="${pageContext.request.contextPath}/emp_images/${vo.empImg }" alt="${vo.empName }(${vo.empNo }) "/>       		    
-					</c:if>
-					<c:if test="${empty vo.empImg }">
-						<img alt="해당 사원의 사진이 없습니다" src="${pageContext.request.contextPath}/emp_images/defaultImages.jpg">
-					</c:if>
-			</div>	
 	       	  <!--  <input type="image" src="" alt="이미지 등록" id="empImg">       		     -->
        		<div id="diEnName">
        		<label for="enName">영어이름</label> 
        		<input type="text" id="empEName" name="empEName" value="${vo.empEName }"> 
        		</div>
        		<div id="diDe">
-     			<label for="deptName">부서</label>
-				<c:forEach var="vo" items="${list }">
-					<select>
-						<option value="${vo.deptNo }">
-					${vo.deptName }</option>
-					</select>				
-				</c:forEach>
+       		<c:set var="deVo" value="${list }" />
+     			<label for="deptNo">부서</label>
+					<select id="deptNo" name="deptNo">
+					<option value="101" 
+					<c:if test="${vo.deptName=='기획' }">
+					selected</c:if>
+					>기획</option>
+					<option value="201" 
+					<c:if test="${vo.deptName=='인사' }">
+					selected</c:if>
+					>인사</option>
+					<option value="301" 
+					<c:if test="${vo.deptName=='재무' }">
+					selected</c:if>
+					>재무</option>			
+					<option value="401" 
+					<c:if test="${vo.deptName=='홍보' }">
+					selected</c:if>
+					>홍보</option>
+					<option value="501" 
+					<c:if test="${vo.deptName=='전산' }">
+					selected</c:if>
+					>전산</option>
+					<option value="601" 
+					<c:if test="${vo.deptName=='영업' }">
+					selected</c:if>
+					>영업</option>
+					<option value="701" 
+					<c:if test="${vo.deptName=='법무' }">
+					selected</c:if>
+					>법무</option>
+					</select>					
 			</div>
 			<div id="diPos">
 				<label for="posNo">직급</label>  
@@ -224,12 +243,16 @@
 				<label for="hobby">취미</label>   	
 				<input type="text" name="empHobby" id="empHobby" value="${vo.empHobby }">
 			</div>
-			 <div id="diZipcode">
+		    <div>
 		        <label for="zipcode" id="zipcodel">우편번호</label>
-		        <input type="text" name="empZipcode" id="empZipcode" value="${vo.empZipcode }">
+		        <input type="text" name="empZipcode" id="empZipcode" value="${vo.empZipcode }" style="width: 130px;">
 		        <input type="button" value="우편번호 찾기" id="btnZipcode" title="새창열림" onclick="daumPostcode()">
+		     </div>
+		     <div>
 				<label for="address" id="address">주소</label>
-				<input type="text" name="empAddr" id="empAddr" value="${vo.empAddr }">	
+				<input type="text" name="empAddr" id="empAddr" value="${vo.empAddr }">
+			</div>
+			<div>
 				<label for="addressDetail" id="addressDetail">상세주소</label>
 				<input type="text" name="empAddr2" id="empAddr2" value="${vo.empAddr2 }">
 			</div>
@@ -249,7 +272,7 @@
 			
 			<c:set var="tel" value="${fn:split(vo.empTel, '-') }"/>
 			<div id="diTel">
-			<label for="hp1">휴대폰</label>&nbsp;
+			<label for="hp1">휴대폰</label>
       		  <select name="hp1" id="hp1" title="휴대폰 앞자리">
 		            <option value="010" 
 		            	<c:if test="${tel[0]=='010'}">
@@ -286,7 +309,7 @@
 	        <input type="text" name="tel2" id="tel2" maxlength="4" title="휴대폰 가운데자리"
 	        	class="width_80" value="${tel[1]}">-
 	        <input type="text" name="tel3" id="tel3" maxlength="4" title="휴대폰 뒷자리"
-	        	class="width_80" value="${tel[2] }">
+	        	class="width_80" value="${tel[2] }" style="width: 90px;">
 	   		</div>
 	   		<div id="diDate">
        			<label for="empHiredate">입사일</label>
@@ -368,6 +391,18 @@
 	        	</div>
         	</fieldset>
         </form>
+        </div>
+        <div id="diImg1">
+	        <div id="diImg2">
+	       			<c:if test="${!empty vo.empImg }">
+		       	   		<img src="${pageContext.request.contextPath}/emp_images/${vo.empImg }"
+		       	   		 alt="${vo.empName }(${vo.empNo })" />       		    
+					</c:if>
+					<c:if test="${empty vo.empImg }">
+						<i class="fa fa-user"></i>
+					</c:if>
+			</div>
+		</div>	
     </div>
 </article>
 

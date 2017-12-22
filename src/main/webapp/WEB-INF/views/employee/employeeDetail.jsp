@@ -22,6 +22,7 @@
 <article id="bodysection">
         <!-- 3. 내용 -->
     <div id="dimyPage">
+    	<div id="diInput">
    		<form id="frmEmp" name="frmEMP" method="post" 
    		action="<c:url value='/employee/employeeEdit.do?empNo=${vo.empNo }'/>">
 	      	  <fieldset>
@@ -31,25 +32,13 @@
 	       		<div id="diName">
 	      	 		<label for="name">이름</label><input type="text" id="empName" name="empName" maxlength="6" value="${vo.empName }">  
 	      	 	</div> 
-	       		<div id="empImg">
-	       			<c:if test="${!empty vo.empImg }">
-		       	   		<img src="${pageContext.request.contextPath}/emp_images/${vo.empImg }" alt="${vo.empName }(${vo.empNo }) "/>       		    
-					</c:if>
-					<c:if test="${empty vo.empImg }">
-						<img alt="해당 사원의 사진이 없습니다" src="${pageContext.request.contextPath}/emp_images/defaultImages.jpg">
-					</c:if>
-				</div>	
 	       		<div id="diEnName">
 	       			<label for="enName">영어이름</label> <input type="text" id="empEName" name="empEName" value="${vo.empEName }">
-	       		</div>
-				<c:forEach var="vo" items="${list }">
-					<c:if test="${deVo.deptNo==vo.deptNo }">
+	       		</div>		
 					 <div id="diDe">
 						<label for="dept">부서</label>
 						<input type="text" id="deptName" name="deptName" value="${vo.deptName }">
 					</div> 
-					</c:if>
-				</c:forEach>
 				<div id="diPos">
 					<label for="position">직급</label>  
 					<input type="text" id="posName" name="posName" value="${vo.posName }">
@@ -58,12 +47,15 @@
 					<label for="hobby">취미</label>   	
 					<input type="text" name="empHobby" id="empHobby" value="${vo.empHobby }">
 				</div>
-		        <div id="diZipcode">
+		        <div>
 			        <label for="zipcode" id="zipcodel">우편번호</label>
-			        <input type="text" name="empZipcode" id="empZipcode" ReadOnly title="우편번호" style="width: 250px;" value="${vo.empZipcode }">
-					<!--<input type="button" value="우편번호 찾기" id="btnZipcode" title="새창열림"> -->
+			        <input type="text" name="empZipcode" id="empZipcode" ReadOnly title="우편번호" style="width: 130px;" value="${vo.empZipcode }">
+				</div>
+				<div>
 					<label for="address" id="address">주소</label>
-					<input type="text" name="empAddr" id="empAddr" value="${vo.empAddr }">	
+					<input type="text" name="empAddr" id="empAddr" value="${vo.empAddr }">
+				</div>
+				<div>	
 					<label for="addressDetail" id="addressDetail">상세주소</label>
 					<input type="text" name="empAddr2" id="empAddr2" value="${vo.empAddr2 }">
 				</div>
@@ -102,6 +94,18 @@
 				</div>
 		  </fieldset>	
 	   </form> 
+	   </div>
+	   <div id="diImg1">
+	        <div id="diImg2">
+	       			<c:if test="${!empty vo.empImg }">
+		       	   		<img src="${pageContext.request.contextPath}/emp_images/${vo.empImg }"
+		       	   		 alt="${vo.empName }(${vo.empNo })" />       		    
+					</c:if>
+					<c:if test="${empty vo.empImg }">
+						<i class="fa fa-user"></i>
+					</c:if>
+			</div>
+		</div>	
     </div>
 </article>
 <%@include file="employeeBottom.jsp" %>

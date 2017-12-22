@@ -5,6 +5,8 @@ import java.util.List;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.siszo.sisproj.common.SearchVO;
+
 @Repository
 public class EmployeeDAOMybatis extends SqlSessionDaoSupport implements EmployeeDAO{
 
@@ -20,10 +22,7 @@ public class EmployeeDAOMybatis extends SqlSessionDaoSupport implements Employee
 		return getSqlSession().selectOne(namespace+".selectEmployeeByNo",empNo);
 	}
 
-	@Override
-	public List<EmployeeVO> selectAllEmployee() {
-		return getSqlSession().selectList(namespace+".selectAllEmployee");
-	}
+	
 
 	@Override
 	public int editEmployee(EmployeeVO vo) {
@@ -35,6 +34,19 @@ public class EmployeeDAOMybatis extends SqlSessionDaoSupport implements Employee
 		return getSqlSession().selectList(namespace+".selectEmployeeByEmpName",empName);
 	}
 
+	@Override
+	public int employeeSelect(int empNo) {
+		return getSqlSession().update(namespace+".employeeOut",empNo);
+	}
+
+	@Override
+	public int selectTotalRecordCount(SearchVO vo) {
+		return getSqlSession().selectOne(namespace+".selectTotalRecordCount",vo);
+	}
+	@Override
+	public List<EmployeeVO> selectAllEmployee(SearchVO vo) {
+		return getSqlSession().selectList(namespace+".selectAllEmployee",vo);
+	}
 	
 
 	

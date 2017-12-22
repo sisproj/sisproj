@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.siszo.sisproj.common.FileUploadUtil;
 import com.siszo.sisproj.common.PaginationInfo;
@@ -108,7 +109,7 @@ public class NoticeController {
 	
 	
 	@RequestMapping("/noticeDetail.do")
-	public String detail(@RequestParam(defaultValue="0") int notiNo,
+	public String noticeDetail(@RequestParam(defaultValue="0") int notiNo,
 			HttpServletRequest request,	ModelMap model) {
 		logger.info("상세보기 파라미터 notiNo={}", notiNo);
 		
@@ -209,7 +210,74 @@ public class NoticeController {
 		return "common/message";		
 	}
 	
+	/*@RequestMapping("/noticeDelete.do")
+	public ModelAndView noticeDelete(
+		@RequestParam(value="notiNo", defaultValue="0") int notiNo) {
+		
+		logger.info("삭제 화면 파라미터, notiNo=", notiNo);
+		
+		int cnt = noticeService.deleteNotice(notiNo);
+		logger.info("삭제 처리 파라미터, cnt=", cnt);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:/notice/noticeList.do");
+		
+		return mav;
+		
+	}
 	
+	*/
+	
+	
+	
+	
+	/*
+	@RequestMapping(value="/noticeDelete.do", method=RequestMethod.GET)
+	public String noticeDelete_get(@RequestParam(defaultValue="0") int notiNo,
+			@ModelAttribute NoticeVO vo, ModelMap model) {
+		logger.info("삭제 화면 파라미터, notiNo={}", notiNo);
+		
+		String msg="";
+		String url="/notice/noticeDelete.do?notiNo="+vo.getNotiNo();
+		
+		int cnt =noticeService.deleteNotice(vo);
+		
+		if(cnt>0) {
+			msg="삭제되었습니다.";
+			url="/notice/noticeDelete.do?notiNo=?"+vo.getNotiNo();
+		}else {
+			msg="삭제 실패";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "common/messge";
+	}
+	
+	@RequestMapping(value="/noticeDelete.do", method=RequestMethod.POST)
+	public String noticeDelete_post(@ModelAttribute NoticeVO vo,
+			HttpServletRequest request, Model model) {
+		logger.info("삭제처리 파라미터 vo={}", vo);
+		
+		String msg="";
+		String url="/notice/noticeDelete.do?notiNo="+vo.getNotiNo();
+		
+		int cnt =noticeService.deleteNotice(vo);
+		
+		if(cnt>0) {
+			msg="삭제되었습니다.";
+			url="/notice/noticeDelete.do?notiNo=?"+vo.getNotiNo();
+		}else {
+			msg="삭제 실패";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "common/messge";
+	}
+	*/
 }
 
 
