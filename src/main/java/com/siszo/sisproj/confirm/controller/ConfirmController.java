@@ -2,6 +2,7 @@ package com.siszo.sisproj.confirm.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.text.html.HTMLEditorKit.LinkController;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -140,6 +142,8 @@ public class ConfirmController {
 		for(DocumentVO imvo : docuList) {
 			String str = imvo.getCfTitle();
 			String title = ConfirmUtility.titleLength(str, 44);
+			//스크립트 보안 : 꺽쇠 변환
+			title = ConfirmUtility.changeTag(title);
 			
 			imvo.setCfTitle(title);
 		}
@@ -306,8 +310,9 @@ public class ConfirmController {
 			imvo.setEmpName(empName);
 
 			String str = imvo.getCfTitle();
-			String title = ConfirmUtility.titleLength(str, 36);
-			
+			String title = ConfirmUtility.titleLength(str, 28);
+			//스크립트 보안 : 꺽쇠 변환
+			title = ConfirmUtility.changeTag(title);
 			imvo.setCfTitle(title);
 		}
 		
@@ -350,7 +355,8 @@ public class ConfirmController {
 				for(DocumentVO imvo : docuList) {
 					String str = imvo.getCfTitle();
 					String title = ConfirmUtility.titleLength(str, 44);
-					
+					//스크립트 보안 : 꺽쇠 변환
+					title = ConfirmUtility.changeTag(title);
 					imvo.setCfTitle(title);
 				}
 				
@@ -373,7 +379,11 @@ public class ConfirmController {
 		//1. cfNo의 결재 문서 confirm테이블에서 가져옴 + 양식정보도 가져와서 vo에 삽입 = DocumentVO = docuVo (*)
 		DocumentVO docVo = dService.selectDocByCfNo(cfNo);
 		logger.info("해당 문서 조회, docuVo={}",docVo);
-		
+		//스크립트 보안 : 꺽쇠 변환
+		String title = docVo.getCfTitle();
+		title = ConfirmUtility.changeTag(title);
+		docVo.setCfTitle(title);
+				
 		//2. 해당 기안자 조회 해서 EmployeeVO 구함(기안자, 부서이름 조회용)
 		EmployeeVO eVo = dService.selectByEmpNo(docVo.getEmpNo());
 		logger.info("해당 문서 작성자 조회, eVo={}",eVo);
@@ -386,6 +396,10 @@ public class ConfirmController {
 		DocumentVO linkDoc = new DocumentVO();
 		if(docVo.getLinkCfNo()!=null && !docVo.getLinkCfNo().isEmpty()) {
 			linkDoc = dService.selectDocByCfNo(docVo.getLinkCfNo());
+			//스크립트 보안 : 꺽쇠 변환
+			title = linkDoc.getCfTitle();
+			title = ConfirmUtility.changeTag(title);
+			linkDoc.setCfTitle(title);
 			logger.info("해당 문서의 연계문서, linkDoc={}",linkDoc);
 		}
 		
@@ -401,6 +415,12 @@ public class ConfirmController {
 		List<CommentVO> commVoList = new ArrayList<CommentVO>();
 		if(isComment>0) {
 			commVoList = commService.selectCommByCfNo(cfNo);
+			for(CommentVO comm : commVoList) {
+				//스크립트보안 : 꺽쇠변환
+				String cont = comm.getCommContent();
+				ConfirmUtility.changeTag(cont);
+				comm.setCommContent(cont);
+			}
 			logger.info("해당 문서의 의견 리스트, commVoList.size()={}",commVoList.size());
 		}
 		
@@ -492,7 +512,8 @@ public class ConfirmController {
 		for(DocumentVO imvo : docuList) {
 			String str = imvo.getCfTitle();
 			String title = ConfirmUtility.titleLength(str, 44);
-			
+			//스크립트 보안 : 꺽쇠처리
+			ConfirmUtility.changeTag(title);
 			imvo.setCfTitle(title);
 		}
 		

@@ -53,7 +53,7 @@
 							<tr>
 								<td><input type="checkbox" name="docuItems[${status.index }].cfNo" value="${docuVo.cfNo }"></td>
 								<td>${docuVo.cfNo }</td>
-								<td><a href="#">${docuVo.cfTitle }</a></td>
+								<td><a href="<c:url value='/confirm/detail.do?cfNo=${docuVo.cfNo }'/>">${docuVo.cfTitle }</a></td>
 								<td><fmt:formatDate value="${docuVo.cfRegdate }" pattern="yyyy-MM-dd"/></td>
 							</tr>
 						</c:forEach>

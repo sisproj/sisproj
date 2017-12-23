@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ include file="../inc/top.jsp" %>
-<link href="<c:url value='/resources/css/pagecss/confirm_tempsave.css'/>" rel="stylesheet" type="text/css">
+<link href="<c:url value='/resources/css/pagecss/confirm_list.css'/>" rel="stylesheet" type="text/css">
 <!-- 0. include부분 -->
 			<nav>
 				<ul>
@@ -38,10 +38,10 @@
 				<table id="awaittb">
 					<thead>
 						<tr>
-							<th><input type="checkbox" id="allSelect" value="문서번호받기"></th>
 							<th>문서번호</th>
 							<th>제목</th>
 							<th>기안일</th>
+							<th>상태</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -51,10 +51,10 @@
 						<c:if test="${!empty docuList }">
 							<c:forEach var="docuVo" items="${docuList }" varStatus="status">
 								<tr>
-									<td><input type="checkbox" name="docuItems[${status.index }].cfNo" value="${docuVo.cfNo }"></td>
 									<td>${docuVo.cfNo }</td>
-									<td><a href="#">${docuVo.cfTitle }</a></td>
+									<td><a href="<c:url value='/confirm/detail.do?cfNo=${docuVo.cfNo }'/>">${docuVo.cfTitle }</a></td>
 									<td><fmt:formatDate value="${docuVo.cfRegdate }" pattern="yyyy-MM-dd"/></td>
+									<td>${docuVo.cfStatus }</td>
 								</tr>
 							</c:forEach>
 						</c:if>

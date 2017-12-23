@@ -91,18 +91,15 @@
 	font-size: 1.17em;
 }
 #awaittb th:nth-child(1){
-	width: 5%;
-}
-#awaittb th:nth-child(2){
-	width: 15%;
-}
-#awaittb th:nth-child(3){
-	width: 45%;
-}
-#awaittb th:nth-child(4){
 	width: 20%;
 }
-#awaittb th:nth-child(5){
+#awaittb th:nth-child(2){
+	width: 45%;
+}
+#awaittb th:nth-child(3){
+	width: 20%;
+}
+#awaittb th:nth-child(4){
 	width: 15%;
 }
 #awaittb td {

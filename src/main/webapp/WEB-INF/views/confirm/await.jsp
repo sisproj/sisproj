@@ -53,7 +53,7 @@
 							<c:forEach var="docuVo" items="${docuList }" varStatus="status">
 								<tr>
 									<td>${docuVo.cfNo }</td>
-									<td><a href="#">${docuVo.cfTitle }</a></td>
+									<td><a href="<c:url value='/confirm/detail.do?cfNo=${docuVo.cfNo }'/>">${docuVo.cfTitle }</a></td>
 									<td>${docuVo.empName }</td>
 									<td><fmt:formatDate value="${docuVo.cfRegdate }" pattern="yyyy-MM-dd"/></td>
 									<td>${docuVo.cfStatus }</td>

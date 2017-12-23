@@ -101,7 +101,7 @@
 		        select * from confirm 
 		        where cf_status = #{listType}
 		        and (cf_no like '%' || #{searchKeyword} || '%' or cf_title like '%' || #{searchKeyword} || '%' or cf_content like '%' || #{searchKeyword} || '%')
-		        order by cf_no desc
+		        order by cf_regdate desc
 		    ) blist
 		)
 	    <![CDATA[

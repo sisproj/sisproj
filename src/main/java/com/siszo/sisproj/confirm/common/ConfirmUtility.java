@@ -14,7 +14,6 @@ public class ConfirmUtility {
     		contents = contents.replace("\"", "&quot;");
     		contents = contents.replace("\'", "&#39;");
     	}
-    	System.out.println("contents="+contents);
     	return contents;
     }
     

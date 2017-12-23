@@ -33,8 +33,8 @@
 					<!-- 임시저장인경우 -->
 					<input type="button" id="cf_edit" value="수정">&nbsp;&nbsp;
 					<input type="button" id="cf_del" value="삭제">&nbsp;&nbsp;
-					<!-- 결재반려인 경우 수정페이지로 보내는 버튼 -->
-					<input type="button" id="cf_re" value="재 상신">
+					<!--엑셀파일로 다운로드-->
+					<a class="button" href="#">엑셀로 다운</a>
 				</div>
 			<!-- writeform -->	
 				<div name="writeFrm" id="writeFrm">
