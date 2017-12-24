@@ -9,6 +9,7 @@ public interface DocumentDAO {
 	public int selectConfirmSEQ();
 	public int insertConfirmDoc(DocumentVO vo);
 	public List<DocumentVO> selectAllDoc(ConfirmSearchVO svo);
+	public List<DocumentVO> selectForAwait(ConfirmSearchVO svo);
 	public int totalRecordCountDoc(ConfirmSearchVO svo);
 	public List<DocumentVO> completeDocSelByEmpNo(int empNo);
 	public EmployeeVO selectByEmpNo(int empNo);

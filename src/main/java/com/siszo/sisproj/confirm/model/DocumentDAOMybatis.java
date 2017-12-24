@@ -30,6 +30,11 @@ public class DocumentDAOMybatis extends SqlSessionDaoSupport implements Document
 	}
 
 	@Override
+	public List<DocumentVO> selectForAwait(ConfirmSearchVO svo) {
+		return getSqlSession().selectList(namespace+".selectForAwait",svo);
+	}
+	
+	@Override
 	public int totalRecordCountDoc(ConfirmSearchVO svo) {
 		return getSqlSession().selectOne(namespace+".totalRecordCountDoc",svo);
 	}

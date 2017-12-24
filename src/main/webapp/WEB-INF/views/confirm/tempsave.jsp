@@ -10,6 +10,7 @@
 				<li><a href="<c:url value='/confirm/await.do'/>"><i class="fa fa-hdd-o"></i>&nbsp;<span>결재 대기함</span></a></li>
 				<li><a href="<c:url value='/confirm/complete.do'/>"><i class="fa fa-file-text"></i>&nbsp;<span>결재 완료함</span></a></li>
 				<li><a href="<c:url value='/confirm/return.do'/>"><i class="fa fa-history"></i>&nbsp;<span>결재 반려함</span></a></li>
+					<li><a href="<c:url value='/confirm/postbox.do'/>"><i class="fa fa-archive"></i>&nbsp;<span>참조 수신함</span></a></li>
 				<li><a href="<c:url value='/confirm/setting.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>결재 환경 설정</span></a></li>
 				<li><a href="<c:url value='/confirm/adm/typeform.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>결재 양식 관리</span></a></li>
 			</ul>	
@@ -53,7 +54,14 @@
 							<tr>
 								<td><input type="checkbox" name="docuItems[${status.index }].cfNo" value="${docuVo.cfNo }"></td>
 								<td>${docuVo.cfNo }</td>
-								<td><a href="<c:url value='/confirm/detail.do?cfNo=${docuVo.cfNo }'/>">${docuVo.cfTitle }</a></td>
+								<td><a href="<c:url value='/confirm/detail.do?cfNo=${docuVo.cfNo }'/>">
+									<c:if test="${docuVo.isRead == 'N' }">
+										<b>${docuVo.cfTitle } <img alt="New" src="<c:url value='/resources/images/icon_new.gif'/>"></b>
+									</c:if>
+									<c:if test="${docuVo.isRead == 'Y' }">
+										${docuVo.cfTitle }
+									</c:if>
+								</a></td>
 								<td><fmt:formatDate value="${docuVo.cfRegdate }" pattern="yyyy-MM-dd"/></td>
 							</tr>
 						</c:forEach>
@@ -93,4 +101,5 @@
 		<script type="text/javascript" src="<c:url value='/resources/js/pagejs/confirm.js'/>"></script>
 	<!-- 4. 상단 네비 색먹이기 끝-->
 <!-- 0. include부분 끝-->
+<%@ include file="../inc/bottom.jsp" %>
 <script type="text/javascript" src="<c:url value='/resources/js/pagejs/confirm_list.js'/>"></script>

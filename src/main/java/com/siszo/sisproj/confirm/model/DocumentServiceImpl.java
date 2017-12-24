@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.siszo.sisproj.confirm.comment.model.CommentVO;
 import com.siszo.sisproj.confirm.common.ConfirmSearchVO;
 import com.siszo.sisproj.confirm.confirmline.model.ConfirmLineDAO;
 import com.siszo.sisproj.confirm.confirmline.model.ConfirmLineVO;
 import com.siszo.sisproj.confirm.file.model.ConfirmFileDAO;
 import com.siszo.sisproj.confirm.file.model.ConfirmFileVO;
+import com.siszo.sisproj.confirm.isread.model.CfIsReadDAO;
 import com.siszo.sisproj.employee.model.EmployeeVO;
 
 
@@ -27,6 +27,8 @@ public class DocumentServiceImpl implements DocumentService {
 	private ConfirmFileDAO cfDao;
 	@Autowired
 	private ConfirmLineDAO clDao;
+	@Autowired
+	private CfIsReadDAO cirDao;
 
 	@Override
 	public int selectConfirmSEQ() {
@@ -36,6 +38,11 @@ public class DocumentServiceImpl implements DocumentService {
 	@Override
 	public List<DocumentVO> selectAllDoc(ConfirmSearchVO svo) {
 		return dDao.selectAllDoc(svo);
+	}
+	
+	@Override
+	public List<DocumentVO> selectForAwait(ConfirmSearchVO svo) {
+		return dDao.selectForAwait(svo);
 	}
 
 	@Override
@@ -49,7 +56,7 @@ public class DocumentServiceImpl implements DocumentService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional 
 	public int insertConfirmDoc(DocumentVO docuVo, List<ConfirmFileVO> uploadFileList, List<ConfirmLineVO> clVoList) {
 		logger.info("글쓰저 DB 등록 처리, 파라미터 docuVo={}, uploadFileList.size()={}",docuVo,uploadFileList.size());
 		logger.info("파라미터 clVoList.size()={}", clVoList.size());
@@ -63,7 +70,6 @@ public class DocumentServiceImpl implements DocumentService {
 				result=1;
 			} else {
 				result=0;
-				return result;
 			}
 			//파일정보 db 저장 - confirm_file
 			for(ConfirmFileVO  cfVo : uploadFileList) {
@@ -73,7 +79,6 @@ public class DocumentServiceImpl implements DocumentService {
 					result=1;
 				} else {
 					result=0;
-					return result;					
 				}
 			}
 			//결재라인 db저장 - confirm_line
@@ -84,15 +89,33 @@ public class DocumentServiceImpl implements DocumentService {
 					result=1;
 				} else {
 					result=0;
-					return result;
 				}
 			}
-			
+			//내글 읽은여부 db저장 - cf_is_read
+			cnt = cirDao.insertIsRead(docuVo);
+			logger.info("cf_is_read 테이블(글 읽은 여부 테이블) Insert 결과, cnt={}", cnt);
+			if(cnt>0) {
+				result=1;
+			} else {
+				result=0;
+			}
+			//바로 본인결재라면 읽은여부 다음결재자도 주기 - cf_is_read
+			if(docuVo.getEmpNo()!=docuVo.getCfConfirmer()) {
+				DocumentVO nextCfVo= new DocumentVO();
+				nextCfVo.setCfNo(docuVo.getCfNo());
+				nextCfVo.setEmpNo(docuVo.getCfConfirmer());
+				cnt = cirDao.insertIsRead(nextCfVo);
+				if(cnt>0) {
+					result=1;
+				} else {
+					result=0;
+				}				
+			}
 		} catch (RuntimeException e) {
 			result=0;
 			e.printStackTrace();
 		}
-		
+		//throw new RuntimeException("db insert오류");
 		return result;
 	}
 

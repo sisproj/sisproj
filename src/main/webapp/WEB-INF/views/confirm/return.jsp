@@ -10,6 +10,7 @@
 					<li><a href="<c:url value='/confirm/await.do'/>"><i class="fa fa-hdd-o"></i>&nbsp;<span>결재 대기함</span></a></li>
 					<li><a href="<c:url value='/confirm/complete.do'/>"><i class="fa fa-file-text"></i>&nbsp;<span>결재 완료함</span></a></li>
 					<li class="active"><a href="<c:url value='/confirm/return.do'/>"><i class="fa fa-history"></i>&nbsp;<span>결재 반려함</span></a></li>
+					<li><a href="<c:url value='/confirm/postbox.do'/>"><i class="fa fa-archive"></i>&nbsp;<span>참조 수신함</span></a></li>
 					<li><a href="<c:url value='/confirm/setting.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>결재 환경 설정</span></a></li>
 					<li><a href="<c:url value='/confirm/adm/typeform.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>결재 양식 관리</span></a></li>
 				</ul>
@@ -52,7 +53,14 @@
 							<c:forEach var="docuVo" items="${docuList }" varStatus="status">
 								<tr>
 									<td>${docuVo.cfNo }</td>
-									<td><a href="<c:url value='/confirm/detail.do?cfNo=${docuVo.cfNo }'/>">${docuVo.cfTitle }</a></td>
+									<td><a href="<c:url value='/confirm/detail.do?cfNo=${docuVo.cfNo }'/>">
+										<c:if test="${docuVo.isRead == 'N' }">
+											<b>${docuVo.cfTitle } <img alt="New" src="<c:url value='/resources/images/icon_new.gif'/>"></b>
+										</c:if>
+										<c:if test="${docuVo.isRead == 'Y' }">
+											${docuVo.cfTitle }
+										</c:if>
+									</a></td>
 									<td><fmt:formatDate value="${docuVo.cfRegdate }" pattern="yyyy-MM-dd"/></td>
 									<td>${docuVo.cfStatus }</td>
 								</tr>

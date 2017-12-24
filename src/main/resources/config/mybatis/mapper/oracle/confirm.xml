@@ -74,8 +74,8 @@
 	</select>
 	
 	<insert id="insertConfirmDoc" parameterType="DocumentVO">
-		insert into confirm(cf_no, form_no, emp_no, link_cf_no, cf_title, cf_content, cf_isfile, cf_Status)
-		values(#{cfNo}, #{formNo}, #{empNo}, #{linkCfNo}, #{cfTitle}, #{cfContent}, #{cfIsfile}, #{cfStatus})
+		insert into confirm(cf_no, form_no, emp_no, link_cf_no, cf_title, cf_content, cf_isfile, cf_Status, cf_confirmer)
+		values(#{cfNo}, #{formNo}, #{empNo}, #{linkCfNo}, #{cfTitle}, #{cfContent}, #{cfIsfile}, #{cfStatus}, #{cfConfirmer})
 	</insert>
 	
 	<insert id="insertConfirmFile" parameterType="ConfirmFileVO">
@@ -90,8 +90,8 @@
 		<selectKey keyProperty="lineNo" resultType="int" order="BEFORE">
 			select confirm_line_seq.nextval from dual
 		</selectKey>
-		insert into confirm_line(line_no, emp_no, line_stat, cf_no)
-		values(#{lineNo}, #{empNo}, #{lineStat}, #{cfNo})
+		insert into confirm_line(line_no, emp_no, line_stat, cf_no, line_order)
+		values(#{lineNo}, #{empNo}, #{lineStat}, #{cfNo}, #{lineOrder})
 	</insert>
 	
 	<select id="selectAllDoc" parameterType="ConfirmSearchVO" resultType="DocumentVO">
@@ -99,7 +99,21 @@
 		    select rownum as RNUM, blist.* from
 		    (
 		        select * from confirm 
-		        where cf_status = #{listType}
+		        where cf_status = #{listType} and emp_no=#{empNo}
+		        and (cf_no like '%' || #{searchKeyword} || '%' or cf_title like '%' || #{searchKeyword} || '%' or cf_content like '%' || #{searchKeyword} || '%')
+		        order by cf_regdate desc
+		    ) blist
+		)
+	    <![CDATA[
+		where RNUM>#{firstRecordIndex} and RNUM<=#{firstRecordIndex}+#{recordCountPerPage} ]]>
+	</select>
+	
+	<select id="selectForAwait" parameterType="ConfirmSearchVO" resultType="DocumentVO">
+		select * from (
+		    select rownum as RNUM, blist.* from
+		    (
+		        select * from confirm 
+		        where cf_status = #{listType} and (cf_confirmer = #{cfConfirmer} or emp_no=#{empNo})
 		        and (cf_no like '%' || #{searchKeyword} || '%' or cf_title like '%' || #{searchKeyword} || '%' or cf_content like '%' || #{searchKeyword} || '%')
 		        order by cf_regdate desc
 		    ) blist
@@ -158,6 +172,34 @@
 		join emp e
 		on c.MEM_NO = e.EMP_NO
 		where cf_no=#{cfNo}
+	</select>
+	
+	<insert id="insertIsRead" parameterType="DocumentVO">
+		insert into cf_is_read(seq_no,emp_no,cf_no)
+		values(CF_IS_READ_SEQ.nextval, #{empNo}, #{cfNo})
+	</insert>
+	
+	<select id="selectIsReadByCfNo" parameterType="CfIsReadVO" resultType="String">
+		select is_read from cf_is_read where cf_no = #{cfNo} and emp_no=#{empNo}
+	</select>
+	
+	<update id="updateIsReadDoc" parameterType="CfIsReadVO">
+		update cf_is_read set is_read = #{isRead} where cf_no = #{cfNo} and emp_no=#{empNo}
+	</update>
+	
+	<select id="mainBoxSet" parameterType="CfIsReadVO" resultType="int">
+		select count(*)
+		from cf_is_read r
+		join confirm c
+		on r.cf_no = c.cf_no
+		where r.emp_no = #{empNo} and r.is_read=#{isRead} and c.cf_status=#{cfStaus}
+	</select>
+	<select id="mainBoxSetAll" parameterType="CfIsReadVO" resultType="int">
+		select count(*)
+		from cf_is_read r
+		join confirm c
+		on r.cf_no = c.cf_no
+		where r.emp_no = #{empNo} and c.cf_status=#{cfStaus}
 	</select>
 </mapper>
 
