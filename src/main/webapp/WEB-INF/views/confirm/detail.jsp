@@ -40,6 +40,10 @@
 						<input type="button" id="cf_edit" value="수정">&nbsp;&nbsp;
 						<input type="button" id="cf_del" value="삭제">&nbsp;&nbsp;
 					</c:if>
+					<!-- 결재반려인 경우 -->
+					<c:if test="${docVo.cfStatus == '결재반려' }">
+						<input type="button" id="cf_del" value="삭제">&nbsp;&nbsp;
+					</c:if>
 					<!--엑셀파일로 다운로드는 결재완료인경우만-->
 					<c:if test="${docVo.cfStatus == '결재완료' }">
 						<a class="button" href="#">엑셀로 다운</a>
@@ -90,7 +94,10 @@
 											
 										</c:if>
 									</span>
-									<span>${clVo.empName }</span>
+									<span>${clVo.empName } ${clVo.posName }
+									<c:if test="${clVo.lineStat == '승인'}">
+										<br><fmt:formatDate value="${clVo.lineRegdate }" pattern="yy-MM-dd"/>
+									</c:if></span>
 								</div>
 							</c:forEach>
 						</div>
@@ -183,12 +190,14 @@
 <%@ include file="../inc/bottom.jsp" %>
 <script type="text/javascript">
 	$(function(){
-		$('#listbtn #cf_edit').click(function(){
-			location.href="<c:url value='/confirm/edit.do'/>";
+		$('input#cf_edit').click(function(){
+			$(location).attr('href',"<c:url value='/confirm/edit.do?cfNo=${docVo.cfNo }'/>");
 		});
 
-		$('#listbtn #cf_del').click(function(){
-			location.href="<c:url value='/confirm/edit.do'/>";
+		$('input#cf_del').click(function(){
+			if(confirm('정말 문서를 삭제 하시겠습니까?')){
+				$(location).attr('href',"<c:url value='/confirm/delete.do?cfNo=${docVo.cfNo }'/>");
+			}
 		});
 	});
 </script>

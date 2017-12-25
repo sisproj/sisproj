@@ -53,6 +53,21 @@ public class DocumentDAOMybatis extends SqlSessionDaoSupport implements Document
 	public DocumentVO selectDocByCfNo(String cfNo) {
 		return getSqlSession().selectOne(namespace+".selectDocByCfNo",cfNo);
 	}
+
+	@Override
+	public int updateConfirmDoc(DocumentVO docuVo) {
+		return getSqlSession().update(namespace+".updateConfirmDoc",docuVo);
+	}
+
+	@Override
+	public int deleteConfirmLine(String cfNo) {
+		return getSqlSession().delete(namespace+".deleteConfirmLine",cfNo);
+	}
+
+	@Override
+	public int deleteDocuByCfNo(String cfNo) {
+		return getSqlSession().delete(namespace+".deleteDocuByCfNo",cfNo);
+	}
 	
 	
 }

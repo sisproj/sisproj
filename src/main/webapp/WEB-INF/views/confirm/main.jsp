@@ -67,7 +67,7 @@
 						<tbody>
 							<c:if test="${empty awaitList }">
 								<tr>
-									<td colspan="3">문서가 없습니다.</td>
+									<td colspan="3" align="center">문서가 없습니다.</td>
 								</tr>
 							</c:if>
 							<c:if test="${!empty awaitList }">

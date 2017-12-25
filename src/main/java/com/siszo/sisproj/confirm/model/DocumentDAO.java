@@ -14,4 +14,7 @@ public interface DocumentDAO {
 	public List<DocumentVO> completeDocSelByEmpNo(int empNo);
 	public EmployeeVO selectByEmpNo(int empNo);
 	public DocumentVO selectDocByCfNo(String cfNo);
+	public int updateConfirmDoc(DocumentVO docuVo);
+	public int deleteConfirmLine(String cfNo);
+	public int deleteDocuByCfNo(String cfNo);
 }

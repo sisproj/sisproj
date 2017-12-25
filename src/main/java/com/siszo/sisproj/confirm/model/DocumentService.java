@@ -27,4 +27,6 @@ public interface DocumentService {
 	public List<DocumentVO> completeDocSelByEmpNo(int empNo);
 	public EmployeeVO selectByEmpNo(int empNo);
 	public DocumentVO selectDocByCfNo(String cfNo);
+	public int updateConfirmDoc(DocumentVO vo, List<ConfirmFileVO> uploadFileList, List<ConfirmLineVO> clVoList);
+	public int deleteDocuByCfNo(String cfNo);
 }

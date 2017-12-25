@@ -141,13 +141,17 @@
 			$('#cf_ch_savedline ul li i').prop('class','fa fa-folder-o');
 			$('#choice_cfer').fadeIn();
 			$('#choice_cfer').attr('class','on');
+			$('#organ').css('height','500px');
+			$('#orgUp').hide();
+			$('#orgDown').show();
+			$('#organbody').show();
 		});
 
 		var order = 0;
 		//조직도에서 사원 리스트 더블클릭시 리스트에 추가
 		$('#organbody ul li ul li').dblclick(function(){
 			var empNo = $(this).attr('id');
-			var sessempNo = '${empNo}';
+			var sessempNo = '${eVo.empNo }';
 			var status = $('#choice_cfer').attr('class');
 			if($('#confirmers').attr('class')=='favorite' && empNo == sessempNo){
 				alert('자기자신은 선택할 수 없습니다.');
@@ -201,7 +205,10 @@
 		$('#cf_win_close').click(function(){
 			$('#choice_cfer').fadeOut();
 			$('#choice_cfer').attr('class','off');
-			$('#confirmers').html('');
+			$('#organ').css('height', '40px');
+			$('#orgDown').hide();
+			$('#orgUp').show();
+			$('#organbody').hide();
 			order=0;
 		});
 		
@@ -211,7 +218,7 @@
 			if($('#confirmers').attr('class')=='favorite'){
 				alert('저장된 리스트는 삭제 할 수 없습니다.');
 				return false;
-			} else if(thissel == '${empNo}'){
+			} else if(thissel == '${eVo.empNo }'){
 				alert('본인은 삭제 할 수 없습니다.');
 				return false;
 			} else {
@@ -244,9 +251,13 @@
 				var cf_empNo = $(this).find('input[type=hidden]').val();
 				
 				$('#doc_type #confirmer').append("<div id='confirmer1'><span></span><span>"+cf_empName+" "+cf_empPo+"</span><input type='hidden' name='allConfirmer' value='"+cf_empNo+"'></div>");
-				$('#choice_cfer').fadeOut();
-				$('#choice_cfer').attr('class','off');
-			});
+			});				
+			$('#choice_cfer').fadeOut();
+			$('#choice_cfer').attr('class','off');
+			$('#organ').css('height', '40px');
+			$('#orgDown').hide();
+			$('#orgUp').show();
+			$('#organbody').hide();
 			
 			getConfirmers();
 		});

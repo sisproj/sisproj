@@ -131,7 +131,7 @@
 	</select>
 	
 	<update id="myConfirmOk" parameterType="ConfirmLineVO">
-		update confirm_line set line_stat=#{lineStat} where cf_no=#{cfNo} and emp_no = #{empNo}
+		update confirm_line set line_stat=#{lineStat}, line_regdate=sysdate where cf_no=#{cfNo} and emp_no = #{empNo}
 	</update>
 	
 	<select id="selectEmpNameByEmpNo" parameterType="int" resultType="String">
@@ -151,9 +151,9 @@
 	</select>
 	
 	<select id="selectCfLineByCfNo" parameterType="String" resultType="ConfirmLineVO">
-		select l.*, e.emp_name 
+		select l.*, e.emp_name, e.pos_name, e.dept_name
 		from confirm_line l
-		join emp e
+		join empView e
 		on l.EMP_NO = e.EMP_NO
 		where cf_no=#{cfNo} order by line_no
 	</select>
@@ -194,6 +194,7 @@
 		on r.cf_no = c.cf_no
 		where r.emp_no = #{empNo} and r.is_read=#{isRead} and c.cf_status=#{cfStaus}
 	</select>
+	
 	<select id="mainBoxSetAll" parameterType="CfIsReadVO" resultType="int">
 		select count(*)
 		from cf_is_read r
@@ -201,6 +202,24 @@
 		on r.cf_no = c.cf_no
 		where r.emp_no = #{empNo} and c.cf_status=#{cfStaus}
 	</select>
+	
+	<update id="updateConfirmDoc" parameterType="DocumentVO">
+		update confirm set link_cf_no = #{linkCfNo}, cf_title = #{cfTitle}, cf_content = #{cfContent}, 
+		cf_isfile = #{cfIsfile}, cf_Status = #{cfStatus}, cf_confirmer = #{cfConfirmer}
+		where cf_no = #{cfNo}
+	</update>
+	
+	<delete id="deleteConfirmLine" parameterType="string">
+		delete from confirm_line where cf_no=#{cfNo}
+	</delete>
+	
+	<delete id="deleteConfirmFile" parameterType="string">
+		delete from confirm_file where cf_no=#{cfNo}
+	</delete>
+	
+	<delete id="deleteDocuByCfNo" parameterType="String">
+		delete from confirm where cf_no=#{cfNo}
+	</delete>
 </mapper>
 
 

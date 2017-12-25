@@ -62,4 +62,18 @@ $(function(){
 		$('#writeType').val("임시저장");
 		$('#writeFrm').submit();
 	});
+
+	$('#submitbtn #editconfirmbtn').click(function(){
+		if(confirm('바로 다음 결재자에게 상신됩니다. 진행 하시겠습니까?')){
+			submitContents();
+			$('#writeType').val("결재대기");
+			$('#writeFrm').submit();
+		}
+	});
+
+	$('#submitbtn #editsavebtn').click(function(){
+		submitContents();
+		$('#writeType').val("임시저장");
+		$('#writeFrm').submit();
+	});
 });

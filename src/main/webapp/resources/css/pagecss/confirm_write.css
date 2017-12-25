@@ -232,6 +232,7 @@ form#writeFrm #doc_type{
 	height: 540px;
 	box-shadow:3px 3px 7px #555;
 	display: none;
+	z-index: 9995;
 }
 #temp {
 	display:none;

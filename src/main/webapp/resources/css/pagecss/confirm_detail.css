@@ -116,7 +116,9 @@
 }
 #writeFrm #doc_type #confirmer div span:last-child{
 	height: 30%;
+	line-height:13px;
 	text-align: center;
+	padding: 0;
 	overflow: hidden;
 }
 #writeFrm #doc_type #confirmer div span img{
