@@ -19,4 +19,9 @@ public class ConfirmFileDAOMybatis extends SqlSessionDaoSupport implements Confi
 		return getSqlSession().selectList(namespace+".selectCfFileByCfNo",cfNo);
 	}
 
+	@Override
+	public int deleteConfirmFile(String cfNo) {
+		return getSqlSession().delete(namespace+".deleteConfirmFile", cfNo);
+	}
+
 }

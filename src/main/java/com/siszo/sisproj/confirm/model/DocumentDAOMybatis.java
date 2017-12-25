@@ -30,6 +30,11 @@ public class DocumentDAOMybatis extends SqlSessionDaoSupport implements Document
 	}
 
 	@Override
+	public List<DocumentVO> selectForAwait(ConfirmSearchVO svo) {
+		return getSqlSession().selectList(namespace+".selectForAwait",svo);
+	}
+	
+	@Override
 	public int totalRecordCountDoc(ConfirmSearchVO svo) {
 		return getSqlSession().selectOne(namespace+".totalRecordCountDoc",svo);
 	}
@@ -47,6 +52,21 @@ public class DocumentDAOMybatis extends SqlSessionDaoSupport implements Document
 	@Override
 	public DocumentVO selectDocByCfNo(String cfNo) {
 		return getSqlSession().selectOne(namespace+".selectDocByCfNo",cfNo);
+	}
+
+	@Override
+	public int updateConfirmDoc(DocumentVO docuVo) {
+		return getSqlSession().update(namespace+".updateConfirmDoc",docuVo);
+	}
+
+	@Override
+	public int deleteConfirmLine(String cfNo) {
+		return getSqlSession().delete(namespace+".deleteConfirmLine",cfNo);
+	}
+
+	@Override
+	public int deleteDocuByCfNo(String cfNo) {
+		return getSqlSession().delete(namespace+".deleteDocuByCfNo",cfNo);
 	}
 	
 	

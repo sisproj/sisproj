@@ -71,6 +71,7 @@ form#writeFrm #doc_type{
 	border-radius: 10px;
 	padding: 10px;
 	margin-bottom: 10px;
+	background-color: #eee;
 }
 #writeFrm #doc_type #dt_head input{
 	display: block;
@@ -202,6 +203,7 @@ form#writeFrm #doc_type{
 	border: 2px solid #fff;
 	border-radius: 10px;
 	padding: 10px;
+	background-color: #eee;
 }
 
 #insFile h3{
@@ -230,6 +232,7 @@ form#writeFrm #doc_type{
 	height: 540px;
 	box-shadow:3px 3px 7px #555;
 	display: none;
+	z-index: 9995;
 }
 #temp {
 	display:none;

@@ -32,6 +32,7 @@
 	border-radius: 10px;
 	padding: 10px;
 	margin-bottom: 10px;
+	background-color: #eee;
 }
 #writeFrm #doc_type #dt_head input{
 	display: block;
@@ -115,7 +116,9 @@
 }
 #writeFrm #doc_type #confirmer div span:last-child{
 	height: 30%;
+	line-height:13px;
 	text-align: center;
+	padding: 0;
 	overflow: hidden;
 }
 #writeFrm #doc_type #confirmer div span img{
@@ -167,6 +170,7 @@
 	border-radius: 10px;
 	padding: 10px;
 	margin-bottom: 10px;
+	background-color: #eee;
 }
 #writeFrm #insFile h3{
 	margin-bottom: 5px;
@@ -177,7 +181,8 @@
 	margin: 0 auto;
 	border: 2px solid #fff;
 	border-radius: 10px;
-	padding: 10px;				
+	padding: 10px;		
+	background-color: #eee;		
 }
 #writeFrm #cf_comment #comm_wr{
 	padding: 10px;
