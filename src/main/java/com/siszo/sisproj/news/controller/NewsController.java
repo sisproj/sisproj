@@ -16,4 +16,14 @@ public class NewsController {
 	public void photoNewsView() {
 		
 	}
+	
+	@RequestMapping("/dailyNews.do")
+	public void DailyNewsView() {
+		
+	}
+	
+	@RequestMapping("/newsWrite.do")
+	public void newWrite() {
+		
+	}
 }
