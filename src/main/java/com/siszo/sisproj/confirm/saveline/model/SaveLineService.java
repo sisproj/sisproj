@@ -5,5 +5,6 @@ import java.util.List;
 public interface SaveLineService {
 	public List<SaveLineVO> selectSaveLineByEmpNo(int empNo);
 	public SaveLineVO selectSaveLineBySaveNo(int saveNo);
+	public int insertSaveLine(SaveLineVO slVo);
 
 }

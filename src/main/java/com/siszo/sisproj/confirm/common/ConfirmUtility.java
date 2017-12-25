@@ -13,7 +13,9 @@ public class ConfirmUtility {
     		contents = contents.replace(">","&gt;");
     		contents = contents.replace("\"", "&quot;");
     		contents = contents.replace("\'", "&#39;");
+    		contents = contents.replace("/", "&frasl;");
     	}
+		System.out.println("con="+contents);
     	return contents;
     }
     

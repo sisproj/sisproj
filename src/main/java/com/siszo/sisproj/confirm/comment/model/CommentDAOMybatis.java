@@ -18,6 +18,21 @@ public class CommentDAOMybatis extends SqlSessionDaoSupport implements CommentDA
 	public int selectCommCNTByCfNo(String cfNo) {
 		return getSqlSession().selectOne(namespace+".selectCommCNTByCfNo", cfNo);
 	}
+
+	@Override
+	public int insertComment(CommentVO vo) {
+		return getSqlSession().insert(namespace+".insertComment", vo);
+	}
+
+	@Override
+	public int updateComment(CommentVO vo) {
+		return getSqlSession().update(namespace+".updateComment", vo);
+	}
+
+	@Override
+	public int deleteComment(int commNo) {
+		return getSqlSession().delete(namespace+".deleteComment",commNo);
+	}
 	
 	
 }

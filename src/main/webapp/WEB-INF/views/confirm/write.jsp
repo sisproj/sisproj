@@ -153,12 +153,12 @@
 			var empNo = $(this).attr('id');
 			var sessempNo = '${eVo.empNo }';
 			var status = $('#choice_cfer').attr('class');
-			if($('#confirmers').attr('class')=='favorite' && empNo == sessempNo){
+			if(empNo == sessempNo){
 				alert('자기자신은 선택할 수 없습니다.');
 				return false;
 			}
 			if($('#confirmers').attr('class')=='favorite' && empNo != sessempNo && status=='on'){
-				if(confirm('현재 선택된 결재라인이 제거됩니다.')){
+				if(confirm('현재 선택된 결재라인이 선택해제 됩니다.')){
 					$('#cf_ch_savedline ul li i').prop('class','fa fa-folder-o');
 					$('#confirmers').html('');
 					$('#confirmers').removeClass();
@@ -170,14 +170,9 @@
 			
 			if(order<1 && $('#confirmers').attr('class')!='favorite' && status=='on'){
 				//초기 본인 세팅
-				$('#confirmers').prepend("<tr class='t1'><td>1</td></tr>");
-				$("#temp").load("<c:url value='/confirm/choLine.do?empNo="+sessempNo+"'/>", function(response, status, xhr) {
-					if(status=='success'){
-						var temp = $("#temp").html();
-						$('#confirmers tr.t1').append(temp);					
-					}
-				});
-				order+=1;
+				$('#confirmers').prepend("<tr class='t1'><td>1</td><td>${eVo.deptName }</td><td class='cf_empPo'>${eVo.posName }</td><td class='cf_empName'>${eVo.empName }</td><input type='hidden' name='confirmerNo' class='confirmerNo' value='${eVo.empNo }'></tr>");	
+				order+=2;
+				
 			}
 			
 			var exist = 0;
@@ -189,15 +184,15 @@
 
 			//현재 접속자와 조직도에서 선택한 사람이 같지 않을 경우에만 처리
 			if(status=='on' && exist==0 && empNo != sessempNo){
-				if(order==8){alert('최대 8명까지 가능 합니다.'); return false;};
+				if(order==9){alert('최대 8명까지 가능 합니다.'); return false;}; //9부터는 안됨!
 				$("#temp").load("<c:url value='/confirm/choLine.do?empNo="+empNo+"'/>", function(response, status, xhr) {
 					if(status=='success'){
 						$('#confirmers').append("<tr class='t"+order+"'><td>"+order+"</td></tr>");
 						var temp = $("#temp").html();
-						$('#confirmers tr.t'+order).append(temp);				
+						$('#confirmers tr.t'+order).append(temp);
+						order+=1;
 					}
 				});
-				order+=1;	
 			}
 		});
 		

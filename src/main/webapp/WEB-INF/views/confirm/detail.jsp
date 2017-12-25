@@ -139,14 +139,13 @@
 					<!-- 의견 -->
 					<c:if test="${docVo.cfStatus != '임시저장' }">
 						<div id="cf_comment">
-							<h3><i class="fa fa-commenting-o"></i> 의견</h3>
+							<h3><i class="fa fa-commenting-o"></i> 의견 (${fn:length(commVoList) })</h3>
 							<!-- 상단등록창 -->
-							<form name="comm_wr" id="comm_wr" method="post" action="#">
-								<input type="hidden" name="title" value="Hello">
-								<input type="hidden" name="board" value="페이지정보">
-								<input type="hidden" name="mem_no" value="작성자no">
-								<textarea name="con" id="con"></textarea>
-								<input type="submit" class="bold" value="등록">					
+							<form name="comm_wr" id="comm_wr" method="post" action="<c:url value='/confirm/writeComm.do'/>">
+								<input type="hidden" name="cfNo" value="${docVo.cfNo }">
+								<input type="hidden" name="memNo" value="${MyEmpNo }">
+								<textarea name="commContent" id="con" placeholder="줄바꿈이 되지 않습니다."></textarea>
+								<input type="submit" class="bold" value="등록">
 							</form>
 							<!-- 상단등록창 끝 -->
 							<!-- 의견리스트 -->
@@ -155,22 +154,26 @@
 								<div class="selcomm">
 									<div class="comm_info">
 										<span class="comm_reg bold">${commVo.empName }</span> 
-										<span class="comm_reg"><fmt:formatDate value="${commVo.commRegdate }" pattern="yyyy-MM-dd"/></span>
+										<span class="comm_reg"><fmt:formatDate value="${commVo.commRegdate }" pattern="yyyy-MM-dd HH:mm:ss"/></span>
 										<span id="comm-${status.index }">
-											<a class="comm_delete bold" href="#">삭제</a>
-											<a class="comm_edit bold" id="hello_e-${status.index }" href="#">수정</a><!-- 1부분 아이디 반복문 i로 돌리기 -->
+											<c:if test="${commVo.memNo == MyEmpNo}">
+												<a class="comm_delete bold" href="<c:url value='/confirm/deleteComm.do?commNo=${commVo.commNo }&cfNo=${docVo.cfNo }'/>">삭제</a>&nbsp;&nbsp;&nbsp;
+												<a class="comm_edit bold" id="btn_e-${status.index }" href="#comm-${status.index }">수정</a>&nbsp;&nbsp;&nbsp;<!-- 1부분 아이디 반복문 i로 돌리기 -->
+											</c:if>
 										</span>
 									</div>
-									<div class="comm_con">${commVo.commContent }</div>
-									<!-- 수정용 -->
 									<div class="comm_content" id="comm_con-${status.index }"><!-- 1부분 아이디 반복문 i로 돌리기 -->
-										<form name="comm_ed" class="comm_ed" method="post" action="#">
-											<textarea name="con"></textarea>
+										<div class="comm_con">${commVo.commContent }</div>
+										<!-- 수정용 -->
+										<form name="comm_ed" class="comm_ed" method="post" action="<c:url value='/confirm/editComm.do'/>">
+											<textarea name="commContent" placeholder="줄바꿈이 되지 않습니다."></textarea>
 											<input type="submit" class="bold" value="댓글 수정">
-											<input type="hidden" name="no" value="${commVo.commNo }">
+											<input type="hidden" name="commNo" value="${commVo.commNo }">
+											<input type="hidden" name="cfNo" value="${docVo.cfNo }">
 										</form>
+										<!-- 수정용 끝 -->
 									</div>
-									<!-- 수정용 끝 -->
+									<div class="clr"></div>
 								</div>	
 							</c:forEach>
 							<!-- 반복 끝 -->
@@ -198,6 +201,27 @@
 			if(confirm('정말 문서를 삭제 하시겠습니까?')){
 				$(location).attr('href',"<c:url value='/confirm/delete.do?cfNo=${docVo.cfNo }'/>");
 			}
+		});
+		
+		$('.comm_delete').click(function(){
+			if(!confirm('정말 의견을 삭제 하시겠습니까?')){
+				return false;
+			}
+		});
+		
+		$('a.comm_edit').click(function(){
+			var getId = $(this).attr('id');
+			var start = getId.indexOf('-');
+			var num = getId.substring(start+1);
+			var btn = '#comm-'+num;
+			var con = '#comm_con-'+num+' .comm_con';
+			var frm = '#comm_con-'+num+' .comm_ed';
+			$(con).hide();
+			$(btn).hide();
+			$(frm).show();
+		});
+		$('.comm_ed, #comm_wr').submit(function(){
+			
 		});
 	});
 </script>

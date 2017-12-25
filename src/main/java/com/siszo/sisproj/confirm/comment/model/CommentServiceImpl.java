@@ -19,5 +19,20 @@ public class CommentServiceImpl implements CommentService {
 	public int selectCommCNTByCfNo(String cfNo) {
 		return commDao.selectCommCNTByCfNo(cfNo);
 	}
+
+	@Override
+	public int insertComment(CommentVO vo) {
+		return commDao.insertComment(vo);
+	}
+
+	@Override
+	public int updateComment(CommentVO vo) {
+		return commDao.updateComment(vo);
+	}
+
+	@Override
+	public int deleteComment(int commNo) {
+		return commDao.deleteComment(commNo);
+	}
 	
 }

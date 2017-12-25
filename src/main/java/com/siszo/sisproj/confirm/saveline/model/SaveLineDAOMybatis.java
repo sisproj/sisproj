@@ -18,4 +18,9 @@ public class SaveLineDAOMybatis extends SqlSessionDaoSupport implements SaveLine
 	public SaveLineVO selectSaveLineBySaveNo(int saveNo) {
 		return getSqlSession().selectOne(namespace+".selectSaveLineBySaveNo",saveNo);
 	}
+
+	@Override
+	public int insertSaveLine(SaveLineVO slVo) {
+		return getSqlSession().insert(namespace+".insertSaveLine",slVo);
+	}
 }

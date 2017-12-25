@@ -166,7 +166,7 @@
 		select count(*) from comm where cf_no=#{cfNo}
 	</select>
 	
-	<select id="selectCommByCfNo" parameterType="String" resultType="ConfirmFileVO">
+	<select id="selectCommByCfNo" parameterType="String" resultType="CommentVO">
 		select c.*, e.EMP_NAME
 		from comm c
 		join emp e
@@ -220,6 +220,31 @@
 	<delete id="deleteDocuByCfNo" parameterType="String">
 		delete from confirm where cf_no=#{cfNo}
 	</delete>
+	
+	<insert id="insertComment" parameterType="CommentVO">
+		<selectKey keyProperty="commNo" resultType="int" order="BEFORE">
+			select comm_seq.nextval from dual
+		</selectKey>
+		insert into comm(comm_no, mem_no, comm_content, cf_no)
+		values(#{commNo}, #{memNo}, #{commContent}, #{cfNo})
+	</insert>
+	
+	<update id="updateComment" parameterType="CommentVO">
+		update comm set comm_content=#{commContent}
+		where cf_no = #{cfNo}
+	</update>
+	
+	<delete id="deleteComment" parameterType="int">
+		delete from comm where comm_no=#{commNo}
+	</delete>
+	
+	<insert id="insertSaveLine" parameterType="SaveLineVO">
+		<selectKey keyProperty="saveNo" resultType="int" order="BEFORE">
+			select save_line_seq.nextval from dual
+		</selectKey>
+		insert into save_line(save_no, emp_no, save_name, save_confirmer)
+		values(#{saveNo}, #{empNo}, #{saveName}, #{saveConfirmer})
+	</insert>
 </mapper>
 
 

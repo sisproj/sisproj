@@ -186,13 +186,13 @@
 }
 #writeFrm #cf_comment #comm_wr{
 	padding: 10px;
-	height: 70px;
+	height: 40px;
 	border-bottom: 2px solid #fff;
 }
 #writeFrm #cf_comment #comm_wr #con{
 	box-sizing:border-box;
 	width: 80%;
-	height: 70px;
+	height: 100%;
 	float:left;
 	margin-right: 10px;
 	padding: 10px;
@@ -203,7 +203,7 @@
 #writeFrm #cf_comment #comm_wr input[type=submit]{
 	width: 15%;
 	max-width: 150px;
-	height: 70px;
+	height: 100%;
 	float:right;
 	margin-right: 10px;
 }
@@ -220,6 +220,7 @@
 #writeFrm #cf_comment .selcomm .comm_info span:last-child{
 	position: absolute;
 	right: 0;
+	font-size: 0.8em;
 }
 #writeFrm #cf_comment .selcomm .comm_content .comm_ed{
 	display: none;
@@ -227,7 +228,7 @@
 #writeFrm #cf_comment .selcomm .comm_content .comm_ed textarea{
 	box-sizing:border-box;
 	width: 80%;
-	height: 70px;
+	height: 40px;
 	float:left;
 	margin-right: 10px;
 	padding: 10px;
@@ -238,7 +239,7 @@
 #writeFrm #cf_comment .selcomm .comm_content .comm_ed input[type=submit]{
 	width: 15%;
 	max-width: 150px;
-	height: 70px;
+	height: 40px;
 	float:right;
 	margin-right: 10px;
 }
