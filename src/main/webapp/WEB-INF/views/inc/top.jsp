@@ -73,8 +73,17 @@
             </div>
             <div id="info">
                 <ul>
-                    <li><i class="fa fa-id-card"></i>&nbsp;<span class="name bold">이름(id)</span></li>
-                    <li><i class="fa fa-cog"></i>&nbsp;<span><a href="<c:url value='/employee/employeeList.do'/>">마이페이지</a></span></li>
+               		<!-- 	/관리자 로그인과 사원 로그인 보이는것 체인지 -->
+                    <c:if test="${!empty sessionScope.empName }">
+	                	<c:if test="${sessionScope.empLev.equals('사원') }" >
+		                    <li><i class="fa fa-id-card"></i>&nbsp;<span class="name bold">${sessionScope.empName }</span></li>
+		                    <li><i class="fa fa-cog"></i>&nbsp;<span><a href="<c:url value='/employee/employeeList.do'/>">마이페이지</a></span></li>
+	                    </c:if>
+	                    <c:if test="${sessionScope.empLev.equals('관리자') }">
+	                   	    <li><i class="fa fa-id-card"></i>&nbsp;<span class="name bold">관리자 ${sessionScope.empName }님</span></li>
+	               	        <li><i class="fa fa-cog"></i>&nbsp;<span><a href="<c:url value='/employee/employeeList.do'/>">관리자페이지</a></span></li>
+	                    </c:if>
+     				</c:if>
                     <li><i class="fa fa-envelope"></i>&nbsp;<span><a href="#">쪽지</a></span>&nbsp;<span
                             class="red">0</span></li>
                     <li><i class="fa fa-comments"></i>&nbsp;<span><a href="#">대화</a></span>&nbsp;<span

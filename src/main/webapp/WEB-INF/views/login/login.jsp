@@ -36,6 +36,9 @@
 				return false;
 			}			
 		});	
+		$('#pwSe').click(function() {
+			
+		});
 	});
 </script>
 </head>
@@ -45,7 +48,7 @@
     <img src="<c:url value="/resources/images/logo_w.png"/>" alt="로고이미지">
 </div>
 <div id="login">
-    <form action="index.html" method="post" name="loginfrm" id="loginfrm">
+    <form action="<c:url value='/login.do' />" method="post" name="loginfrm" id="loginfrm">
         <div id="forminfo">로그인</div>
         <div class="forminp">
             <label for="empNo">아이디</label>
@@ -56,12 +59,13 @@
             <input type="password" name="empPwd" id="empPwd">
         </div>
         <div id="saveid">
-        <input type="checkbox" name="saveinfo" id="saveinfo"> 
-        <label for="saveinfo">아이디 저장</label>
+      	  <input type="checkbox" name="saveId" id="saveId"> 
+      	  <label for="saveinfo">아이디 저장</label>
         </div>
-        <div id="errormsg"></div>
+        <!-- <div id="errormsg"></div> -->
         <div class="forminp">
-        <input type="submit" id="loginbtn" value="로그인">
+      	  <input type="submit" id="loginbtn" value="로그인">
+      	  <input type="button" id="pwSe" value="비밀번호 찾기">
         </div>
     </form>
 </div>

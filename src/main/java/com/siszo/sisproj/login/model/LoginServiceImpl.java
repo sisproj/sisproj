@@ -1,8 +1,5 @@
 package com.siszo.sisproj.login.model;
 
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,17 +15,19 @@ public class LoginServiceImpl implements LoginService{
 	public int loginCheck(int empNo, String empPwd) {
 		int result=0;
 		
-		String dbPwd =loginDao.selectPwd(empPwd);
-		if(dbPwd==null || dbPwd.isEmpty()) {
+		EmployeeVO vo = loginDao.selectAdmin(empNo);
+		
+		if(vo.getEmpPwd()==null || vo.getEmpPwd().isEmpty()) {
 			result=ID_NONE;
-		}else {
-			if(dbPwd.equals(empPwd)) {
-				result=LOGIN_OK;
-			}else {
-				result=PWD_DISAGREE;
+		}else if(vo.getEmpPwd().equals(empPwd)){
+			if(vo.getEmpLev().equals("사원")) {
+				result=EMP_LOGIN;
+			}else if(vo.getEmpLev().equals("관리자")){
+				result=ADMIN_LOGIN;
 			}
-		}
-
+		}else {
+			result=PWD_DISAGREE;
+		}		
 		return result;	
 	}
 
@@ -37,10 +36,7 @@ public class LoginServiceImpl implements LoginService{
 		return loginDao.selectAdmin(empNo);
 	}
 
-	@Override
-	public List<Map<String, String>> selectEmpLev() {
-		return loginDao.selectEmpLev();
-	}
+
 	
 	
 	
