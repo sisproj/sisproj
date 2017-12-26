@@ -6,5 +6,6 @@ public interface SaveLineService {
 	public List<SaveLineVO> selectSaveLineByEmpNo(int empNo);
 	public SaveLineVO selectSaveLineBySaveNo(int saveNo);
 	public int insertSaveLine(SaveLineVO slVo);
-
+	public int updateSaveLine(SaveLineVO slVo);
+	public int deleteSaveLine(int saveNo);
 }

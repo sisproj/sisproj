@@ -28,4 +28,20 @@
     <beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
         <beans:property name="order" value="0"/>
     </beans:bean>
+    
+    <interceptors>
+    	<interceptor>
+    		<mapping path="/addrBook/*"/>
+    		<mapping path="/commue/*"/>
+    		<mapping path="/employee/*"/>
+    		<mapping path="/messenger/*"/>
+    		<mapping path="/organization/*"/>
+    		<mapping path="/scheduler/*"/>
+    		<mapping path="/news/*"/>
+    		<mapping path="/notice/*"/>  
+    		<mapping path="/confirm/*"/>  		    		  		    		
+    		<mapping path="/home.do"/>
+    		<beans:ref bean="loginInterceptor"/>
+    	</interceptor>
+    </interceptors>
 </beans:beans>

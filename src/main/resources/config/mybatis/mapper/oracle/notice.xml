@@ -57,6 +57,12 @@
 		<include refid="searchWhere"></include>	
 	</select>
 	
+	<update id="updateReadCount" parameterType="int">
+		update notice
+		set noti_readcnt=noti_readcnt+1
+		where noti_no=#{notiNo}
+	</update>
+	
 	<select id="selectByNo" parameterType="int" resultType="NoticeVO">
 		select * from notice where noti_no=#{notiNo}
 	</select>
@@ -68,10 +74,10 @@
 		where noti_no=#{notiNo}	
 	</update>
 	
-	<!-- <delete id="noticeDelete" parameterType="int">
-		delete from notice where noti_no={notiNo}
+	<delete id="deleteNotice" parameterType="int">
+		delete from notice where noti_no=#{notiNo}
 	</delete>
- -->
+ 
 	
 </mapper>
 

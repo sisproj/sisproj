@@ -61,7 +61,7 @@
     		margin: 20px, 0, 0, 0;
     	}
     	#addressList .myAddress{
-    		width:50px;
+    		width:50px; 
     		height:50px;
     		line-height:50px;
     		display:block;
@@ -105,7 +105,7 @@
     		text-align: center;
     		padding: 10px;
     	}
-    	.divPaging{
+    	#paging{
     		/* border: 1px solid rgb(195, 195, 195); */
     		height: 50px;
     		text-align: center;

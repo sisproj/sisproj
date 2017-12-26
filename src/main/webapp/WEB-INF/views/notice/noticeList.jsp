@@ -38,7 +38,7 @@
 
 <!-- 페이징 처리에 필요한 form 태그 -->
 <form name="frmPage" method="post" 
-action="<c:url value='/reBoard/list.do'/>">
+action="<c:url value='/notice/noticeList.do'/>">
 	<input type="hidden" name="searchCondition" 
 		value="${param.searchCondition }">
 	<input type="hidden" name="searchKeyword" 
@@ -80,7 +80,7 @@ action="<c:url value='/reBoard/list.do'/>">
 										<td>${vo.notiNo}</td>									
 										<td style="text-align:left">
 												<a href
-						="<c:url value='/notice/noticeDetail.do?notiNo=${vo.notiNo}'/>">
+						="<c:url value='/notice/countUpdate.do?notiNo=${vo.notiNo}'/>">
 													<!-- 제목이 긴 경우 일부만 보여주기 -->
 													<c:if test="${fn:length(vo.notiTitle)>30 }">
 														${fn:substring(vo.notiTitle,0,30) }...
@@ -91,20 +91,22 @@ action="<c:url value='/reBoard/list.do'/>">
 												</a>
 										</td>									
 										<td>${vo.empNo }</td>									
-										<td>2015-05-05</td>								
-										<td>0</td>								
+										<td><fmt:formatDate value="${vo.notiRegdate}" 
+											pattern="yyyy-MM-dd" /></td>								
+										<td>${vo.notiReadcnt}</td>								
 									</tr>								
 								</c:forEach>
 							</c:if>
 						</tbody>
 					</table>
-				</div>
+				
 				<div class="divPage" style="text-align: center;">
 					<c:if test="${pagingInfo.firstPage>1 }">
 						<a href="#" class="btn btn-success btn-arrow-left"
 							onclick="pageFunc(${pagingInfo.firstPage-1})">이전</a>
 					</c:if>
 					
+					<span id="pageBlock">
 					<!-- [1][2][3][4][5][6][7][8][9][10] -->
 					<c:forEach var="i" begin="${pagingInfo.firstPage}" 
 						end="${pagingInfo.lastPage}">
@@ -116,40 +118,41 @@ action="<c:url value='/reBoard/list.do'/>">
 							[${i }]</a>
 				 		</c:if>				
 					</c:forEach>
+					</span>
 					
 					<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage}">
 						<a href="#" class="btn btn-success btn-arrow-left"
 							onclick="pageFunc(${pagingInfo.lastPage+1})">다음</a>
 					</c:if>
 					
-					<a href="noticeWrite.do" class="btn btn-primary pull-right">글쓰기</a>
+					
 				</div>
-			</div>	
-<div class="divSearch">
-   	<form name="frmSearch" method="post" 
-   	action="<c:url value='/notice/noticeList.do'/>">
-        <select name="searchCondition">
-            <option value="noticeTitle"
-            	<c:if test="${param.searchCondition=='noticeTitle' }"> 
+				
+		
+		<div class="divSearch" style="text-align: center;">
+			<form name="frmSearch" method="post"
+				action="<c:url value='/notice/noticeList.do'/>">
+				<select name="searchCondition">
+					<option value="noti_title"
+						<c:if test="${param.searchCondition=='notiTitle' }"> 
             		selected
-            	</c:if>
-            	>제목</option>
-            <option value="noticeContent"
-            	<c:if test="${param.searchCondition=='noticeContent' }"> 
+            	</c:if>>제목</option>
+					<option value="noti_content"
+						<c:if test="${param.searchCondition=='notiContent' }"> 
             		selected
-            	</c:if>    
-            >내용</option>
-            <option value="empNo" 
-            	<c:if test="${param.searchCondition=='empNo' }"> 
+            	</c:if>>내용</option>
+					<option value="emp_no"
+						<c:if test="${param.searchCondition=='empNo' }"> 
             		selected
-            	</c:if>
-            >작성자</option>
-        </select>   
-        <input type="text" name="searchKeyword" title="검색어 입력"
-        	value="${param.searchKeyword }">   
-		<input type="submit" value="검색">
-    </form>
-</div>
+            	</c:if>>작성자</option>
+				</select> <input type="text" name="searchKeyword" title="검색어 입력"
+					value="${param.searchKeyword }"> <input type="submit" class="btn btn-primary"
+					value="검색">
+			</form>
+			<a href="noticeWrite.do" class="btn btn-primary pull-right">글쓰기</a>
+			</div>
+			</div>
+		</div>
 			<!-- 3. 내용 끝 -->
 		</article>
 		<!-- 4. 상단 네비 색먹이기 // li태그 순서(전자결재 : 6번째) 입력 -->
