@@ -6,19 +6,21 @@ import java.util.Map;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.siszo.sisproj.common.AddrSearchVO;
+
 @Repository
 public class AddrBookDAOMybatis extends SqlSessionDaoSupport implements AddrBookDAO{
 	private String namespace="config.mybatis.mapper.oracle.addrBook";
 
 	@Override
 //	public List<AddrBookVO> selectAddrBookAll(int groupNo) {
-	public List<AddrBookVO> selectAddrBookAll(Map<String, Integer> map) {
-		return getSqlSession().selectList(namespace+".selectAddrBookAll",map);
+	public List<AddrBookVO> selectAddrBookAll(AddrSearchVO searchVo) {
+		return getSqlSession().selectList(namespace+".selectAddrBookAll",searchVo);
 	}
 	
 	@Override
-	public List<AddrBookVO> selectAddrBookIsDelY() {
-		return getSqlSession().selectList(namespace+".selectAddrBookIsDelY");
+	public List<AddrBookVO> selectAddrBookIsDelY(AddrSearchVO searchVo) {
+		return getSqlSession().selectList(namespace+".selectAddrBookIsDelY",searchVo);
 	}
 
 	@Override
@@ -39,5 +41,15 @@ public class AddrBookDAOMybatis extends SqlSessionDaoSupport implements AddrBook
 	@Override
 	public int deleteAddrBook() {
 		return getSqlSession().delete(namespace+".deleteAddrBook");
+	}
+
+	@Override
+	public int selectTotalRecordCountN(AddrSearchVO searchVo) {
+		return getSqlSession().selectOne(namespace+".selectTotalRecordCountN",searchVo);
+	}
+
+	@Override
+	public int selectTotalRecordCountY(AddrSearchVO searchVo) {
+		return getSqlSession().selectOne(namespace+".selectTotalRecordCountY",searchVo);
 	}
 }

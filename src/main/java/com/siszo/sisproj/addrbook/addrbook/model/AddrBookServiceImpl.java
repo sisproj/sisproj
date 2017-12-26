@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.siszo.sisproj.common.AddrSearchVO;
+
 @Service
 public class AddrBookServiceImpl implements AddrBookService{
 	@Autowired
@@ -14,12 +16,12 @@ public class AddrBookServiceImpl implements AddrBookService{
 
 	@Override
 //	public List<AddrBookVO> selectAddrBookAll(int groupNo) {
-	public List<AddrBookVO> selectAddrBookAll(Map<String, Integer> map) {
-		return addrBookDao.selectAddrBookAll(map);
+	public List<AddrBookVO> selectAddrBookAll(AddrSearchVO searchVo) {
+		return addrBookDao.selectAddrBookAll(searchVo);
 	}
 	@Override
-	public List<AddrBookVO> selectAddrBookIsDelY() {
-		return addrBookDao.selectAddrBookIsDelY();
+	public List<AddrBookVO> selectAddrBookIsDelY(AddrSearchVO searchVo) {
+		return addrBookDao.selectAddrBookIsDelY(searchVo);
 	}
 
 	@Override
@@ -67,6 +69,14 @@ public class AddrBookServiceImpl implements AddrBookService{
 	@Override
 	public int deleteAddrBook() {
 		return addrBookDao.deleteAddrBook();
+	}
+	@Override
+	public int selectTotalRecordCountN(AddrSearchVO searchVo) {
+		return addrBookDao.selectTotalRecordCountN(searchVo);
+	}
+	@Override
+	public int selectTotalRecordCountY(AddrSearchVO searchVo) {
+		return addrBookDao.selectTotalRecordCountY(searchVo);
 	}
 	
 }

@@ -9,6 +9,7 @@ public class AddrBookVO {
 	private int addrGroupNo;
 	private String addrIsDel;
 	private int empNo;
+	private String groupName;
 	
 	public int getAddrNo() {
 		return addrNo;
@@ -43,7 +44,7 @@ public class AddrBookVO {
 	public int getAddrGroupNo() {
 		return addrGroupNo;
 	}
-	public void setAddrGruopNo(int addrGroupNo) {
+	public void setAddrGroupNo(int addrGroupNo) {
 		this.addrGroupNo = addrGroupNo;
 	}
 	public String getAddrIsDel() {
@@ -58,12 +59,18 @@ public class AddrBookVO {
 	public void setEmpNo(int empNo) {
 		this.empNo = empNo;
 	}
+	public String getGroupName() {
+		return groupName;
+	}
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+	
 	@Override
 	public String toString() {
 		return "AddrBookVO [addrNo=" + addrNo + ", addrName=" + addrName + ", addrComp=" + addrComp + ", addrTel="
 				+ addrTel + ", addrEmail=" + addrEmail + ", addrGroupNo=" + addrGroupNo + ", addrIsDel=" + addrIsDel
-				+ ", empNo=" + empNo + "]";
+				+ ", empNo=" + empNo + ", groupName=" + groupName + "]";
 	}
-	
 	
 }
