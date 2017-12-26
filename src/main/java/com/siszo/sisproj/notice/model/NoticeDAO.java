@@ -8,9 +8,11 @@ public interface NoticeDAO {
 	public int insertNotice(NoticeVO vo);
 	public List<NoticeVO> selectAll(SearchVO searchVo);
 	public int selectTotalRecordCount(SearchVO searchVo);
+	public int updateReadCount(int notiNo);
+	
 	public NoticeVO selectByNo(int notiNo);
 	public int updateNotice(NoticeVO vo);
-	/*public int deleteNotice(int notiNo);*/
+	public int deleteNotice(int notiNo);
 	
 /*	public int deleteNotice(NoticeVO vo);*/
 	
