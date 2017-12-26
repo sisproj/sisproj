@@ -46,11 +46,15 @@
 							</tr>
 							<tr>
 								<td>작성일자</td>
-								<td colspan="2"></td>
+								<td colspan="2">${vo.notiRegdate}</td>
+							</tr>
+							<tr>
+								<td>조회수</td>
+								<td colspan="2">${vo.notiReadcnt}</td>
 							</tr>
 							<tr>
 								<td>내용</td>
-								<td colspan="2" style="max-height: 400px; height: 380px; text-align: left;">${vo.notiContent}</td>
+								<td colspan="2" style="max-height: 400px; height: 330px; text-align: left;">${vo.notiContent}</td>
 							</tr>
 						</tbody>
 					</table>
