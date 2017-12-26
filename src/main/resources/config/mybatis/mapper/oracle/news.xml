@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.news">
+	
+	<insert id="insertNews" parameterType="NewsVO">
+		<selectKey keyProperty="newsNo" resultType="int" order="BEFORE">
+			select news_seq.nextval from dual
+		</selectKey>
+		
+		insert into news(news_no, news_title,emp_no,news_content,news_main)
+		values(#{newsNo},#{newsTitle},20170001,#{newsContent},#{newsMain})
+	</insert>
+
+
+	<select id="dailyNewsList" resultType="NewsVO">
+		select * from news
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
