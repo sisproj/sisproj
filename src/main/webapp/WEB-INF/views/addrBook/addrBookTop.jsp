@@ -105,7 +105,7 @@
     		text-align: center;
     		padding: 10px;
     	}
-    	.divPaging{
+    	#paging{
     		/* border: 1px solid rgb(195, 195, 195); */
     		height: 50px;
     		text-align: center;

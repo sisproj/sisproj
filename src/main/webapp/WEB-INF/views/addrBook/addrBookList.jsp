@@ -65,8 +65,9 @@ $(function(){
 		        		</c:forEach>
 		        	</table>
 		        </div>
-		    	<div class="divPaging">
+		    	<div id="paging">
 		        	<jsp:include page="paging.jsp"></jsp:include>
+		    		${pageCode }
 		        </div>
 	        </div>        
 	    </form>

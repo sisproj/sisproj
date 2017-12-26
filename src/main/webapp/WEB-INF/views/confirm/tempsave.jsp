@@ -10,6 +10,7 @@
 				<li><a href="<c:url value='/confirm/await.do'/>"><i class="fa fa-hdd-o"></i>&nbsp;<span>결재 대기함</span></a></li>
 				<li><a href="<c:url value='/confirm/complete.do'/>"><i class="fa fa-file-text"></i>&nbsp;<span>결재 완료함</span></a></li>
 				<li><a href="<c:url value='/confirm/return.do'/>"><i class="fa fa-history"></i>&nbsp;<span>결재 반려함</span></a></li>
+					<li><a href="<c:url value='/confirm/postbox.do'/>"><i class="fa fa-archive"></i>&nbsp;<span>참조 수신함</span></a></li>
 				<li><a href="<c:url value='/confirm/setting.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>결재 환경 설정</span></a></li>
 				<li><a href="<c:url value='/confirm/adm/typeform.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>결재 양식 관리</span></a></li>
 			</ul>	
@@ -32,7 +33,7 @@
 		<!-- 3. 내용 -->
 		<div id="wrap">
 			<div id="search" class="bold">
-				검색어 : <input type="text" name="searchKey" id="searchKey" placeholder="문서번호, 제목, 내용">
+				검색어 : <input type="text" name="searchKey" id="searchKey" placeholder="문서번호, 제목, 내용" value="${param.searchKeyword }">
 				<input type="button" value="검색">
 			</div>
 			<table id="awaittb">
@@ -46,44 +47,53 @@
 				</thead>
 				<tbody>
 					<c:if test="${empty docuList }">
-						<tr><td colspan="4">조회된 데이터가 없습니다.</td></tr>
+						<tr><td colspan="4" rowspan="2">문서가 없습니다</td></tr>
 					</c:if>
 					<c:if test="${!empty docuList }">
 						<c:forEach var="docuVo" items="${docuList }" varStatus="status">
 							<tr>
 								<td><input type="checkbox" name="docuItems[${status.index }].cfNo" value="${docuVo.cfNo }"></td>
 								<td>${docuVo.cfNo }</td>
-								<td><a href="#">${docuVo.cfTitle }</a></td>
+								<td><a href="<c:url value='/confirm/detail.do?cfNo=${docuVo.cfNo }'/>">
+									<c:if test="${docuVo.isRead == 'N' }">
+										<b>${docuVo.cfTitle } <img alt="New" src="<c:url value='/resources/images/icon_new.gif'/>"></b>
+									</c:if>
+									<c:if test="${docuVo.isRead == 'Y' }">
+										${docuVo.cfTitle }
+									</c:if>
+								</a></td>
 								<td><fmt:formatDate value="${docuVo.cfRegdate }" pattern="yyyy-MM-dd"/></td>
 							</tr>
 						</c:forEach>
 					</c:if>
 				</tbody>
 			</table>
-			<div id="pagingbtn">
-				<c:if test="${pageInfo.currentPage!=1 }">
-					<a id="firstbtn" href="#" onclick="movePage(1)"><i class="fa fa-arrow-left"></i></a>
-				</c:if>
-				<c:if test="${pageInfo.firstPage>1 }">
-					<a id="prevbtn" href="#" onclick="movePage(${pageInfo.firstPage-1})"><i class="fa fa-chevron-left"></i></a>
-				</c:if>
-				
-				<c:forEach var="i" begin="${pageInfo.firstPage }" end="${pageInfo.lastPage }">
-					<c:if test="${i==pageInfo.currentPage }">
-						<span class="thispage">${i }</span>					
+			<c:if test="${!empty docuList}">
+				<div id="pagingbtn">
+					<c:if test="${pageInfo.currentPage!=1 }">
+						<a id="firstbtn" href="#" onclick="movePage(1)"><i class="fa fa-arrow-left"></i></a>
 					</c:if>
-					<c:if test="${i!=pageInfo.currentPage }">
-						<a href="#" onclick="movePage(${i })">${i }</a>				
+					<c:if test="${pageInfo.firstPage>1 }">
+						<a id="prevbtn" href="#" onclick="movePage(${pageInfo.firstPage-1})"><i class="fa fa-chevron-left"></i></a>
 					</c:if>
-				</c:forEach>
-				
-				<c:if test="${pageInfo.lastPage < pageInfo.totalPage }">
-					<a id=nextbtn href="#" onclick="movePage(${pageInfo.lastPage+1})"><i class="fa fa-chevron-right"></i></a>
-				</c:if>
-				<c:if test="${pageInfo.currentPage!=pageInfo.totalPage  }">
-					<a id=lastbtn href="#" onclick="movePage(${pageInfo.totalPage })"><i class="fa fa-arrow-right"></i></a>
-				</c:if>
-			</div>
+					
+					<c:forEach var="i" begin="${pageInfo.firstPage }" end="${pageInfo.lastPage }">
+						<c:if test="${i==pageInfo.currentPage }">
+							<span class="thispage">${i }</span>					
+						</c:if>
+						<c:if test="${i!=pageInfo.currentPage }">
+							<a href="#" onclick="movePage(${i })">${i }</a>				
+						</c:if>
+					</c:forEach>
+					
+					<c:if test="${pageInfo.lastPage < pageInfo.totalPage }">
+						<a id=nextbtn href="#" onclick="movePage(${pageInfo.lastPage+1})"><i class="fa fa-chevron-right"></i></a>
+					</c:if>
+					<c:if test="${pageInfo.currentPage!=pageInfo.totalPage  }">
+						<a id=lastbtn href="#" onclick="movePage(${pageInfo.totalPage })"><i class="fa fa-arrow-right"></i></a>
+					</c:if>
+				</div>
+			</c:if>
 		</div>
 		<!-- 3. 내용 끝 -->
 	</article>
@@ -92,14 +102,4 @@
 	<!-- 4. 상단 네비 색먹이기 끝-->
 <!-- 0. include부분 끝-->
 <%@ include file="../inc/bottom.jsp" %>
-<script type="text/javascript">
-	function movePage(currentP){
-		document.frmPaging.currentPage.value=currentP;
-		document.frmPaging.submit();
-	}
-	$('#search input[type=button]').click(function(){
-		var sk = $('#search #searchKey').val()
-		$('form[name=frmPaging] input[name=searchKeyword]').val(sk);
-		movePage(1);
-	});
-</script>
+<script type="text/javascript" src="<c:url value='/resources/js/pagejs/confirm_list.js'/>"></script>
