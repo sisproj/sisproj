@@ -28,11 +28,11 @@
 		$('form[name=forminfo]').submit(function(){
 			if($('#empNo').val()==''){
 				alert('사번을 입력하세요');
-				$('#userid').focus();
+				$('#empNo').focus();
 				return false;
 			}else if($('#empPwd').val()==''){
 				alert('비밀번호를 입력하세요');
-				$('#pwd').focus();
+				$('#empPwd').focus();
 				return false;
 			}			
 		});	
@@ -48,7 +48,7 @@
     <img src="<c:url value="/resources/images/logo_w.png"/>" alt="로고이미지">
 </div>
 <div id="login">
-    <form action="<c:url value='/login.do' />" method="post" name="loginfrm" id="loginfrm">
+    <form action="<c:url value='/login/login.do' />" method="post" name="loginfrm" id="loginfrm">
         <div id="forminfo">로그인</div>
         <div class="forminp">
             <label for="empNo">아이디</label>
@@ -70,4 +70,10 @@
     </form>
 </div>
 </body>
+<style type="text/css">
+	#pwSe{
+		width: 87px;
+		height: 30px;
+	}
+</style>
 </html>

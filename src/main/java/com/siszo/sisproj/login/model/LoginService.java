@@ -8,6 +8,7 @@ public interface LoginService {
 		public static final int EMP_LOGIN=2; //사원 로그인
 		public static final int ID_NONE=3;   //해당 아이디 없음
 		public static final int PWD_DISAGREE=4; //비밀번호 불일치
+		public static final int LOGIN_OK=5; //로그인 성공
 		
 		public int loginCheck(int empNo, String empPwd);
 		public EmployeeVO selectAdmin(int empNo);
