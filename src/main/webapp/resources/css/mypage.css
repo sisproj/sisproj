@@ -1,10 +1,13 @@
 @charset "UTF-8";
 
+/* 전체 디브 스타일 */
 	#dimyPage{
 		width:100%;	
 	 	box-sizing:border-box;
 	 	padding: 40px;
+	 	background-color: white;
 	}
+/* 회원 수정,등록,상세보기 스타일 */
  	#dimyPage #diTel #tel2{
 		width:85px;
 	}

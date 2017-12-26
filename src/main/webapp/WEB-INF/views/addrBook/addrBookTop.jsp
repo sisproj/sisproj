@@ -61,7 +61,7 @@
     		margin: 20px, 0, 0, 0;
     	}
     	#addressList .myAddress{
-    		width:50px;
+    		width:50px; 
     		height:50px;
     		line-height:50px;
     		display:block;

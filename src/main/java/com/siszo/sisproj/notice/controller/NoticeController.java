@@ -75,7 +75,7 @@ public class NoticeController {
 	
 	@RequestMapping("/noticeList.do")
 	public String noticeList(@ModelAttribute SearchVO searchVo, Model model) {
-		logger.info("공지사항 리스트");
+		logger.info("공지사항 리스트, 파라미터 searchVo={}", searchVo);
 		
 		//Paging 처리에 필요한 변수를 계산해주는 PaginationInfo 생성
 		PaginationInfo pagingInfo = new PaginationInfo();
@@ -102,9 +102,21 @@ public class NoticeController {
 		return "notice/noticeList";
 	}
 	
-	@RequestMapping("/noticeUpdate.do")
-	public void noticeUpdate() {
-		logger.info("공지사항 글 수정하기");
+	@RequestMapping("/countUpdate.do")
+	public String countUpdate(@RequestParam(defaultValue="0") int notiNo,
+			Model model) {
+		logger.info("조회수 증가, 파라미터 notiNo={}", notiNo);
+		
+		if(notiNo==0) {
+			model.addAttribute("msg", "잘못된 url입니다.");
+			model.addAttribute("url", "/notice/noticeList.do");
+			return "common/message";
+		}
+		
+		int cnt = noticeService.updateReadCount(notiNo);
+		logger.info("조회수 증가 결과, cnt={}", cnt);
+		
+		return "redirect:/notice/noticeDetail.do?notiNo="+notiNo;
 	}
 	
 	
@@ -199,7 +211,7 @@ public class NoticeController {
 		
 		if(cnt>0) {
 			msg="글수정되었습니다.";
-			url="/notice/noticeUpdate.do?notiNo="+vo.getNotiNo();
+			url="/notice/noticeDetail.do?notiNo="+vo.getNotiNo();
 		}else {
 			msg="글수정 실패";							
 		}
@@ -210,23 +222,27 @@ public class NoticeController {
 		return "common/message";		
 	}
 	
-	/*@RequestMapping("/noticeDelete.do")
-	public ModelAndView noticeDelete(
-		@RequestParam(value="notiNo", defaultValue="0") int notiNo) {
+	@RequestMapping("/noticeDelete.do")
+	/*public ModelAndView noticeDelete(
+		@RequestParam(value="notiNo", defaultValue="0") int notiNo) {*/
+	public String noticeDelete(
+		@RequestParam int notiNo) {
 		
 		logger.info("삭제 화면 파라미터, notiNo=", notiNo);
 		
 		int cnt = noticeService.deleteNotice(notiNo);
 		logger.info("삭제 처리 파라미터, cnt=", cnt);
 		
-		ModelAndView mav = new ModelAndView();
+		/*ModelAndView mav = new ModelAndView();
 		mav.setViewName("redirect:/notice/noticeList.do");
 		
-		return mav;
+		return mav;*/
+		
+		return "redirect:/notice/noticeList.do";
 		
 	}
 	
-	*/
+	
 	
 	
 	
