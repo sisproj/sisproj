@@ -22,7 +22,25 @@
     <script src="<c:url value="/resources/jquery-ui/jquery-ui.min.js"/>"></script>
 
     <!-- loginjs -->
-    <script src="<c:url value="/resources/js/login.js"/>"></script>
+<script src="<c:url value="/resources/js/login.js"/>"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('form[name=forminfo]').submit(function(){
+			if($('#empNo').val()==''){
+				alert('사번을 입력하세요');
+				$('#userid').focus();
+				return false;
+			}else if($('#empPwd').val()==''){
+				alert('비밀번호를 입력하세요');
+				$('#pwd').focus();
+				return false;
+			}			
+		});	
+		$('#pwSe').click(function() {
+			
+		});
+	});
+</script>
 </head>
 <body>
 <img id="plain" src="<c:url value="/resources/images/airplain.png"/>" alt="비행기">
@@ -30,18 +48,25 @@
     <img src="<c:url value="/resources/images/logo_w.png"/>" alt="로고이미지">
 </div>
 <div id="login">
-    <form action="index.html" method="post" name="loginfrm" id="loginfrm">
+    <form action="<c:url value='/login.do' />" method="post" name="loginfrm" id="loginfrm">
         <div id="forminfo">로그인</div>
         <div class="forminp">
-            <label for="userid">아이디</label><input type="text" name="userid" id="userid">
+            <label for="empNo">아이디</label>
+            <input type="text" name="empNo" id="empNo">
         </div>
         <div class="forminp">
-            <label for="pwd">비밀번호</label><input type="password" name="pwd" id="pwd">
+            <label for="empPwd">비밀번호</label>
+            <input type="password" name="empPwd" id="empPwd">
         </div>
-        <div id="saveid"><input type="checkbox" name="saveinfo" id="saveinfo"> <label for="saveinfo">아이디 저장</label>
+        <div id="saveid">
+      	  <input type="checkbox" name="saveId" id="saveId"> 
+      	  <label for="saveinfo">아이디 저장</label>
         </div>
-        <div id="errormsg"></div>
-        <div class="forminp"><input type="submit" id="loginbtn" value="로그인"></div>
+        <!-- <div id="errormsg"></div> -->
+        <div class="forminp">
+      	  <input type="submit" id="loginbtn" value="로그인">
+      	  <input type="button" id="pwSe" value="비밀번호 찾기">
+        </div>
     </form>
 </div>
 </body>

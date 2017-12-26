@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 public class CommentVO {
 	private int commNo; //의견번호
 	private int memNo; //사원번호(작성자)
+	private String empName; //작성자이름
 	private Timestamp commRegdate; //작성일
 	private String commContent; //내용
 	private String cfNo; //해당의견 문서번호
@@ -38,11 +39,19 @@ public class CommentVO {
 	public void setCfNo(String cfNo) {
 		this.cfNo = cfNo;
 	}
+	public String getEmpName() {
+		return empName;
+	}
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
 	@Override
 	public String toString() {
-		return "CommentVO [commNo=" + commNo + ", memNo=" + memNo + ", commRegdate=" + commRegdate + ", commContent="
-				+ commContent + ", cfNo=" + cfNo + "]";
+		return "CommentVO [commNo=" + commNo + ", memNo=" + memNo + ", empName=" + empName + ", commRegdate="
+				+ commRegdate + ", commContent=" + commContent + ", cfNo=" + cfNo + "]";
 	}
+
+	
 	
 	
 }

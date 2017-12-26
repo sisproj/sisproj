@@ -10,6 +10,7 @@
 					<li><a href="<c:url value='/confirm/await.do'/>"><i class="fa fa-hdd-o"></i>&nbsp;<span>결재 대기함</span></a></li>
 					<li><a href="<c:url value='/confirm/complete.do'/>"><i class="fa fa-file-text"></i>&nbsp;<span>결재 완료함</span></a></li>
 					<li><a href="<c:url value='/confirm/return.do'/>"><i class="fa fa-history"></i>&nbsp;<span>결재 반려함</span></a></li>
+					<li><a href="<c:url value='/confirm/postbox.do'/>"><i class="fa fa-archive"></i>&nbsp;<span>참조 수신함</span></a></li>
 					<li><a href="<c:url value='/confirm/setting.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>결재 환경 설정</span></a></li>
 					<li><a href="<c:url value='/confirm/adm/typeform.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>결재 양식 관리</span></a></li>
 				</ul>	
@@ -26,96 +27,97 @@
 		<article id="bodysection">
 			<!-- 3. 내용 -->
 				<div id="linebtn">
-					<input type="button" id="cf_ok" value="결재승인">&nbsp;&nbsp;
-					<input type="button" id="cf_not" value="결재반려">&nbsp;&nbsp;
-					<input type="button" id="cf_edit" value="수정">&nbsp;&nbsp;
-					<input type="button" id="cf_del" value="삭제">&nbsp;&nbsp;
-					<input type="button" id="cf_re" value="재 상신">	
+					<!-- (내문서이거나 || 결재대기) 이면서&& 내 결재 차례인 경우 -->
+					<c:if test="${(docVo.empNo == MyEmpNo || docVo.cfStatus == '결재대기') && MyEmpNo==docVo.cfConfirmer }">
+						<input type="button" id="cf_ok" value="결재승인">&nbsp;&nbsp;
+					</c:if>
+					<!-- 내문서가 아니면서&& 결재대기 이면서&& 내 결재 차례인 경우 -->
+					<c:if test="${docVo.empNo != MyEmpNo && docVo.cfStatus == '결재대기' && MyEmpNo==docVo.cfConfirmer }">
+						<input type="button" id="cf_not" value="결재반려">&nbsp;&nbsp;
+					</c:if>
+					<!-- 임시저장인경우 -->
+					<c:if test="${docVo.cfStatus == '임시저장' }">
+						<input type="button" id="cf_edit" value="수정">&nbsp;&nbsp;
+						<input type="button" id="cf_del" value="삭제">&nbsp;&nbsp;
+					</c:if>
+					<!-- 결재반려인 경우 -->
+					<c:if test="${docVo.cfStatus == '결재반려' }">
+						<input type="button" id="cf_del" value="삭제">&nbsp;&nbsp;
+					</c:if>
+					<!--엑셀파일로 다운로드는 결재완료인경우만-->
+					<c:if test="${docVo.cfStatus == '결재완료' }">
+						<a class="button" href="#">엑셀로 다운</a>
+					</c:if>
 				</div>
 			<!-- writeform -->	
 				<div name="writeFrm" id="writeFrm">
 				<!-- 서식 -->
 					<div id="doc_type">
 						<div id="dt_head">
-							<input type="text" name="doctype" value="시행기안문">
+							<input type="text" name="doctype" value="${docVo.formName }">
 						</div>
+						<span></span>
 						<p id="userinfo">
-							기안자 : <input type="text" name="username" value="사용자(부서이름)" readonly>
-							<input type="hidden" name="userno" value="회원번호">
+							기안자 : <input type="text" name="username" value="${eVo.empName }(${eVo.deptName })" readonly><br>
+							현재 문서 상태 : <strong>${docVo.cfStatus }</strong>
 						</p>
 						<div id="doc_info">
 							<div>
 								<label for ="docno" class="sd1">문서 번호</label>
-								<input type="text" name="docno" id="docno" value="20171011102030001" readonly>
+								<input type="text" name="docno" id="docno" value="${docVo.cfNo }" readonly>
 							</div>
 							<div>
 								<label for="docreg" class="sd1">기안 일자</label>
-								<input type="text" name="docreg" id="docreg" value="20171011" readonly>
+								<input type="text" name="docreg" id="docreg" 
+									value='<fmt:formatDate value="${docVo.cfRegdate }" pattern="yyyy-MM-dd"/>' readonly>
 							</div>
 							<div>
 								<label for="doclife" class="sd1">보존 년한</label>	
-								<input type="text" name="doclife" id="doclife" value="5년" readonly>
+								<input type="text" name="doclife" id="doclife" value="${docVo.formLife }" readonly>
 							</div>
 							<div>
 								<label for="docsecu" class="sd1">보안수준</label>	
-								<input type="text" name="docsecu" id="docsecu" value="중" readonly>
+								<input type="text" name="docsecu" id="docsecu" value="${docVo.formSecu }" readonly>
 							</div>
 						</div>
 						<div id="confirmer">
-							<div>
-								<span><img src="../user_sign/app_sign.gif" alt="결재"></span>
-								<span>결재자1</span>
-							</div>
-							<div>
-								<span><img src="../user_sign/app_sign.gif" alt="결재"></span>
-								<span>결재자2</span>
-							</div>
-							<div>
-								<span><img src="../user_sign/app_sign.gif" alt="결재"></span>
-								<span>결재자3</span>
-							</div>
-							<div>
-								<span><img src="../user_sign/app_sign.gif" alt="결재"></span>
-								<span>결재자4</span>
-							</div>
-							<div>
-								<span><img src="../user_sign/app_sign.gif" alt="결재"></span>
-								<span>결재자5</span>
-							</div>
-							<div>
-								<span><img src="../user_sign/app_sign.gif" alt="결재"></span>
-								<span>결재자6</span>
-							</div>
-							<div>
-								<span><img src="../user_sign/app_sign.gif" alt="결재"></span>
-								<span>결재자7</span>
-							</div>
-							<div>
-								<span><img src="../user_sign/app_sign.gif" alt="결재"></span>
-								<span>결재자8</span>
-							</div>
+							<c:forEach var="clVo" items="${clVoList }">
+								<div>
+									<span>
+										<c:if test="${clVo.lineStat == CL_COMPLETE}">
+											<img src="<c:url value='/user_sign/app_sign.gif'/>" alt="결재"> <!-- 결재자 사인 경로 넣기 -->
+										</c:if>
+										<c:if test="${clVo.lineStat == CL_RETURN}">
+											<img src="<c:url value='/user_sign/return_img.jpg'/>" alt="반려">											
+										</c:if>
+										<c:if test="${clVo.lineStat == CL_AWAIT }">
+											
+										</c:if>
+									</span>
+									<span>${clVo.empName } ${clVo.posName }
+									<c:if test="${clVo.lineStat == '승인'}">
+										<br><fmt:formatDate value="${clVo.lineRegdate }" pattern="yy-MM-dd"/>
+									</c:if></span>
+								</div>
+							</c:forEach>
 						</div>
 						<div class="clr"></div>
 						<div id="cf_info">
 							<div class="dr">
 								<label for="linkdoc" class="sd1">연계문서</label>	
-								<input type="text" name="linkdoc" id="linkdoc" value="(20171010102031001) 시행기안문" readonly>
+								<input type="text" name="linkdoc" id="linkdoc" value="
+								<c:if test="${!empty linkdoc }">
+									(${linkDoc.cfNo }) ${linkDoc.cfTitle }
+								</c:if>
+								" readonly>
 							</div>
 							<div class="dr">
 								<label for="doctitle" class="sd1">제목</label>	
-								<input type="text" name="doctitle" id="doctitle" value="" readonly>
+								<input type="text" name="doctitle" id="doctitle" value="${docVo.cfTitle }" readonly>
 							</div>			
 							<!-- 내용부분 -->
 							<div id="contents">
-								<table border="0" cellpadding="0" cellspacing="0" style="border:1px solid #cccccc; border-left:0; border-bottom:0;" class="__se_tbl"><tbody>
-<tr><td style="border:1px solid #cccccc; border-top:0; border-right:0; background-color:#ffffff" width="693"><p>&nbsp;dadads</p></td>
-<td style="border:1px solid #cccccc; border-top:0; border-right:0; background-color:#ffffff" width="693"><p>&nbsp;213123</p></td>
-</tr>
-<tr><td style="border:1px solid #cccccc; border-top:0; border-right:0; background-color:#ffffff" width="693"><p>&nbsp;sadasd</p></td>
-<td style="border:1px solid #cccccc; border-top:0; border-right:0; background-color:#ffffff" width="693"><p>&nbsp;1234123</p></td>
-</tr>
-</tbody>
-</table><p><br></p>
+								${docVo.cfContent }
 							</div>
 							<!-- 내용부분 끝 -->				
 						</div>
@@ -123,73 +125,61 @@
 					<!-- 미드 끝 -->
 					<!-- 파일첨부 -->
 					<div id="insFile">
-						<h3><i class="fa fa-floppy-o"></i> 파일 첨부</h3>
+						<h3><i class="fa fa-floppy-o"></i> 첨부된 파일</h3>
 						<div id="files">
-							<span><a href="#">파일이름.jsp</a></span><br>
-							<span><a href="#">파일이름.jsp</a></span><br>
-							<span><a href="#">파일이름.jsp</a></span><br>
-							<span><a href="#">파일이름.jsp</a></span>
+							<c:forEach var="cfVo" items="${fileList }" varStatus="status">
+								<span><a href="<c:url value='/attachfile/${cfVo.fileName }'/>">${status.index+1 }. ${cfVo.fileOriName }</a> 
+								/ (${(cfVo.fileSize/1024) + (((cfVo.fileSize/1024) % 1 > 0.5)?(1 - ((cfVo.fileSize/1024) % 1)) % 1:-((cfVo.fileSize/1024) % 1))}KB)</span>
+								<c:if test="${status.index != fn:length(fileList) }">
+									<br>
+								</c:if>
+							</c:forEach>
 						</div>
 					</div>
 					<!-- 의견 -->
-					<div id="cf_comment">
-						<h3><i class="fa fa-commenting-o"></i> 의견</h3>
-						<!-- 상단등록창 -->
-						<form name="comm_wr" id="comm_wr" method="post" action="#">
-							<input type="hidden" name="title" value="Hello">
-							<input type="hidden" name="board" value="페이지정보">
-							<input type="hidden" name="mem_no" value="작성자no">
-							<textarea name="con" id="con"></textarea>
-							<input type="submit" class="bold" value="등록">					
-						</form>
-						<!-- 상단등록창 끝 -->
-						<!-- 의견리스트 -->
-						<!-- 반복 -->
-						<div class="selcomm">
-							<div class="comm_info">
-								<span class="comm_reg bold">작성자</span> 
-								<span class="comm_reg">등록일</span>
-								<span id="comm-1"><!-- 1부분 아이디 반복문 i로 돌리기 -->
-									<a class="comm_delete bold" href="#">삭제</a>
-									<a class="comm_edit bold" id="hello_e-1" href="#">수정</a><!-- 1부분 아이디 반복문 i로 돌리기 -->
-								</span>
-							</div>
-							<div class="comm_con">내용<br>내용<br>내용<br>내용<br>내용<br></div>
-							<!-- 수정용 -->
-							<div class="comm_content" id="comm_con-1"><!-- 1부분 아이디 반복문 i로 돌리기 -->
-								<form name="comm_ed" class="comm_ed" method="post" action="#">
-									<textarea name="con"></textarea>
-									<input type="submit" class="bold" value="댓글 수정">
-									<input type="hidden" name="no" value="의견번호">
-									<input type="hidden" name="board" value="페이지정보">
-								</form>
-							</div>
-							<!-- 수정용 끝 -->
-						</div>	
-						<div class="selcomm">
-							<div class="comm_info">
-								<span class="comm_reg bold">작성자</span> 
-								<span class="comm_reg">등록일</span>
-								<span id="comm-1"><!-- 1부분 아이디 반복문 i로 돌리기 -->
-									<a class="comm_delete bold" href="#">삭제</a>
-									<a class="comm_edit bold" id="hello_e-1" href="#">수정</a><!-- 1부분 아이디 반복문 i로 돌리기 -->
-								</span>
-							</div>
-							<div class="comm_con">내용<br>내용<br>내용<br>내용<br>내용<br></div>
-							<!-- 수정용 -->
-							<div class="comm_content" id="comm_con-1"><!-- 1부분 아이디 반복문 i로 돌리기 -->
-								<form name="comm_ed" class="comm_ed" method="post" action="#">
-									<textarea name="con"></textarea>
-									<input type="submit" class="bold" value="댓글 수정">
-									<input type="hidden" name="no" value="의견번호">
-									<input type="hidden" name="board" value="페이지정보">
-								</form>
-							</div>
-							<!-- 수정용 끝 -->
-						</div>	
-						<!-- 의견리스트 끝 -->
-						<!-- 반복 끝 -->
-					</div>
+					<c:if test="${docVo.cfStatus != '임시저장' }">
+						<div id="cf_comment">
+							<h3><i class="fa fa-commenting-o"></i> 의견 (${fn:length(commVoList) })</h3>
+							<!-- 상단등록창 -->
+							<form name="comm_wr" id="comm_wr" method="post" action="<c:url value='/confirm/writeComm.do'/>">
+								<input type="hidden" name="cfNo" value="${docVo.cfNo }">
+								<input type="hidden" name="memNo" value="${MyEmpNo }">
+								<textarea name="commContent" id="con" placeholder="줄바꿈이 되지 않습니다."></textarea>
+								<input type="submit" class="bold" value="등록">
+							</form>
+							<!-- 상단등록창 끝 -->
+							<!-- 의견리스트 -->
+							<!-- 반복 -->
+							<c:forEach var="commVo" items="${commVoList }" varStatus="status">
+								<div class="selcomm">
+									<div class="comm_info">
+										<span class="comm_reg bold">${commVo.empName }</span> 
+										<span class="comm_reg"><fmt:formatDate value="${commVo.commRegdate }" pattern="yyyy-MM-dd HH:mm:ss"/></span>
+										<span id="comm-${status.index }">
+											<c:if test="${commVo.memNo == MyEmpNo}">
+												<a class="comm_delete bold" href="<c:url value='/confirm/deleteComm.do?commNo=${commVo.commNo }&cfNo=${docVo.cfNo }'/>">삭제</a>&nbsp;&nbsp;&nbsp;
+												<a class="comm_edit bold" id="btn_e-${status.index }" href="#comm-${status.index }">수정</a>&nbsp;&nbsp;&nbsp;<!-- 1부분 아이디 반복문 i로 돌리기 -->
+											</c:if>
+										</span>
+									</div>
+									<div class="comm_content" id="comm_con-${status.index }"><!-- 1부분 아이디 반복문 i로 돌리기 -->
+										<div class="comm_con">${commVo.commContent }</div>
+										<!-- 수정용 -->
+										<form name="comm_ed" class="comm_ed" method="post" action="<c:url value='/confirm/editComm.do'/>">
+											<textarea name="commContent" placeholder="줄바꿈이 되지 않습니다."></textarea>
+											<input type="submit" class="bold" value="댓글 수정">
+											<input type="hidden" name="commNo" value="${commVo.commNo }">
+											<input type="hidden" name="cfNo" value="${docVo.cfNo }">
+										</form>
+										<!-- 수정용 끝 -->
+									</div>
+									<div class="clr"></div>
+								</div>	
+							</c:forEach>
+							<!-- 반복 끝 -->
+							<!-- 의견리스트 끝 -->
+						</div>
+					</c:if>
 				</div>
 				<!-- 하단 끝 -->
 			<!-- writeform 끝-->	
@@ -201,3 +191,37 @@
 		<!-- 0. include부분 끝-->
 
 <%@ include file="../inc/bottom.jsp" %>
+<script type="text/javascript">
+	$(function(){
+		$('input#cf_edit').click(function(){
+			$(location).attr('href',"<c:url value='/confirm/edit.do?cfNo=${docVo.cfNo }'/>");
+		});
+
+		$('input#cf_del').click(function(){
+			if(confirm('정말 문서를 삭제 하시겠습니까?')){
+				$(location).attr('href',"<c:url value='/confirm/delete.do?cfNo=${docVo.cfNo }'/>");
+			}
+		});
+		
+		$('.comm_delete').click(function(){
+			if(!confirm('정말 의견을 삭제 하시겠습니까?')){
+				return false;
+			}
+		});
+		
+		$('a.comm_edit').click(function(){
+			var getId = $(this).attr('id');
+			var start = getId.indexOf('-');
+			var num = getId.substring(start+1);
+			var btn = '#comm-'+num;
+			var con = '#comm_con-'+num+' .comm_con';
+			var frm = '#comm_con-'+num+' .comm_ed';
+			$(con).hide();
+			$(btn).hide();
+			$(frm).show();
+		});
+		$('.comm_ed, #comm_wr').submit(function(){
+			
+		});
+	});
+</script>

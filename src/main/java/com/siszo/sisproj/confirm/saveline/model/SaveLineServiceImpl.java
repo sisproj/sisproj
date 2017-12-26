@@ -19,4 +19,9 @@ public class SaveLineServiceImpl implements SaveLineService{
 	public SaveLineVO selectSaveLineBySaveNo(int saveNo) {
 		return slDao.selectSaveLineBySaveNo(saveNo);
 	}
+
+	@Override
+	public int insertSaveLine(SaveLineVO slVo) {
+		return slDao.insertSaveLine(slVo);
+	}
 }

@@ -329,7 +329,7 @@ html, body {
 		<input type="hidden" id="pschText" name="pschText"><!-- 제목 -->
 	</form>
 	<div id="scheduler_here" class="dhx_cal_container"
-		style='width: 1400px; height: 700px;'>
+		style='width: 1500px; height: 750px;'>
 		<div class="dhx_cal_navline">
 			<div class='dhx_cal_export pdf' id='export_pdf' title='Export to PDF' onclick='scheduler.toPDF("http://dhtmlxscheduler.appspot.com/export/pdf", "color")'>&nbsp;</div>
 			<div class="dhx_cal_prev_button">&nbsp;</div>

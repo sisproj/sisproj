@@ -5,7 +5,9 @@ import java.util.List;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.siszo.sisproj.confirm.comment.model.CommentVO;
 import com.siszo.sisproj.confirm.common.ConfirmSearchVO;
+import com.siszo.sisproj.employee.model.EmployeeVO;
 
 
 @Repository
@@ -28,6 +30,11 @@ public class DocumentDAOMybatis extends SqlSessionDaoSupport implements Document
 	}
 
 	@Override
+	public List<DocumentVO> selectForAwait(ConfirmSearchVO svo) {
+		return getSqlSession().selectList(namespace+".selectForAwait",svo);
+	}
+	
+	@Override
 	public int totalRecordCountDoc(ConfirmSearchVO svo) {
 		return getSqlSession().selectOne(namespace+".totalRecordCountDoc",svo);
 	}
@@ -35,6 +42,31 @@ public class DocumentDAOMybatis extends SqlSessionDaoSupport implements Document
 	@Override
 	public List<DocumentVO> completeDocSelByEmpNo(int empNo) {
 		return getSqlSession().selectList(namespace+".completeDocSelByEmpNo",empNo);
+	}
+
+	@Override
+	public EmployeeVO selectByEmpNo(int empNo) {
+		return getSqlSession().selectOne(namespace+".selectByEmpNo",empNo);
+	}
+
+	@Override
+	public DocumentVO selectDocByCfNo(String cfNo) {
+		return getSqlSession().selectOne(namespace+".selectDocByCfNo",cfNo);
+	}
+
+	@Override
+	public int updateConfirmDoc(DocumentVO docuVo) {
+		return getSqlSession().update(namespace+".updateConfirmDoc",docuVo);
+	}
+
+	@Override
+	public int deleteConfirmLine(String cfNo) {
+		return getSqlSession().delete(namespace+".deleteConfirmLine",cfNo);
+	}
+
+	@Override
+	public int deleteDocuByCfNo(String cfNo) {
+		return getSqlSession().delete(namespace+".deleteDocuByCfNo",cfNo);
 	}
 	
 	
