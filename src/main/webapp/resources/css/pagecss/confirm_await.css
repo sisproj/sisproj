@@ -1,5 +1,8 @@
 @charset "UTF-8";
 #search{
+	width: 100%;
+	max-width:1100px;
+	margin: 0 auto;
 	background-color: #eee;
 	padding : 10px;
 	padding-bottom:0;
@@ -20,6 +23,9 @@
 	height:20px;
 }
 #pagingbtn{
+	width: 100%;
+	max-width:1100px;
+	margin: 0 auto;
 	height: 40px;
 	width: auto;
 	background-color: #eee;
@@ -64,9 +70,14 @@
 }
 #awaittb {
 	width: 100%;
+	max-width:1100px;
+	margin: 0 auto;
 	background-color: #eee;
 	padding : 10px;
 	box-sizing:border-box;
+}
+#awaittb tr:hover{
+	background-color: #d1d1d1;
 }
 #awaittb th{
 	box-sizing:border-box;
@@ -78,24 +89,21 @@
 	font-size: 1.17em;
 }
 #awaittb th:nth-child(1){
-	width: 13%;
+	width: 20%;
 }
 #awaittb th:nth-child(2){
-	width: 38%;
+	width: 30%;
 }
 #awaittb th:nth-child(3){
-	width: 13%;
+	width: 10%;
 }
 #awaittb th:nth-child(4){
-	width: 10%;
+	width: 20%;
 
 }
 #awaittb th:nth-child(5){
-	width: 18%;
+	width: 10%;
 
-}
-#awaittb th:nth-child(6){
-	width: 8%
 }
 #awaittb td {
 	box-sizing:border-box;

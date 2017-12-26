@@ -7,11 +7,13 @@ public class ConfirmLineVO {
 	private int lineNo; //결재라인번호
 	private int empNo; //결재자(사원번호)
 	private String empName; //결재자(이름) (join emp.emp_no)
-	private String empPosition; //결재자 직급 (join emp.emp_position)
+	private String posName; //결재자 직급 (join position.pos_name)
 	private String deptName; //결재자 부서명 (join dept.dept_name)
+	private String signName; //결재자 서명(join sign.sign_name)
 	private String lineStat; //결재 상태
 	private String cfNo; //결재문서 번호
 	private Timestamp lineRegdate; //결재변경일자
+	private int lineOrder; //결재 순서
 	
 	public int getLineNo() {
 		return lineNo;
@@ -55,17 +57,30 @@ public class ConfirmLineVO {
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
 	}
-	public String getEmpPosition() {
-		return empPosition;
+	public String getPosName() {
+		return posName;
 	}
-	public void setEmpPosition(String empPosition) {
-		this.empPosition = empPosition;
+	public void setPosName(String posName) {
+		this.posName = posName;
 	}
-	
+	public String getSignName() {
+		return signName;
+	}
+	public void setSignName(String signName) {
+		this.signName = signName;
+	}
+	public int getLineOrder() {
+		return lineOrder;
+	}
+	public void setLineOrder(int lineOrder) {
+		this.lineOrder = lineOrder;
+	}
 	@Override
 	public String toString() {
-		return "ConfirmLineVO [lineNo=" + lineNo + ", empNo=" + empNo + ", empName=" + empName + ", empPosition="
-				+ empPosition + ", deptName=" + deptName + ", lineStat=" + lineStat + ", cfNo=" + cfNo
-				+ ", lineRegdate=" + lineRegdate + "]";
+		return "ConfirmLineVO [lineNo=" + lineNo + ", empNo=" + empNo + ", empName=" + empName + ", posName=" + posName
+				+ ", deptName=" + deptName + ", signName=" + signName + ", lineStat=" + lineStat + ", cfNo=" + cfNo
+				+ ", lineRegdate=" + lineRegdate + ", lineOrder=" + lineOrder + "]";
 	}
+	
+	
 }

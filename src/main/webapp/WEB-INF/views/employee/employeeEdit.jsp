@@ -137,11 +137,13 @@
         <!-- 3. 내용 -->
         <!-- 사원로그인시 부서/직급/월급/사원번호 수정 불가 if걸기 -->
     <div id="dimyPage">
+    	<div id="diInput">
       	<form id="frmEmp" name="frmEnp"    	
       	action="<c:url value='/employee/employeeEdit.do?empNo=${vo.empNo }'/>" method="post" enctype="multipart/form-data">
-      	<input type="hidden" name="empTel" id="empTel" value="${vo.empTel }">
-      	<input type="hidden" name="empSsn" id="empSsn" value="${vo.empSsn }">
-      	<input type="hidden" name="empEmail" id="empEmail" value="${vo.empEmail }">
+      	<input type="text" name="empTel" id="empTel" value="${vo.empTel }">
+      	<input type="text" name="empSsn" id="empSsn" value="${vo.empSsn }">
+      	<input type="text" name="empEmail" id="empEmail" value="${vo.empEmail }">
+      	<input type="text" name="oldFileName" id="oldFileName" value="${vo.empImg}">
       	  <fieldset>
   		    <div id="diId">
       	 		<label for="name">사원번호</label>
@@ -155,15 +157,6 @@
       	 		<label for="name">이름</label>
       	 		<input type="text" id=" empName" name=" empName" value="${vo.empName }">   
        		</div>
-       		<div id="empImg" style="overflow: hidden;">
-	       			<c:if test="${!empty vo.empImg }">
-		       	   		<img src="${pageContext.request.contextPath}/emp_images/${vo.empImg }"
-		       	   		 alt="${vo.empName }(${vo.empNo })" />       		    
-					</c:if>
-					<c:if test="${empty vo.empImg }">
-						<img alt="해당 사원의 사진이 없습니다" src="${pageContext.request.contextPath}/emp_images/defaultImages.jpg">
-					</c:if>
-			</div>	
 	       	  <!--  <input type="image" src="" alt="이미지 등록" id="empImg">       		     -->
        		<div id="diEnName">
        		<label for="enName">영어이름</label> 
@@ -398,6 +391,18 @@
 	        	</div>
         	</fieldset>
         </form>
+        </div>
+        <div id="diImg1">
+	        <div id="diImg2">
+	       			<c:if test="${!empty vo.empImg }">
+		       	   		<img src="${pageContext.request.contextPath}/emp_images/${vo.empImg }"
+		       	   		 alt="${vo.empName }(${vo.empNo })" />       		    
+					</c:if>
+					<c:if test="${empty vo.empImg }">
+						<i class="fa fa-user"></i>
+					</c:if>
+			</div>
+		</div>	
     </div>
 </article>
 

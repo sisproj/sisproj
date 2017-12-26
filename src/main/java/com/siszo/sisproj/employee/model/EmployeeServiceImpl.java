@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.siszo.sisproj.common.SearchVO;
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
@@ -17,8 +19,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
-	public List<EmployeeVO> selectAllEmployee() {
-		return employeeDao.selectAllEmployee();
+	public List<EmployeeVO> selectAllEmployee(SearchVO vo) {		
+		return employeeDao.selectAllEmployee(vo);	
 	}
 
 	@Override
@@ -28,10 +30,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public List<EmployeeVO> selectEmployeeByEmpPosition(String empName) {
-		 List<EmployeeVO> list=employeeDao.selectEmployeeByEmpName(empName);		 
-	 
-		 return list;
-		 
+		 return employeeDao.selectEmployeeByEmpName(empName);		 		 
 	}
 
 	@Override
@@ -55,6 +54,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 			e.printStackTrace();
 		}
 		return cnt;
+	}
+
+	@Override
+	public int selectTotalRecordCount(SearchVO vo) {
+		return employeeDao.selectTotalRecordCount(vo);
 	}
 	
 		

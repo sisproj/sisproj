@@ -41,7 +41,9 @@
 					</tr>
 				</thead>
 				<tbody id="confirmers">
-					
+					<c:if test="${!empty empNoList }">
+						<c:import url='/confirm/choLine.do'/>
+					</c:if>
 				</tbody>
 			</table>
 		</div>

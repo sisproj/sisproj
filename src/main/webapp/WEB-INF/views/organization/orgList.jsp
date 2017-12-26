@@ -103,10 +103,15 @@
 		function empInfomation(item){
 			/* alert("123"); */
 			if($('#choice_cfer').length){
-                  if($('#choice_cfer').attr('class')=='on'){
-                     return false;
-                  }
+               if($('#choice_cfer').attr('class')=='on'){
+                  return false;
                }
+            }
+			if($('#save_line').length){
+	            if($('#save_line').attr('class')=='on'){
+	               return false;
+	            }
+        	}
 			var empNo="empNo="+$(item).attr('id');
 			/* alert(empNo); */
 			$.ajax({

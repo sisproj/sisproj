@@ -1,5 +1,7 @@
 package com.siszo.sisproj.confirm.confirmline.model;
 
+import java.util.List;
+
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +22,11 @@ public class ConfirmLineDAOMybatis extends SqlSessionDaoSupport implements Confi
 	@Override
 	public int myConfirmOk(ConfirmLineVO vo) {
 		return getSqlSession().update(namespace+".myConfirmOk",vo);
+	}
+
+	@Override
+	public List<ConfirmLineVO> selectCfLineByCfNo(String cfNo) {
+		return getSqlSession().selectList(namespace+".selectCfLineByCfNo",cfNo);
 	}
 
 	

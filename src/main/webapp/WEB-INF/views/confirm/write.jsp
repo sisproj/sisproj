@@ -9,6 +9,7 @@
 					<li><a href="<c:url value='/confirm/await.do'/>"><i class="fa fa-hdd-o"></i>&nbsp;<span>결재 대기함</span></a></li>
 					<li><a href="<c:url value='/confirm/complete.do'/>"><i class="fa fa-file-text"></i>&nbsp;<span>결재 완료함</span></a></li>
 					<li><a href="<c:url value='/confirm/return.do'/>"><i class="fa fa-history"></i>&nbsp;<span>결재 반려함</span></a></li>
+					<li><a href="<c:url value='/confirm/postbox.do'/>"><i class="fa fa-archive"></i>&nbsp;<span>참조 수신함</span></a></li>
 					<li><a href="<c:url value='/confirm/setting.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>결재 환경 설정</span></a></li>
 					<li><a href="<c:url value='/confirm/adm/typeform.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>결재 양식 관리</span></a></li>
 				</ul>	
@@ -47,21 +48,24 @@
 				</div>	
 				<!-- 상단 끝 -->
 
-				<form name="writeFrm" id="writeFrm" method="post" action="<c:url value='/confirm/write.do'/>" enctype="multipart/form-data">
+				<form name="writeFrm" id="writeFrm" method="post"
+					action="<c:url value='/confirm/confirmOk.do'/>" enctype="multipart/form-data">
 				<!-- 미드 -->
+					<input type="hidden" name="cfStatus" id="writeType">
+					<input type="hidden" name="allConfirmers" id="allConfirmers">
 					<div id="doc_type">
 						<div id="dt_head">
 							<input type="text" name="formName" value="${vo.formName }" readonly>
 							<input type="hidden" name="formNo" value="${param.formNo }">
 						</div>
 						<p id="userinfo">
-							기안자 : <input type="text" name="username" value="사용자(부서이름)" readonly>
-							<input type="hidden" name="empNo" value="${empNo }">
+							기안자 : <input type="text" name="username" value="${eVo.empName }(${eVo.deptName })" readonly>
+							<input type="hidden" name="empNo" value="${eVo.empNo }">
 						</p>
 						<div id="doc_info">
 							<div>
 								<label for ="docno" class="sd1">문서 번호</label> <!-- 날짜+부서번호+양식번호+문서시퀀스 -->
-								<input type="text" name="cfNo" id="docno" value="${today }301333${seq}" readonly>
+								<input type="text" name="cfNo" id="docno" value="${today }301${vo.formNo }${seq}" readonly>
 							</div>
 							<div>
 								<label for="docreg" class="sd1">기안 일자</label>
@@ -111,12 +115,11 @@
 						</select>
 						<div id="files"></div>
 					</div>
-					<input type="hidden" name="allConfirmers" id="allConfirmers">
-					<div id="submitbtn">
-						<input type="button" id="confirmbtn" onclick="submitContents()" value="결재">&nbsp;&nbsp;
-						<input type="button" id="savebtn" onclick="submitContents()" value="임시저장">	
-					</div>
 				</form>
+				<div id="submitbtn">
+					<input type="button" id="confirmbtn" value="결재">&nbsp;&nbsp;
+					<input type="button" id="savebtn" value="임시저장">	
+				</div>
 				<div id="choice_cfer" class='off'>
 					<c:import url='/confirm/line.do'/>
 				</div>
@@ -138,20 +141,24 @@
 			$('#cf_ch_savedline ul li i').prop('class','fa fa-folder-o');
 			$('#choice_cfer').fadeIn();
 			$('#choice_cfer').attr('class','on');
+			$('#organ').css('height','500px');
+			$('#orgUp').hide();
+			$('#orgDown').show();
+			$('#organbody').show();
 		});
 
 		var order = 0;
 		//조직도에서 사원 리스트 더블클릭시 리스트에 추가
 		$('#organbody ul li ul li').dblclick(function(){
 			var empNo = $(this).attr('id');
-			var sessempNo = '${empNo}';
+			var sessempNo = '${eVo.empNo }';
 			var status = $('#choice_cfer').attr('class');
-			if($('#confirmers').attr('class')=='favorite' && empNo == sessempNo){
+			if(empNo == sessempNo){
 				alert('자기자신은 선택할 수 없습니다.');
 				return false;
 			}
 			if($('#confirmers').attr('class')=='favorite' && empNo != sessempNo && status=='on'){
-				if(confirm('현재 선택된 결재라인이 제거됩니다.')){
+				if(confirm('현재 선택된 결재라인이 선택해제 됩니다.')){
 					$('#cf_ch_savedline ul li i').prop('class','fa fa-folder-o');
 					$('#confirmers').html('');
 					$('#confirmers').removeClass();
@@ -163,14 +170,9 @@
 			
 			if(order<1 && $('#confirmers').attr('class')!='favorite' && status=='on'){
 				//초기 본인 세팅
-				$('#confirmers').prepend("<tr class='t1'><td>1</td></tr>");
-				$("#temp").load("<c:url value='/confirm/choLine.do?empNo="+sessempNo+"'/>", function(response, status, xhr) {
-					if(status=='success'){
-						var temp = $("#temp").html();
-						$('#confirmers tr.t1').append(temp);					
-					}
-				});
-				order+=1;
+				$('#confirmers').prepend("<tr class='t1'><td>1</td><td>${eVo.deptName }</td><td class='cf_empPo'>${eVo.posName }</td><td class='cf_empName'>${eVo.empName }</td><input type='hidden' name='confirmerNo' class='confirmerNo' value='${eVo.empNo }'></tr>");	
+				order+=2;
+				
 			}
 			
 			var exist = 0;
@@ -182,15 +184,15 @@
 
 			//현재 접속자와 조직도에서 선택한 사람이 같지 않을 경우에만 처리
 			if(status=='on' && exist==0 && empNo != sessempNo){
-				if(order==8){alert('최대 8명까지 가능 합니다.'); return false;};
+				if(order==9){alert('최대 8명까지 가능 합니다.'); return false;}; //9부터는 안됨!
 				$("#temp").load("<c:url value='/confirm/choLine.do?empNo="+empNo+"'/>", function(response, status, xhr) {
 					if(status=='success'){
 						$('#confirmers').append("<tr class='t"+order+"'><td>"+order+"</td></tr>");
 						var temp = $("#temp").html();
-						$('#confirmers tr.t'+order).append(temp);				
+						$('#confirmers tr.t'+order).append(temp);
+						order+=1;
 					}
 				});
-				order+=1;	
 			}
 		});
 		
@@ -198,7 +200,10 @@
 		$('#cf_win_close').click(function(){
 			$('#choice_cfer').fadeOut();
 			$('#choice_cfer').attr('class','off');
-			$('#confirmers').html('');
+			$('#organ').css('height', '40px');
+			$('#orgDown').hide();
+			$('#orgUp').show();
+			$('#organbody').hide();
 			order=0;
 		});
 		
@@ -208,7 +213,7 @@
 			if($('#confirmers').attr('class')=='favorite'){
 				alert('저장된 리스트는 삭제 할 수 없습니다.');
 				return false;
-			} else if(thissel == '${empNo}'){
+			} else if(thissel == '${eVo.empNo }'){
 				alert('본인은 삭제 할 수 없습니다.');
 				return false;
 			} else {
@@ -241,9 +246,13 @@
 				var cf_empNo = $(this).find('input[type=hidden]').val();
 				
 				$('#doc_type #confirmer').append("<div id='confirmer1'><span></span><span>"+cf_empName+" "+cf_empPo+"</span><input type='hidden' name='allConfirmer' value='"+cf_empNo+"'></div>");
-				$('#choice_cfer').fadeOut();
-				$('#choice_cfer').attr('class','off');
-			});
+			});				
+			$('#choice_cfer').fadeOut();
+			$('#choice_cfer').attr('class','off');
+			$('#organ').css('height', '40px');
+			$('#orgDown').hide();
+			$('#orgUp').show();
+			$('#organbody').hide();
 			
 			getConfirmers();
 		});
