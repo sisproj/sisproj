@@ -76,7 +76,7 @@
                		<!-- 관리자 로그인과 사원 로그인 보이는것 체인지 -->
                     <c:if test="${!empty sessionScope.empVo.empNo }">	    
                     	<li>${sessionScope.empVo.empNo }바바</li>          	
-	                    <c:if test="${sessionScope.empVo.empLev eq ('관리자') }">
+	                    <c:if test="${sessionScope.empVo.empLev == '관리자' }">
 	                   	    <li><i class="fa fa-id-card"></i>&nbsp;<span class="name bold">관리자 ${sessionScope.empVo.empName }님</span></li>
 	               	        <li><i class="fa fa-cog"></i>&nbsp;<span><a href="<c:url value='/employee/employeeList.do'/>">관리자페이지</a></span></li>
 	                    </c:if>

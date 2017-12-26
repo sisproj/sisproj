@@ -58,7 +58,7 @@
 	</select>
 	
 	<select id="selectSaveLineByEmpNo" parameterType="int" resultType="SaveLineVO">
-		select * from save_line where emp_no = #{empNo}
+		select * from save_line where emp_no = #{empNo} order by save_no
 	</select>
 	
 	<select id="selectSaveLineBySaveNo" parameterType="int" resultType="SaveLineVO">
@@ -231,7 +231,7 @@
 	
 	<update id="updateComment" parameterType="CommentVO">
 		update comm set comm_content=#{commContent}
-		where cf_no = #{cfNo}
+		where comm_no = #{commNo}
 	</update>
 	
 	<delete id="deleteComment" parameterType="int">
@@ -245,6 +245,18 @@
 		insert into save_line(save_no, emp_no, save_name, save_confirmer)
 		values(#{saveNo}, #{empNo}, #{saveName}, #{saveConfirmer})
 	</insert>
+	
+	<update id="updateSaveLine" parameterType="SaveLineVO">
+		update save_line set save_name = #{saveName}, save_confirmer = #{saveConfirmer} where save_no = #{saveNo}
+	</update>
+	
+	<delete id="deleteSaveLine" parameterType="int">
+		delete from save_line where save_no = #{saveNo}
+	</delete>
+	
+	<select id="selectSign" parameterType="int" resultType="SignVO">
+		select * from sign where emp_no = 20170001
+	</select>
 </mapper>
 
 

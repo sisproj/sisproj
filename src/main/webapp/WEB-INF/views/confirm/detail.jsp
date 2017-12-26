@@ -151,7 +151,7 @@
 							<!-- 의견리스트 -->
 							<!-- 반복 -->
 							<c:forEach var="commVo" items="${commVoList }" varStatus="status">
-								<div class="selcomm">
+								<div class="selcomm" id="${commVo.commNo }">
 									<div class="comm_info">
 										<span class="comm_reg bold">${commVo.empName }</span> 
 										<span class="comm_reg"><fmt:formatDate value="${commVo.commRegdate }" pattern="yyyy-MM-dd HH:mm:ss"/></span>
@@ -167,9 +167,9 @@
 										<!-- 수정용 -->
 										<form name="comm_ed" class="comm_ed" method="post" action="<c:url value='/confirm/editComm.do'/>">
 											<textarea name="commContent" placeholder="줄바꿈이 되지 않습니다."></textarea>
-											<input type="submit" class="bold" value="댓글 수정">
 											<input type="hidden" name="commNo" value="${commVo.commNo }">
 											<input type="hidden" name="cfNo" value="${docVo.cfNo }">
+											<input type="submit" class="bold" value="댓글 수정">
 										</form>
 										<!-- 수정용 끝 -->
 									</div>

@@ -5,6 +5,8 @@ import java.util.List;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import oracle.net.aso.s;
+
 @Repository
 public class SaveLineDAOMybatis extends SqlSessionDaoSupport implements SaveLineDAO {
 	private String namespace="config.mybatis.mapper.oracle.confirm";
@@ -22,5 +24,15 @@ public class SaveLineDAOMybatis extends SqlSessionDaoSupport implements SaveLine
 	@Override
 	public int insertSaveLine(SaveLineVO slVo) {
 		return getSqlSession().insert(namespace+".insertSaveLine",slVo);
+	}
+
+	@Override
+	public int updateSaveLine(SaveLineVO slVo) {
+		return getSqlSession().update(namespace+".updateSaveLine", slVo);
+	}
+
+	@Override
+	public int deleteSaveLine(int saveNo) {
+		return getSqlSession().delete(namespace+".deleteSaveLine", saveNo);
 	}
 }
