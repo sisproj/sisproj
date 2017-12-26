@@ -1,12 +1,12 @@
 $(function(){
 	$('#loginbtn').click(function(){
-		if($('#userid').val()==""){
+		if($('#empNo').val()==""){
 			$('#errormsg').text('아이디를 입력해주세요');
-			$('#userid').focus();
+			$('#empNo').focus();
 			return false;
-		} else if($('#pwd').val()==""){
+		} else if($('#empPwd').val()==""){
 			$('#errormsg').text('비밀번호를 입력해주세요');
-			$('#pwd').focus();
+			$('#empPwd').focus();
 			return false;
 		}
 		$('#loginfrm').submit();

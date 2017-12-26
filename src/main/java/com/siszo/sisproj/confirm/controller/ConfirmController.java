@@ -40,6 +40,8 @@ import com.siszo.sisproj.confirm.model.DocumentService;
 import com.siszo.sisproj.confirm.model.DocumentVO;
 import com.siszo.sisproj.confirm.saveline.model.SaveLineService;
 import com.siszo.sisproj.confirm.saveline.model.SaveLineVO;
+import com.siszo.sisproj.confirm.sign.model.SignService;
+import com.siszo.sisproj.confirm.sign.model.SignVO;
 import com.siszo.sisproj.employee.model.EmployeeVO;
 
 @Controller
@@ -61,6 +63,8 @@ public class ConfirmController {
 	private CommentService commService;
 	@Autowired
 	private CfIsReadService cirService;
+	@Autowired
+	private SignService sService;
 	@Autowired
 	private FileUploadUtil fileUtil;
 	
@@ -254,12 +258,14 @@ public class ConfirmController {
 	public String setting(Model model) {
 		logger.info("결재 환경 설정 보여주기");
 		logger.info("결재서명등록 화면 보여주기");	
-		
+		SignVO sVo = sService.selectSign(empNo);
+		logger.info("결재 서명 조회 결과 sVo={}",sVo);
 		
 		logger.info("결재라인등록 화면 보여주기");		
 		List<SaveLineVO> slVoList = slService.selectSaveLineByEmpNo(empNo);
 		EmployeeVO eVo = dService.selectByEmpNo(empNo);//내 정보 VO로 전달
-				
+		
+		model.addAttribute("sVo",sVo);
 		model.addAttribute("slVoList",slVoList);
 		model.addAttribute("eVo",eVo);
 		
@@ -702,8 +708,8 @@ public class ConfirmController {
 		docVo.setCfTitle(title);
 				
 		//2. 해당 기안자 조회 해서 EmployeeVO 구함(기안자, 부서이름 조회용)
-		EmployeeVO eVo = dService.selectByEmpNo(docVo.getEmpNo());
-		logger.info("해당 문서 작성자 조회, eVo={}",eVo);
+		EmployeeVO writerEmpVo = dService.selectByEmpNo(docVo.getEmpNo());
+		logger.info("해당 문서 작성자 조회, eVo={}",writerEmpVo);
 		
 		//3. cfNo의 결재라인 confirm_line 테이블에서 가져옴 = List<ConfirmLineVO> (*)
 		List<ConfirmLineVO> clVoList = clService.selectCfLineByCfNo(cfNo);
@@ -740,14 +746,19 @@ public class ConfirmController {
 			}
 			logger.info("해당 문서의 의견 리스트, commVoList.size()={}",commVoList.size());
 		}
+		//7. 접속자 본인 이미 경로 받아가기
+		SignVO sVo = sService.selectSign(empNo);
+		logger.info("접속자 서명 조회 처리 결과 sVo={}",sVo);
 		
 		model.addAttribute("docVo", docVo);
-		model.addAttribute("eVo", eVo);
+		model.addAttribute("writerEmpVo", writerEmpVo);
 		model.addAttribute("clVoList", clVoList);
 		model.addAttribute("linkDoc", linkDoc);
 		model.addAttribute("fileList", fileList);
 		model.addAttribute("commVoList", commVoList);
 		model.addAttribute("MyEmpNo",empNo);
+		model.addAttribute("sVo",sVo);
+		
 		//결재 상태 확인용 상태플래그
 		model.addAttribute("CL_AWAIT",ConfirmLineService.CL_AWAIT);
 		model.addAttribute("CL_COMPLETE",ConfirmLineService.CL_COMPLETE);
@@ -867,8 +878,6 @@ public class ConfirmController {
 		model.addAttribute("MyEmpNo",empNo);
 		
 		return "confirm/await";
-		
-		//처리해야함 : 해당 결재라인을 전체 조회해서 List얻음 -> 얻고 나서 line_no 순으로 for문으로 돌리면서 대기인 사람과 본인 만 해당 문서 보여주기
 	}
 	
 	@RequestMapping("/complete.do")

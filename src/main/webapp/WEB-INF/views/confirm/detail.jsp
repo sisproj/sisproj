@@ -58,7 +58,7 @@
 						</div>
 						<span></span>
 						<p id="userinfo">
-							기안자 : <input type="text" name="username" value="${eVo.empName }(${eVo.deptName })" readonly><br>
+							기안자 : <input type="text" name="username" value="${writerEmpVo.empName }(${writerEmpVo.deptName })" readonly><br>
 							현재 문서 상태 : <strong>${docVo.cfStatus }</strong>
 						</p>
 						<div id="doc_info">
@@ -85,7 +85,7 @@
 								<div>
 									<span>
 										<c:if test="${clVo.lineStat == CL_COMPLETE}">
-											<img src="<c:url value='/user_sign/app_sign.gif'/>" alt="결재"> <!-- 결재자 사인 경로 넣기 -->
+											<img src="<c:url value='/user_sign/${sVo.signName }'/>" alt="결재"> <!-- 결재자 사인 경로 넣기 -->
 										</c:if>
 										<c:if test="${clVo.lineStat == CL_RETURN}">
 											<img src="<c:url value='/user_sign/return_img.jpg'/>" alt="반려">											

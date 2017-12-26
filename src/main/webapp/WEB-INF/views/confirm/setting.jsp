@@ -38,11 +38,12 @@
 					<h3>결재서명등록</h3>
 					<div id="sign_img">
 						<p>현재등록된 이미지</p>
-						<img src="<c:url value=''/>" alt="서명"><br>
-						<span id="signfname">app_sign.gif</span><br><br>
-						<form name="updateSign" id="updateSign" method="post" action="#" enctype="multipart/form-data">
-							<input type="hidden" name="oldfilename" value="">
-							<input type="file" name="upfile" id="upfile" value="" accept="image/*">
+						<img src="${pageContext.request.contextPath }/user_sign/${sVo.signName}" alt="등록된 이미지가 없습니다."><br>
+						<span id="signfname">${sVo.signOriName }</span><br><br>
+						<form name="updateSign" id="updateSign" method="post" 
+							action="<c:url value='/confirm/updateSign.do'/>" enctype="multipart/form-data">
+							<input type="hidden" name="oldfilename" value="${sVo.signName }">
+							<input type="file" name="upfile" id="upfile" accept="image/*">
 							<input type="button" id="udSign" value="등록">
 						</form>
 					</div>
@@ -79,10 +80,10 @@
 							</table>
 							<!-- 결재라인 모아 처리 -->
 							<form id=confirmers_save action="#">
-								<input type="text" name="saveNo" value="0">
-								<input type="text" name="empNo" value="${eVo.empNo }">
-								<input type="text" name="saveName" id="saveName">
-								<input type="text" name="saveConfirmer" id="allConfirmers">
+								<input type="hidden" name="saveNo" value="0">
+								<input type="hidden" name="empNo" value="${eVo.empNo }">
+								<input type="hidden" name="saveName" id="saveName">
+								<input type="hidden" name="saveConfirmer" id="allConfirmers">
 							</form>
 							<div id="detailbtn">	
 								<input type="button" id="saveLine" value="저장">&nbsp;
@@ -109,7 +110,33 @@
 <div class="modal"></div>
 <script type="text/javascript" src="<c:url value='/resources/js/pagejs/confirm_setting.js'/>"></script>
 <script type="text/javascript">
-$(function(){
+
+function fileCheck(obj){
+	var pathpoint = obj.value.lastIndexOf(".");
+	var filepoint = obj.value.substring(pathpoint+1,obj.length);
+	var filetype = filepoint.toLowerCase();
+	if(filetype == 'bmp'){
+		alert('bmp파일은 업로드가 불가능 합니다.');
+		return false;
+	} else if(filetype != 'jpg' && filetype != 'jpeg' && filetype != 'gif' && filetype != 'png'){
+		alert('이미지파일만 업로드가 가능합니다.');
+		return false;
+	} else {
+		$('#updateSign').submit();		
+	}
+}
+
+$(function(){	
+	$('#udSign').click(function(){
+		if($('#upfile').val()!=""){
+			alert("수정");
+			fileCheck(document.getElementById('upfile'));
+		}
+	});
+	
+	$( "#cf_settings" ).tabs();
+	
+	////// 전자결재라인등록 부분
 	var sessempNo = '${eVo.empNo }';
 	var status = "";
 	

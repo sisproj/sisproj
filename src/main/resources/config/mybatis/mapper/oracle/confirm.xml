@@ -255,8 +255,17 @@
 	</delete>
 	
 	<select id="selectSign" parameterType="int" resultType="SignVO">
-		select * from sign where emp_no = 20170001
+		select * from sign where emp_no = #{empNo}
 	</select>
+	
+	<insert id="insertSignImg" parameterType="SignVO">
+		insert into sign(emp_no, sign_name, sign_ori_name, sign_size)
+		values(20170001, '파일이름', '원래이름', 1234123)
+	</insert>
+	
+	<update id="updateSignImg" parameterType="SignVO">
+		update sign set sign_name = #{signName}, sign_ori_name = #{signOriName}, sign_size = #{signSize} where emp_no = #{empNo}
+	</update>
 </mapper>
 
 
