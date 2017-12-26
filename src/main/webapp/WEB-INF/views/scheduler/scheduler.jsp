@@ -187,8 +187,6 @@
 					return true; 
 			});			     
 			  
-				
-			console.log("${list}");
 			
 			scheduler.parse([//화면에 뿌려주기.
 				<c:if test="${empty list}">
