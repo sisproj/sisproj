@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.siszo.sisproj.news.model.NewsService;
 import com.siszo.sisproj.news.model.NewsVO;
@@ -24,8 +25,10 @@ public class NewsController {
 	
 	
 	@RequestMapping("/news.do")
-	public void newsView() {
-		
+	public void newsView(Model model) {
+		List<NewsVO> list = newsService.dailyNewsList();
+		logger.info("뉴스화면 출력 listsize={}",list.size());
+		model.addAttribute("list",list);
 	}
 	
 	@RequestMapping("/newsWriteOk.do")
@@ -74,4 +77,17 @@ public class NewsController {
 		model.addAttribute("list",list);
 		
 	}
+	
+	@RequestMapping("/newsDetail.do")
+	public String newsDetail(@RequestParam(defaultValue="0") int newsNo, Model model) {
+		NewsVO newsVo=newsService.newsSearchByNo(newsNo);
+		logger.info("뉴스 디테일 화면 출력,newsVo ={}",newsVo);
+		
+		
+		model.addAttribute("newsVo",newsVo);
+		
+		return "news/newsDetail";
+	}
+	
+	
 }

@@ -2,7 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<div id="photo">
-            <img src="${pageContext.request.contextPath }/resources/images/avatar.png" alt="사진이미지">
+         <c:if test="${empty sessionScope.empVo.empImg }">
+         	<img src="${pageContext.request.contextPath }/emp_images/defaultImg.png" alt="${sessionScope.empVo.empName }">
+         </c:if>
+		<c:if test="${!empty sessionScope.empVo.empImg }">
+            <img src="${pageContext.request.contextPath }/emp_images/${sessionScope.empVo.empImg}" alt="${sessionScope.empVo.empName }">
+        </c:if>
 	</div>
 	<div id="info">
 	    <ul>
@@ -28,7 +33,7 @@
 	<div id="asidebtn">
 	    <ul>
 	        <li><a href="#">출근</a></li>
-	        <li><a href="#" onclick="window.open('<c:url value="/messenger/messenger.do"/>', 'messengerWindow', 'toolbar=no,scrollbars=yes')">메신저</a></li>
+	        <li><a href="#" onclick="window.open('<c:url value="/messenger/messenger.do"/>', 'messengerWindow', 'width=1100,height=640,toolbar=no,scrollbars=yes')">메신저</a></li>
 	        <li><a href="<c:url value='/login/logout.do'/>">로그 아웃</a></li>
 	    </ul>
 	</div>

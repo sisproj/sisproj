@@ -108,41 +108,24 @@
 					
 				</div>
 				<div class="w3-third">
+				<!-- 반복시작 -->
+				<c:if test="${!empty list }">
+					<c:forEach var="vo" items="${list }">
 					<div class="w3-container w3-light-grey">
-						<h2>Very New News!</h2>
-						<p class="w3-justify">Lorem ipsum dolor sit amet, consectetur
-							adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-							dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-							exercitation ullamco laboris nisi ut aliquip ex ea commodo
-							consequat. Duis aute irure dolor in reprehenderit in voluptate
-							velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-							occaecat cupidatat non proident, sunt in culpa qui officia
-							deserunt mollit anim id est laborum.</p>
+					<c:if test="${fn:length(vo.newsTitle)>30 }">
+						<h4><a href="#"> ${fn:substring(vo.newsTitle,0,30) }...</a></h4>
+					</c:if>
+					<c:if test="${fn:length(vo.newsTitle)<=30}">
+						<h4><a href="#"> ${vo.newsTitle}</a></h4>
+					</c:if>
+						<p class="w3-justify">${vo.newsContent}</p>
 					</div>
 					<br>
-					<div class="w3-container w3-light-grey w3-justify">
-						<h2>Very New News!</h2>
-						<p class="w3-justify">Lorem ipsum dolor sit amet, consectetur
-							adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-							dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-							exercitation ullamco laboris nisi ut aliquip ex ea commodo
-							consequat. Duis aute irure dolor in reprehenderit in voluptate
-							velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-							occaecat cupidatat non proident, sunt in culpa qui officia
-							deserunt mollit anim id est laborum.</p>
-					</div>
-					<br>
-					<div class="w3-container w3-light-grey w3-justify">
-						<h2>Very New News!</h2>
-						<p class="w3-justify">Lorem ipsum dolor sit amet, consectetur
-							adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-							dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-							exercitation ullamco laboris nisi ut aliquip ex ea commodo
-							consequat. Duis aute irure dolor in reprehenderit in voluptate
-							velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-							occaecat cupidatat non proident, sunt in culpa qui officia
-							deserunt mollit anim id est laborum.</p>
-					</div>
+					</c:forEach>
+				
+				</c:if>
+					
+					<!-- 반복끝 -->
 				</div>
 			</div>
 		</div>

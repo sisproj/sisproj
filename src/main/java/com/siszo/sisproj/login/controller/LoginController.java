@@ -44,7 +44,7 @@ public class LoginController {
 
 		int cnt = loginService.loginCheck(vo.getEmpNo(), vo.getEmpPwd());
 
-		String msg="",url="/login.do";
+		String msg="",url="/login/login.do";
 		if(cnt==loginService.LOGIN_OK) {
 			EmployeeVO empVo = employeeService.selectEmployeeByNo(vo.getEmpNo());
 			logger.info("로그인 후 파라미터 empVo={}",empVo);
@@ -96,6 +96,7 @@ public class LoginController {
 		
 		/*		String empName = (String)session.getAttribute("empName");
 		String empLev = (String)session.getAttribute("empLev");*/
+		
 		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
 	
 		

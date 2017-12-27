@@ -75,7 +75,12 @@
 					<td colspan="7">사원 데이터가 없습니다</td>
 				</c:if>
 					<tr>	
-						<td><input type="checkbox" name="empItems[${status.index}].empNo" value="${vo.empNo}"></td>			
+					<c:if test="${empty vo.empOutdate }">
+						<td><input type="checkbox" name="empItems[${status.index}].empNo" value="${vo.empNo}"></td>		
+					</c:if>		
+					<c:if test="${!empty vo.empOutdate }" >
+						<td></td>
+					</c:if>
 						<td>${vo.empNo }</td>
 						<!-- 사원번호로 사원 디테일 이동 -->
 						<td><a href="<c:url value='/employee/employeeDetail.do?empNo=${vo.empNo }'/>">${vo.empName}</a></td>
@@ -124,21 +129,13 @@
     </article>
         <!-- 3. 내용 끝 -->
 <script type="text/javascript">
-	$(function () {
-	 	/* $('input[type==checkbox]').checked(function() {
-	 		var outdate = $('#diempList td')
-			if($()=="퇴사"){
-				alert("이미 퇴사한 직원입니다.");
-				return false;
-			}
-		});  */
-		
+	$(function () {	
 		$('#btDeSe').click(function(){
 			window.open('<c:url value='/employee/employeeDetailSearch.do'/>','chk',
 					'left=0,top=0,width=500,height=250,locations=yes,resizable=yes');
 		});
 			$('input[name=chkAll]').click(function(){
-
+	
 				$('input[type=checkbox]').prop('checked', this.checked);
 				
 			});
