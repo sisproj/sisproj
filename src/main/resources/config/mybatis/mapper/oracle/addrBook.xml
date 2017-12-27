@@ -24,7 +24,7 @@
 					and addr_groupno=#{addrGroupNo}		
 				</if>
 		        <include refid="searchWhere"></include>
-		        order by addr_groupNo		        
+		        order by addr_no		        
 		    ) alist
 		) 
 		<![CDATA[
@@ -49,11 +49,7 @@
 		    from(
 		        select * from addrBookView
 		        where addr_isdel='Y'
-		        <if test="addrGroupNo!=0">
-					and addr_groupno=#{addrGroupNo}		
-				</if>
-				<include refid="searchWhere"></include>
-		        order by addr_groupNo		        
+		        order by emp_No		        
 		    ) dlist
 		) 
 		<![CDATA[

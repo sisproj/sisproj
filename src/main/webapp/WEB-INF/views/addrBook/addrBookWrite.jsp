@@ -90,9 +90,7 @@
 			    </div>
 			    </form>
 			</div>
-	        <div class="divPaging">
-	        	<!-- <p>이곳에 페이징 처리를 합시다</p> -->
-	        </div>
+	       
         </div>
     </article>
     <!-- 3. 내용 끝 -->
