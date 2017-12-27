@@ -37,8 +37,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		logger.info("컨트롤러 수행전 실행-preHandle");
 		
 		EmployeeVO empVo= (EmployeeVO)request.getSession().getAttribute("empVo");
-		logger.info("인터셉터 empNo={}",empVo.getEmpNo());
-		if(empVo.getEmpNo()==0) {
+		logger.info("인터셉터 empVo={}",empVo);
+		if(empVo==null) {
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out =response.getWriter();
 			out.println("<script>alert('먼저 로그인하세요');");

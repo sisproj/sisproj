@@ -70,10 +70,4 @@
     </form>
 </div>
 </body>
-<style type="text/css">
-	#pwSe{
-		width: 87px;
-		height: 30px;
-	}
-</style>
 </html>
