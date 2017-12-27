@@ -746,9 +746,6 @@ public class ConfirmController {
 			}
 			logger.info("해당 문서의 의견 리스트, commVoList.size()={}",commVoList.size());
 		}
-		//7. 접속자 본인 이미 경로 받아가기
-		SignVO sVo = sService.selectSign(empNo);
-		logger.info("접속자 서명 조회 처리 결과 sVo={}",sVo);
 		
 		model.addAttribute("docVo", docVo);
 		model.addAttribute("writerEmpVo", writerEmpVo);
@@ -757,7 +754,6 @@ public class ConfirmController {
 		model.addAttribute("fileList", fileList);
 		model.addAttribute("commVoList", commVoList);
 		model.addAttribute("MyEmpNo",empNo);
-		model.addAttribute("sVo",sVo);
 		
 		//결재 상태 확인용 상태플래그
 		model.addAttribute("CL_AWAIT",ConfirmLineService.CL_AWAIT);

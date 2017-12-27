@@ -20,6 +20,7 @@ import com.siszo.sisproj.employee.model.EmployeeVO;
 import com.siszo.sisproj.login.model.LoginService;
 
 @Controller
+@RequestMapping("/login")
 public class LoginController {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
@@ -29,12 +30,12 @@ public class LoginController {
 	@Autowired
 	private LoginService loginService;
 
-	@RequestMapping(value="/login/login.do",method=RequestMethod.GET)
+	@RequestMapping(value="/login.do",method=RequestMethod.GET)
 	public void login_get() {
 		logger.info("로그인 화면 보여주기");
 	}
 	
-	@RequestMapping(value="/login/login.do",method=RequestMethod.POST)
+	@RequestMapping(value="/login.do",method=RequestMethod.POST)
 	public String login_post(@ModelAttribute EmployeeVO vo,
 			@RequestParam(required=false) String saveId,
 			HttpServletRequest request, HttpServletResponse response,
@@ -46,7 +47,8 @@ public class LoginController {
 		String msg="",url="/login/login.do";
 		if(cnt==loginService.LOGIN_OK) {
 			EmployeeVO empVo = employeeService.selectEmployeeByNo(vo.getEmpNo());
-
+			logger.info("로그인 후 파라미터 empVo={}",empVo);
+			
 			HttpSession session =request.getSession();
 			session.setAttribute("empVo",empVo);
 					
@@ -75,7 +77,7 @@ public class LoginController {
 		
 		return "common/message";
 	}
-	@RequestMapping("/login/logout.do")
+	@RequestMapping("/logout.do")
 	public String logout(HttpSession session,Model model) {
 		logger.info("로그 아웃");
 		
@@ -88,14 +90,18 @@ public class LoginController {
 		
 		return "common/message";
 	}
-	@RequestMapping("/inc/top.do")
-	public String detailEmployee(@RequestParam(defaultValue="0") int empNo,Model model) {
-		logger.info("홈 화면 사원 간단한 정보 보기 파라미터 empNo={}",empNo);
+	@RequestMapping("/empInfo.do")
+	public String detailEmployee(HttpSession session,Model model) {
+		logger.info("사원  간략정보 화면 보여주기");
 		
-		EmployeeVO vo = employeeService.selectEmployeeByNo(empNo);
-		logger.info("간단한 사원 정보 보기 결과 vo={}",vo);
-		model.addAttribute("vo",vo);
+		/*		String empName = (String)session.getAttribute("empName");
+		String empLev = (String)session.getAttribute("empLev");*/
 		
-		return "redirect:/inc/top.jsp";
+		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
+	
+		
+		model.addAttribute("empVo",empVo);
+		
+		return "login/empInfo";
 	}
 }

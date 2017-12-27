@@ -3,7 +3,6 @@
 	width: 100%;
 	max-width:1100px;
 	margin: 0 auto;
-	background-color: #eee;
 	padding : 10px;
 	padding-bottom:0;
 	box-sizing:border-box;
@@ -28,7 +27,6 @@
 	margin: 0 auto;
 	height: 40px;
 	width: auto;
-	background-color: #eee;
 	box-sizing:border-box;
 	padding-bottom: 10px;
 	text-align:center;
@@ -74,12 +72,15 @@
 	width: 100%;
 	max-width:1100px;
 	margin: 0 auto;
-	background-color: #eee;
 	padding : 10px;
 	box-sizing:border-box;
 }
+#awaittb tr{
+	transition:all 300ms linear;
+}
 #awaittb tr:hover{
-	background-color: #d1d1d1;
+	background-color: #e1e1e1;
+	font-weight: 600;
 }
 #awaittb th{
 	box-sizing:border-box;
@@ -108,7 +109,7 @@
 #awaittb td {
 	box-sizing:border-box;
 	padding: 5px;
-	border-bottom: 2px solid #fff;
+	border-bottom: 2px solid #e1e1e1;
 }
 #awaittb td:nth-child(1){
 	text-align: center;

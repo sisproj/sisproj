@@ -43,10 +43,11 @@
 	width: 40%;
 	float: left;
 	margin-top: 100px;
-	background-color: #fff;
 	border-radius:10px ;
 	margin-left: 5%;
 	padding: 10px;
+	background-color: #efefef;
+	box-shadow: 1px 1px 3px #999;
 }
 
 .cfmain_table h3{

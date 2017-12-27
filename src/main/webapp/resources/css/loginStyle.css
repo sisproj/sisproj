@@ -75,6 +75,10 @@ html, body{
 	width: 70px;
 	height: 30px;
 }
+#login #pwSe{
+	width: 87px;
+	height: 30px;
+}
 #login form #saveid{
 	text-align: right;
 	margin-right: 50px;

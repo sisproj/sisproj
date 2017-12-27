@@ -52,7 +52,7 @@
 					action="<c:url value='/confirm/confirmEdit.do'/>" enctype="multipart/form-data">
 				<!-- 미드 -->
 					<input type="hidden" name="cfStatus" id="writeType">
-					<input type="text" name="allConfirmers" id="allConfirmers" value="${allConfirmers }">
+					<input type="hidden" name="allConfirmers" id="allConfirmers" value="${allConfirmers }">
 					<div id="doc_type">
 						<div id="dt_head">
 							<input type="text" name="formName" value="${docVo.formName }" readonly>

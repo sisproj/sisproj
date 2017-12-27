@@ -187,7 +187,6 @@
 #writeFrm #cf_comment #comm_wr{
 	padding: 10px;
 	height: 40px;
-	border-bottom: 2px solid #fff;
 }
 #writeFrm #cf_comment #comm_wr #con{
 	box-sizing:border-box;

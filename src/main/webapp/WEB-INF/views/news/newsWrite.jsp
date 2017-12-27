@@ -160,7 +160,7 @@ float:right;
 </article>
 <!-- 4. 상단 네비 색먹이기 // li태그 순서(전자결재 : 6번째) 입력 -->
 <script type="text/javascript">
-	$(function() {
+	$(function() {	
 		$('header nav ul li:nth-child(9) a').addClass('active');
 	});
 </script>
