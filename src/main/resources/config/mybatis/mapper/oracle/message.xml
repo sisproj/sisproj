@@ -1,31 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="config.mybatis.mapper.oracle.organization">	
-	<select id="selectDeptName" resultType="DeptVO">
-		select * from dept order by dept_No
-	</select>
-	<select id="selectEmp" resultType="EmployeeVO">
-		select * from empView
-		where emp_outdate is null
-		order by pos_no
-	</select>
-	<select id="selectEmpByEmpNo" parameterType="int" resultType="EmployeeVO">
-		select * from empView 
-		where emp_No=#{empNo} 
-		and emp_outdate is null
-		order by pos_no
-	</select>
-	<select id="selectMulti" parameterType="string" resultType="EmployeeVO">
-		select * from EMPVIEW
-		where emp_name like '%' || #{keyword} || '%'
-		or dept_name like '%' || #{keyword} || '%'
-		or pos_name like '%' || #{keyword} || '%'
-		or emp_no like '%' || #{keyword} || '%'
-		and emp_outdate is null
-		order by pos_no
-	</select>
+<mapper namespace="config.mybatis.mapper.oracle.message">
+    <insert id="insertMessage">
+        <selectKey keyProperty="msgNo" resultType="int" order="BEFORE">
+            select message_seq.nextval from dual
+        </selectKey>
+
+        INSERT INTO MESSAGE (MSG_NO, MSG_TITLE, MSG_CONTENT, MSG_IMPFLAG, MSG_REGDATE, SENDEMP_NO)
+        VALUES (#{msgNo}, #{msgTitle}, #{msgContent}, 'N', DEFAULT, #{sendempNo})
+    </insert>
+
+    <insert id="insertMessageRec">
+        <selectKey keyProperty="recNo" resultType="int" order="BEFORE">
+            select message_rec_seq.nextval from dual
+        </selectKey>
+        INSERT INTO MESSAGE_REC (REC_NO, MSG_READFLAG, EMP_NO, MSG_NO)
+        VALUES (#{recNo}, DEFAULT, #{empNo}, message_seq.currval)
+
+    </insert>
 </mapper>
 
 

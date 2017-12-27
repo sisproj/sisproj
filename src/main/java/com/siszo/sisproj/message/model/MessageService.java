@@ -1,4 +1,6 @@
 package com.siszo.sisproj.message.model;
 
-public class MessageService {
+public interface MessageService {
+    public int insertMessage(MessageVO messageVO);
+    public int insertMessageRec(MessageRecVO messageRecVO);
 }

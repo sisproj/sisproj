@@ -49,7 +49,7 @@
     <div class="messenger-enter-container" id="enter-container">
         <div class="messenger-enter-bar w3-card">
             <div class="messenger-enter">
-                <textarea class="messenger-textarea" rows="1" id="chatMsg">${chatKey}</textarea>
+                <textarea class="messenger-textarea" rows="1" id="chatMsg"></textarea>
                 <button onclick="writeMessage()"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
             </div>
         </div>
