@@ -151,11 +151,13 @@
 	</select>
 	
 	<select id="selectCfLineByCfNo" parameterType="String" resultType="ConfirmLineVO">
-		select l.*, e.emp_name, e.pos_name, e.dept_name
+		select l.*, e.emp_name, e.pos_name, e.dept_name, s.sign_name
 		from confirm_line l
 		join empView e
 		on l.EMP_NO = e.EMP_NO
-		where cf_no=#{cfNo} order by line_no
+		left outer join sign s
+		on l.emp_no = s.emp_no
+		where l.cf_no=#{cfNo} order by line_no
 	</select>
 	
 	<select id="selectCfFileByCfNo" parameterType="String" resultType="ConfirmFileVO">
@@ -260,7 +262,7 @@
 	
 	<insert id="insertSignImg" parameterType="SignVO">
 		insert into sign(emp_no, sign_name, sign_ori_name, sign_size)
-		values(20170001, '파일이름', '원래이름', 1234123)
+		values(#{empNo}, #{signName}, #{signOriName}, #{signSize})
 	</insert>
 	
 	<update id="updateSignImg" parameterType="SignVO">
