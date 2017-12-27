@@ -2,7 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<div id="photo">
-            <img src="${pageContext.request.contextPath }/resources/images/avatar.png" alt="사진이미지">
+         <c:if test="${empty sessionScope.empVo.empImg }">
+         	<img src="${pageContext.request.contextPath }/emp_images/defaultImg.png" alt="${sessionScope.empVo.empName }">
+         </c:if>
+		<c:if test="${!empty sessionScope.empVo.empImg }">
+            <img src="${pageContext.request.contextPath }/emp_images/${sessionScope.empVo.empImg}" alt="${sessionScope.empVo.empName }">
+        </c:if>
 	</div>
 	<div id="info">
 	    <ul>
