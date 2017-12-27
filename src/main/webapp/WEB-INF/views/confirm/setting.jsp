@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ include file="../inc/top.jsp" %>
 <link href="<c:url value='/resources/css/pagecss/confirm_setting.css'/>" rel="stylesheet" type="text/css">
+<style type="text/css">
+	
+</style>
 <!-- 0. include부분 -->
 			<nav>
 			<ul>
@@ -35,11 +38,12 @@
 					<h3>결재서명등록</h3>
 					<div id="sign_img">
 						<p>현재등록된 이미지</p>
-						<img src="<c:url value=''/>" alt="사인"><br>
-						<span id="signfname">app_sign.gif</span><br><br>
-						<form name="updateSign" id="updateSign" method="post" action="#" enctype="multipart/form-data">
-							<input type="hidden" name="oldfilename" value="">
-							<input type="file" name="upfile" id="upfile" value="" accept="image/*">
+						<img src="${pageContext.request.contextPath }/user_sign/${sVo.signName}" alt="등록된 이미지가 없습니다."><br>
+						<span id="signfname">${sVo.signOriName }</span><br><br>
+						<form name="updateSign" id="updateSign" method="post" 
+							action="<c:url value='/confirm/updateSign.do'/>" enctype="multipart/form-data">
+							<input type="hidden" name="oldfilename" value="${sVo.signName }">
+							<input type="file" name="upfile" id="upfile" accept="image/*">
 							<input type="button" id="udSign" value="등록">
 						</form>
 					</div>
@@ -52,15 +56,15 @@
 						<div id="cf_line">
 							<h3>결재라인</h3>
 							<c:forEach var="slVo" items="${slVoList}">
-								<a href="#">
+								<a class="savedLine" href="#">
 									<div id="${slVo.saveNo }">
-										<i class="fa fa-folder-open"></i> ${slVo.saveName }
+										<i class="fa fa-folder"></i> <span>${slVo.saveName }</span>
 									</div>
 								</a>
 							</c:forEach>
 						</div>
 						<div id="line_detail">
-							<h3>[기안용]상세정보</h3>
+							<h3>상세정보</h3>
 							<table>
 								<thead>
 									<tr>
@@ -75,7 +79,7 @@
 								</tbody>
 							</table>
 							<!-- 결재라인 모아 처리 -->
-							<form id=confirmers_save action="<c:url value='/confirm/confirmLine.do'/>">
+							<form id=confirmers_save action="#">
 								<input type="hidden" name="saveNo" value="0">
 								<input type="hidden" name="empNo" value="${eVo.empNo }">
 								<input type="hidden" name="saveName" id="saveName">
@@ -103,30 +107,76 @@
 		<!-- 0. include부분 끝-->
 
 <%@ include file="../inc/bottom.jsp" %>
+<div class="modal"></div>
 <script type="text/javascript" src="<c:url value='/resources/js/pagejs/confirm_setting.js'/>"></script>
 <script type="text/javascript">
-$(function(){
-	var sessempNo = '${eVo.empNo }';
 
-	$('#savelinebtn input[type=button]').click(function(){
+function fileCheck(obj){
+	var pathpoint = obj.value.lastIndexOf(".");
+	var filepoint = obj.value.substring(pathpoint+1,obj.length);
+	var filetype = filepoint.toLowerCase();
+	if(filetype == 'bmp'){
+		alert('bmp파일은 업로드가 불가능 합니다.');
+		return false;
+	} else if(filetype != 'jpg' && filetype != 'jpeg' && filetype != 'gif' && filetype != 'png'){
+		alert('이미지파일만 업로드가 가능합니다.');
+		return false;
+	} else {
+		$('#updateSign').submit();		
+	}
+}
+
+$(function(){	
+	$('#udSign').click(function(){
+		if($('#upfile').val()!=""){
+			alert("수정");
+			fileCheck(document.getElementById('upfile'));
+		}
+	});
+	
+	$( "#cf_settings" ).tabs();
+	
+	////// 전자결재라인등록 부분
+	var sessempNo = '${eVo.empNo }';
+	var status = "";
+	
+	$.btnFunc=function(){
+		status = $('#cf_line').attr('class'); //왼쪽라인에서 선택시 class="favorite", 조직도에서 선택시 class="newline"
+		if(status=="newline"){
+			$('#detailbtn input[type=button]').hide();
+			$('#saveLine').show();
+			$('#changeName').hide();
+		} else if(status=="favorite"){
+			$('#detailbtn input[type=button]').hide();
+			$('#editLine').show();		
+			$('#deleteLine').show();		
+			$('#changeName').show();
+		}
+	};
+	
+
+	$('#savelinebtn input[type=button]').click(function(){		
+		if(status == 'favorite'){
+			if(confirm('현재 선택된 결재라인이 선택해제 됩니다.')){
+				$('#cf_line a div i').prop('class','fa fa-folder');
+				$('#line_detail table tbody').html('');
+				$('#cf_line').attr('class','newline');
+				order=0;
+			} else {
+				return false;
+			}	
+		}	
+
+		$('#inputTitle input[type=text]').val('');
 		$('#save_line').attr('class','on');
 		$('#cf_line').attr('class', 'newline');
 		$('#organ').css('height','500px');
 		$('#orgUp').hide();
 		$('#orgDown').show();
 		$('#organbody').show();
-
-		var status = $('#cf_line').attr('class'); //왼쪽라인에서 선택시 class="favorite", 조직도에서 선택시 class="newline"
-		if(status=="newline"){
-			$('#detailbtn input[type=button]').hide();
-			$('#saveLine').show();
-		} else if(status=="favorite"){
-			$('#detailbtn input[type=button]').hide();
-			$('#editLine').show();		
-			$('#deleteLine').show();		
-		}
 		
 		$('#line_detail h3').text('신규 결재라인 등록');
+		$.btnFunc();
 	});	
 	
 	var order = 0;
@@ -139,18 +189,12 @@ $(function(){
 			if(empNo == sessempNo){
 				alert('자기자신은 선택할 수 없습니다.');
 				return false;
-			}
+			}		
 			
-			if(status == 'favorite' && empNo != sessempNo){
-				if(confirm('현재 선택된 결재라인이 선택해제 됩니다.')){
-					$('#cf_line a div i').prop('class','fa fa-folder');
-					$('#line_detail table tbody').html('');
-					$('#cf_line').removeClass();
-					order=0;
-				} else {
-					return false;
-				}	
-			}			
+			if(status == 'favorite'){
+				alert('이미 저장된 리스트 입니다.');
+				return false;
+			}	
 			
 			if(order<1){
 				//초기 본인 세팅
@@ -184,6 +228,9 @@ $(function(){
 					}
 				});
 			}
+		} else {
+			alert('결재 라인을 신규등록 하고자 한다면 \r [신규등록] 버튼을 클릭 후 이용하십시오');
+			return false;
 		}
 	});//end 더블클릭 event
 	
@@ -198,6 +245,7 @@ $(function(){
 			order-=1;
 			giveOrder();
 		}
+		getConfirmers();
 	});
 	
 	//저장 버튼 클릭시 히든에 넣고 제목입력창 띄워줌
@@ -209,6 +257,8 @@ $(function(){
 			return false;		
 		}
 		$('#inputTitle').fadeIn();
+		$('.modal').show();
+		$('#confirmers_save').attr("action","<c:url value='/confirm/confirmLine.do'/>");
 	});
 	
 	//제목 입력시 히든에 세팅
@@ -225,6 +275,65 @@ $(function(){
 		}
 		$('#confirmers_save').submit();
 		$('#inputTitle').fadeOut();		
+		$('.modal').hide();
+	});
+	
+	//좌측 리스트 클릭시 오른쪽에 데이터 뿌려줌
+	$('a.savedLine').click(function(){
+		$('#cf_line').attr('class','favorite');
+		var saveNo = $(this).find('div').attr('id');
+		var saveName = $(this).find('div span').text();
+		$('#line_detail h3').text('['+saveName+'] 상세정보');
+		$('.savedLine div i').prop('class', 'fa fa-folder');
+		$(this).find('div i').prop('class', 'fa fa-folder-open');
+		
+		$.ajax({
+			url:"<c:url value='/confirm/settingConfirmers.do'/>",
+			type:"get",
+			data:"saveNo="+saveNo,
+			dataType:"json",
+			success : function(res){
+				$('#line_detail table tbody').html('');
+				$.btnFunc();
+				$.each(res, function(idx, item){
+					$('#line_detail table tbody').append("<tr class='"+(idx+1)+"'><td>"+(idx+1)+"</td><td>"+item.deptName+"</td><td>"+item.posName+"</td><td>"+item.empName+"</td><input type='hidden' name='confirmerNo' class='confirmerNo' value='"+item.empNo+"'>");
+				});
+				$('input[name=saveNo]').val(saveNo);
+				$('#saveName').val(saveName);
+				$('#inputTitle input[type=text]').val(saveName);
+				getConfirmers();
+			},
+			error : function(xhr, status, error){
+				alert("에러발생 : "+status+"->"+error)
+			}
+		});
+	});
+	
+	//수정 버튼 클릭시 처리
+	$('#editLine').click(function(){
+		getConfirmers();
+		if($('input[name=saveNo]').val()==""){
+			alert('저장된 결재라인 선택해주세요.');
+			$('#inputTitle input[type=text]').focus();
+			return false;
+		}
+		$('#inputTitle').fadeIn();
+		$('.modal').show();
+		$('#confirmers_save').attr("action","<c:url value='/confirm/editLine.do'/>");
+	});
+	
+	//삭제 버튼 클릭시 처리
+	$('#deleteLine').click(function(){
+		var saveNo = $('input[name=saveNo]').val();
+		getConfirmers();
+		if(saveNo==""){
+			alert('저장된 결재라인 선택해주세요.');
+			$('#inputTitle input[type=text]').focus();
+			return false;
+		}
+		if(confirm('선택된 결재라인이 완전히 삭제됩니다.')){
+			location.href="<c:url value='/confirm/deleteLine.do?saveNo="+saveNo+"'/>";
+		}
 	});
 	
 	//함수 : 앞 인덱스 맞춰 주기

@@ -24,4 +24,14 @@ public class SaveLineServiceImpl implements SaveLineService{
 	public int insertSaveLine(SaveLineVO slVo) {
 		return slDao.insertSaveLine(slVo);
 	}
+
+	@Override
+	public int updateSaveLine(SaveLineVO slVo) {
+		return slDao.updateSaveLine(slVo);
+	}
+
+	@Override
+	public int deleteSaveLine(int saveNo) {
+		return slDao.deleteSaveLine(saveNo);
+	}
 }

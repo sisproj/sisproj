@@ -40,6 +40,8 @@ import com.siszo.sisproj.confirm.model.DocumentService;
 import com.siszo.sisproj.confirm.model.DocumentVO;
 import com.siszo.sisproj.confirm.saveline.model.SaveLineService;
 import com.siszo.sisproj.confirm.saveline.model.SaveLineVO;
+import com.siszo.sisproj.confirm.sign.model.SignService;
+import com.siszo.sisproj.confirm.sign.model.SignVO;
 import com.siszo.sisproj.employee.model.EmployeeVO;
 
 @Controller
@@ -61,6 +63,8 @@ public class ConfirmController {
 	private CommentService commService;
 	@Autowired
 	private CfIsReadService cirService;
+	@Autowired
+	private SignService sService;
 	@Autowired
 	private FileUploadUtil fileUtil;
 	
@@ -253,13 +257,15 @@ public class ConfirmController {
 	@RequestMapping("/setting.do")
 	public String setting(Model model) {
 		logger.info("결재 환경 설정 보여주기");
-		
 		logger.info("결재서명등록 화면 보여주기");	
+		SignVO sVo = sService.selectSign(empNo);
+		logger.info("결재 서명 조회 결과 sVo={}",sVo);
 		
 		logger.info("결재라인등록 화면 보여주기");		
 		List<SaveLineVO> slVoList = slService.selectSaveLineByEmpNo(empNo);
 		EmployeeVO eVo = dService.selectByEmpNo(empNo);//내 정보 VO로 전달
-				
+		
+		model.addAttribute("sVo",sVo);
 		model.addAttribute("slVoList",slVoList);
 		model.addAttribute("eVo",eVo);
 		
@@ -271,11 +277,47 @@ public class ConfirmController {
 		logger.info("결재라인 등록 처리(save_line 테이블), 파라미터 slVo={}",slVo);
 		
 		int cnt = slService.insertSaveLine(slVo);
-		String msg="", url="/confirm/setting.do";
+		String msg="", url="/confirm/setting.do#tabs-2";
 		if(cnt>0) {
 			msg="결재라인이 등록 되었습니다.";
 		} else {
 			msg="결재라인 등록실패";
+		}
+		
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+		return "common/message";		
+	}
+	
+	@RequestMapping("/editLine.do")
+	public String editLine(@ModelAttribute SaveLineVO slVo, Model model) {
+		logger.info("결재라인 수정 처리(save_line 테이블), 파라미터 slVo={}",slVo);
+		
+		int cnt = slService.updateSaveLine(slVo);
+		String msg="", url="/confirm/setting.do#tabs-2";
+		if(cnt>0) {
+			msg="결재라인이 수정 되었습니다.";
+		} else {
+			msg="결재라인 수정실패";
+		}
+		
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+		return "common/message";	
+	}
+	
+	@RequestMapping("/deleteLine.do")
+	public String deleteLine(@RequestParam(defaultValue="0") int saveNo, Model model) {
+		logger.info("결재라인 삭제 처리(save_line 테이블), 파라미터 saveNo={}",saveNo);
+		
+		int cnt = slService.deleteSaveLine(saveNo);
+		String msg="", url="/confirm/setting.do#tabs-2";
+		if(cnt>0) {
+			msg="결재라인이 삭제 되었습니다.";
+		} else {
+			msg="결재라인 삭제실패";
 		}
 		
 		model.addAttribute("msg",msg);
@@ -666,8 +708,8 @@ public class ConfirmController {
 		docVo.setCfTitle(title);
 				
 		//2. 해당 기안자 조회 해서 EmployeeVO 구함(기안자, 부서이름 조회용)
-		EmployeeVO eVo = dService.selectByEmpNo(docVo.getEmpNo());
-		logger.info("해당 문서 작성자 조회, eVo={}",eVo);
+		EmployeeVO writerEmpVo = dService.selectByEmpNo(docVo.getEmpNo());
+		logger.info("해당 문서 작성자 조회, eVo={}",writerEmpVo);
 		
 		//3. cfNo의 결재라인 confirm_line 테이블에서 가져옴 = List<ConfirmLineVO> (*)
 		List<ConfirmLineVO> clVoList = clService.selectCfLineByCfNo(cfNo);
@@ -706,12 +748,13 @@ public class ConfirmController {
 		}
 		
 		model.addAttribute("docVo", docVo);
-		model.addAttribute("eVo", eVo);
+		model.addAttribute("writerEmpVo", writerEmpVo);
 		model.addAttribute("clVoList", clVoList);
 		model.addAttribute("linkDoc", linkDoc);
 		model.addAttribute("fileList", fileList);
 		model.addAttribute("commVoList", commVoList);
 		model.addAttribute("MyEmpNo",empNo);
+		
 		//결재 상태 확인용 상태플래그
 		model.addAttribute("CL_AWAIT",ConfirmLineService.CL_AWAIT);
 		model.addAttribute("CL_COMPLETE",ConfirmLineService.CL_COMPLETE);
@@ -831,8 +874,6 @@ public class ConfirmController {
 		model.addAttribute("MyEmpNo",empNo);
 		
 		return "confirm/await";
-		
-		//처리해야함 : 해당 결재라인을 전체 조회해서 List얻음 -> 얻고 나서 line_no 순으로 for문으로 돌리면서 대기인 사람과 본인 만 해당 문서 보여주기
 	}
 	
 	@RequestMapping("/complete.do")
@@ -1023,26 +1064,33 @@ public class ConfirmController {
 		int cnt = commService.updateComment(commVo);
 		logger.info("의견 수정 처리 결과, cnt={}",cnt);
 		
-		String msg="", url="/confirm/detail.do?cfNo="+commVo.getCfNo();
-		if(cnt>0) {
-			msg = "의견이 수정 되었습니다.";
-		} else {
-			msg = "의견 수정 실패";
-		}
-		
-		model.addAttribute("msg",msg);
-		model.addAttribute("url",url);
-		
-		return "common/message";
+		return "redirect:/confirm/detail.do?cfNo="+commVo.getCfNo()+"#"+commVo.getCommNo();
 	}
 	
 	@RequestMapping("/settingConfirmer.do")
 	@ResponseBody
-	public ConfirmLineVO settingConfirmer(@RequestParam(defaultValue="0") int empNo, Model model) {
+	public ConfirmLineVO settingConfirmer(@RequestParam(defaultValue="0") int empNo) {
 		logger.info("ajax요청 - 결재 환경 설정 - 결재 라인 등록 부분 라인 세팅");
 		
 		ConfirmLineVO clVo = clService.selectConfirmerByEmpNo(empNo);
 		
 		return clVo;
+	}
+	
+	@RequestMapping("/settingConfirmers.do")
+	@ResponseBody
+	public List<ConfirmLineVO> settingConfirmers(@RequestParam(defaultValue="0") int saveNo){
+		logger.info("ajax요청 - 결재 환경 설정 - 저장된 결재라인 불러와 세팅");
+		
+		SaveLineVO savelineVo = slService.selectSaveLineBySaveNo(saveNo);
+		String confirmers = savelineVo.getSaveConfirmer();
+		String[] empNos = confirmers.split(",");
+		
+		List<ConfirmLineVO> empNoList = new ArrayList<ConfirmLineVO>();
+		for(int i=0; i<empNos.length; i++) {
+			empNoList.add(clService.selectConfirmerByEmpNo(Integer.parseInt(empNos[i])));
+		}
+		
+		return empNoList;
 	}
 }

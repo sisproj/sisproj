@@ -3,16 +3,58 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="config.mybatis.mapper.oracle.addrBook">	
-	<select id="selectAddrBookAll" parameterType="map" resultType="addrBookVO">
-		select * from addrBookView
-		where addr_isdel='N'
- 		<if test="groupNo!= 0">
-			and addr_groupno=#{groupNo}		
+	<sql id="searchWhere">
+		<if test="searchKeyword !=null and searchKeyword!=''">
+			or addr_name like '%' || #{searchKeyword} || '%'
+			or addr_comp like '%' || #{searchKeyword} || '%'
+			or addr_email like '%' || #{searchKeyword} || '%'
+			or addr_tel like '%' || #{searchKeyword} || '%'
 		</if>
+	</sql>
+	
+	<select id="selectAddrBookAll" parameterType="AddrSearchVO" resultType="addrBookVO" >
+		select *
+		from
+		(
+		    select rownum as RNUM, alist.*
+		    from(
+		        select * from addrBookView
+		        where addr_isdel='N'
+		        <if test="addrGroupNo!=0">
+					and addr_groupno=#{addrGroupNo}		
+				</if>
+		        <include refid="searchWhere"></include>
+		        order by addr_no		        
+		    ) alist
+		) 
+		<![CDATA[
+		where RNUM > #{firstRecordIndex} 
+		and RNUM<=#{firstRecordIndex}+ #{recordCountPerPage} ]]>	
 	</select>
-	<select id="selectAddrBookIsDelY" resultType="addrBookVO">
-		select * from addrBookView
-		where addr_isdel='Y'	
+	<select id="selectTotalRecordCountN" resultType="int" parameterType="AddrSearchVO">
+		select count(*) from addrBookView
+		where addr_isdel='N'
+		<include refid="searchWhere"></include>		
+	</select>
+	<select id="selectTotalRecordCountY" resultType="int" parameterType="AddrSearchVO">
+		select count(*) from addrBookView
+		where addr_isdel='Y'
+		<include refid="searchWhere"></include>
+	</select>
+	<select id="selectAddrBookIsDelY" parameterType="AddrSearchVO" resultType="addrBookVO">
+		select *
+		from
+		(
+		    select rownum as RNUM, dlist.*
+		    from(
+		        select * from addrBookView
+		        where addr_isdel='Y'
+		        order by emp_No		        
+		    ) dlist
+		) 
+		<![CDATA[
+		where RNUM > #{firstRecordIndex} 
+		and RNUM<=#{firstRecordIndex}+ #{recordCountPerPage} ]]>	
 	</select>	
 	<insert id="insertAddrBook" parameterType="AddrBookVO">
 		<selectKey keyProperty="addrNo" resultType="int" order="BEFORE">

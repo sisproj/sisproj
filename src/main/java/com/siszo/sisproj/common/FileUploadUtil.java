@@ -21,7 +21,7 @@ public class FileUploadUtil {
     public static final int PDS_UPLOAD = 1;  //자료실 업로드인 경우
     public static final int EMP_IMAGE_UPLOAD = 2;  //상품등록시 이미지 업로드인 경우
     public static final int ATTACHFILE = 3;  //전자결재 첨부파일 처리
-    public static final int USER_SIGN = 4;  //전자결재 첨부파일 처리
+    public static final int USER_SIGN = 4;  //전자결재 서명 첨부파일 처리
 
     @Resource(name = "fileUploadProperties")
     private Properties fileProperties;

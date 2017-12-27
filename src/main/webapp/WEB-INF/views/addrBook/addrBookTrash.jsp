@@ -2,28 +2,40 @@
     pageEncoding="utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="addrBookTop.jsp"%>
+<!-- Bootstrap -->
+<script src="<c:url value='/resources/jquery/jquery-3.2.1.min.js'/>"></script>
+<link href="<c:url value='/resources/css/bootstrap/bootstrap.min.css'/>" rel="stylesheet">
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="<c:url value='/resources/js/bootstrap/bootstrap.min.js'/>"></script>
 <script type="text/javascript">
-$(function(){
-	$('#divRestore').click(function(){
-		var len=$('td input[type=checkbox]:checked').length;
-		if(len==0){
-			alert('복원할 정보를 체크하세요');
-			return;
-		}
-		$('#frmTrash').prop('action','<c:url value="/addrBook/restore.do"/>');
-		$('#frmTrash').submit();
-	});
-	$('#divClear').click(function(){
-		if(confirm('영구 삭제 하시겠습니까?')){
-			$('#frmTrash').prop('action','<c:url value="/addrBook/addrBookClear.do"/>');
+	$(function(){
+		$('#divRestore').click(function(){
+			var len=$('td input[type=checkbox]:checked').length;
+			if(len==0){
+				alert('복원할 정보를 체크하세요');
+				return;
+			}
+			$('#frmTrash').prop('action','<c:url value="/addrBook/restore.do"/>');
 			$('#frmTrash').submit();
-		}
+		});
+		$('#divClear').click(function(){
+			if(confirm('영구 삭제 하시겠습니까?')){
+				$('#frmTrash').prop('action','<c:url value="/addrBook/addrBookClear.do"/>');
+				$('#frmTrash').submit();
+			}
+		});
 	});
-});
+	
+	function pageFunc(curPage){
+		document.frmTrash.currentPage.value=curPage;
+		frmTrash.submit();
+	}
 </script>
         <!-- 3. 내용 -->
     <article id="bodysection">
     <form name="frmTrash" id="frmTrash" action='<c:url value="/addrBook/addrBookTrash.do"/>' method="post">
+        <input type="hidden" id="currentPage" name="currentPage" value="1">
+        <input type="hidden" id="countPerPage" name="countPerPage" value="10">
         <div id="divBodysection">
 	        <div class="divAddrHeader">
 		        <a href="#"><div id="divClear"><i class="fa fa-trash"></i><span> 휴지통 비우기</span></div></a>		        
@@ -70,9 +82,36 @@ $(function(){
 	        		</c:forEach>
 	        	</table>
 	        </div>
-	        <div class="divPaging">
-	        	<jsp:include page="paging.jsp"></jsp:include>
-	        </div>
+	        
+	        <!-- 페이징처리 -->
+		    	<div id="paging">
+		        	<%-- <jsp:include page="paging.jsp"></jsp:include> --%>
+		        	<nav aria-label="..." style="text-align: center;">
+						<ul class="pagination">
+							<!-- 이전 블럭으로 이동 ◀ -->
+							<c:if test="${pagingInfo.firstPage>1 }">
+								<li><a href="#" onclick="pageFunc(${pagingInfo.firstPage-1})">«</a></li>	
+							</c:if>	
+						
+							<!-- [1][2][3][4][5][6][7][8][9][10] -->
+							<c:forEach var="i" begin="${pagingInfo.firstPage}" end="${pagingInfo.lastPage}">
+								<c:if test="${i==pagingInfo.currentPage}">
+									<li><a href="#">${i }</a></li>
+								</c:if>
+								<c:if test="${i!=pagingInfo.currentPage}">
+									<li><a href="#" onclick="pageFunc(${i })" class="active">${i }</a></li>
+						 		</c:if>				
+							</c:forEach>
+						
+							<!-- 다음 블럭으로 이동 ▶ -->
+							<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage}">
+								<li><a href="#" onclick="pageFunc(${pagingInfo.lastPage+1})">»</a></li>
+							</c:if>
+						</ul>
+					</nav>
+		        </div>
+		        <!-- 페이징 처리 끝 -->
+	        
         </div>
         </form>
     </article>

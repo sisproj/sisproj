@@ -55,7 +55,7 @@ h1 {
   cursor: pointer;
 }
 
-.btn:hover, .active {
+.btn:hover, .activity {
   background-color: #666;
   color: white;
 }
@@ -68,7 +68,7 @@ h1 {
                 <!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
               <li><a href="<c:url value='/news/news.do'/>"><i
 				class="fa fa-pencil-square-o"></i>&nbsp;<span>뉴스 홈</span></a></li>
-		<li><a href="#"><i class="fa fa-floppy-o"></i>&nbsp;<span>SIS 사내뉴스</span></a></li>
+		<li><a href="<c:url value='/news/dailyNews.do'/>"><i class="fa fa-floppy-o"></i>&nbsp;<span>SIS 사내뉴스</span></a></li>
 		<li class="active"><a href="<c:url value='/news/photoNews.do'/>"><i class="fa fa-floppy-o"></i>&nbsp;<span>SIS 포토뉴스</span></a></li>
 
             </ul>
