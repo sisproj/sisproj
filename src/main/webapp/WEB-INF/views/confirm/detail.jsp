@@ -85,7 +85,7 @@
 								<div>
 									<span>
 										<c:if test="${clVo.lineStat == CL_COMPLETE}">
-											<img src="<c:url value='/user_sign/${sVo.signName }'/>" alt="결재"> <!-- 결재자 사인 경로 넣기 -->
+											<img src="<c:url value='/user_sign/${clVo.signName }'/>" alt="결재"> <!-- 결재자 사인 경로 넣기 -->
 										</c:if>
 										<c:if test="${clVo.lineStat == CL_RETURN}">
 											<img src="<c:url value='/user_sign/return_img.jpg'/>" alt="반려">											
