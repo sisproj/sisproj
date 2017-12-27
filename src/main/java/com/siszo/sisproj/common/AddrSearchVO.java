@@ -7,14 +7,14 @@ package com.siszo.sisproj.common;
 */
 
 public class AddrSearchVO {
-	/** 검색조건 */
+	/** 검색조건(그룹번호) */
 	private int addrGroupNo;
 	
 	/** 검색키워드 */
 	private String searchKeyword = "";
     
-	/** 검색 사용여부 */
-	private String searchUseYn = "";
+	/** 로그인된 아이디 */
+	private int empNo;
 	
 	/** 현재 페이지 */
 	private int currentPage = 1;
@@ -40,7 +40,7 @@ public class AddrSearchVO {
     	this.currentPage = bean.currentPage;
     	this.addrGroupNo = bean.getAddrGroupNo();
     	this.searchKeyword = bean.getSearchKeyword();
-    	this.searchUseYn = bean.getSearchUseYn();
+    	this.empNo = bean.getEmpNo();
     	this.blockSize = bean.blockSize;
     	this.firstRecordIndex = bean.firstRecordIndex;
     	this.lastRecordIndex = bean.lastRecordIndex;
@@ -63,15 +63,15 @@ public class AddrSearchVO {
     	this.searchKeyword = searchKeyword;
     }
 
-    public String getSearchUseYn() {
-    	return searchUseYn;
-    }
+    public int getEmpNo() {
+		return empNo;
+	}
 
-    public void setSearchUseYn(String searchUseYn) {
-    	this.searchUseYn = searchUseYn;
-    }
+	public void setEmpNo(int empNo) {
+		this.empNo = empNo;
+	}
 
-    public int getCurrentPage() {
+	public int getCurrentPage() {
     	return currentPage;
     }
 
@@ -111,15 +111,12 @@ public class AddrSearchVO {
     	this.recordCountPerPage = recordCountPerPage;
     }
 
-    @Override
-    public String toString() {
-    	return "AddrSearchVO [addrGroupNo=" + addrGroupNo + ", searchKeyword=" + searchKeyword + ", searchUseYn="
-    			+ searchUseYn + ", currentPage=" + currentPage + ", blockSize=" + blockSize + ", firstRecordIndex="
-    			+ firstRecordIndex + ", lastRecordIndex=" + lastRecordIndex + ", recordCountPerPage=" + recordCountPerPage
-    			+ "]";
-    } 
-
-
-
+	@Override
+	public String toString() {
+		return "AddrSearchVO [addrGroupNo=" + addrGroupNo + ", searchKeyword=" + searchKeyword + ", empNo=" + empNo
+				+ ", currentPage=" + currentPage + ", blockSize=" + blockSize + ", firstRecordIndex=" + firstRecordIndex
+				+ ", lastRecordIndex=" + lastRecordIndex + ", recordCountPerPage=" + recordCountPerPage + "]";
+	}
+	
 }
  

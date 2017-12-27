@@ -12,7 +12,7 @@ public interface AddrBookService {
 	public int insertAddrBook(AddrBookVO vo);
 	public int updateIsDelYMulti(List<AddrBookVO> list);
 	public int updateIsDelNMulti(List<AddrBookVO> list);
-	public int deleteAddrBook();
+	public int deleteAddrBook(int empNo);
 	public int selectTotalRecordCountN(AddrSearchVO searchVo);
 	public int selectTotalRecordCountY(AddrSearchVO searchVo);
 }
