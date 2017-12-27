@@ -21,8 +21,7 @@
         var initFlag = true;
         $(document).ready(function () {
             userId = $('#sessionId').val();
-            console.log(initFlag);
-            if(initFlag) {
+            if (initFlag) {
                 firebaseSetUser();
                 loadKeyListByUserId(userId);
                 loadOrganization();
@@ -77,7 +76,26 @@
                 usersRef.set("true");
             }
 
-            var empNameArr = new Array();
+            var empNameArr;
+            empNameArr = [];
+
+           /* var userRef = firebase.database().ref('users/');
+            userRef.once('value', function (snapshot) {
+                var i = 0;
+                snapshot.forEach(function (childSnapshot) {
+                    var childKey = childSnapshot.key;
+                    console.log("i : " + i);
+                    if (empIdArr[i] == childKey) {
+                        console.log(childSnapshot.val().emp_name);
+                        empNameArr.push(childSnapshot.val().emp_name);
+                    }
+                    i++;
+                })
+            }).then(function () { //불러오기 끝난후 실행
+                console.log(empNameArr);
+            });
+*/
+
             for (var i = 0; i < empIdArr.length; i++) {
                 var userRef = firebase.database().ref('users/' + empIdArr[i]);
                 userRef.once('value', function (snapshot) {
@@ -108,7 +126,7 @@
         }
 
         function changeContent(chatKey) {
-            loadMemberListByChatKey(chatKey);x
+            loadMemberListByChatKey(chatKey);
             var chatsRef = firebase.database().ref('chats/' + chatKey);
             chatsRef.once('value', function (snapshot) {
                 var title = snapshot.val().title;
@@ -194,7 +212,7 @@
 
         function resetUnreadCount() {
             var name, count;
-            console.log(chatKey);
+
             var membersRef = firebase.database().ref('members/' + chatKey + "/" + userId);
             membersRef.once('value', function (snapshot) {
                 count = snapshot.val().count;
@@ -239,7 +257,7 @@
                 chatsRef.once('value', function (snapshot) {
                     var title = snapshot.val().title.toString();
                     var lastMessage = snapshot.val().lastMessage;
-                    if(snapshot.val().lastMessage == undefined) {
+                    if (snapshot.val().lastMessage == undefined) {
                         lastMessage = "";
                     }
 
