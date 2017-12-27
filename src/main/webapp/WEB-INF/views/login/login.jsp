@@ -62,7 +62,6 @@
       	  <input type="checkbox" name="saveId" id="saveId"> 
       	  <label for="saveinfo">아이디 저장</label>
         </div>
-        <!-- <div id="errormsg"></div> -->
         <div class="forminp">
       	  <input type="submit" id="loginbtn" value="로그인">
       	  <input type="button" id="pwSe" value="비밀번호 찾기">
