@@ -39,8 +39,8 @@ public class AddrBookDAOMybatis extends SqlSessionDaoSupport implements AddrBook
 	}
 
 	@Override
-	public int deleteAddrBook() {
-		return getSqlSession().delete(namespace+".deleteAddrBook");
+	public int deleteAddrBook(int empNo) {
+		return getSqlSession().delete(namespace+".deleteAddrBook", empNo);
 	}
 
 	@Override

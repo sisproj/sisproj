@@ -67,8 +67,8 @@ public class AddrBookServiceImpl implements AddrBookService{
 		return cnt;
 	}
 	@Override
-	public int deleteAddrBook() {
-		return addrBookDao.deleteAddrBook();
+	public int deleteAddrBook(int empNo) {
+		return addrBookDao.deleteAddrBook(empNo);
 	}
 	@Override
 	public int selectTotalRecordCountN(AddrSearchVO searchVo) {

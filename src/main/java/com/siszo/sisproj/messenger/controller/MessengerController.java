@@ -1,7 +1,9 @@
 package com.siszo.sisproj.messenger.controller;
 
+import com.siszo.sisproj.common.SearchVO;
 import com.siszo.sisproj.dept.model.DeptService;
 import com.siszo.sisproj.dept.model.DeptVO;
+import com.siszo.sisproj.employee.model.EmployeeService;
 import com.siszo.sisproj.employee.model.EmployeeVO;
 import com.siszo.sisproj.organization.model.OrganizationService;
 import org.slf4j.Logger;
@@ -12,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -23,9 +26,11 @@ public class MessengerController {
     private DeptService deptService;
     @Autowired
     private OrganizationService orgService;
+    @Autowired
+    private EmployeeService employeeService;
 
 
-    @RequestMapping("/messenger/messenger.do")
+    @RequestMapping(value = "/messenger/messenger.do", method = RequestMethod.GET)
     public String messenger_get() {
         return "messenger/messengerMain";
     }
@@ -52,5 +57,10 @@ public class MessengerController {
         return "messenger/messengerStart";
     }
 
-
+    @RequestMapping(value = "/messenger/messengerUser.do", method = RequestMethod.POST)
+    public @ResponseBody List<EmployeeVO> messengerUser_post() {
+        List<EmployeeVO> list = employeeService.selectAllEmployee(new SearchVO());
+        logger.info("사용자 정보 받아옴 messengerUser_post()");
+        return list;
+    }
 }

@@ -31,12 +31,15 @@ $(function() {
 			 setInterval(function(){
 				submitContents();
 				$('#previewContent').html($('#taNewsWrite').val());
+				
 			}, 100); 
 			 
 			
 
 			 $('#savebutton').click(function(){
 				submitContents();
+			
+				alert($('#previewContent').text());
 				 if($('#newsMain').val()=='0'){
 					 alert("분류를 선택해주세요");
 					 return false;
@@ -53,6 +56,7 @@ $(function() {
 				 }
 				 return true;
 			 });
+			 
 			 
 			
 			 

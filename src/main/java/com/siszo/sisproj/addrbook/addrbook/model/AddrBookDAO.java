@@ -12,7 +12,7 @@ public interface AddrBookDAO {
 	public int insertAddrBook(AddrBookVO vo);
 	public int updateIsDelY(int addrNo);
 	public int updateIsDelN(int addrNo);
-	public int deleteAddrBook();
+	public int deleteAddrBook(int empNo);
 	public int selectTotalRecordCountN(AddrSearchVO searchVo);
 	public int selectTotalRecordCountY(AddrSearchVO searchVo);
 }
