@@ -5,4 +5,5 @@
        	<c:import url="/news/bottomNews.do"/>
 </footer>
 </body>
+
 </html>
