@@ -55,37 +55,6 @@ public class EmployeeController {
 
 		Timestamp hiredate =Timestamp.valueOf(empHiredate1+" 00:00:00");
 
-		/*String email1 = vo.getEmail1();
-		String email2 = vo.getEmail2();
-		String email3 = vo.getEmail3();
-
-		String tel1 = vo.getTel1();
-		String tel2 = vo.getTel2();
-		String tel3 = vo.getTel3();
-
-		String jumin1 = vo.getJumin1();
-		String jumin2 = vo.getJumin2();
-
-
-		logger.info("사원 등록 , 파라미터 vo={}",vo);
-		if(vo.getEmpEmail()!=null && !vo.getEmpEmail().isEmpty()) {
-			if(email2.equals("etc") && email1!=null && !email1.isEmpty() && email3!=null && !email3.isEmpty()) {
-				vo.setEmpEmail(email1+"@"+email3);
-			}else if(email1!=null && !email1.isEmpty() && email2!=null && !email2.isEmpty()){
-				vo.setEmpEmail(email1+"@"+email2);
-			}
-		}
-		if(vo.getEmpTel()!=null && !vo.getEmpTel().isEmpty()) {
-			if(tel1!=null && !tel1.isEmpty() && tel2!=null && !tel2.isEmpty() && tel3!=null && !tel3.isEmpty()) {
-				vo.setEmpTel(tel1+"-"+tel2+"-"+tel3);
-			}
-		}
-		if(vo.getEmpSsn()!=null && !vo.getEmpSsn().isEmpty()) {
-			if(jumin1!=null && !jumin1.isEmpty() && jumin2!=null && !jumin2.isEmpty()) {
-				vo.setEmpSsn(jumin1+"-"+jumin2);
-			}
-		}*/
-
 		vo.setEmpHiredate(hiredate);
 
 		List<Map<String, Object>> list=null;
@@ -138,6 +107,7 @@ public class EmployeeController {
 	@RequestMapping(value="/employeeEdit.do",method=RequestMethod.GET)
 	public String employeeEdit_get(@RequestParam(defaultValue="0") int empNo,Model model) {
 		logger.info("사원수정 화면 보여주기, 파라미터 값 empNo={}",empNo);			
+		
 		EmployeeVO vo =  employeeService.selectEmployeeByNo(empNo);
 
 		List<DeptVO> list= deptService.selectDeptName();

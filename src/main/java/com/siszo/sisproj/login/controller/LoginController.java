@@ -99,9 +99,14 @@ public class LoginController {
 		
 		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
 	
-		
 		model.addAttribute("empVo",empVo);
 		
 		return "login/empInfo";
+	}
+	@RequestMapping("/searchPwd.do")
+	public String searchPwd(HttpSession session,Model model) {
+		EmployeeVO vo = (EmployeeVO) session.getAttribute("empVo");
+		
+		return "login/searchPwd";
 	}
 }

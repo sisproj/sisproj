@@ -1005,6 +1005,9 @@ body .ui-tooltip {
 #cf_settings{
 	box-shadow: 1px 1px 3px #999;
 }
+#ui-datepicker-div{
+	box-shadow: 1px 1px 3px #999;	
+}
 .ui-widget-content a {
 	color: #333
 }

@@ -75,13 +75,13 @@ html, body{
 	width: 70px;
 	height: 30px;
 }
-#login #pwSe{
+#login form div #pwSe{
 	width: 87px;
 	height: 30px;
 }
 #login form #saveid{
-	text-align: right;
-	margin-right: 50px;
+	text-align: center;
+	margin-left:105px;
 }
 img#plain{
 	width: 500px;
