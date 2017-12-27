@@ -99,10 +99,7 @@ public class AddrBookController {
 	
 	@RequestMapping("/addrBookTrash.do")
 	public String trash_get(@ModelAttribute AddrSearchVO searchVo, Model model) {
-		logger.info("휴지통 화면 보여주기");
-		
-		List<AddrBookVO> addrList=addrBookService.selectAddrBookIsDelY(searchVo);
-		logger.info("휴지통 조회결과, addrList.size()={}", addrList.size());
+		logger.info("휴지통 화면 보여주기, 파라미터 searchVo={}", searchVo);		
 		
 		//Paging 처리에 필요한 변수를 계산해주는 PaginationInfo 생성
 		PaginationInfo pagingInfo = new PaginationInfo();
@@ -116,6 +113,9 @@ public class AddrBookController {
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 		logger.info("searchVo 최종값 : {}", searchVo);
 		
+		List<AddrBookVO> addrList=addrBookService.selectAddrBookIsDelY(searchVo);
+		logger.info("휴지통 조회결과, addrList.size()={}", addrList.size());
+
 		int totalRecord = addrBookService.selectTotalRecordCountY(searchVo);
 		logger.info("글 전체 개수 조회 결과, totalRecord={}", totalRecord);
 		

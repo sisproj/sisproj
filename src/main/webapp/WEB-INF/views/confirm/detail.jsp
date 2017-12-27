@@ -85,7 +85,7 @@
 								<div>
 									<span>
 										<c:if test="${clVo.lineStat == CL_COMPLETE}">
-											<img src="<c:url value='/user_sign/${sVo.signName }'/>" alt="결재"> <!-- 결재자 사인 경로 넣기 -->
+											<img src="<c:url value='/user_sign/${clVo.signName }'/>" alt="결재"> <!-- 결재자 사인 경로 넣기 -->
 										</c:if>
 										<c:if test="${clVo.lineStat == CL_RETURN}">
 											<img src="<c:url value='/user_sign/return_img.jpg'/>" alt="반려">											
@@ -150,32 +150,34 @@
 							<!-- 상단등록창 끝 -->
 							<!-- 의견리스트 -->
 							<!-- 반복 -->
-							<c:forEach var="commVo" items="${commVoList }" varStatus="status">
-								<div class="selcomm" id="${commVo.commNo }">
-									<div class="comm_info">
-										<span class="comm_reg bold">${commVo.empName }</span> 
-										<span class="comm_reg"><fmt:formatDate value="${commVo.commRegdate }" pattern="yyyy-MM-dd HH:mm:ss"/></span>
-										<span id="comm-${status.index }">
-											<c:if test="${commVo.memNo == MyEmpNo}">
-												<a class="comm_delete bold" href="<c:url value='/confirm/deleteComm.do?commNo=${commVo.commNo }&cfNo=${docVo.cfNo }'/>">삭제</a>&nbsp;&nbsp;&nbsp;
-												<a class="comm_edit bold" id="btn_e-${status.index }" href="#comm-${status.index }">수정</a>&nbsp;&nbsp;&nbsp;<!-- 1부분 아이디 반복문 i로 돌리기 -->
-											</c:if>
-										</span>
-									</div>
-									<div class="comm_content" id="comm_con-${status.index }"><!-- 1부분 아이디 반복문 i로 돌리기 -->
-										<div class="comm_con">${commVo.commContent }</div>
-										<!-- 수정용 -->
-										<form name="comm_ed" class="comm_ed" method="post" action="<c:url value='/confirm/editComm.do'/>">
-											<textarea name="commContent" placeholder="줄바꿈이 되지 않습니다."></textarea>
-											<input type="hidden" name="commNo" value="${commVo.commNo }">
-											<input type="hidden" name="cfNo" value="${docVo.cfNo }">
-											<input type="submit" class="bold" value="댓글 수정">
-										</form>
-										<!-- 수정용 끝 -->
-									</div>
-									<div class="clr"></div>
-								</div>	
-							</c:forEach>
+							<c:if test="${!empty commVoList }">
+								<c:forEach var="commVo" items="${commVoList }" varStatus="status">
+									<div class="selcomm" id="${commVo.commNo }">
+										<div class="comm_info">
+											<span class="comm_reg bold">${commVo.empName }</span> 
+											<span class="comm_reg"><fmt:formatDate value="${commVo.commRegdate }" pattern="yyyy-MM-dd HH:mm:ss"/></span>
+											<span id="comm-${status.index }">
+												<c:if test="${commVo.memNo == MyEmpNo}">
+													<a class="comm_delete bold" href="<c:url value='/confirm/deleteComm.do?commNo=${commVo.commNo }&cfNo=${docVo.cfNo }'/>">삭제</a>&nbsp;&nbsp;&nbsp;
+													<a class="comm_edit bold" id="btn_e-${status.index }" href="#comm-${status.index }">수정</a>&nbsp;&nbsp;&nbsp;<!-- 1부분 아이디 반복문 i로 돌리기 -->
+												</c:if>
+											</span>
+										</div>
+										<div class="comm_content" id="comm_con-${status.index }"><!-- 1부분 아이디 반복문 i로 돌리기 -->
+											<div class="comm_con">${commVo.commContent }</div>
+											<!-- 수정용 -->
+											<form name="comm_ed" class="comm_ed" method="post" action="<c:url value='/confirm/editComm.do'/>">
+												<textarea name="commContent" placeholder="줄바꿈이 되지 않습니다."></textarea>
+												<input type="hidden" name="commNo" value="${commVo.commNo }">
+												<input type="hidden" name="cfNo" value="${docVo.cfNo }">
+												<input type="submit" class="bold" value="댓글 수정">
+											</form>
+											<!-- 수정용 끝 -->
+										</div>
+										<div class="clr"></div>
+									</div>	
+								</c:forEach>
+							</c:if>
 							<!-- 반복 끝 -->
 							<!-- 의견리스트 끝 -->
 						</div>
