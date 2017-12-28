@@ -122,14 +122,15 @@ function fileCheck(obj){
 		alert('이미지파일만 업로드가 가능합니다.');
 		return false;
 	} else {
-		$('#updateSign').submit();		
+		if(confirm('기존에 등록된 서명은 삭제됩니다. 진행하시겠습니까?')){
+			$('#updateSign').submit();					
+		}
 	}
 }
 
 $(function(){	
 	$('#udSign').click(function(){
 		if($('#upfile').val()!=""){
-			alert("수정");
 			fileCheck(document.getElementById('upfile'));
 		}
 	});
@@ -185,22 +186,34 @@ $(function(){
 		var empNo = $(this).attr('id');
 		var windowStat = $('#save_line').attr('class'); //결재라인선택 창열렸을때 on 닫히면 off
 		
-		if(windowStat=='on'){
+		if(windowStat=='on' || status == 'favorite'){
 			if(empNo == sessempNo){
 				alert('자기자신은 선택할 수 없습니다.');
 				return false;
 			}		
 			
 			if(status == 'favorite'){
-				alert('이미 저장된 리스트 입니다.');
-				return false;
-			}	
+				$('#line_detail table tbody tr').each(function(index){
+					order=index+1;
+				});
+				order+=1;
+				if(!confirm('이미 저장된 리스트 입니다. 수정하시겠습니까?')){
+					order=0;
+					return false;
+				} else {
+					status="newline";
+					$('#line_detail h3').append(' 수정중...');
+				}
+				alert(order);
+			}
 			
-			if(order<1){
-				//초기 본인 세팅
-				$('#line_detail table tbody').prepend("<tr class='t1'><td>1</td></tr>");
-				$('#line_detail table tbody tr.t1').append("<td>${eVo.deptName }</td><td>${eVo.posName }</td><td>${eVo.empName }</td><input type='hidden' name='confirmerNo' class='confirmerNo' value='${eVo.empNo }'>");
-				order+=2;
+			if(status !='favorite'){
+				if(order<1){
+					//초기 본인 세팅
+					$('#line_detail table tbody').prepend("<tr class='t1'><td>1</td></tr>");
+					$('#line_detail table tbody tr.t1').append("<td>${eVo.deptName }</td><td>${eVo.posName }</td><td>${eVo.empName }</td><input type='hidden' name='confirmerNo' class='confirmerNo' value='${eVo.empNo }'>");
+					order+=2;
+				}
 			}
 			
 			var exist = 0;
@@ -236,6 +249,12 @@ $(function(){
 	
 	//결재라인 지정 window에 선택된 결재자 더블클릭시 리스트에서 제거
 	$('body').on('dblclick','#line_detail table tbody tr',function(){
+		if(!confirm('이미 저장된 리스트 입니다. 수정하시겠습니까?')){
+			return false;
+		} else {
+			status="newline";
+			$('#line_detail h3').append(' 수정중...');
+		}
 		var thissel = $(this).find('input[type=hidden]').val();
 		if(thissel == sessempNo){
 			alert('본인은 삭제 할 수 없습니다.');

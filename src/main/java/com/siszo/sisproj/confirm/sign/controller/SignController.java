@@ -7,19 +7,20 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.siszo.sisproj.common.FileUploadUtil;
 import com.siszo.sisproj.confirm.sign.model.SignService;
 import com.siszo.sisproj.confirm.sign.model.SignVO;
+import com.siszo.sisproj.employee.model.EmployeeVO;
 
 
 @Controller
@@ -32,18 +33,17 @@ public class SignController {
 	@Autowired
 	private FileUploadUtil fileuploatUtil;
 	
-	private int empNo = 20170001; //임시회원번호 김연아
-	
 	@RequestMapping("/updateSign.do")
-	public String insertSignImg(@RequestParam String oldfilename, HttpServletRequest request, Model model) {
+	public String insertSignImg(@RequestParam String oldfilename,HttpSession session, HttpServletRequest request, Model model) {
 		logger.info("결재 서명 등록 처리, 파라미터, oldfilename={}", oldfilename);
+		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
 		
 		//결재서명 이미지 업로드 처리
 		String signName="";
 		String signOriName="";
 		long signSize=0;
 		SignVO sVo = new SignVO();
-		sVo.setEmpNo(empNo);
+		sVo.setEmpNo(empVo.getEmpNo());
 		try {
 			List<Map<String, Object>> list = fileuploatUtil.fileupload(request, FileUploadUtil.USER_SIGN);
 			for(Map<String, Object> map: list) {

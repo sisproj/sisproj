@@ -999,7 +999,7 @@ body .ui-tooltip {
 
 .ui-widget-content {
 	border: 1px solid #aaa;
-	background: #e1e1e1;
+	background: #eee;
 	color: #333;
 }
 #cf_settings{
@@ -1066,7 +1066,7 @@ body .ui-tooltip {
 	a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover
 	{
 	border: 1px solid #999;
-	background: #e1e1e1;
+	background: #eee;
 	font-weight: bold;
 	color: #fff
 }

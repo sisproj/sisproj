@@ -9,8 +9,8 @@
 			select news_seq.nextval from dual
 		</selectKey>
 		
-		insert into news(news_no, news_title,emp_no,news_content,news_main)
-		values(#{newsNo},#{newsTitle},20170001,#{newsContent},#{newsMain})
+		insert into news(news_no, news_title,emp_no,news_content,news_image,news_main)
+		values(#{newsNo},#{newsTitle},20170001,#{newsContent},#{newsImage},#{newsMain})
 	</insert>
 
 

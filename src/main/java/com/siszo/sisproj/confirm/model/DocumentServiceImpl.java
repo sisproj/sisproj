@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.siszo.sisproj.confirm.common.ConfirmSearchVO;
 import com.siszo.sisproj.confirm.confirmline.model.ConfirmLineDAO;
+import com.siszo.sisproj.confirm.confirmline.model.ConfirmLineService;
 import com.siszo.sisproj.confirm.confirmline.model.ConfirmLineVO;
 import com.siszo.sisproj.confirm.file.model.ConfirmFileDAO;
 import com.siszo.sisproj.confirm.file.model.ConfirmFileVO;
@@ -41,11 +42,6 @@ public class DocumentServiceImpl implements DocumentService {
 		return dDao.selectAllDoc(svo);
 	}
 	
-	@Override
-	public List<DocumentVO> selectForAwait(ConfirmSearchVO svo) {
-		return dDao.selectForAwait(svo);
-	}
-
 	@Override
 	public int totalRecordCountDoc(ConfirmSearchVO svo) {
 		return dDao.totalRecordCountDoc(svo);
@@ -81,7 +77,7 @@ public class DocumentServiceImpl implements DocumentService {
 				} else {
 					result=0;
 				}
-			}
+			}		
 			//결재라인 db저장 - confirm_line
 			for(ConfirmLineVO clVo : clVoList) {
 				cnt = clDao.insertConfirmLine(clVo);
@@ -102,10 +98,20 @@ public class DocumentServiceImpl implements DocumentService {
 			}
 			//바로 본인결재라면 읽은여부 다음결재자도 주기 - cf_is_read
 			if(docuVo.getEmpNo()!=docuVo.getCfConfirmer()) {
-				DocumentVO nextCfVo= new DocumentVO();
-				nextCfVo.setCfNo(docuVo.getCfNo());
-				nextCfVo.setEmpNo(docuVo.getCfConfirmer());
-				cnt = cirDao.insertIsRead(nextCfVo);
+				CfIsReadVO cirrVo = new CfIsReadVO();
+				cirrVo.setCfNo(docuVo.getCfNo());
+				cirrVo.setEmpNo(docuVo.getCfConfirmer());
+				cirrVo.setIsRead("N");
+				cnt = cirDao.selectIsReadCNTByCfNo(cirrVo);
+				logger.info("해당글의 isread 조회 결과, cnt={}",cnt);
+				if(cnt>0) {
+					//있으면 업데이트
+					cnt = cirDao.updateIsReadDoc(cirrVo);
+				} else {
+					//없으면 insert
+					cnt = cirDao.insertIsReadCIR(cirrVo);				
+				}				
+				logger.info("다음 결재자 처리 결과 cnt={}", cnt);
 				if(cnt>0) {
 					result=1;
 				} else {
@@ -145,22 +151,25 @@ public class DocumentServiceImpl implements DocumentService {
 		} else {
 			result=0;
 		}
-		//기존 파일정보 삭제
-		cnt = cfDao.deleteConfirmFile(docuVo.getCfNo());
-		logger.info("기존 파일 삭제 처리 결과, cnt={}",cnt);
-		if(cnt>0 ) {
-			result=1;
-		} else {
-			result=0;
-		}
-		//새로운 파일정보 DB 저장
-		for(ConfirmFileVO  cfVo : uploadFileList) {
-			cnt = cfDao.insertConfirmFile(cfVo);
-			logger.info("첨부파일 저장 처리 결과, cnt={}", cnt);
-			if(cnt>0) {
+		//업로드된 파일이 있다면
+		if(uploadFileList.size()>0) {
+			//기존 파일정보 삭제
+			cnt = cfDao.deleteConfirmFile(docuVo.getCfNo());
+			logger.info("기존 파일 삭제 처리 결과, cnt={}",cnt);
+			if(cnt>0 ) {
 				result=1;
 			} else {
 				result=0;
+			}
+			//새로운 파일정보 DB 저장
+			for(ConfirmFileVO  cfVo : uploadFileList) {
+				cnt = cfDao.insertConfirmFile(cfVo);
+				logger.info("첨부파일 저장 처리 결과, cnt={}", cnt);
+				if(cnt>0) {
+					result=1;
+				} else {
+					result=0;
+				}
 			}
 		}
 		//기존 결재라인 삭제
@@ -195,17 +204,29 @@ public class DocumentServiceImpl implements DocumentService {
 		} else {
 			result=0;
 		}
+		//cf_is_read 에서 해당 글의 레코드가 1개가 아니면 
+		
 		//바로 본인결재라면 읽은 여부 다음 결재자도 주기
-		if(docuVo.getEmpNo()!=docuVo.getCfConfirmer()) {
-			DocumentVO nextCfVo= new DocumentVO();
-			nextCfVo.setCfNo(docuVo.getCfNo());
-			nextCfVo.setEmpNo(docuVo.getCfConfirmer());
-			cnt = cirDao.insertIsRead(nextCfVo);
+		if(docuVo.getEmpNo()!=docuVo.getCfConfirmer()) {			
+			CfIsReadVO cirrVo = new CfIsReadVO();
+			cirrVo.setCfNo(docuVo.getCfNo());
+			cirrVo.setEmpNo(docuVo.getCfConfirmer());
+			cirrVo.setIsRead("N");
+			cnt = cirDao.selectIsReadCNTByCfNo(cirrVo);
+			logger.info("해당글의 isread 조회 결과, cnt={}",cnt);
+			if(cnt>0) {
+				//있으면 업데이트
+				cnt = cirDao.updateIsReadDoc(cirrVo);
+			} else {
+				//없으면 insert
+				cnt = cirDao.insertIsReadCIR(cirrVo);				
+			}				
+			logger.info("다음 결재자 처리 결과 cnt={}", cnt);
 			if(cnt>0) {
 				result=1;
 			} else {
 				result=0;
-			}				
+			}
 		}
 		
 		return result;
@@ -214,5 +235,82 @@ public class DocumentServiceImpl implements DocumentService {
 	@Override
 	public int deleteDocuByCfNo(String cfNo) {
 		return dDao.deleteDocuByCfNo(cfNo);
+	}
+
+	@Override
+	@Transactional
+	public int noConfirm(DocumentVO dVo, CfIsReadVO cirVo, ConfirmLineVO clVo) {
+		int result = 0;		
+		//1.해당 결재자 결재라인에서 반려로 처리 myConfirmOk(ConfirmLine)
+		int cnt = clDao.myConfirmOk(clVo);
+		if(cnt>0) {
+			result=1;
+		} else {
+			result=0;
+		}
+		//2. 해당문서 결재반려 update 처리 updateDocStatus(Document)
+		cnt = dDao.updateDocStatus(dVo);
+		if(cnt>0) {
+			result=1;
+		} else {
+			result=0;
+		}
+		
+		//3. 해당 글 기안자 isread 안읽음(N)으로 처리 updateIsReadDoc(CfIsRead)
+		cnt = cirDao.updateIsReadDoc(cirVo);
+		if(cnt>0) {
+			result=1;
+		} else {
+			result=0;
+		}
+		
+		return result;
+	}
+
+	@Override
+	@Transactional
+	public int yesConfirm(DocumentVO dVo, CfIsReadVO cirVo, ConfirmLineVO clVo, int nextConfirmer) {
+		System.out.println("승인 문서 정보 : "+dVo);
+		System.out.println("읽은 정보 : "+cirVo);
+		System.out.println("결재라인 정보 : "+clVo);
+		System.out.println("다음 결재자  : "+nextConfirmer);
+		int result = 0;
+		//1.해당 결재자 결재라인에서 승인로 처리 myConfirmOk(ConfirmLine)
+		int cnt = clDao.myConfirmOk(clVo);
+		if(cnt>0) {
+			result=1;
+		} else {
+			result=0;
+		}
+		//2. 해당문서 결재대기 혹은 완료로 update 처리 updateDocStatus(Document)
+		cnt = dDao.updateDocStatus(dVo);
+		if(cnt>0) {
+			result=1;
+		} else {
+			result=0;
+		}
+		
+		if(nextConfirmer==0) {
+			//-> 다음 결재자가 없으면 업데이트
+			cnt = cirDao.updateIsReadDoc(cirVo);
+		} else {
+			//isread에 해당 글과 결재자로 cnt조회... 
+			cnt = cirDao.selectIsReadCNTByCfNo(cirVo);
+			logger.info("해당글의 isread 조회 결과, cnt={}",cnt);
+			if(cnt>0) {
+				//있으면 업데이트
+				cnt = cirDao.updateIsReadDoc(cirVo);
+			} else {
+				//없으면 insert
+				cnt = cirDao.insertIsReadCIR(cirVo);				
+			}
+		}
+		if(cnt>0) {
+			result=1;
+		} else {
+			result=0;
+		}
+		
+		return result;
 	}
 }
