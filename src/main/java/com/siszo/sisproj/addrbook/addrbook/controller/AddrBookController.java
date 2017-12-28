@@ -56,7 +56,7 @@ public class AddrBookController {
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 		logger.info("searchVo 최종값 : {}", searchVo);
 		
-		List<AddrGroupVO> groupList=groupService.selectGroupName();
+		List<AddrGroupVO> groupList=groupService.selectGroupName(empNo);
 		logger.info("개인주소록 그룹명 조회결과, groupList.size()={}", groupList.size());
 
 		List<AddrBookVO> addrList=addrBookService.selectAddrBookAll(searchVo);
@@ -204,4 +204,9 @@ public class AddrBookController {
 		
 		return "common/message";		
 	}
+	/*
+	@RequestParam("/groupList.do")
+	public String groupList() {
+		
+	}*/
 }

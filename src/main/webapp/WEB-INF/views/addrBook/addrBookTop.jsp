@@ -5,9 +5,10 @@
 
 <script type="text/javascript">
 	$(function(){
+		$('#groupList').hide();
 		$('.myAddress').click(function(){
-
-			var empNo="empNo="+'20170001';
+			$('#groupList').show();
+			var empNo="empNo="+${sessionScope.empVo.empNo};
 			var groupList="";
 			$.ajax({
 				url:"<c:url value='/addrBook/groupList.do'/>",
@@ -15,11 +16,10 @@
 				dataType:"json",
 				type:"get",
 				success:function(res){
-					groupList+="전체주소록<br>";
-					groupList+="<hr>";
+					groupList+="<li>전체주소록</li><ul></ul>";
 					if(res.length>0 ){					
 						$.each(res, function(idx, item){
-							$(groupList).append("└ "+item.groupNameme+"<br>");
+							$(groupList).append("<li>└ "+item.groupNameme+"</li>");
 						});							
 					}					
 					$('#groupList').html(groupList);
@@ -47,6 +47,13 @@
 		});
 		
 		$('.divAddrBody table tr:eq(0)').css('border-bottom','1px solid rgb(195, 195, 195)');
+		
+		$('#addressWrite').click(function(){
+			$('#divWriteSection').show();
+		});
+		$('#btCancel').click(function(){
+			$('#divWriteSection').hide();
+		});
 	});
 </script>
     <style>
@@ -117,8 +124,6 @@
     	#selectMenu select{
     		border: 0;
     	}		
-		.addrStar{display: none;}
-		.addrStaro{display:inline;}
 		#groupList{
 			position : fixed;
 			width: 100px;
@@ -130,18 +135,66 @@
 			background-color: #ff0;
 			transition : all 500ms linear;
 		}
+		
+		/* 연락처 입력부분 */
+	#divWriteSection{
+		width: 560px;
+		height: 290px;
+		border: 1px solid rgb(195, 195, 195);
+		position: fixed;
+		left: 40%;
+	}
+	.divWriteBody{
+		width: 530px;
+		height:230px;
+		padding: 10px;
+	}
+	.divWriteBody label{
+		width: 20%;
+		float: left;
+		text-align: right;
+		padding: 3px 15px 0 0;
+		clear: left;
+		font-weight: bold;
+	}
+	.divWriteBody input{
+		line-height: 20px;
+		width: 120px;
+	}
+	.divWriteBody select{
+		height: 24px;
+	}
+	#btSubmit{
+		border: 1px solid rgb(195, 195, 195);
+		padding: 5px;
+		width: 60px;
+	}
+	#btCancel{
+		border: 1px solid rgb(195, 195, 195);
+		padding: 5px;
+		width: 60px;
+		margin-left: 10px;
+	}
+	#btSubmit i{
+		color: rgb(181,230,29);
+	}
+	#btCancel i{
+		color: rgb(255,0,128);
+	}
+	.center{
+		text-align: center;
+		padding: 10px;
+	}
     </style>
 <!-- 0. include부분 -->
-	<!-- 내주소록 클릭시 그룹리스트 보여주기 -->
-		<!-- <div id="groupList"></div> -->
-	<!-- 내주소록 그룹 리스트 끝 -->
+	
         <nav>
             <ul>
                 <!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
                 <li id="addressList"><a href="#"><i class="fa fa-address-book-o"></i>&nbsp;<span>내 주소록</span>
                 	<i id="myAddressRight" class="myAddress fa fa-chevron-right"></i></a>
                 </li>
-                <li><a href="<c:url value='/addrBook/addrBookWrite.do'/>"><i class="fa fa-user-plus"></i>&nbsp;<span>연락처 추가</span></a></li>
+                <li id="addressWrite"><a href="#"><i class="fa fa-user-plus"></i>&nbsp;<span>연락처 추가</span></a></li>
                 <li><a href="#"><i class="fa fa-users"></i>&nbsp;<span>그룹 추가</span></a></li>
                 <li><a href="<c:url value='/addrBook/addrBookTrash.do'/>"><i class="fa fa-trash"></i>&nbsp;<span>휴지통</span></a></li>
                 <li><a href="#"><i class="fa fa-cog"></i>&nbsp;<span>환경설정</span></a></li>
@@ -150,16 +203,19 @@
             <div id="listbtn"><p><i class="fa fa-chevron-circle-left" style="text-align: center;"></i></p></div>
         </nav>
     </aside>
+	<!-- 내주소록 클릭시 그룹리스트 보여주기 -->		
     <div id="groupList">
        	<ul>
        		<li><a href="<c:url value='/addrBook/addrBookList.do'/>">전체 주소록</a>
        			<ul>
-       				<c:import url="/addrBook/addrGroupList.do"/>
+       				<%-- <c:import url="/addrBook/addrGroupList.do"/> --%>
        				<!-- <li><a href="#">└ 가족</a></li> -->        				
        			</ul>
        		</li>                		
        	</ul>                	
     </div>
+	<!-- 내주소록 그룹 리스트 끝 -->
+	
     <!-- 왼쪽 사이드 메뉴 끝 -->
     <hr>
     
