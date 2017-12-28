@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.siszo.sisproj.confirm.comment.model.CommentVO;
 import com.siszo.sisproj.confirm.common.ConfirmSearchVO;
+import com.siszo.sisproj.confirm.confirmline.model.ConfirmLineVO;
 import com.siszo.sisproj.employee.model.EmployeeVO;
 
 
@@ -27,11 +28,6 @@ public class DocumentDAOMybatis extends SqlSessionDaoSupport implements Document
 	@Override
 	public List<DocumentVO> selectAllDoc(ConfirmSearchVO svo) {
 		return getSqlSession().selectList(namespace+".selectAllDoc",svo);
-	}
-
-	@Override
-	public List<DocumentVO> selectForAwait(ConfirmSearchVO svo) {
-		return getSqlSession().selectList(namespace+".selectForAwait",svo);
 	}
 	
 	@Override
@@ -68,6 +64,9 @@ public class DocumentDAOMybatis extends SqlSessionDaoSupport implements Document
 	public int deleteDocuByCfNo(String cfNo) {
 		return getSqlSession().delete(namespace+".deleteDocuByCfNo",cfNo);
 	}
-	
-	
+
+	@Override
+	public int updateDocStatus(DocumentVO dVo) {
+		return getSqlSession().update(namespace+".updateDocStatus", dVo);
+	}	
 }

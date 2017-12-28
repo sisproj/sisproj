@@ -40,12 +40,14 @@
 		        </select>   
 		        <input type="text" name="searchKeyword" title="검색어 입력" value="${param.searchKeyword }">   
 				<input type="submit" value="검색">
+				<c:if test="${sessionScope.empVo.empLev=='관리자' }">
+				<input type="button" id="btEx" name="btEx" value="엑셀다운로드">
+				</c:if>
 			    <select id="pl" style="float: right;">
 					<option value="10">10명</option>
 					<option value="20">20명</option>
 				</select>
 			</div>
-
 	<div id="diempList">
 		<div id="coLi">
 		<table id="allList" border="1">
@@ -60,7 +62,10 @@
 				<col width="5%">
 			</colgroup>
 			<tr>
+			<c:if test="${sessionScope.empVo.empLev=='관리자' }">
 				<th><input type="checkbox" id="chkAll" name="chkAll"></th>
+			</c:if>
+			<th></th>
 				<th style="width: 10%">사원번호</th>
 				<th>사원이름</th>
 				<th>사원부서</th>
@@ -75,11 +80,11 @@
 					<td colspan="7">사원 데이터가 없습니다</td>
 				</c:if>
 					<tr>	
-					<c:if test="${empty vo.empOutdate }">
-						<td><input type="checkbox" name="empItems[${status.index}].empNo" value="${vo.empNo}"></td>		
-					</c:if>		
-					<c:if test="${!empty vo.empOutdate }" >
-						<td></td>
+					<c:if test="${sessionScope.empVo.empLev=='관리자' }">
+						<td><input type="checkbox" name="empItems[${status.index}].empNo" value="${vo.empNo}"></td>	
+					</c:if>	
+					<c:if test="${sessionScope.empVo.empLev!='관리자' }">	
+					<td></td>
 					</c:if>
 						<td>${vo.empNo }</td>
 						<!-- 사원번호로 사원 디테일 이동 -->
@@ -100,6 +105,12 @@
 			<!-- 페이징 처리 해야하는 곳 10명,25명 단위로 계산 부트스트랩 사용 페이징 스타일-->
 		</table>
 	</div>
+	<c:if test="${sessionScope.empVo.empLev=='관리자' }">
+	<div style="text-align: right; margin-top: 3px;width:90%; ">
+		<input type="button" id="btOu" name="btOu" value="퇴사">
+		<input type="button" id="btCo" name="btCo" value="복직">
+	</div>
+	</c:if>
 		<div id="diPage">
 			<ul class="pagination">
 				<c:if test="${pagingInfo.firstPage>1 }">
@@ -122,7 +133,6 @@
 					<a href="#" onclick="pageFunc(${pagingInfo.lastPage+1})">«</a>	
 				</c:if>	
 			</ul>
-			<input type="button" id="btCh" name="btCh" value="퇴사">
 		</div>
 	</div> 
 </form>
@@ -140,15 +150,27 @@
 				
 			});
 			
-			$('#btCh').click(function(){
-				//선택한 사원 퇴사
-				var len =$('td input[name="empItems[${status.index}].empNo"]:checked').length;
+			//선택한 사원 퇴사					
+			$('#btOu').click(function(){
+				var len = $('td input[type=checkbox]:checked').length;
 				if(len==0){
 					alert('퇴사시킬 사원을 먼저 체크하세요');
 					return;
 				}
 				
 				$('#searchEmp').prop('action','<c:url value="/employee/employeeOut.do"/>');
+				$('#searchEmp').submit();				
+			});
+			
+			//선택한 사원 복직					
+			$('#btCo').click(function(){
+				var len = $('td input[type=checkbox]:checked').length;
+				if(len==0){
+					alert('복직시킬 사원을 먼저 체크하세요');
+					return;
+				}
+				
+				$('#searchEmp').prop('action','<c:url value="/employee/employeeCome.do"/>');
 				$('#searchEmp').submit();				
 			});
 			

@@ -140,10 +140,10 @@
     	<div id="diInput">
       	<form id="frmEmp" name="frmEnp"    	
       	action="<c:url value='/employee/employeeEdit.do?empNo=${vo.empNo }'/>" method="post" enctype="multipart/form-data">
-      	<input type="text" name="empTel" id="empTel" value="${vo.empTel }">
-      	<input type="text" name="empSsn" id="empSsn" value="${vo.empSsn }">
-      	<input type="text" name="empEmail" id="empEmail" value="${vo.empEmail }">
-      	<input type="text" name="oldFileName" id="oldFileName" value="${vo.empImg}">
+      	<input type="hidden" name="empTel" id="empTel" value="${vo.empTel }">
+      	<input type="hidden" name="empSsn" id="empSsn" value="${vo.empSsn }">
+      	<input type="hidden" name="empEmail" id="empEmail" value="${vo.empEmail }">
+      	<input type="hidden" name="oldFileName" id="oldFileName" value="${vo.empImg}">
       	  <fieldset>
   		    <div id="diId">
       	 		<label for="name">사원번호</label>

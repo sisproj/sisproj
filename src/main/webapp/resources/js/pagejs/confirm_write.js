@@ -42,7 +42,7 @@ $(function(){
 		var linkdocName = $('#link_cho #link_doc :selected').text();
 		if(linkdocNo!=''){
 			$('#cf_info #linkCfNo').val(linkdocNo);	
-			$('#cf_info #linkdoc').val("("+linkdocNo+")"+linkdocName);	
+			$('#cf_info #linkdoc').val("("+linkdocNo+")"+" "+linkdocName);	
 		} else {
 			$('#cf_info #linkCfNo').val('');	
 			$('#cf_info #linkdoc').val('');				
