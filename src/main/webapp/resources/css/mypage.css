@@ -22,7 +22,7 @@
 	}
 	#dimyPage #allList{
 		border:none;
-		border-color:rgb(221,221,221);
+		border-color:white;
 		border-collapse:collapse;
 		text-align: center;
 		width: 90%;
@@ -71,7 +71,11 @@
 		position: absolute;
 		overflow: hidden;
 	}
-	 #dimyPage #diImg2{
+/* 	#dimypage #empImg{
+		width: 100%;
+		height: 100%;
+	}*/	 
+	#dimyPage #diImg2{
 		width:100%;
 		height: 100%;
 	} 

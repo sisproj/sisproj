@@ -216,6 +216,31 @@ public class EmployeeController {
 
 		return "common/message";
 	}
+	@RequestMapping("/employeeCome.do")
+	public String employeeCome(@ModelAttribute EmployeeListVO vo,Model model) {
+		logger.info("복직시킬 사원 ,파라미터 vo={}",vo);
+		
+		List<EmployeeVO> list = vo.getEmpItems();
+		for(EmployeeVO emVo : list) {
+			emVo.getEmpNo();
+			logger.info("사원 번호  emVo.getEmpNo={}",emVo.getEmpNo());
+		}
+		int cnt=employeeService.employeeCome(list);
+		logger.info("선택한 사원 복직 결과, cnt={}",cnt);		
+
+		String msg="",url="/employee/employeeList.do";
+
+		if(cnt>0) {
+			msg="사원 복직 완료";
+		}else {
+			msg="사원 복직 실패";
+		}
+
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+
+		return "common/message";
+	}
 	//완료
 
 	@RequestMapping("/employeeList.do")

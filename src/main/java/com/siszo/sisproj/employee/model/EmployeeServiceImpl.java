@@ -46,7 +46,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 				int empNo=vo.getEmpNo();
 				//체크한 사원만 퇴사
 				if(empNo!=0) {
-					cnt = employeeDao.employeeSelect(empNo);
+					cnt = employeeDao.employeeOut(empNo);
 				}
 			}//for			
 		}catch(RuntimeException e) {
@@ -59,6 +59,24 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public int selectTotalRecordCount(SearchVO vo) {
 		return employeeDao.selectTotalRecordCount(vo);
+	}
+
+	@Override
+	public int employeeCome(List<EmployeeVO> list) {
+		int cnt=0;
+		try {
+			for(EmployeeVO vo :list) {
+				int empNo=vo.getEmpNo();
+				//체크한 사원만 복직
+				if(empNo!=0) {
+					cnt = employeeDao.employeeCome(empNo);
+				}
+			}//for			
+		}catch(RuntimeException e) {
+			cnt=0;
+			e.printStackTrace();
+		}
+		return cnt;
 	}
 	
 		

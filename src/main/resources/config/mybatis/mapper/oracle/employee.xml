@@ -37,11 +37,6 @@
 		where emp_no = #{empNo}
 	</update>
 	
-	<update id="employeeOut" parameterType="int">
-		update empView set emp_outdate=sysdate
-		where emp_no = #{empNo}
-	</update>
-	
 	<select id="selectTotalRecordCount" resultType="int" parameterType="SearchVO" >
 		select count(*) from empView
 		 <include refid="searchWhere"></include>  
@@ -52,6 +47,16 @@
 		<include refid="searchWhere"></include>
 		order by pos_No
 	</select>
+
+	<update id="employeeOut" parameterType="int">
+		update empView set emp_outdate=sysdate
+		where emp_no = #{empNo}
+	</update>
+	
+	<update id="employeeCome" parameterType="int">
+		update empView set emp_outdate=null
+		where emp_no = #{empNo}
+	</update>
 </mapper>
 
 

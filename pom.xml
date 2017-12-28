@@ -301,6 +301,18 @@
             <artifactId>quartz-oracle</artifactId>
             <version>1.8.5</version>
         </dependency>
+        <!-- Poi api -->
+        <dependency>
+			 <groupId>org.apache.poi</groupId>
+			 <artifactId>poi</artifactId>
+			 <version>3.7</version>
+		</dependency>    
+		<dependency>
+			 <groupId>org.apache.poi</groupId>
+			 <artifactId>poi-ooxml</artifactId>
+			 <version>3.7</version>
+		</dependency>
+
     </dependencies>
 
     <repositories>
