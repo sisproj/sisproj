@@ -4,7 +4,7 @@
 
 <mapper namespace="config.mybatis.mapper.oracle.addrGroup">	
 	<select id="selectGroupName" resultType="addrGroupVO">
-		select * from addgroup order by group_no
+		select * from addrgroup order by group_no
 	</select>
 </mapper>
 

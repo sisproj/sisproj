@@ -17,6 +17,10 @@ public class NewsServiceImpl implements NewsService{
 		return newsDao.dailyNewsList();
 	}
 	
+	public NewsVO newsSearchByNo(int newsNo) {
+		return newsDao.newsSearchByNo(newsNo);
+	}
+	
 	
 	
 }

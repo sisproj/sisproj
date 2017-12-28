@@ -44,7 +44,7 @@ public class LoginController {
 
 		int cnt = loginService.loginCheck(vo.getEmpNo(), vo.getEmpPwd());
 
-		String msg="",url="/login.do";
+		String msg="",url="/login/login.do";
 		if(cnt==loginService.LOGIN_OK) {
 			EmployeeVO empVo = employeeService.selectEmployeeByNo(vo.getEmpNo());
 			logger.info("로그인 후 파라미터 empVo={}",empVo);
@@ -68,8 +68,10 @@ public class LoginController {
 			msg="사원번호가 일치하지않습니다.";
 		}else if(cnt==loginService.PWD_DISAGREE) {
 			msg="비밀번호가 일치하지 않습니다.";
+		}else if(cnt==loginService.EMP_OUT){
+			msg="퇴사직원은 로그인을 할 수 없습니다";
 		}else {
-			msg="로그인 실패";
+			msg="로그인 실패!";
 		}
 		
 		model.addAttribute("msg",msg);
@@ -96,11 +98,22 @@ public class LoginController {
 		
 		/*		String empName = (String)session.getAttribute("empName");
 		String empLev = (String)session.getAttribute("empLev");*/
+		
 		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
 	
-		
 		model.addAttribute("empVo",empVo);
 		
 		return "login/empInfo";
+	}
+	@RequestMapping("/searchPwd.do")
+	public String searchPwd(@ModelAttribute EmployeeVO vo,Model model) {
+		logger.info("비밀번호 찾기 파라미터 vo={}",vo);
+		
+		String empPwd = loginService.selectPwd(vo);
+		logger.info("비밀번호 찾기 결과 empPwd={}",empPwd);
+		
+		model.addAttribute("empPwd",empPwd);
+		
+		return "login/searchPwd";
 	}
 }

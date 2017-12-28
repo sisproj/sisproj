@@ -24,6 +24,7 @@ import com.siszo.sisproj.common.PaginationInfo;
 import com.siszo.sisproj.common.Utility;
 import com.siszo.sisproj.dept.model.DeptService;
 import com.siszo.sisproj.dept.model.DeptVO;
+import com.siszo.sisproj.employee.model.EmployeeVO;
 
 @Controller
 @RequestMapping("/addrBook")
@@ -36,8 +37,13 @@ public class AddrBookController {
 	private AddrGroupService groupService;
 	
 	@RequestMapping("/addrBookList.do")
-	public String list(@ModelAttribute AddrSearchVO searchVo,Model model) {
-		logger.info("개인주소록 리스트 조회하기, searchVo={}", searchVo);
+	public String list(@ModelAttribute AddrSearchVO searchVo,HttpSession session, Model model) {
+		EmployeeVO empVo =(EmployeeVO)session.getAttribute("empVo");
+		int empNo=empVo.getEmpNo();
+		logger.info("###################empVO={}",empVo);
+		searchVo.setEmpNo(empNo);
+		
+		logger.info("개인주소록 리스트 조회하기, searchVo={}", searchVo);		
 		
 		//Paging 처리에 필요한 변수를 계산해주는 PaginationInfo 생성
 		PaginationInfo pagingInfo = new PaginationInfo();
@@ -77,7 +83,8 @@ public class AddrBookController {
 	@RequestMapping(value="/addrBookWrite.do", method=RequestMethod.POST)
 	public String write_post(@ModelAttribute AddrBookVO vo,
 		HttpSession session, Model model) {
-		int empNo=(Integer)session.getAttribute("empNo");
+		EmployeeVO empVo =(EmployeeVO)session.getAttribute("empVo");
+		int empNo=empVo.getEmpNo();
 		logger.info("연락처 등록 하기, 파라미터 vo={}, empNo={}",vo, empNo);
 		
 		vo.setEmpNo(empNo);
@@ -98,7 +105,11 @@ public class AddrBookController {
 	}
 	
 	@RequestMapping("/addrBookTrash.do")
-	public String trash_get(@ModelAttribute AddrSearchVO searchVo, Model model) {
+	public String trash_get(@ModelAttribute AddrSearchVO searchVo,HttpSession session, Model model) {
+		EmployeeVO empVo =(EmployeeVO)session.getAttribute("empVo");
+		int empNo=empVo.getEmpNo();
+		
+		searchVo.setEmpNo(empNo);
 		logger.info("휴지통 화면 보여주기, 파라미터 searchVo={}", searchVo);		
 		
 		//Paging 처리에 필요한 변수를 계산해주는 PaginationInfo 생성
@@ -129,10 +140,13 @@ public class AddrBookController {
 	}
 	
 	@RequestMapping(value="/addrBookClear.do", method=RequestMethod.POST)
-	public String trash(Model model) {
+	public String trash(HttpSession session, Model model) {
+		EmployeeVO empVo =(EmployeeVO)session.getAttribute("empVo");
+		int empNo=empVo.getEmpNo();
+		
 		logger.info("휴지통 비우기");
 		
-		int cnt=addrBookService.deleteAddrBook();
+		int cnt=addrBookService.deleteAddrBook(empNo);
 		
 		String msg="",url="/addrBook/addrBookTrash.do";
 		if(cnt>0) {
@@ -148,7 +162,7 @@ public class AddrBookController {
 	}
 	
 	@RequestMapping(value="/goToTrash.do", method=RequestMethod.POST)
-	public String goToTrash(@ModelAttribute AddrBookListVO addrBookListVo, Model model) {
+	public String goToTrash(@ModelAttribute AddrBookListVO addrBookListVo,HttpSession session, Model model) {
 		logger.info("삭제버튼 클릭시 휴지통으로 이동, 파라미터 addrBookListVo={}",addrBookListVo);
 		
 		List<AddrBookVO> list=addrBookListVo.getAddrItems();

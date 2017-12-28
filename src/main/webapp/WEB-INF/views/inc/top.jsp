@@ -1,6 +1,6 @@
 <%@page import="com.siszo.sisproj.employee.model.EmployeeVO"%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
-<%@ page session="false" %>
+<%@ page session="true" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -23,13 +23,13 @@
     <script src="<c:url value="/resources/jquery/jquery.easing.1.3.js"/>"></script>
     <!-- jquery-ui -->
     <script src="<c:url value="/resources/jquery-ui/jquery-ui.min.js"/>"></script>
-	<!-- smart editor 2.0 -->
-	<script type="text/javascript" src="<c:url value='/resources/se2/js/service/HuskyEZCreator.js'/>" charset="utf-8"></script>
+    <!-- smart editor 2.0 -->
+    <script type="text/javascript" src="<c:url value='/resources/se2/js/service/HuskyEZCreator.js'/>" charset="utf-8"></script>
     <!-- mainjs -->
-    
+
     <script src="<c:url value="/resources/js/mainjs.js"/>"></script>
     <script src="<c:url value="/resources/js/zipcode.js"/>"></script>
-   
+
 </head>
 <body>
 <!-- 상단부분 -->
@@ -68,10 +68,9 @@
     </div>
     <!-- 왼쪽 사이드 메뉴 -->
     <aside>
-    	 <div id="loginfo">
+        <div id="loginfo">
             <c:import url="/login/empInfo.do"></c:import>
         </div>
         <div id="organ">
-       		<c:import url="/organization/orgList.do"/>
+            <c:import url="/organization/orgList.do"/>
         </div>
-     

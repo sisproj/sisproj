@@ -17,6 +17,11 @@
 	<select id="dailyNewsList" resultType="NewsVO">
 		select * from news
 	</select>
+	
+	<select id="newsSearchByNo" resultType="NewsVO" parameterType="int">
+		select * from news where news_No=#{newsNo}
+	</select>
+	
 </mapper>
 
 

@@ -5,10 +5,7 @@
 <mapper namespace="config.mybatis.mapper.oracle.addrBook">	
 	<sql id="searchWhere">
 		<if test="searchKeyword !=null and searchKeyword!=''">
-			or addr_name like '%' || #{searchKeyword} || '%'
-			or addr_comp like '%' || #{searchKeyword} || '%'
-			or addr_email like '%' || #{searchKeyword} || '%'
-			or addr_tel like '%' || #{searchKeyword} || '%'
+			and addr_name like '%' || #{searchKeyword} || '%'
 		</if>
 	</sql>
 	
@@ -19,7 +16,7 @@
 		    select rownum as RNUM, alist.*
 		    from(
 		        select * from addrBookView
-		        where addr_isdel='N'
+		        where addr_isdel='N' and emp_no=#{empNo}
 		        <if test="addrGroupNo!=0">
 					and addr_groupno=#{addrGroupNo}		
 				</if>
@@ -33,12 +30,12 @@
 	</select>
 	<select id="selectTotalRecordCountN" resultType="int" parameterType="AddrSearchVO">
 		select count(*) from addrBookView
-		where addr_isdel='N'
+		where addr_isdel='N' and emp_no=#{empNo}
 		<include refid="searchWhere"></include>		
 	</select>
 	<select id="selectTotalRecordCountY" resultType="int" parameterType="AddrSearchVO">
 		select count(*) from addrBookView
-		where addr_isdel='Y'
+		where addr_isdel='Y' and emp_no=#{empNo}
 		<include refid="searchWhere"></include>
 	</select>
 	<select id="selectAddrBookIsDelY" parameterType="AddrSearchVO" resultType="addrBookVO">
@@ -48,8 +45,8 @@
 		    select rownum as RNUM, dlist.*
 		    from(
 		        select * from addrBookView
-		        where addr_isdel='Y'
-		        order by emp_No		        
+		        where addr_isdel='Y' and emp_no=#{empNo}
+		        order by addr_No		        
 		    ) dlist
 		) 
 		<![CDATA[
@@ -60,8 +57,8 @@
 		<selectKey keyProperty="addrNo" resultType="int" order="BEFORE">
 			select addrbook_seq.nextval from dual
 		</selectKey>
-		insert into addrBook
-		values(#{addrNo}, #{addrName}, #{addrComp}, #{addrTel}, #{addrEmail}, #{addrGroupNo}, #{addrIsDel}, #{empNo})
+		insert into addrBookView(addr_no, addr_name, addr_comp, addr_tel, addr_email, addr_isdel, group_no, emp_no)
+		values(#{addrNo}, #{addrName}, #{addrComp}, #{addrTel}, #{addrEmail}, #{addrIsDel}, #{groupNo}, #{empNo})
 	</insert>	
 	<update id="updateIsDelY" parameterType="int">
 		update addrBook
@@ -75,7 +72,7 @@
 	</update>
 	<delete id="deleteAddrBook" parameterType="int">
 		delete from addrBook
-		where addr_isDel='Y'
+		where addr_isDel='Y' and emp_No=#{empNo}
 	</delete>
 </mapper>
 

@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ page session="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -36,8 +37,10 @@
 				return false;
 			}			
 		});	
-		$('#pwSe').click(function() {
-			
+		$('#pwSe').click(function() {			
+			 	window.open("<c:url value='/login/searchPwd.do' />",
+				'chk',
+				'left=0,top=0,width=400,height=250,locations=yes,resizable=yes');
 		});
 	});
 </script>
@@ -52,14 +55,17 @@
         <div id="forminfo">로그인</div>
         <div class="forminp">
             <label for="empNo">아이디</label>
-            <input type="text" name="empNo" id="empNo">
+            <input type="text" name="empNo" id="empNo" value="${cookie.ck_empNo.value }">
         </div>
         <div class="forminp">
             <label for="empPwd">비밀번호</label>
             <input type="password" name="empPwd" id="empPwd">
         </div>
         <div id="saveid">
-      	  <input type="checkbox" name="saveId" id="saveId"> 
+      	  <input type="checkbox" name="saveId" id="saveId"
+      	  <c:if test="${!empty cookie.ck_empNo }">
+						checked
+		  </c:if>>
       	  <label for="saveinfo">아이디 저장</label>
         </div>
         <div class="forminp">

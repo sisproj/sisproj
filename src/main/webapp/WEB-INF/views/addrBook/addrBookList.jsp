@@ -19,7 +19,8 @@
 		});
 		
 		$('#addrSearch').click(function(){
-			$('#frmList').submit();		
+			/* $('#hiddinsk').val($('#searchKeyword').val()); */
+			 $('#frmList').submit();		
 		});
 	    
 	});	
@@ -37,11 +38,12 @@
 			        <a href="#"><div id="divDeleteMulti"><i class="fa fa-trash"></i><span> 삭제</span></div></a>
 			        <a href="#"><div><i class="fa fa-envelope-o"></i><span> 메일 보내기</span></div></a>
 			        <a href="#"><div><i class="fa fa-file-excel-o"></i><span> 주소록 내보내기</span></div></a>
-			        <input type="hidden" id="currentPage" name="currentPage" value="1">
-			        <input type="hidden" id="countPerPage" name="countPerPage" value="10">
-			        <input type="hidden" name="searchKeyword" value="${param.searchKeyword }">
-			        <div><input type="text" placeholder="연락처 검색" id="searchKeyword" name="searchKeyword" value="">
-			        	<a href="#"><i id="addrSearch" class="fa fa-search"></i></a></div>
+			        <input type="text" id="currentPage" name="currentPage" value="1">
+			        <input type="text" id="countPerPage" name="countPerPage" value="10">
+			        <div>
+			        	<input type="text" placeholder="연락처 검색" id="searchKeyword" name="searchKeyword" value='${param.searchKeyword}'>
+			        	<a href="#"><i id="addrSearch" class="fa fa-search"></i></a>
+		        	</div>
 			        <div id="selectMenu">
 			        	<select>
 					        <option value="10">10개씩 보기</option>
