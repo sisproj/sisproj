@@ -98,24 +98,13 @@
 		select * from (
 		    select rownum as RNUM, blist.* from
 		    (
-		        select * from confirm 
-		        where cf_status = #{listType} and emp_no=#{empNo}
-		        and (cf_no like '%' || #{searchKeyword} || '%' or cf_title like '%' || #{searchKeyword} || '%' or cf_content like '%' || #{searchKeyword} || '%')
-		        order by cf_regdate desc
-		    ) blist
-		)
-	    <![CDATA[
-		where RNUM>#{firstRecordIndex} and RNUM<=#{firstRecordIndex}+#{recordCountPerPage} ]]>
-	</select>
-	
-	<select id="selectForAwait" parameterType="ConfirmSearchVO" resultType="DocumentVO">
-		select * from (
-		    select rownum as RNUM, blist.* from
-		    (
-		        select * from confirm 
-		        where cf_status = #{listType} and (cf_confirmer = #{cfConfirmer} or emp_no=#{empNo})
-		        and (cf_no like '%' || #{searchKeyword} || '%' or cf_title like '%' || #{searchKeyword} || '%' or cf_content like '%' || #{searchKeyword} || '%')
-		        order by cf_regdate desc
+		       	select c.*, r.is_read
+				from confirm c
+				join cf_is_read r
+				on c.cf_no = r.cf_no
+		        where c.cf_status = #{listType} and r.emp_no=#{empNo}
+				and (c.cf_no like '%' || #{searchKeyword} || '%' or c.cf_title like '%' || #{searchKeyword} || '%' or c.cf_content like '%' || #{searchKeyword} || '%')
+				order by r.is_read, c.cf_regdate desc
 		    ) blist
 		)
 	    <![CDATA[
@@ -181,8 +170,17 @@
 		values(CF_IS_READ_SEQ.nextval, #{empNo}, #{cfNo})
 	</insert>
 	
+	<insert id="insertIsReadCIR" parameterType="CfIsReadVO">
+		insert into cf_is_read(seq_no,emp_no,cf_no)
+		values(CF_IS_READ_SEQ.nextval, #{empNo}, #{cfNo})
+	</insert>
+	
 	<select id="selectIsReadByCfNo" parameterType="CfIsReadVO" resultType="String">
 		select is_read from cf_is_read where cf_no = #{cfNo} and emp_no=#{empNo}
+	</select>
+	
+	<select id="selectIsReadCNTByCfNo" parameterType="CfIsReadVO" resultType="int">
+		select count(*) from cf_is_read where cf_no = #{cfNo} and emp_no=#{empNo}
 	</select>
 	
 	<update id="updateIsReadDoc" parameterType="CfIsReadVO">
@@ -268,6 +266,12 @@
 	<update id="updateSignImg" parameterType="SignVO">
 		update sign set sign_name = #{signName}, sign_ori_name = #{signOriName}, sign_size = #{signSize} where emp_no = #{empNo}
 	</update>
+	
+	<update id="updateDocStatus" parameterType="DocumentVO">
+		update confirm set cf_Status = #{cfStatus}, cf_confirmer = #{cfConfirmer} where cf_no = #{cfNo}
+	</update>
+	
+
 </mapper>
 
 

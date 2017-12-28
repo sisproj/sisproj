@@ -5,6 +5,7 @@ import java.util.List;
 import com.siszo.sisproj.confirm.common.ConfirmSearchVO;
 import com.siszo.sisproj.confirm.confirmline.model.ConfirmLineVO;
 import com.siszo.sisproj.confirm.file.model.ConfirmFileVO;
+import com.siszo.sisproj.confirm.isread.model.CfIsReadVO;
 import com.siszo.sisproj.employee.model.EmployeeVO;
 
 public interface DocumentService {
@@ -22,11 +23,12 @@ public interface DocumentService {
 	public int selectConfirmSEQ();
 	public int insertConfirmDoc(DocumentVO vo, List<ConfirmFileVO> uploadFileList, List<ConfirmLineVO> clVoList); 
 	public List<DocumentVO> selectAllDoc(ConfirmSearchVO svo);
-	public List<DocumentVO> selectForAwait(ConfirmSearchVO svo);
 	public int totalRecordCountDoc(ConfirmSearchVO svo);
 	public List<DocumentVO> completeDocSelByEmpNo(int empNo);
 	public EmployeeVO selectByEmpNo(int empNo);
 	public DocumentVO selectDocByCfNo(String cfNo);
 	public int updateConfirmDoc(DocumentVO vo, List<ConfirmFileVO> uploadFileList, List<ConfirmLineVO> clVoList);
 	public int deleteDocuByCfNo(String cfNo);
+	public int noConfirm(DocumentVO dVo, CfIsReadVO cirVo, ConfirmLineVO clVo);
+	public int yesConfirm(DocumentVO dVo, CfIsReadVO cirVo, ConfirmLineVO clVo, int nextConfirmer);
 }

@@ -78,9 +78,11 @@
 #awaittb tr{
 	transition:all 300ms linear;
 }
+#awaittb td b{
+	color: #306;	
+}
 #awaittb tr:hover{
 	background-color: #e1e1e1;
-	font-weight: 600;
 }
 #awaittb th{
 	box-sizing:border-box;

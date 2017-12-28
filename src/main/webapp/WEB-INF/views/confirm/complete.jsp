@@ -47,7 +47,7 @@
 					</thead>
 					<tbody>
 						<c:if test="${empty docuList }">
-							<tr><td colspan="4" rowspan="2">문서가 없습니다</td></tr>
+							<tr><td colspan="4" rowspan="2" style="font-size: 1em;">문서가 없습니다</td></tr>
 						</c:if>
 						<c:if test="${!empty docuList }">
 							<c:forEach var="docuVo" items="${docuList }" varStatus="status">

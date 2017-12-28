@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
-<%@ include file="../inc/top.jsp" %>
+<%-- <%@ include file="../inc/top.jsp" %> --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:import url="../inc/top.jsp"/>
 <link href="<c:url value='/resources/css/pagecss/confirm_detail.css'/>" rel="stylesheet" type="text/css">
 <!-- 0. include부분 -->
 			<nav>
@@ -21,27 +25,23 @@
 		<!-- 왼쪽 사이드 메뉴 끝 -->
 		<article id="headsection">
 			<!-- 2. 페이지 이름 지정 // 북마크 지정 여부 .bookmark || .nobook -->
-			<h1><i class="fa fa-book" aria-hidden="true"></i>&nbsp;문서제목(양식이름)&nbsp;<a href="#"><i class="fa fa-bookmark nobook" aria-hidden="true"></i></a></h1>
+			<h1><i class="fa fa-book" aria-hidden="true"></i>&nbsp;${docVo.cfTitle }(${dfName })&nbsp;<a href="#"><i class="fa fa-bookmark nobook" aria-hidden="true"></i></a></h1>
 			<!-- 2. 페이지 이름 지정 끝 -->
 		</article>	
 		<article id="bodysection">
 			<!-- 3. 내용 -->
 				<div id="linebtn">
-					<!-- (내문서이거나 || 결재대기) 이면서&& 내 결재 차례인 경우 -->
-					<c:if test="${(docVo.empNo == MyEmpNo || docVo.cfStatus == '결재대기') && MyEmpNo==docVo.cfConfirmer }">
+					<!-- 내문서 && 임시 저장 || 결재대기 && !내문서  -->
+					<c:if test="${(docVo.empNo == sessionScope.empVo.empNo && docVo.cfStatus == '임시저장') || (docVo.empNo != sessionScope.empVo.empNo && docVo.cfStatus == '결재대기') }">
 						<input type="button" id="cf_ok" value="결재승인">&nbsp;&nbsp;
 					</c:if>
-					<!-- 내문서가 아니면서&& 결재대기 이면서&& 내 결재 차례인 경우 -->
-					<c:if test="${docVo.empNo != MyEmpNo && docVo.cfStatus == '결재대기' && MyEmpNo==docVo.cfConfirmer }">
-						<input type="button" id="cf_not" value="결재반려">&nbsp;&nbsp;
+					<!-- 내문서가 아니면서 && 결재대기 이면서&& 내 결재 차례인 경우 -->
+					<c:if test="${docVo.empNo != sessionScope.empVo.empNo && docVo.cfStatus == '결재대기' }">
+						<input type="button" id="cf_return" value="결재반려">&nbsp;&nbsp;
 					</c:if>
-					<!-- 임시저장인경우 -->
-					<c:if test="${docVo.cfStatus == '임시저장' }">
+					<!-- 임시저장이거나 결재반려인경우 -->
+					<c:if test="${docVo.cfStatus == '임시저장' || docVo.cfStatus == '결재반려'}">
 						<input type="button" id="cf_edit" value="수정">&nbsp;&nbsp;
-						<input type="button" id="cf_del" value="삭제">&nbsp;&nbsp;
-					</c:if>
-					<!-- 결재반려인 경우 -->
-					<c:if test="${docVo.cfStatus == '결재반려' }">
 						<input type="button" id="cf_del" value="삭제">&nbsp;&nbsp;
 					</c:if>
 					<!--엑셀파일로 다운로드는 결재완료인경우만-->
@@ -85,7 +85,12 @@
 								<div>
 									<span>
 										<c:if test="${clVo.lineStat == CL_COMPLETE}">
-											<img src="<c:url value='/user_sign/${clVo.signName }'/>" alt="결재"> <!-- 결재자 사인 경로 넣기 -->
+											<c:if test="${!empty clVo.signName}">
+												<img src="<c:url value='/user_sign/${clVo.signName }'/>" alt="결재"> <!-- 결재자 사인 경로 넣기 -->
+											</c:if>
+											<c:if test="${empty clVo.signName}">
+												<p style="color: #036">결재</p>
+											</c:if>
 										</c:if>
 										<c:if test="${clVo.lineStat == CL_RETURN}">
 											<img src="<c:url value='/user_sign/return_img.jpg'/>" alt="반려">											
@@ -95,7 +100,7 @@
 										</c:if>
 									</span>
 									<span>${clVo.empName } ${clVo.posName }
-									<c:if test="${clVo.lineStat == '승인'}">
+									<c:if test="${clVo.lineStat != '대기'}">
 										<br><fmt:formatDate value="${clVo.lineRegdate }" pattern="yy-MM-dd"/>
 									</c:if></span>
 								</div>
@@ -141,12 +146,14 @@
 						<div id="cf_comment">
 							<h3><i class="fa fa-commenting-o"></i> 의견 (${fn:length(commVoList) })</h3>
 							<!-- 상단등록창 -->
-							<form name="comm_wr" id="comm_wr" method="post" action="<c:url value='/confirm/writeComm.do'/>">
-								<input type="hidden" name="cfNo" value="${docVo.cfNo }">
-								<input type="hidden" name="memNo" value="${MyEmpNo }">
-								<textarea name="commContent" id="con" placeholder="줄바꿈이 되지 않습니다."></textarea>
-								<input type="submit" class="bold" value="등록">
-							</form>
+							<c:if test="${docVo.cfStatus != '결재완료' && docVo.cfStatus != '결재반려' }">
+								<form name="comm_wr" id="comm_wr" method="post" action="<c:url value='/confirm/writeComm.do'/>">
+									<input type="hidden" name="cfNo" value="${docVo.cfNo }">
+									<input type="hidden" name="memNo" value="${sessionScope.empVo.empNo }">
+									<textarea name="commContent" id="con" placeholder="줄바꿈이 되지 않습니다."></textarea>
+									<input type="submit" class="bold" value="등록">
+								</form>
+							</c:if>
 							<!-- 상단등록창 끝 -->
 							<!-- 의견리스트 -->
 							<!-- 반복 -->
@@ -157,7 +164,7 @@
 											<span class="comm_reg bold">${commVo.empName }</span> 
 											<span class="comm_reg"><fmt:formatDate value="${commVo.commRegdate }" pattern="yyyy-MM-dd HH:mm:ss"/></span>
 											<span id="comm-${status.index }">
-												<c:if test="${commVo.memNo == MyEmpNo}">
+												<c:if test="${commVo.memNo == sessionScope.empVo.empNo && docVo.cfStatus != '결재완료' && docVo.cfStatus != '결재반려'}">
 													<a class="comm_delete bold" href="<c:url value='/confirm/deleteComm.do?commNo=${commVo.commNo }&cfNo=${docVo.cfNo }'/>">삭제</a>&nbsp;&nbsp;&nbsp;
 													<a class="comm_edit bold" id="btn_e-${status.index }" href="#comm-${status.index }">수정</a>&nbsp;&nbsp;&nbsp;<!-- 1부분 아이디 반복문 i로 돌리기 -->
 												</c:if>
@@ -222,8 +229,27 @@
 			$(btn).hide();
 			$(frm).show();
 		});
-		$('.comm_ed, #comm_wr').submit(function(){
-			
+		$('form.comm_ed').submit(function(){
+			var cont = $(this).find('textarea[name=commContent]').val();
+			if(cont==''){
+				return false;
+			}
+		});
+		
+		$('#cf_ok').click(function(){
+			if(confirm('정말로 결재를 승인 하시겠습니까?')){
+				location.href="<c:url value='/confirm/yesConfirm.do?cfNo=${docVo.cfNo }&empNo=${docVo.empNo}'/>";
+			} else{
+				return false;				
+			}
+		});
+		$('#cf_return').click(function(){
+			if(confirm('정말로 결재를 반려 하시겠습니까?')){
+				location.href="<c:url value='/confirm/noConfirm.do?cfNo=${docVo.cfNo }&empNo=${docVo.empNo}'/>";			
+			}else {
+				return false;
+				
+			}	
 		});
 	});
 </script>
