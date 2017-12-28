@@ -19,4 +19,9 @@ public class LoginDAOMybatis extends SqlSessionDaoSupport implements LoginDAO{
 	public EmployeeVO selectAdmin(int empNo) {
 		return getSqlSession().selectOne(namespace+".selectAdmin",empNo);
 	}
+
+	@Override
+	public String selectPwd(EmployeeVO vo) {
+		return getSqlSession().selectOne(namespace+".selectPwd",vo);
+	}
 }

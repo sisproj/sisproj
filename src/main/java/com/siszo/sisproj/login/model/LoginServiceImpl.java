@@ -22,17 +22,27 @@ public class LoginServiceImpl implements LoginService{
 		
 		if(vo.getEmpPwd()==null || vo.getEmpPwd().isEmpty()) {
 			result=ID_NONE;
-		}else if(vo.getEmpPwd().equals(empPwd)){
-			result=LOGIN_OK;		
+		}else if(vo.getEmpPwd().equals(empPwd)){		
+			if(vo.getEmpOutdate()!=null) {
+				result=EMP_OUT;
+			}else {				
+				result=LOGIN_OK;		
+			}
 		}else {
 			result=PWD_DISAGREE;
 		}		
+		logger.info("로그인 확인 결과 result={}",result);
 		return result;	
 	}
 
 	@Override
 	public EmployeeVO selectAdmin(int empNo) {
 		return loginDao.selectAdmin(empNo);
+	}
+
+	@Override
+	public String selectPwd(EmployeeVO vo) {
+		return loginDao.selectPwd(vo);
 	}
 
 
