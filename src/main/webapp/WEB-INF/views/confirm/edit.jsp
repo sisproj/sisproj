@@ -52,6 +52,7 @@
 					action="<c:url value='/confirm/confirmEdit.do'/>" enctype="multipart/form-data">
 				<!-- 미드 -->
 					<input type="hidden" name="cfStatus" id="writeType">
+					<input type="hidden" name=cfIsfile" value="${docVo.cfIsfile }">
 					<input type="hidden" name="allConfirmers" id="allConfirmers" value="${allConfirmers }">
 					<div id="doc_type">
 						<div id="dt_head">
@@ -86,7 +87,7 @@
 								<div>
 									<span>
 										<c:if test="${clVo.lineStat == CL_COMPLETE}">
-											<img src="<c:url value='/user_sign/app_sign.gif'/>" alt="결재"> <!-- 결재자 사인 경로 넣기 -->
+											<img src="<c:url value='/user_sign/${clVo.signName }'/>" alt="결재"> <!-- 결재자 사인 경로 넣기 -->
 										</c:if>
 										<c:if test="${clVo.lineStat == CL_RETURN}">
 											<img src="<c:url value='/user_sign/return_img.jpg'/>" alt="반려">											

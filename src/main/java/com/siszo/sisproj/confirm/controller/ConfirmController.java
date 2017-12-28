@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +19,6 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -68,14 +68,14 @@ public class ConfirmController {
 	@Autowired
 	private FileUploadUtil fileUtil;
 	
-	private int empNo = 20170001; //임시회원번호 김연아
-	
 	@RequestMapping("/main.do")
-	public String main(Model model) {
+	public String main(HttpSession session, Model model) {
 		logger.info("전자결재 메인화면 보여주기");
+		//세션 세팅
+		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");		
 		
 		CfIsReadVO cirVo = new CfIsReadVO();
-		cirVo.setEmpNo(empNo);
+		cirVo.setEmpNo(empVo.getEmpNo());
 		cirVo.setIsRead("N");
 		// 메인화면 박스별 숫자 세팅 1.임시저장함
 		cirVo.setCfStaus(DocumentService.TEMPORARY_SAVE);
@@ -109,7 +109,7 @@ public class ConfirmController {
 		//결재대기함 플래그 VO에 입력
 		ConfirmSearchVO svo = new ConfirmSearchVO();
 		//searchVo에 값 세팅
-		svo.setEmpNo(empNo);
+		svo.setEmpNo(empVo.getEmpNo());
 		svo.setRecordCountPerPage(5);
 		svo.setFirstRecordIndex(0);
 		//결재대기함 플래그 VO에 입력
@@ -178,7 +178,10 @@ public class ConfirmController {
 	}
 	
 	@RequestMapping("/write.do")
-	public String write(@RequestParam(defaultValue="0") int formNo, Model model) {
+	public String write(@RequestParam(defaultValue="0") int formNo,HttpSession session, Model model) {
+		//세션
+		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
+		
 		logger.info("새 결재 진행 - 결재 작성 화면 보여주기");
 		
 		String msg="", url="";
@@ -195,31 +198,29 @@ public class ConfirmController {
 		DocumentFormVO vo = dfService.selectDocFormByFormNo(formNo);
 		int seq = dService.selectConfirmSEQ();
 		logger.info("양식폼 가져오기 처리결과 vo={}, seq={}",vo, seq);
-		List<DocumentVO> docuVo = dService.completeDocSelByEmpNo(empNo);
+		List<DocumentVO> docuVo = dService.completeDocSelByEmpNo(empVo.getEmpNo());
 		
 		Date day = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		String today = sdf.format(day);
 		System.out.println("오늘날짜"+today);
 		
-		//2. 해당 기안자 조회 해서 EmployeeVO 구함(기안자, 부서이름 조회용)
-		EmployeeVO eVo = dService.selectByEmpNo(empNo);
-		logger.info("해당 문서 작성자 조회, eVo={}",eVo);
-		
 		model.addAttribute("vo",vo);
 		model.addAttribute("today",today);
 		model.addAttribute("seq",seq);
-		model.addAttribute("eVo",eVo);
+		model.addAttribute("eVo",empVo);
 		model.addAttribute("docuVo",docuVo);
 		
 		return "confirm/write";
 	}
 	
 	@RequestMapping("/line.do")
-	public String line(Model model) {
+	public String line(HttpSession session, Model model) {
+		//세션
+		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
 		logger.info("결재라인 선택화면 보여주기");
 		
-		List<SaveLineVO> slVoList = slService.selectSaveLineByEmpNo(empNo);
+		List<SaveLineVO> slVoList = slService.selectSaveLineByEmpNo(empVo.getEmpNo());
 		
 		model.addAttribute("slVoList",slVoList);
 		
@@ -255,19 +256,21 @@ public class ConfirmController {
 	}
 	//결재환경설정
 	@RequestMapping("/setting.do")
-	public String setting(Model model) {
+	public String setting(HttpSession session, Model model) {
+		//세션
+		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
+		
 		logger.info("결재 환경 설정 보여주기");
 		logger.info("결재서명등록 화면 보여주기");	
-		SignVO sVo = sService.selectSign(empNo);
+		SignVO sVo = sService.selectSign(empVo.getEmpNo());
 		logger.info("결재 서명 조회 결과 sVo={}",sVo);
 		
 		logger.info("결재라인등록 화면 보여주기");		
-		List<SaveLineVO> slVoList = slService.selectSaveLineByEmpNo(empNo);
-		EmployeeVO eVo = dService.selectByEmpNo(empNo);//내 정보 VO로 전달
+		List<SaveLineVO> slVoList = slService.selectSaveLineByEmpNo(empVo.getEmpNo());
 		
 		model.addAttribute("sVo",sVo);
 		model.addAttribute("slVoList",slVoList);
-		model.addAttribute("eVo",eVo);
+		model.addAttribute("eVo",empVo);
 		
 		return "confirm/setting";
 	}
@@ -327,7 +330,11 @@ public class ConfirmController {
 	}
 	/////
 	@RequestMapping("/confirmOk.do")
-	public String confirmOk_post(@ModelAttribute DocumentVO docuVo, @RequestParam String allConfirmers,	HttpServletRequest request, Model model) {
+	public String confirmOk_post(@ModelAttribute DocumentVO docuVo, @RequestParam String allConfirmers,	
+			HttpSession session, HttpServletRequest request, Model model) {
+		//세션
+		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
+		
 		//임시저장인지 결재 처리인지 플래그 vo에 세팅
 		String writeType = docuVo.getCfStatus();
 		logger.info("새 결재 진행 - 결재 문서 작성 처리, 파라미터 docuVo={}, 저장처리 방식 : writeType={}", docuVo, writeType);
@@ -413,7 +420,7 @@ public class ConfirmController {
 					ConfirmLineVO myConfirm = new ConfirmLineVO();
 					myConfirm.setCfNo(docuVo.getCfNo());
 					myConfirm.setLineStat(ConfirmLineService.CL_COMPLETE);
-					myConfirm.setEmpNo(empNo);
+					myConfirm.setEmpNo(empVo.getEmpNo());
 					
 					cnt = clService.myConfirmOk(myConfirm);
 					if(cnt>0) {
@@ -454,7 +461,11 @@ public class ConfirmController {
 	}
 	
 	@RequestMapping("/confirmEdit.do")
-	public String confirmEdit(@ModelAttribute DocumentVO docuVo, @RequestParam String allConfirmers, HttpServletRequest request, Model model) {
+	public String confirmEdit(@ModelAttribute DocumentVO docuVo, @RequestParam String allConfirmers, 
+			HttpSession session, HttpServletRequest request, Model model) {
+		//세션 받아오기
+		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
+		
 		//임시저장인지 결재 처리인지 플래그 vo에 세팅
 		String writeType = docuVo.getCfStatus();
 		logger.info("결재 문서 수정 처리, 파라미터 docuVo={}, 저장처리 방식 : writeType={}", docuVo, writeType);
@@ -492,8 +503,6 @@ public class ConfirmController {
 					uploadFileList.add(cfVo);
 				}
 				docuVo.setCfIsfile(DocumentService.HAVE_FILES);
-			} else {
-				docuVo.setCfIsfile(DocumentService.NOT_HAVE_FILES);
 			}
 			logger.info("파일 처리 이후 docuVo 내용, docuVo={}",docuVo);
 			logger.info("업로드 파일 리스트, uploadFileList.size()={}",uploadFileList.size());
@@ -547,7 +556,7 @@ public class ConfirmController {
 					ConfirmLineVO myConfirm = new ConfirmLineVO();
 					myConfirm.setCfNo(docuVo.getCfNo());
 					myConfirm.setLineStat(ConfirmLineService.CL_COMPLETE);
-					myConfirm.setEmpNo(empNo);
+					myConfirm.setEmpNo(empVo.getEmpNo());
 					
 					cnt = clService.myConfirmOk(myConfirm);
 					if(cnt>0) {
@@ -602,7 +611,10 @@ public class ConfirmController {
 	}
 	
 	@RequestMapping("/edit.do")
-	public String edit(@RequestParam(required=false) String cfNo, Model model) {
+	public String edit(@RequestParam(required=false) String cfNo,HttpSession session, Model model) {
+		//세션
+		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
+		
 		logger.info("문서 수정화면 보여주기, 파라미터 cfNo={}",cfNo);
 		if(cfNo==null || cfNo.isEmpty()) {
 			String msg = "잘못된 URL입니다.";
@@ -620,10 +632,6 @@ public class ConfirmController {
 		String title = docVo.getCfTitle();
 		title = ConfirmUtility.changeTag(title);
 		docVo.setCfTitle(title);
-		
-		//2. 접속자 본인 조회 해서 EmployeeVO 구함(기안자, 부서이름 조회용)
-				EmployeeVO eVo = dService.selectByEmpNo(empNo);
-				logger.info("작성자 조회, eVo={}",eVo);
 				
 		//3. cfNo의 결재라인 confirm_line 테이블에서 가져옴 = List<ConfirmLineVO> (*)
 		List<ConfirmLineVO> clVoList = clService.selectCfLineByCfNo(cfNo);
@@ -651,15 +659,14 @@ public class ConfirmController {
 			logger.info("해당 문서의 파일 리스트, fileList.size()={}",fileList.size());
 		}
 		//6. 연계문서 선택 리스트
-		List<DocumentVO> compleVoList = dService.completeDocSelByEmpNo(empNo);
+		List<DocumentVO> compleVoList = dService.completeDocSelByEmpNo(empVo.getEmpNo());
 		logger.info("연계문서리스트 조회 결과, compleVoList.size()={}",compleVoList.size());
 
 		model.addAttribute("docVo", docVo);
-		model.addAttribute("eVo", eVo);
+		model.addAttribute("eVo", empVo);
 		model.addAttribute("clVoList", clVoList);
 		model.addAttribute("linkDoc", linkDoc);
 		model.addAttribute("fileList", fileList);
-		model.addAttribute("MyEmpNo",empNo);
 		model.addAttribute("compleVoList",compleVoList);
 		model.addAttribute("empNoList",clVoList);
 		model.addAttribute("allConfirmers",allConfirmers);
@@ -672,7 +679,10 @@ public class ConfirmController {
 	}
 	
 	@RequestMapping("/detail.do")
-	public String detail(@RequestParam(required=false) String cfNo, Model model) {
+	public String detail(@RequestParam(required=false) String cfNo, HttpSession session, Model model) {
+		//세션
+		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
+		
 		logger.info("상세페이지 보여주기, 파라미터 cfNo={}", cfNo);
 		if(cfNo==null || cfNo.isEmpty()) {
 			String msg = "잘못된 URL입니다.";
@@ -686,7 +696,7 @@ public class ConfirmController {
 		//0. 해당글 해당 유저 읽은글 처리
 		CfIsReadVO cirVo = new CfIsReadVO();
 		cirVo.setCfNo(cfNo);
-		cirVo.setEmpNo(empNo);
+		cirVo.setEmpNo(empVo.getEmpNo());
 		cirVo.setIsRead("Y");
 		int cnt = cirService.updateIsReadDoc(cirVo);
 		if(cnt<=0) {
@@ -706,6 +716,9 @@ public class ConfirmController {
 		String title = docVo.getCfTitle();
 		title = ConfirmUtility.changeTag(title);
 		docVo.setCfTitle(title);
+		//1-1. 해당 문서의 양식이름
+		DocumentFormVO dfVo = dfService.selectDocFormByFormNo(docVo.getFormNo());
+		String dfName = dfVo.getFormName();
 				
 		//2. 해당 기안자 조회 해서 EmployeeVO 구함(기안자, 부서이름 조회용)
 		EmployeeVO writerEmpVo = dService.selectByEmpNo(docVo.getEmpNo());
@@ -748,12 +761,12 @@ public class ConfirmController {
 		}
 		
 		model.addAttribute("docVo", docVo);
+		model.addAttribute("dfName",dfName);
 		model.addAttribute("writerEmpVo", writerEmpVo);
 		model.addAttribute("clVoList", clVoList);
 		model.addAttribute("linkDoc", linkDoc);
 		model.addAttribute("fileList", fileList);
 		model.addAttribute("commVoList", commVoList);
-		model.addAttribute("MyEmpNo",empNo);
 		
 		//결재 상태 확인용 상태플래그
 		model.addAttribute("CL_AWAIT",ConfirmLineService.CL_AWAIT);
@@ -765,8 +778,11 @@ public class ConfirmController {
 	
 	//////////////////////////////////리스트	
 	@RequestMapping("/tempsave.do")
-	public String tempsave(@ModelAttribute ConfirmSearchVO svo, Model model) {
+	public String tempsave(@ModelAttribute ConfirmSearchVO svo, HttpSession session, Model model) {
 		logger.info("임시저장함 보여주기, 파라미터 searchVo={}",svo);
+		//세션
+		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");		
+		
 		//임시저장함 플래그 VO에 입력
 		svo.setListType(DocumentService.TEMPORARY_SAVE);
 		
@@ -779,7 +795,7 @@ public class ConfirmController {
 		//searchVo에 값 세팅
 		svo.setRecordCountPerPage(ConfirmUtility.RECORD_COUNT_PER_PAGE);
 		svo.setFirstRecordIndex(pageInfo.getFirstRecordIndex());
-		svo.setEmpNo(empNo);
+		svo.setEmpNo(empVo.getEmpNo());
 		logger.info("searchVo 최종값={}", svo);
 		
 		
@@ -798,7 +814,7 @@ public class ConfirmController {
 			
 			//읽은여부 docuVo에 세팅 
 			cirVo.setCfNo(imvo.getCfNo());
-			cirVo.setEmpNo(empNo); //임시 프로퍼티 지정
+			cirVo.setEmpNo(empVo.getEmpNo()); //임시 프로퍼티 지정
 			String isRead = cirService.selectIsReadByCfNo(cirVo);
 			imvo.setIsRead(isRead);
 		}
@@ -812,14 +828,16 @@ public class ConfirmController {
 		model.addAttribute("pageInfo",pageInfo);
 		model.addAttribute("docuList",docuList);
 		model.addAttribute("cirList",cirList);
-		model.addAttribute("MyEmpNo",empNo);
 		
 		
 		return "confirm/tempsave";
 	}
 
 	@RequestMapping("/await.do")
-	public String await(@ModelAttribute ConfirmSearchVO svo, Model model) {
+	public String await(@ModelAttribute ConfirmSearchVO svo, HttpSession session, Model model) {
+		//세션
+		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
+		
 		logger.info("결재대기함 화면 보여주기, 파라미터 searchVo={}",svo);
 		//결재대기함 플래그 VO에 입력
 		svo.setListType(DocumentService.CONFIRM_AWAIT);
@@ -833,15 +851,15 @@ public class ConfirmController {
 		//searchVo에 값 세팅
 		svo.setRecordCountPerPage(ConfirmUtility.RECORD_COUNT_PER_PAGE);
 		svo.setFirstRecordIndex(pageInfo.getFirstRecordIndex());
-		svo.setCfConfirmer(empNo);
-		svo.setEmpNo(empNo);
-		
+		svo.setCfConfirmer(empVo.getEmpNo());
+		svo.setEmpNo(empVo.getEmpNo());
 		logger.info("searchVo 최종값={}", svo);
+		
 		//현재 접속자 사원 번호 세팅
 		CfIsReadVO cirVo = new CfIsReadVO();
-		cirVo.setEmpNo(empNo); //임시 프로퍼티 지정
+		cirVo.setEmpNo(empVo.getEmpNo());
 
-		List<DocumentVO> docuList = dService.selectForAwait(svo);
+		List<DocumentVO> docuList = dService.selectAllDoc(svo);
 		logger.info("결재대기함 목록 조회 결과, docuList.size()={}",docuList.size());
 		
 		//이름 넣어주기 + 제목 길이 처리
@@ -871,64 +889,68 @@ public class ConfirmController {
 		
 		model.addAttribute("pageInfo",pageInfo);
 		model.addAttribute("docuList",docuList);
-		model.addAttribute("MyEmpNo",empNo);
 		
 		return "confirm/await";
 	}
 	
 	@RequestMapping("/complete.do")
-	public String complete(@ModelAttribute ConfirmSearchVO svo, Model model) {
+	public String complete(@ModelAttribute ConfirmSearchVO svo, HttpSession session, Model model) {
+		//세션
+		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
+		
 		logger.info("결재완료함 화면 보여주기, 파라미터 searchVo={}",svo);
 		//결재완료함 플래그 VO에 입력
 		svo.setListType(DocumentService.CONFIRM_COMPLETE);
 		
 		//paging 처리에 필요한 변수
-				PaginationInfo pageInfo = new PaginationInfo();
-				pageInfo.setBlockSize(ConfirmUtility.BLOCK_SIZE);
-				pageInfo.setRecordCountPerPage(ConfirmUtility.RECORD_COUNT_PER_PAGE);
-				pageInfo.setCurrentPage(svo.getCurrentPage());
-				
-				//searchVo에 값 세팅
-				svo.setRecordCountPerPage(ConfirmUtility.RECORD_COUNT_PER_PAGE);
-				svo.setFirstRecordIndex(pageInfo.getFirstRecordIndex());
-				svo.setEmpNo(empNo);
-				logger.info("searchVo 최종값={}", svo);
-				//현재 접속자 사원 번호 세팅
-				CfIsReadVO cirVo = new CfIsReadVO();
-				cirVo.setEmpNo(empNo); //임시 프로퍼티 지정
+		PaginationInfo pageInfo = new PaginationInfo();
+		pageInfo.setBlockSize(ConfirmUtility.BLOCK_SIZE);
+		pageInfo.setRecordCountPerPage(ConfirmUtility.RECORD_COUNT_PER_PAGE);
+		pageInfo.setCurrentPage(svo.getCurrentPage());
+		
+		//searchVo에 값 세팅
+		svo.setRecordCountPerPage(ConfirmUtility.RECORD_COUNT_PER_PAGE);
+		svo.setFirstRecordIndex(pageInfo.getFirstRecordIndex());
+		svo.setEmpNo(empVo.getEmpNo());
+		logger.info("searchVo 최종값={}", svo);
+		//현재 접속자 사원 번호 세팅
+		CfIsReadVO cirVo = new CfIsReadVO();
+		cirVo.setEmpNo(empVo.getEmpNo());
 
-				List<DocumentVO> docuList = dService.selectAllDoc(svo);
-				logger.info("결재완료함 목록 조회 결과, docuList.size()={}",docuList.size());
-				
-				//제목 길이 처리
-				for(DocumentVO imvo : docuList) {
-					String str = imvo.getCfTitle();
-					String title = ConfirmUtility.titleLength(str, 44);
-					//스크립트 보안 : 꺽쇠 변환
-					title = ConfirmUtility.changeTag(title);
-					imvo.setCfTitle(title);
-					
-					//읽은여부 docuVo에 세팅 
-					cirVo.setCfNo(imvo.getCfNo());
-					String isRead = cirService.selectIsReadByCfNo(cirVo);
-					imvo.setIsRead(isRead);
-				}
-				
-				int totalRecord = dService.totalRecordCountDoc(svo);
-				logger.info("결재완료함 문서 개수 조회 결과, totalRecord={}",totalRecord);
-				
-				pageInfo.setTotalRecord(totalRecord);		
-				logger.info("검색어 searchKeyword={}",svo.getSearchKeyword());
-				
-				model.addAttribute("pageInfo",pageInfo);
-				model.addAttribute("docuList",docuList);
-				model.addAttribute("MyEmpNo",empNo);
+		List<DocumentVO> docuList = dService.selectAllDoc(svo);
+		logger.info("결재완료함 목록 조회 결과, docuList.size()={}",docuList.size());
+		
+		//제목 길이 처리
+		for(DocumentVO imvo : docuList) {
+			String str = imvo.getCfTitle();
+			String title = ConfirmUtility.titleLength(str, 44);
+			//스크립트 보안 : 꺽쇠 변환
+			title = ConfirmUtility.changeTag(title);
+			imvo.setCfTitle(title);
+			
+			//읽은여부 docuVo에 세팅 
+			cirVo.setCfNo(imvo.getCfNo());
+			String isRead = cirService.selectIsReadByCfNo(cirVo);
+			imvo.setIsRead(isRead);
+		}
+		
+		int totalRecord = dService.totalRecordCountDoc(svo);
+		logger.info("결재완료함 문서 개수 조회 결과, totalRecord={}",totalRecord);
+		
+		pageInfo.setTotalRecord(totalRecord);		
+		logger.info("검색어 searchKeyword={}",svo.getSearchKeyword());
+		
+		model.addAttribute("pageInfo",pageInfo);
+		model.addAttribute("docuList",docuList);
 		
 		return "confirm/complete";
 	}
 	
 	@RequestMapping("/return.do")
-	public String return_get(@ModelAttribute ConfirmSearchVO svo, Model model) {
+	public String return_get(@ModelAttribute ConfirmSearchVO svo, HttpSession session, Model model) {
+		//세션
+		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
+		
 		logger.info("결재반려함 화면 보여주기, 파라미터 searchVo={}",svo);
 		//결재반려함 플래그 VO에 입력
 		svo.setListType(DocumentService.CONFIRM_RETURN);
@@ -942,11 +964,11 @@ public class ConfirmController {
 		//searchVo에 값 세팅
 		svo.setRecordCountPerPage(ConfirmUtility.RECORD_COUNT_PER_PAGE);
 		svo.setFirstRecordIndex(pageInfo.getFirstRecordIndex());
-		svo.setEmpNo(empNo);
+		svo.setEmpNo(empVo.getEmpNo());
 		logger.info("searchVo 최종값={}", svo);
 		//현재 접속자 사원 번호 세팅
 		CfIsReadVO cirVo = new CfIsReadVO();
-		cirVo.setEmpNo(empNo); //임시 프로퍼티 지정
+		cirVo.setEmpNo(empVo.getEmpNo());
 
 		List<DocumentVO> docuList = dService.selectAllDoc(svo);
 		logger.info("결재반려함 목록 조회 결과, docuList.size()={}",docuList.size());
@@ -974,7 +996,6 @@ public class ConfirmController {
 		
 		model.addAttribute("pageInfo",pageInfo);
 		model.addAttribute("docuList",docuList);
-		model.addAttribute("MyEmpNo",empNo);
 		
 		return "confirm/return";
 	}
@@ -1092,5 +1113,122 @@ public class ConfirmController {
 		}
 		
 		return empNoList;
+	}
+	
+	@RequestMapping("/noConfirm.do")
+	public String noConfirm(@RequestParam String cfNo, @RequestParam int empNo, HttpSession session, Model model) {
+		//세션 받기
+		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
+		logger.info("결재 반려 처리, 파라미터 cfNo={}, empNo={}", cfNo, empNo);
+		
+		//0.해당 결재자 결재라인에서 반려로 처리 myConfirmOk(ConfirmLine)
+		ConfirmLineVO clVo = new ConfirmLineVO();
+		clVo.setLineStat(ConfirmLineService.CL_RETURN);
+		clVo.setCfNo(cfNo);
+		clVo.setEmpNo(empVo.getEmpNo());
+		
+		//1. 해당문서 결재반려 update 처리 updateDocStatus(Document)
+		DocumentVO dVo = new DocumentVO();
+		dVo.setCfNo(cfNo);
+		dVo.setCfStatus(DocumentService.CONFIRM_RETURN);
+		dVo.setCfConfermer(0);
+		
+		//2. 해당 글 기안자 isread 안읽음(N)으로 처리 updateIsReadDoc(CfIsRead)
+		CfIsReadVO cirVo = new CfIsReadVO();
+		cirVo.setCfNo(cfNo);
+		cirVo.setIsRead("N");
+		cirVo.setEmpNo(empNo);
+		
+		//db작업
+		int result = dService.noConfirm(dVo, cirVo, clVo);
+		String msg="", url="/confirm/await.do";
+		if(result>0) {
+			msg="결재 반려 처리되었습니다.";
+		} else {
+			msg="결재 반려 처리 실패";
+		}
+		
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+		return "common/message";
+	}
+	
+	@RequestMapping("/yesConfirm.do")
+	public String yesConfirm(@RequestParam String cfNo, @RequestParam int empNo, HttpSession session, Model model) {
+		//세션 받기
+		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
+		logger.info("결재 승인 처리, 파라미터 cfNo={}, empNo={}", cfNo, empNo);
+		
+		//0.해당 결재자 결재라인에서 승인로 처리 myConfirmOk(ConfirmLine)
+		ConfirmLineVO clVo = new ConfirmLineVO();
+		clVo.setLineStat(ConfirmLineService.CL_COMPLETE);
+		clVo.setCfNo(cfNo);
+		clVo.setEmpNo(empVo.getEmpNo());
+
+		//1. 해당글 결재라인 리스트 받기 / selectCfList(String cfNo)
+		List<ConfirmLineVO> cfLineList = clService.selectCfLineByCfNo(cfNo);
+		logger.info("해당글 결재라인 추출 결과, cfLineList.size()={}",cfLineList.size());
+		
+		//2. 다음결재자 추출하기
+		int nextConfirmer = 0;
+		for(int i=0; i<cfLineList.size(); i++) {
+			ConfirmLineVO nextCfVo = cfLineList.get(i);
+			String wait = nextCfVo.getLineStat();
+			if(wait.equals(ConfirmLineService.CL_AWAIT)) {
+				if((i+1)==cfLineList.size()) {
+					nextConfirmer = 0;
+				} else {
+				nextConfirmer = cfLineList.get(i+1).getEmpNo();
+				}
+				break;
+			}
+		}
+		logger.info("다음 결재자, nextConfirmer={}", nextConfirmer);
+		
+		//clVo, dVo, cirVo, writer(empNo), confirmer(empVo.getEmpNo)
+
+		//update confirm set cf_Status = #{cfStatus}, cf_confirmer = #{cfConfirmer} where cf_no = #{cfNo}
+		DocumentVO dVo = new DocumentVO();
+		CfIsReadVO cirVo = new CfIsReadVO();
+		if(nextConfirmer == 0) {
+			//2. 다음 결재자 없다면
+			//-> 해당 문서 다음 결재자를 0으로update(cf_confirmer), 상태를 '결재완료'로 처리 update
+			dVo.setCfNo(cfNo);
+			dVo.setCfStatus(DocumentService.CONFIRM_COMPLETE);
+			dVo.setCfConfermer(nextConfirmer);
+			dVo.setEmpNo(empNo);
+			
+			//-> isread 테이블에 기안자 상태 안읽음(N)으로 처리 update
+			cirVo.setCfNo(cfNo);
+			cirVo.setIsRead("N");
+			cirVo.setEmpNo(empNo);
+		} else {
+			//3. 다음 결재자 있다면
+			//-> 해당 문서 다음 결재자를 다음 순서로 지정 update(cf_confirmer), 상태를 결재대기로
+			dVo.setCfNo(cfNo);
+			dVo.setCfStatus(DocumentService.CONFIRM_AWAIT);
+			dVo.setCfConfermer(nextConfirmer);
+			dVo.setEmpNo(empNo);
+			
+			//-> 결재자가 본인이면 isread에 업데이트, 본인이 아니면 다음 결재자 insert
+			cirVo.setCfNo(cfNo);
+			cirVo.setIsRead("N");
+			cirVo.setEmpNo(nextConfirmer);
+		}
+		
+		//db작업
+		int result = dService.yesConfirm(dVo, cirVo, clVo, nextConfirmer);
+		String msg="", url="/confirm/await.do";
+		if(result>0) {
+			msg="결재 승인 처리되었습니다.";
+		} else {
+			msg="결재 승인 처리 실패";
+		}
+		
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+		return "common/message";
 	}
 }
