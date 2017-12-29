@@ -6,7 +6,6 @@ import java.util.Map;
 import com.siszo.sisproj.common.AddrSearchVO;
 
 public interface AddrBookService {
-//	public List<AddrBookVO> selectAddrBookAll(int groupNo);
 	public List<AddrBookVO> selectAddrBookAll(AddrSearchVO searchVo);
 	public List<AddrBookVO> selectAddrBookIsDelY(AddrSearchVO searchVo);
 	public int insertAddrBook(AddrBookVO vo);

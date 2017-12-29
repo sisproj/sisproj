@@ -8,7 +8,7 @@ package com.siszo.sisproj.common;
 
 public class AddrSearchVO {
 	/** 검색조건(그룹번호) */
-	private int addrGroupNo;
+	private int groupNo;
 	
 	/** 검색키워드 */
 	private String searchKeyword = "";
@@ -38,7 +38,7 @@ public class AddrSearchVO {
      */
     public void setAddrSearchVO(AddrSearchVO bean){
     	this.currentPage = bean.currentPage;
-    	this.addrGroupNo = bean.getAddrGroupNo();
+    	this.groupNo = bean.getGroupNo();
     	this.searchKeyword = bean.getSearchKeyword();
     	this.empNo = bean.getEmpNo();
     	this.blockSize = bean.blockSize;
@@ -47,12 +47,12 @@ public class AddrSearchVO {
     	this.recordCountPerPage = bean.recordCountPerPage;
     }
 
-    public int getAddrGroupNo() {
-    	return addrGroupNo;
+    public int getGroupNo() {
+    	return groupNo;
     }
 
-    public void setAddrGroupNo(int addrGroupNo) {
-    	this.addrGroupNo = addrGroupNo;
+    public void setGroupNo(int groupNo) {
+    	this.groupNo = groupNo;
     }
 
     public String getSearchKeyword() {
@@ -113,7 +113,7 @@ public class AddrSearchVO {
 
 	@Override
 	public String toString() {
-		return "AddrSearchVO [addrGroupNo=" + addrGroupNo + ", searchKeyword=" + searchKeyword + ", empNo=" + empNo
+		return "AddrSearchVO [groupNo=" + groupNo + ", searchKeyword=" + searchKeyword + ", empNo=" + empNo
 				+ ", currentPage=" + currentPage + ", blockSize=" + blockSize + ", firstRecordIndex=" + firstRecordIndex
 				+ ", lastRecordIndex=" + lastRecordIndex + ", recordCountPerPage=" + recordCountPerPage + "]";
 	}
