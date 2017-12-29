@@ -73,7 +73,7 @@
 					id="empSal" value="<fmt:formatNumber value='${vo.empSal }' pattern='#,###' /> 원 ">			 				 
 				</div>
 				<div>
-					<label for="empHiredate">월급</label>   	
+					<label for="empHiredate">입사일</label>   	
 					<input type="text" name="empHiredate"
 					 id="empHiredate" value="<fmt:formatDate value="${vo.empHiredate }" 
 						pattern="yyyy-MM-dd"/>" > 			 				 
@@ -89,8 +89,6 @@
 	       		<div id="diReg">
 		           		<input type="button" id="btEdit" value="수정">
 						<input type="button" id="btCen" value="목록">
-				<%-- 	<a href="<c:url value='employee/employeeEdit.do?empNo=${vo.empNo }' />">수정</a> |
-					<a href="<c:url value='employee/employeeEdit.do?empNo=${vo.empNo }' />">목록</a>  --%>
 				</div>
 		  </fieldset>	
 	   </form> 

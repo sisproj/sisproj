@@ -35,7 +35,7 @@ public class EmployeeDAOMybatis extends SqlSessionDaoSupport implements Employee
 	}
 
 	@Override
-	public int employeeSelect(int empNo) {
+	public int employeeOut(int empNo) {
 		return getSqlSession().update(namespace+".employeeOut",empNo);
 	}
 
@@ -46,6 +46,11 @@ public class EmployeeDAOMybatis extends SqlSessionDaoSupport implements Employee
 	@Override
 	public List<EmployeeVO> selectAllEmployee(SearchVO vo) {
 		return getSqlSession().selectList(namespace+".selectAllEmployee",vo);
+	}
+
+	@Override
+	public int employeeCome(int empNo) {
+		return getSqlSession().update(namespace+".employeeCome",empNo);
 	}
 	
 

@@ -216,6 +216,31 @@ public class EmployeeController {
 
 		return "common/message";
 	}
+	@RequestMapping("/employeeCome.do")
+	public String employeeCome(@ModelAttribute EmployeeListVO vo,Model model) {
+		logger.info("복직시킬 사원 ,파라미터 vo={}",vo);
+		
+		List<EmployeeVO> list = vo.getEmpItems();
+		for(EmployeeVO emVo : list) {
+			emVo.getEmpNo();
+			logger.info("사원 번호  emVo.getEmpNo={}",emVo.getEmpNo());
+		}
+		int cnt=employeeService.employeeCome(list);
+		logger.info("선택한 사원 복직 결과, cnt={}",cnt);		
+
+		String msg="",url="/employee/employeeList.do";
+
+		if(cnt>0) {
+			msg="사원 복직 완료";
+		}else {
+			msg="사원 복직 실패";
+		}
+
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+
+		return "common/message";
+	}
 	//완료
 
 	@RequestMapping("/employeeList.do")
@@ -226,9 +251,6 @@ public class EmployeeController {
 		pagingInfo.setBlockSize(Utility.BLOCK_SIZE);
 		pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);
 		pagingInfo.setCurrentPage(seVo.getCurrentPage());
-		logger.info("페이징처리 값 확인 Utility.BLOCK_SIZE={}"
-				+ ",Utility.RECORD_COUNT_PER_PAGE={} ",Utility.BLOCK_SIZE,Utility.RECORD_COUNT_PER_PAGE);
-		logger.info("페이징처리 값 확인 seVo.getCurrentPage()={}",seVo.getCurrentPage());
 		
 		//SearchVo에 값 셋팅
 		seVo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);
@@ -236,10 +258,7 @@ public class EmployeeController {
 		logger.info("searchVo 최종값 : {}", seVo);
 
 		List<EmployeeVO> list =employeeService.selectAllEmployee(seVo);
-		for(EmployeeVO vo : list) {
-			vo.getEmpNo();
-			logger.info("사원 번호  vo.getEmpNo={}",vo.getEmpNo());
-		}
+		
 		logger.info("사원수 결과, list.size()={}", list.size());
 
 		int totalRecord = employeeService.selectTotalRecordCount(seVo);

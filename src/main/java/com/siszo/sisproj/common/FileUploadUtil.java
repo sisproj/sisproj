@@ -31,6 +31,7 @@ public class FileUploadUtil {
     public static final int USER_SIGN = 4;  //전자결재 서명 첨부파일 처리
     public static final int PDS_UPLOAD_NOTI = 9;  //공지사항 첨부파일 처리
     
+    public static final int NEWS_IMAGES = 5;  //뉴스 등록이미지 업로드인 경우
 
     @Resource(name = "fileUploadProperties")
     private Properties fileProperties;
@@ -93,8 +94,9 @@ public class FileUploadUtil {
                 upPath = fileProperties.getProperty("confirm.user_sign.path.test");
             } else if (uploadGb == PDS_UPLOAD_NOTI) {
             	upPath = fileProperties.getProperty("notifile.upload.path.test");
-            } 
-
+            } else if (uploadGb == NEWS_IMAGES) {
+            	upPath = fileProperties.getProperty("newsImageFile.upload.path.test");
+            }
             logger.info("test 경로:" + upPath);
         } else {
             //배포시 경로
@@ -108,6 +110,8 @@ public class FileUploadUtil {
                 upPath = fileProperties.getProperty("confirm.user_sign.path");
             } else if (uploadGb == PDS_UPLOAD_NOTI) {
             	upPath = fileProperties.getProperty("notifile.upload.path");
+            }else if (uploadGb == NEWS_IMAGES) {
+            	upPath = fileProperties.getProperty("newsImageFile.upload.path");
             }
             logger.info("배포시 경로:" + upPath);
 

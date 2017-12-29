@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.siszo.sisproj.addrbook.addrbook.model.AddrBookListVO;
 import com.siszo.sisproj.addrbook.addrbook.model.AddrBookService;
@@ -56,7 +57,7 @@ public class AddrBookController {
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 		logger.info("searchVo 최종값 : {}", searchVo);
 		
-		List<AddrGroupVO> groupList=groupService.selectGroupName();
+		List<AddrGroupVO> groupList=groupService.selectGroupName(empNo);
 		logger.info("개인주소록 그룹명 조회결과, groupList.size()={}", groupList.size());
 
 		List<AddrBookVO> addrList=addrBookService.selectAddrBookAll(searchVo);
@@ -204,4 +205,6 @@ public class AddrBookController {
 		
 		return "common/message";		
 	}
+	
+	
 }

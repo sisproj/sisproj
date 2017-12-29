@@ -11,7 +11,7 @@ public class AddrGroupServiceImpl implements AddrGroupService{
 	private AddrGroupDAO addrGroupDao;
 
 	@Override
-	public List<AddrGroupVO> selectGroupName() {
-		return addrGroupDao.selectGroupName();
+	public List<AddrGroupVO> selectGroupName(int empNo) {
+		return addrGroupDao.selectGroupName(empNo);
 	}
 }

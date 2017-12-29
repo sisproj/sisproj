@@ -41,7 +41,7 @@ public class LoginController {
 			HttpServletRequest request, HttpServletResponse response,
 			Model model) {
 		logger.info("로그인 하기 파라미터 vo={},chkSaveId={}",vo,saveId);
-
+		
 		int cnt = loginService.loginCheck(vo.getEmpNo(), vo.getEmpPwd());
 
 		String msg="",url="/login/login.do";
@@ -116,4 +116,9 @@ public class LoginController {
 		
 		return "login/searchPwd";
 	}
+	/*@RequestMapping(value="/viewPwd.do",method=RequestMethod.GET)
+	public String viewPwd() {
+		logger.info("비밀번호 찾기후 화면 보여주기");
+		
+	}*/
 }

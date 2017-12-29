@@ -12,4 +12,5 @@ public interface EmployeeService {
 	public int employeeOut(List<EmployeeVO> list);
 	public List<EmployeeVO> selectAllEmployee(SearchVO vo);
 	public int selectTotalRecordCount(SearchVO vo);
+	public int employeeCome(List<EmployeeVO> list);
 }
