@@ -64,7 +64,7 @@
 									</a></td>
 									<td>${docuVo.empName }</td>
 									<td><fmt:formatDate value="${docuVo.cfRegdate }" pattern="yyyy-MM-dd"/></td>
-									<td>${docuVo.cfConfirmer}<br>${docuVo.cfStatus }</td>
+									<td>${docuVo.cfStatus }</td>
 								</tr>
 							</c:forEach>
 						</c:if>

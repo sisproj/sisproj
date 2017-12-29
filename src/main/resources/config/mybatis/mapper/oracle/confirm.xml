@@ -289,7 +289,7 @@
 		        from confirm c
 		        join cf_is_read r
 		        on c.cf_no = r.cf_no
-		        where c.cf_status = #{listType} and r.emp_no=#{empNo}
+		        where c.cf_status = #{listType} and c.emp_no=#{empNo} and r.emp_no=#{empNo}
 		        and (c.cf_no like '%' || #{searchKeyword} || '%' or c.cf_title like '%' || #{searchKeyword} || '%' or c.cf_content like '%' || #{searchKeyword} || '%')
 		        order by r.is_read, c.cf_regdate desc
 		    ) blist
@@ -303,7 +303,7 @@
 		from confirm c
 		join cf_is_read r
 		on c.cf_no = r.cf_no
-		where c.cf_status =#{cfStatus} and r.emp_no=#{empNo}
+		where c.cf_status =#{cfStatus} and c.emp_no=#{empNo} and r.emp_no=#{empNo}
 	</select>
 
 	<select id="selectReturnCntSecondType" parameterType="DocumentVO" resultType="int">
@@ -311,7 +311,7 @@
 		from confirm c
 		join cf_is_read r
 		on c.cf_no = r.cf_no
-		where c.cf_status = #{cfStatus} and r.emp_no=#{empNo} and r.is_read=#{isRead}
+		where c.cf_status = #{cfStatus} and c.emp_no=#{empNo} and r.emp_no=#{empNo} and r.is_read=#{isRead}
 	</select>
 	
 	<select id="selectSaveWaitThirdType" parameterType="ConfirmSearchVO" resultType="DocumentVO">
