@@ -10,6 +10,13 @@ public class MessageVO {
     private Timestamp msgRegdate;
     private int sendempNo;
 
+    private String deptName;
+    private String empName;
+    private String posName;
+
+    private int recNo;
+    private String msgReadflag;
+
     public MessageVO() {
     }
 
@@ -70,6 +77,46 @@ public class MessageVO {
         this.sendempNo = sendempNo;
     }
 
+    public int getRecNo() {
+        return recNo;
+    }
+
+    public void setRecNo(int recNo) {
+        this.recNo = recNo;
+    }
+
+    public String getMsgReadflag() {
+        return msgReadflag;
+    }
+
+    public void setMsgReadflag(String msgReadflag) {
+        this.msgReadflag = msgReadflag;
+    }
+
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
+    }
+
+    public String getEmpName() {
+        return empName;
+    }
+
+    public void setEmpName(String empName) {
+        this.empName = empName;
+    }
+
+    public String getPosName() {
+        return posName;
+    }
+
+    public void setPosName(String posName) {
+        this.posName = posName;
+    }
+
     @Override
     public String toString() {
         return "MessageVO{" +
@@ -79,8 +126,11 @@ public class MessageVO {
                 ", msgImpflag='" + msgImpflag + '\'' +
                 ", msgRegdate=" + msgRegdate +
                 ", sendempNo=" + sendempNo +
+                ", deptName='" + deptName + '\'' +
+                ", empName='" + empName + '\'' +
+                ", posName='" + posName + '\'' +
+                ", recNo=" + recNo +
+                ", msgReadflag='" + msgReadflag + '\'' +
                 '}';
     }
-
-
 }

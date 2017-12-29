@@ -18,8 +18,11 @@
         </selectKey>
         INSERT INTO MESSAGE_REC (REC_NO, MSG_READFLAG, EMP_NO, MSG_NO)
         VALUES (#{recNo}, DEFAULT, #{empNo}, message_seq.currval)
-
     </insert>
+
+    <select id="selectRecMsgByEmpNo" parameterType="MessageSearchVO" resultType="MessageVO">
+        SELECT * FROM MSGRECVIEW WHERE EMP_NO = #{empNo} ORDER BY MSG_REGDATE DESC
+    </select>
 </mapper>
 
 
