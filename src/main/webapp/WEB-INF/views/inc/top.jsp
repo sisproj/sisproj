@@ -68,6 +68,7 @@
     </div>
     <!-- 왼쪽 사이드 메뉴 -->
     <aside>
+  <!--   상단 좌측 사진과 정보가 나오는 페이지는 view/login/empInfo.jsp에 있습니다  -->
         <div id="loginfo">
             <c:import url="/login/empInfo.do"></c:import>
         </div>

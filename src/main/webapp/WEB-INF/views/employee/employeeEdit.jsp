@@ -105,10 +105,14 @@
 				alert('월급을 입력하세요.');
 				$("#empSal").focus();
 				return false;
-			}else if($('#tel2').val()=="" || $('#tel3').val()==""){
-				alert('전화번호를 입력하세요.');
+			}else if($('#tel2').val()=="" ){
+				alert('전화번호 앞자리를 입력하세요.');
 				$("#tel2").focus();
 				return false;			
+			}else if($('#tel3').val()==""|| $('#tel3').val().length!=4){
+				alert('전화번호 뒷자리를 입력하세요.');
+				$("#tel3").focus();
+				return false;	
 			}else if($('#empHiredate1').val()==""){
 				alert('입사일을 입력하세요.');
 				$("#empHiredate1").focus();
