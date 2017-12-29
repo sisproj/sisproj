@@ -8,7 +8,5 @@ public interface CfIsReadDAO {
 	public int insertIsReadCIR(CfIsReadVO cirVo);
 	public String selectIsReadByCfNo(CfIsReadVO vo);
 	public int updateIsReadDoc(CfIsReadVO vo);
-	public int mainBoxSet(CfIsReadVO vo);
-	public int mainBoxSetAll(CfIsReadVO vo);
 	public int selectIsReadCNTByCfNo(CfIsReadVO cirVo);
 }

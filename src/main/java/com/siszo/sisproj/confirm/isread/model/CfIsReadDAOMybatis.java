@@ -25,16 +25,6 @@ public class CfIsReadDAOMybatis extends SqlSessionDaoSupport implements CfIsRead
 	}
 
 	@Override
-	public int mainBoxSet(CfIsReadVO vo) {
-		return getSqlSession().selectOne(namespace+".mainBoxSet", vo);
-	}
-
-	@Override
-	public int mainBoxSetAll(CfIsReadVO vo) {
-		return getSqlSession().selectOne(namespace+".mainBoxSetAll", vo);
-	}
-
-	@Override
 	public int insertIsReadCIR(CfIsReadVO cirVo) {
 		return getSqlSession().insert(namespace+".insertIsReadCIR", cirVo);
 	}

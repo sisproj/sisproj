@@ -25,7 +25,7 @@
 			<!-- 2. 페이지 이름 지정 끝 -->
 		</article>	
 		<article id="bodysection">
-			<form name="frmPaging" method="post" action="<c:url value='/confirm/tempsave.do'/>">
+			<form name="frmPaging" method="post" action="<c:url value='/confirm/complete.do'/>">
 				<!-- 페이징 처리용 -->
 				<input type="hidden" name="searchKeyword" value="${param.searchKeyword }">
 				<input type="hidden" name="currentPage">
@@ -53,12 +53,12 @@
 							<c:forEach var="docuVo" items="${docuList }" varStatus="status">
 								<tr>
 									<td>${docuVo.cfNo }</td>
-									<td><a href="<c:url value='/confirm/detail.do?cfNo=${docuVo.cfNo }'/>">
+									<td title="${docuVo.cfTitle }"><a href="<c:url value='/confirm/detail.do?cfNo=${docuVo.cfNo }'/>">
 										<c:if test="${docuVo.isRead == 'N' }">
-											<b>${docuVo.cfTitle } <img alt="New" src="<c:url value='/resources/images/icon_new.gif'/>"></b>
+											<b>${docuVo.changeTitle } <img alt="New" src="<c:url value='/resources/images/icon_new.gif'/>"></b>
 										</c:if>
 										<c:if test="${docuVo.isRead == 'Y' }">
-											${docuVo.cfTitle }
+											${docuVo.changeTitle }
 										</c:if>
 									</a></td>
 									<td><fmt:formatDate value="${docuVo.cfRegdate }" pattern="yyyy-MM-dd"/></td>

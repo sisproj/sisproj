@@ -29,5 +29,10 @@ public class ConfirmLineDAOMybatis extends SqlSessionDaoSupport implements Confi
 		return getSqlSession().selectList(namespace+".selectCfLineByCfNo",cfNo);
 	}
 
+	@Override
+	public int selectReferByEmpCf(ConfirmLineVO clVo) {
+		return getSqlSession().selectOne(namespace+".selectReferByEmpCf",clVo);
+	}
+
 	
 }

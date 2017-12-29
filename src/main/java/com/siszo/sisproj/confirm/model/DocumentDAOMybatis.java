@@ -26,16 +26,6 @@ public class DocumentDAOMybatis extends SqlSessionDaoSupport implements Document
 	}
 
 	@Override
-	public List<DocumentVO> selectAllDoc(ConfirmSearchVO svo) {
-		return getSqlSession().selectList(namespace+".selectAllDoc",svo);
-	}
-	
-	@Override
-	public int totalRecordCountDoc(ConfirmSearchVO svo) {
-		return getSqlSession().selectOne(namespace+".totalRecordCountDoc",svo);
-	}
-
-	@Override
 	public List<DocumentVO> completeDocSelByEmpNo(int empNo) {
 		return getSqlSession().selectList(namespace+".completeDocSelByEmpNo",empNo);
 	}
@@ -68,5 +58,75 @@ public class DocumentDAOMybatis extends SqlSessionDaoSupport implements Document
 	@Override
 	public int updateDocStatus(DocumentVO dVo) {
 		return getSqlSession().update(namespace+".updateDocStatus", dVo);
+	}
+
+	@Override
+	public List<EmployeeVO> selectEmpListByDeptNo(int deptNo) {
+		return getSqlSession().selectList(namespace+".selectEmpListByDeptNo",deptNo);
+	}
+
+	@Override
+	public int insertSendDoc(ConfirmLineVO clVo) {
+		return getSqlSession().insert(namespace+".insertSendDoc",clVo);
+	}
+
+	@Override
+	public List<DocumentVO> selectCompleteOneType(ConfirmSearchVO csVo) {
+		return getSqlSession().selectList(namespace+".selectCompleteOneType",csVo);
+	}
+
+	@Override
+	public int selectCompleteAllCntOneType(DocumentVO dVo) {
+		return getSqlSession().selectOne(namespace+".selectCompleteAllCntOneType",dVo);
+	}
+
+	@Override
+	public int selectCompleteCntOneType(DocumentVO dVo) {
+		return getSqlSession().selectOne(namespace+".selectCompleteCntOneType",dVo);
+	}
+
+	@Override
+	public List<DocumentVO> selectReturnSecondType(ConfirmSearchVO csVo) {
+		return getSqlSession().selectList(namespace+".selectReturnSecondType",csVo);
+	}
+
+	@Override
+	public int selectReturnAllCntSecondType(DocumentVO dVo) {
+		return getSqlSession().selectOne(namespace+".selectReturnAllCntSecondType",dVo);
+	}
+
+	@Override
+	public int selectReturnCntSecondType(DocumentVO dVo) {
+		return getSqlSession().selectOne(namespace+".selectReturnCntSecondType",dVo);
+	}
+
+	@Override
+	public List<DocumentVO> selectSaveWaitThirdType(ConfirmSearchVO csVo) {
+		return getSqlSession().selectList(namespace+".selectSaveWaitThirdType",csVo);
+	}
+
+	@Override
+	public int selectSaveWaitAllCntThirdType(DocumentVO dVo) {
+		return getSqlSession().selectOne(namespace+".selectSaveWaitAllCntThirdType",dVo);
+	}
+
+	@Override
+	public int selectSaveWaitCntThirdType(DocumentVO dVo) {
+		return getSqlSession().selectOne(namespace+".selectSaveWaitCntThirdType",dVo);
+	}
+
+	@Override
+	public List<DocumentVO> selectReferFourType(ConfirmSearchVO csVo) {
+		return getSqlSession().selectList(namespace+".selectReferFourType",csVo);
+	}
+
+	@Override
+	public int selectReferCntAllFourType(DocumentVO dVo) {
+		return getSqlSession().selectOne(namespace+".selectReferCntAllFourType",dVo);
+	}
+
+	@Override
+	public int selectReferCntFourType(DocumentVO dVo) {
+		return getSqlSession().selectOne(namespace+".selectReferCntFourType",dVo);
 	}	
 }

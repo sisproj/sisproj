@@ -17,15 +17,5 @@ public class CfIsReadServiceImpl implements CfIsReadService {
 	public int updateIsReadDoc(CfIsReadVO vo) {
 		return cirDao.updateIsReadDoc(vo);
 	}
-
-	@Override
-	public int mainBoxSet(CfIsReadVO vo) {
-		return cirDao.mainBoxSet(vo);
-	}
-
-	@Override
-	public int mainBoxSetAll(CfIsReadVO vo) {
-		return cirDao.mainBoxSetAll(vo);
-	}	
 	
 }

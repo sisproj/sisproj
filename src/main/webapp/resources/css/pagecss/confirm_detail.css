@@ -111,6 +111,10 @@
     font-size: 0.7em;
     font-weight: bold;
 }
+#writeFrm #doc_type #confirmer div span p{
+	height: 100%;
+	line-height: 48px;
+}
 #writeFrm #doc_type #confirmer div span:first-child{
 	height: 70%;
 	border-bottom: 1px solid #fff;
@@ -252,3 +256,54 @@
 	border-bottom: 2px solid transparent;
 }
 /*하단 끝*/
+
+/*참조 발신*/
+#confirmRefer {
+	box-sizing:border-box;
+	width: 95%;
+	margin: 0 auto;
+	border: 2px solid #fff;
+	border-radius: 10px;
+	padding: 10px;
+	margin-top: 10px;
+	background-color: #efefef;
+	box-shadow: 1px 1px 3px #999;	
+}
+#confirmRefer #sendFrm{
+	display : none;
+}
+#confirmRefer h3{
+	cursor : pointer;
+}
+#confirmRefer #downbtn{
+	display: inline-block;
+	position: absolute;
+	right:55px;
+	transition : all 500ms linear;
+}
+#sendFrm p{
+	margin: 10px;	
+}
+#sendFrm ul{
+	margin: 10px;
+}
+#sendFrm ul li{
+	margin: 5px;
+	margin-left: 10px;
+}
+#sendFrm input[type=submit],
+#sendFrm input[type=button]{
+	width: 50px;
+	height: 20px;
+	margin-left: 10px;
+}
+#sendFrm label{
+	display:inline-block;
+	margin-left: 10px;
+}
+#sendFrm select {
+	width: 150px;
+	height: 30px;
+	border: 0;
+	border-radius: 5px;
+}

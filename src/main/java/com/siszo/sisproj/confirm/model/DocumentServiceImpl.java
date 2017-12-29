@@ -36,16 +36,6 @@ public class DocumentServiceImpl implements DocumentService {
 	public int selectConfirmSEQ() {
 		return dDao.selectConfirmSEQ();
 	}
-	
-	@Override
-	public List<DocumentVO> selectAllDoc(ConfirmSearchVO svo) {
-		return dDao.selectAllDoc(svo);
-	}
-	
-	@Override
-	public int totalRecordCountDoc(ConfirmSearchVO svo) {
-		return dDao.totalRecordCountDoc(svo);
-	}
 
 	@Override
 	public List<DocumentVO> completeDocSelByEmpNo(int empNo) {
@@ -122,7 +112,6 @@ public class DocumentServiceImpl implements DocumentService {
 			result=0;
 			e.printStackTrace();
 		}
-		//throw new RuntimeException("db insert오류");
 		return result;
 	}
 
@@ -313,4 +302,99 @@ public class DocumentServiceImpl implements DocumentService {
 		
 		return result;
 	}
+
+	@Override
+	public List<EmployeeVO> selectEmpListByDeptNo(int deptNo) {
+		return dDao.selectEmpListByDeptNo(deptNo);
+	}
+
+	@Override
+	@Transactional
+	public int insertSendDoc(List<ConfirmLineVO> clVoList) {
+		int cnt = 0;
+		//수신함 업로드 및 읽은 여부 테이블에 넣기
+		for(ConfirmLineVO clVo : clVoList) {
+			//수신함에 없을떄만 인서트
+			int res = clDao.selectReferByEmpCf(clVo);
+			if(res==0) {
+				cnt = dDao.insertSendDoc(clVo);				
+			} 
+			
+			//읽은 여부테이블에 해당 사람이 있으면 업데이트 없으면 인서트
+			CfIsReadVO cirVo = new CfIsReadVO();
+			cirVo.setCfNo(clVo.getCfNo());
+			cirVo.setEmpNo(clVo.getEmpNo());
+			cirVo.setIsRead("N");
+
+			res = cirDao.selectIsReadCNTByCfNo(cirVo);
+			if(res>0) {
+				cnt = cirDao.updateIsReadDoc(cirVo);
+			} else {
+				cnt = cirDao.insertIsReadCIR(cirVo);
+			}
+		}
+		
+		return cnt;
+	}
+
+	@Override
+	public List<DocumentVO> selectCompleteOneType(ConfirmSearchVO csVo) {
+		return dDao.selectCompleteOneType(csVo);
+	}
+
+	@Override
+	public int selectCompleteAllCntOneType(DocumentVO dVo) {
+		return dDao.selectCompleteAllCntOneType(dVo);
+	}
+
+	@Override
+	public int selectCompleteCntOneType(DocumentVO dVo) {
+		return dDao.selectCompleteCntOneType(dVo);
+	}
+
+	@Override
+	public List<DocumentVO> selectReturnSecondType(ConfirmSearchVO csVo) {
+		return dDao.selectReturnSecondType(csVo);
+	}
+
+	@Override
+	public int selectReturnAllCntSecondType(DocumentVO dVo) {
+		return dDao.selectReturnAllCntSecondType(dVo);
+	}
+
+	@Override
+	public int selectReturnCntSecondType(DocumentVO dVo) {
+		return dDao.selectReturnCntSecondType(dVo);
+	}
+
+	@Override
+	public List<DocumentVO> selectSaveWaitThirdType(ConfirmSearchVO csVo) {
+		return dDao.selectSaveWaitThirdType(csVo);
+	}
+
+	@Override
+	public int selectSaveWaitAllCntThirdType(DocumentVO dVo) {
+		return dDao.selectSaveWaitAllCntThirdType(dVo);
+	}
+
+	@Override
+	public int selectSaveWaitCntThirdType(DocumentVO dVo) {
+		return dDao.selectSaveWaitCntThirdType(dVo);
+	}
+
+	@Override
+	public List<DocumentVO> selectReferFourType(ConfirmSearchVO csVo) {
+		return dDao.selectReferFourType(csVo);
+	}
+
+	@Override
+	public int selectReferCntAllFourType(DocumentVO dVo) {
+		return dDao.selectReferCntAllFourType(dVo);
+	}
+
+	@Override
+	public int selectReferCntFourType(DocumentVO dVo) {
+		return dDao.selectReferCntFourType(dVo);
+	}
+
 }

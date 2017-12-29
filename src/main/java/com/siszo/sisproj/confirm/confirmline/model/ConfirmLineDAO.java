@@ -7,4 +7,5 @@ public interface ConfirmLineDAO {
 	public int insertConfirmLine(ConfirmLineVO vo);
 	public int myConfirmOk(ConfirmLineVO vo);
 	public List<ConfirmLineVO> selectCfLineByCfNo(String cfNo);
+	public int selectReferByEmpCf(ConfirmLineVO clVo);
 }

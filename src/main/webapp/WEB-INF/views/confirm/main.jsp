@@ -28,12 +28,6 @@
 		<article id="bodysection">
 			<!-- 3. 내용 -->
 				<div class="cf_infobox">
-					<a href="<c:url value='/confirm/tempsave.do'/>">
-						<ul>
-							<li>${tempsaveCnt } / ${tempsaveCntAll }</li>
-							<li>임시 저장함</li>
-						</ul>	
-					</a>
 					<a href="<c:url value='/confirm/await.do'/>">
 						<ul>
 							<li>${awaitCnt } / ${awaitCntAll }</li>
@@ -51,6 +45,18 @@
 							<li>${returnCnt } / ${returnCntAll }</li>
 							<li>결재 반려함</li>
 						</ul>
+					</a>
+					<a href="<c:url value='/confirm/tempsave.do'/>">
+						<ul>
+							<li>${tempsaveCnt } / ${tempsaveCntAll }</li>
+							<li>임시 저장함</li>
+						</ul>	
+					</a>
+					<a href="<c:url value='/confirm/postbox.do'/>">
+						<ul>
+							<li>${postboxCnt} / ${postboxCntAll }</li>
+							<li>참조 수신함</li>
+						</ul>	
 					</a>
 				</div>
 				<div class="clr"></div>

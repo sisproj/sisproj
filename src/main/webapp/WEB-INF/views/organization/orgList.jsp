@@ -112,6 +112,11 @@
 	               return false;
 	            }
         	}
+			if($('#confirmRefer').length){
+	            if($('#confirmRefer').attr('class')=='up'){
+	               return false;
+	            }
+        	}
 			var empNo="empNo="+$(item).attr('id');
 			/* alert(empNo); */
 			$.ajax({

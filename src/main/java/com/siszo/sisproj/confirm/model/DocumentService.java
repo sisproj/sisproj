@@ -22,8 +22,6 @@ public interface DocumentService {
 	
 	public int selectConfirmSEQ();
 	public int insertConfirmDoc(DocumentVO vo, List<ConfirmFileVO> uploadFileList, List<ConfirmLineVO> clVoList); 
-	public List<DocumentVO> selectAllDoc(ConfirmSearchVO svo);
-	public int totalRecordCountDoc(ConfirmSearchVO svo);
 	public List<DocumentVO> completeDocSelByEmpNo(int empNo);
 	public EmployeeVO selectByEmpNo(int empNo);
 	public DocumentVO selectDocByCfNo(String cfNo);
@@ -31,4 +29,26 @@ public interface DocumentService {
 	public int deleteDocuByCfNo(String cfNo);
 	public int noConfirm(DocumentVO dVo, CfIsReadVO cirVo, ConfirmLineVO clVo);
 	public int yesConfirm(DocumentVO dVo, CfIsReadVO cirVo, ConfirmLineVO clVo, int nextConfirmer);
+	public List<EmployeeVO> selectEmpListByDeptNo(int deptNo);
+	public int insertSendDoc(List<ConfirmLineVO> clVoList);
+	
+	//1타입 - 결재완료
+	public List<DocumentVO> selectCompleteOneType(ConfirmSearchVO csVo);
+	public int selectCompleteAllCntOneType(DocumentVO dVo);
+	public int selectCompleteCntOneType(DocumentVO dVo);
+
+	//2타입 - 결재반려
+	public List<DocumentVO> selectReturnSecondType(ConfirmSearchVO csVo);
+	public int selectReturnAllCntSecondType(DocumentVO dVo);
+	public int selectReturnCntSecondType(DocumentVO dVo);
+
+	//3타입 - 임시저장, 결재대기
+	public List<DocumentVO> selectSaveWaitThirdType(ConfirmSearchVO csVo);
+	public int selectSaveWaitAllCntThirdType(DocumentVO dVo);
+	public int selectSaveWaitCntThirdType(DocumentVO dVo);
+
+	//4타입 - 참조수신
+	public List<DocumentVO> selectReferFourType(ConfirmSearchVO csVo);
+	public int selectReferCntAllFourType(DocumentVO dVo);
+	public int selectReferCntFourType(DocumentVO dVo);
 }

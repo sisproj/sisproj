@@ -94,27 +94,6 @@
 		values(#{lineNo}, #{empNo}, #{lineStat}, #{cfNo}, #{lineOrder})
 	</insert>
 	
-	<select id="selectAllDoc" parameterType="ConfirmSearchVO" resultType="DocumentVO">
-		select * from (
-		    select rownum as RNUM, blist.* from
-		    (
-		       	select c.*, r.is_read
-				from confirm c
-				join cf_is_read r
-				on c.cf_no = r.cf_no
-		        where c.cf_status = #{listType} and r.emp_no=#{empNo}
-				and (c.cf_no like '%' || #{searchKeyword} || '%' or c.cf_title like '%' || #{searchKeyword} || '%' or c.cf_content like '%' || #{searchKeyword} || '%')
-				order by r.is_read, c.cf_regdate desc
-		    ) blist
-		)
-	    <![CDATA[
-		where RNUM>#{firstRecordIndex} and RNUM<=#{firstRecordIndex}+#{recordCountPerPage} ]]>
-	</select>
-	
-	<select id="totalRecordCountDoc" resultType="int" parameterType="ConfirmSearchVO">
-		select count(*) from confirm where cf_status=#{listType} and (cf_no like '%' || #{searchKeyword} || '%' or cf_title like '%' || #{searchKeyword} || '%' or cf_content like '%' || #{searchKeyword} || '%')
-	</select>
-	
 	<select id="completeDocSelByEmpNo" parameterType="int" resultType="DocumentVO">
 		select * from confirm where emp_no=#{empNo} and cf_status='결재완료' order by cf_no desc
 	</select>
@@ -187,22 +166,6 @@
 		update cf_is_read set is_read = #{isRead} where cf_no = #{cfNo} and emp_no=#{empNo}
 	</update>
 	
-	<select id="mainBoxSet" parameterType="CfIsReadVO" resultType="int">
-		select count(*)
-		from cf_is_read r
-		join confirm c
-		on r.cf_no = c.cf_no
-		where r.emp_no = #{empNo} and r.is_read=#{isRead} and c.cf_status=#{cfStaus}
-	</select>
-	
-	<select id="mainBoxSetAll" parameterType="CfIsReadVO" resultType="int">
-		select count(*)
-		from cf_is_read r
-		join confirm c
-		on r.cf_no = c.cf_no
-		where r.emp_no = #{empNo} and c.cf_status=#{cfStaus}
-	</select>
-	
 	<update id="updateConfirmDoc" parameterType="DocumentVO">
 		update confirm set link_cf_no = #{linkCfNo}, cf_title = #{cfTitle}, cf_content = #{cfContent}, 
 		cf_isfile = #{cfIsfile}, cf_Status = #{cfStatus}, cf_confirmer = #{cfConfirmer}
@@ -271,7 +234,157 @@
 		update confirm set cf_Status = #{cfStatus}, cf_confirmer = #{cfConfirmer} where cf_no = #{cfNo}
 	</update>
 	
+	<select id="selectEmpListByDeptNo" parameterType="int" resultType="EmployeeVO">
+		select * from empView
+		where emp_outdate is null and dept_no = #{deptNo}
+	</select>
+	
+	<select id="selectReferByEmpCf" parameterType="ConfirmLineVO" resultType="int">
+		select count(*) from confirm_refer where emp_no=#{empNo} and cf_no=#{cfNo}
+	</select>
+	
+	<insert id="insertSendDoc" parameterType="ConfirmLineVO">
+		insert into confirm_refer(seq_no, emp_no, cf_no)
+		values(confirm_refer_seq.nextval, #{empNo}, #{cfNo})
+	</insert>
+	
+	<select id="selectCompleteOneType" parameterType="ConfirmSearchVO" resultType="DocumentVO">
+		select * from (
+		    select rownum as RNUM, blist.* from
+		    (
+		        select c.*, r.is_read
+		        from confirm c
+		        join cf_is_read r
+		        on c.cf_no = r.cf_no
+		        where c.cf_status = #{listType} and c.emp_no=#{empNo} and r.emp_no=#{empNo}
+		        and (c.cf_no like '%' || #{searchKeyword} || '%' or c.cf_title like '%' || #{searchKeyword} || '%' or c.cf_content like '%' || #{searchKeyword} || '%')
+		        order by r.is_read, c.cf_regdate desc
+		    ) blist
+		)
+		<![CDATA[
+		where RNUM>#{firstRecordIndex} and RNUM<=#{firstRecordIndex}+#{recordCountPerPage} ]]>
+	</select>
+	
+	<select id="selectCompleteAllCntOneType" parameterType="DocumentVO" resultType="int">
+		select count(*)
+		from confirm c
+		join cf_is_read r
+		on c.cf_no = r.cf_no
+		where c.cf_status = #{cfStatus} and c.emp_no=#{empNo} and r.emp_no=#{empNo}
+	</select>
 
+	<select id="selectCompleteCntOneType" parameterType="DocumentVO" resultType="int">
+		select count(*)
+		from confirm c
+		join cf_is_read r
+		on c.cf_no = r.cf_no
+		where c.cf_status = #{cfStatus} and c.emp_no=#{empNo} and r.emp_no=#{empNo} and r.is_read=#{isRead}
+	</select>
+	
+	<select id="selectReturnSecondType" parameterType="ConfirmSearchVO" resultType="DocumentVO">
+		select * from (
+		    select rownum as RNUM, blist.* from
+		    (
+		        select c.*, r.is_read
+		        from confirm c
+		        join cf_is_read r
+		        on c.cf_no = r.cf_no
+		        where c.cf_status = #{listType} and r.emp_no=#{empNo}
+		        and (c.cf_no like '%' || #{searchKeyword} || '%' or c.cf_title like '%' || #{searchKeyword} || '%' or c.cf_content like '%' || #{searchKeyword} || '%')
+		        order by r.is_read, c.cf_regdate desc
+		    ) blist
+		)
+		<![CDATA[
+		where RNUM>#{firstRecordIndex} and RNUM<=#{firstRecordIndex}+#{recordCountPerPage} ]]>
+	</select>
+	
+	<select id="selectReturnAllCntSecondType" parameterType="DocumentVO" resultType="int">
+		select count(*)
+		from confirm c
+		join cf_is_read r
+		on c.cf_no = r.cf_no
+		where c.cf_status =#{cfStatus} and r.emp_no=#{empNo}
+	</select>
+
+	<select id="selectReturnCntSecondType" parameterType="DocumentVO" resultType="int">
+		select count(*)
+		from confirm c
+		join cf_is_read r
+		on c.cf_no = r.cf_no
+		where c.cf_status = #{cfStatus} and r.emp_no=#{empNo} and r.is_read=#{isRead}
+	</select>
+	
+	<select id="selectSaveWaitThirdType" parameterType="ConfirmSearchVO" resultType="DocumentVO">
+		select * from (
+		    select rownum as RNUM, blist.* from
+		    (
+		        select c.*, r.is_read
+		        from confirm c
+		        join cf_is_read r
+		        on c.cf_no = r.cf_no
+		        where c.cf_status = #{listType} and r.emp_no=#{empNo}
+		        and (c.cf_no like '%' || #{searchKeyword} || '%' or c.cf_title like '%' || #{searchKeyword} || '%' or c.cf_content like '%' || #{searchKeyword} || '%')
+		        order by r.is_read, c.cf_regdate desc
+		    ) blist
+		)
+		<![CDATA[
+		where RNUM>#{firstRecordIndex} and RNUM<=#{firstRecordIndex}+#{recordCountPerPage} ]]>
+	</select>
+	
+	<select id="selectSaveWaitAllCntThirdType" parameterType="DocumentVO" resultType="int">
+		select count(*)
+		from confirm c
+		join cf_is_read r
+		on c.cf_no = r.cf_no
+		where c.cf_status = #{cfStatus} and r.emp_no=#{empNo}
+	</select>
+	
+	<select id="selectSaveWaitCntThirdType" parameterType="DocumentVO" resultType="int">
+		select count(*)
+		from confirm c
+		join cf_is_read r
+		on c.cf_no = r.cf_no
+		where c.cf_status = #{cfStatus} and r.emp_no=#{empNo} and r.is_read=#{isRead}
+	</select>
+
+	<select id="selectReferFourType" parameterType="ConfirmSearchVO" resultType="DocumentVO">
+		select * from (
+		    select rownum as RNUM, blist.* from
+		    (
+		        select c.*, r.is_read
+		        from confirm c
+		        join cf_is_read r
+		        on c.cf_no = r.cf_no
+		        join confirm_refer f
+		        on c.cf_no = f.cf_no
+		        where c.cf_status = #{listType} and r.emp_no=#{empNo} and f.emp_no=#{empNo}
+		        and (c.cf_no like '%' || #{searchKeyword} || '%' or c.cf_title like '%' || #{searchKeyword} || '%' or c.cf_content like '%' || #{searchKeyword} || '%')
+		        order by r.is_read, c.cf_regdate desc
+		    ) blist
+		)
+		<![CDATA[
+		where RNUM>#{firstRecordIndex} and RNUM<=#{firstRecordIndex}+#{recordCountPerPage} ]]>
+	</select>
+	
+	<select id="selectReferCntAllFourType" parameterType="DocumentVO" resultType="int">
+		select count(*)
+		from confirm c
+		join cf_is_read r
+		on c.cf_no = r.cf_no
+		join confirm_refer f
+		on c.cf_no = f.cf_no
+		where c.cf_status = #{cfStatus} and r.emp_no=#{empNo} and f.emp_no=#{empNo}
+	</select>
+
+	<select id="selectReferCntFourType" parameterType="DocumentVO" resultType="int">
+		select count(*)
+		from confirm c
+		join cf_is_read r
+		on c.cf_no = r.cf_no
+		join confirm_refer f
+		on c.cf_no = f.cf_no
+		where c.cf_status = #{cfStatus} and r.emp_no=#{empNo} and f.emp_no=#{empNo} and r.is_read=#{isRead}	
+	</select>
 </mapper>
 
 

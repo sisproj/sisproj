@@ -12,6 +12,7 @@ public class DocumentVO extends DocumentFormVO{
 	private Timestamp cfRegdate; //기안일자
 	private String linkCfNo; //연계문서번호
 	private String cfTitle; //기안제목
+	private String changeTitle; //변경 후 이름
 	private String cfContent; //기안내용
 	private String cfIsfile; //파일여부
 	private String cfStatus; //현재상태
@@ -61,6 +62,12 @@ public class DocumentVO extends DocumentFormVO{
 	public void setCfTitle(String cfTitle) {
 		this.cfTitle = cfTitle;
 	}
+	public String getChangeTitle() {
+		return changeTitle;
+	}
+	public void setChangeTitle(String changeTitle) {
+		this.changeTitle = changeTitle;
+	}
 	public String getCfContent() {
 		return cfContent;
 	}
@@ -94,16 +101,15 @@ public class DocumentVO extends DocumentFormVO{
 	public int getCfConfirmer() {
 		return cfConfirmer;
 	}
-	public void setCfConfermer(int cfConfermer) {
-		this.cfConfirmer = cfConfermer;
+	public void setCfConfirmer(int cfConfirmer) {
+		this.cfConfirmer = cfConfirmer;
 	}
 	@Override
 	public String toString() {
 		return "DocumentVO [cfNo=" + cfNo + ", formNo=" + formNo + ", empNo=" + empNo + ", empName=" + empName
-				+ ", cfRegdate=" + cfRegdate + ", linkCfNo=" + linkCfNo + ", cfTitle=" + cfTitle + ", cfContent="
-				+ cfContent + ", cfIsfile=" + cfIsfile + ", cfStatus=" + cfStatus + ", allConfirmers=" + allConfirmers
-				+ ", isRead=" + isRead + ", cfConfirmer=" + cfConfirmer + "]";
+				+ ", cfRegdate=" + cfRegdate + ", linkCfNo=" + linkCfNo + ", cfTitle=" + cfTitle + ", changeTitle="
+				+ changeTitle + ", cfContent=" + cfContent + ", cfIsfile=" + cfIsfile + ", cfStatus=" + cfStatus
+				+ ", allConfirmers=" + allConfirmers + ", isRead=" + isRead + ", cfConfirmer=" + cfConfirmer + "]";
 	}
-	
 	
 }

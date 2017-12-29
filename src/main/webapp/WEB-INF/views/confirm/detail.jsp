@@ -190,8 +190,33 @@
 						</div>
 					</c:if>
 				</div>
+				<c:if test="${docVo.empNo == sessionScope.empVo.empNo && docVo.cfStatus == '결재완료' }">
+					<div id="confirmRefer">
+						<h3><i class="fa fa-paper-plane-o"></i> 참조 발신 <i class="fa fa-arrow-down" id="downbtn"></i></h3>
+						<form name="sendFrm" id="sendFrm" method="post" action="<c:url value='/confirm/documentSend.do'/>">
+							<p>조직도에서 참조 발신할 개인을 선택하거나 아래에서 부서를 선택하세요.</p>
+							<div id="listeners">
+								<ul><b>수신자 :</b>
+								
+								</ul>
+							</div>
+							<input type="hidden" name="cfNo" value="${docVo.cfNo }"> 
+							<input type="hidden" name="allListener" id="allListener"><!-- 이따 히든 -->
+							<label for="deptNo">부서 : </label> 
+							<select name="deptNo">
+								<option value="">부서를 선택하세요</option>
+								<hr>
+								<c:forEach var="dept" items="${deptList }">
+									<option value="${dept.deptNo }">${dept.deptName }팀</option>
+								</c:forEach>
+							</select>
+							<input type="button" id="resetbtn" value="초기화">
+							<input type="submit" id="sendbtn" value="발신">
+						</form>
+					</div>
+				</c:if>
 				<!-- 하단 끝 -->
-			<!-- writeform 끝-->	
+			<!-- writeform 끝-->
 			<!-- 3. 내용 끝 -->
 		</article>
 		<!-- 4. 상단 네비 색먹이기 // li태그 순서(전자결재 : 6번째) 입력 -->
@@ -201,7 +226,7 @@
 
 <%@ include file="../inc/bottom.jsp" %>
 <script type="text/javascript">
-	$(function(){
+	$(function(){		
 		$('input#cf_edit').click(function(){
 			$(location).attr('href',"<c:url value='/confirm/edit.do?cfNo=${docVo.cfNo }'/>");
 		});
@@ -251,5 +276,126 @@
 				
 			}	
 		});
+				
+		//참조 발신 부분
+		var sessempNo = ${sessionScope.empVo.empNo};
+		
+		$('#confirmRefer h3').click(function(){
+			var sta = $('#confirmRefer').attr('class');
+			
+			if(sta == "up"){
+				$('#confirmRefer form#sendFrm').slideUp();
+				$('#confirmRefer h3 #downbtn').css('transform','rotate(0deg)');
+				$('#confirmRefer').attr('class','down');
+				$('#organ').css('height','40px');
+				$('#orgUp').hide();
+				$('#orgDown').show();
+			} else {
+				$('#confirmRefer form#sendFrm').slideDown();
+				$('#confirmRefer h3 #downbtn').css('transform','rotate(180deg)');	
+				$('#confirmRefer').attr('class','up');		
+				$('#organ').css('height','500px');
+				$('#orgUp').hide();
+				$('#orgDown').show();
+				$('#organbody').show();	
+			}
+		});		
+		
+		
+		//조직도 이름 더블 클릭시
+		$('#organbody ul li ul li').dblclick(function(){
+			//창 오픈
+			$('#confirmRefer form#sendFrm').slideDown();
+			$('#confirmRefer h3 #downbtn').css('transform','rotate(180deg)');	
+			$('#confirmRefer').attr('class','up');
+			
+			var empNo = $(this).attr('id');
+			
+			//본인 선택시 막기
+			if(empNo == sessempNo){
+				alert('자기자신은 선택할 수 없습니다.');
+				return false;
+			}
+			
+			//이미 리스트 존재시 막기
+			var exist = 0;
+			$('#listeners li .listener').each(function(){
+				if($(this).val()==empNo){
+					exist=1;
+				}
+			});
+			
+			if(exist==0){
+				$.ajax({
+					url:"<c:url value='/confirm/settingConfirmer.do'/>",
+					type:"get",
+					data:"empNo="+empNo,
+					dataType:"json",
+					success:function(res){
+						$('#listeners ul').append("<li>"+res.empName+" "+res.posName+" ("+res.empNo+")<input type='hidden' class='listener' value='"+res.empNo+"'></li>");
+					},
+					error : function(xhr,status,error){
+						alert("에러발생 : "+status+"==>"+error);
+					}
+				});
+			}
+		});
+		
+		//부서 선택 시 부서원 전체 로드
+		$('#sendFrm select').change(function(){
+			var deptNo = $(this).find('option:selected').val();
+
+			if(deptNo!=0){
+				$('#listeners ul').html('<b>수신자 :</b>');
+				
+				$.ajax({
+					url:"<c:url value='/confirm/settingListener.do'/>",
+					type:"get",
+					data:"deptNo="+deptNo,
+					dataType:"json",
+					success:function(res){
+						$.each(res,function(idx, item){
+							$('#listeners ul').append("<li>"+item.empName+" "+item.posName+" ("+item.empNo+")<input type='hidden' class='listener' value='"+item.empNo+"'></li>");
+						});
+					},
+					error:function(xhr,status,error){
+						alert("에러발생 : "+status+"==>"+error);					
+					}
+				});
+			}
+		});
+		
+		//초기화 버튼
+		$('#sendFrm input[type=button]').click(function(){
+			//리스트 초기화
+			$('#listeners ul').html('<b>수신자 :</b>');
+			$('#sendFrm select').val('');
+		});
+		
+		//유효성 : 수신자 없으면 발신안됨
+		$('#sendbtn').click(function(){
+			getConfirmers();
+			
+			if($('#allListener').val()==''){
+				alert('수신자를 선택하세요.')
+				return false;
+			} else if(!confirm($('#allListener').val()+" 에게 발송 하시겠습니까?")){
+				return false;
+			}
+		});
+			
+		//함수 : 수신자들 모아 hidden에 처리
+		function getConfirmers(){
+			$('#allListener').val('');
+			var empNos = "";
+			var maxCnt = $('input.listener').length-1;
+			$('input.listener').each(function(idx, item){
+				empNos += $(this).val();
+				if(maxCnt!=idx){
+					empNos += ",";
+				}
+			});
+			$('#allListener').val(empNos);
+		}
 	});
 </script>
