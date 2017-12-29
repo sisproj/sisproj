@@ -6,28 +6,36 @@
 <script type="text/javascript">
 	$(function(){
 		$('#groupList').hide();
-		$('.myAddress').click(function(){
+		$('.myAddress').hover(function(){
 			$('#groupList').show();
 			var empNo="empNo="+${sessionScope.empVo.empNo};
-			var groupList="";
+			/* alert(empNo); */
+			$('#groupList ul').val("");
 			$.ajax({
 				url:"<c:url value='/addrBook/groupList.do'/>",
 				data:empNo,
 				dataType:"json",
 				type:"get",
 				success:function(res){
-					groupList+="<li>전체주소록</li><ul></ul>";
-					if(res.length>0 ){					
+					$('#groupList ul').html("<li>   전체주소록<ul></ul></li>");
+					if(res.length>0 ){
+					/* alert(res.length); */
 						$.each(res, function(idx, item){
-							$(groupList).append("<li>└ "+item.groupNameme+"</li>");
+							/* alert("groupNo:"+item.groupNo+", groupName:"+item.groupName+", empNo:"+item.empNo); */
+							$('#groupList ul li ul').append("<li>    └ "+item.groupName+"</li>");
 						});							
+					}else{
+						$('#searchResult ul li ul').html("<li>그룹을 생성하세요</li>");
 					}					
-					$('#groupList').html(groupList);
+					/* event.preventDefault(); */
 				},
 				error:function(xhr, status, error){
 					alert("에러 : "+status+"=>"+error);
 				}
+			
 			});			
+		},function(){
+			$('#groupList').hide();
 		});
 
 		$('.divAddrBody table td').hover(function(){
@@ -54,6 +62,8 @@
 		$('#btCancel').click(function(){
 			$('#divWriteSection').hide();
 		});
+		
+		
 	});
 </script>
     <style>
@@ -127,13 +137,21 @@
 		#groupList{
 			position : fixed;
 			width: 100px;
-			height: 100px;
-			border: 1px solid rgb(245,245,245);
-			top:299px;
-			left:298px;
-			width:300px;
-			background-color: #ff0;
+			height: 120px;
+			border: 1px solid #333;
+			top:310px;
+			left:298px;			
+			background-color: #fff;
 			transition : all 500ms linear;
+			z-index: 9999;
+			cursor: pointer;
+		}
+		#groupList ul > li{
+			list-style: none;
+			padding: 2px;
+		}
+		#groupList li ul li:hover{
+			background-color: rgb(245,245,245);
 		}
 		
 		/* 연락처 입력부분 */
@@ -176,10 +194,10 @@
 		margin-left: 10px;
 	}
 	#btSubmit i{
-		color: rgb(181,230,29);
+		color: #0f0;
 	}
 	#btCancel i{
-		color: rgb(255,0,128);
+		color: #f00;
 	}
 	.center{
 		text-align: center;
@@ -206,12 +224,7 @@
 	<!-- 내주소록 클릭시 그룹리스트 보여주기 -->		
     <div id="groupList">
        	<ul>
-       		<li><a href="<c:url value='/addrBook/addrBookList.do'/>">전체 주소록</a>
-       			<ul>
-       				<%-- <c:import url="/addrBook/addrGroupList.do"/> --%>
-       				<!-- <li><a href="#">└ 가족</a></li> -->        				
-       			</ul>
-       		</li>                		
+       		            		
        	</ul>                	
     </div>
 	<!-- 내주소록 그룹 리스트 끝 -->
