@@ -79,7 +79,7 @@
 		<div class="row">
 			<form name="formWrite" method="post"
 				action="<c:url value='/notice/noticeWrite.do'/>"
-				onsubmit="return send(this)">
+				enctype="multipart/form-data" onsubmit="return send(this)">
 				<table class="table table-striped"
 					style="text-align: center; border: 1px solid #c5bdbd;">
 					<thead>
@@ -98,7 +98,10 @@
 						<tr class="active">
 							<td><textarea class="form-control" placeholder="글 내용"
 									id="notiContent" name="notiContent" maxlength="2048"
-									style="height: 480px;"></textarea></td>
+									style="height: 430px;"></textarea></td>
+						</tr>
+						<tr>
+							<td><input type="file" id="upfile" name="upfile" />
 						</tr>
 					</tbody>
 				</table>

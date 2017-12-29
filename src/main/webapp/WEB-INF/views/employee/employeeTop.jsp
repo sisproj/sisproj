@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="utf-8"%>
 <%@include file="../inc/top.jsp" %>
      <!-- 0. include부분 -->
          <link rel="stylesheet" href="<c:url value="/resources/css/mypage.css"/>">

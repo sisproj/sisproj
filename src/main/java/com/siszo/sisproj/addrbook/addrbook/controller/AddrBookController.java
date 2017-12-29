@@ -9,10 +9,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.siszo.sisproj.addrbook.addrbook.model.AddrBookListVO;
 import com.siszo.sisproj.addrbook.addrbook.model.AddrBookService;
@@ -21,6 +23,7 @@ import com.siszo.sisproj.addrbook.addrgroup.model.AddrGroupService;
 import com.siszo.sisproj.addrbook.addrgroup.model.AddrGroupVO;
 import com.siszo.sisproj.common.AddrSearchVO;
 import com.siszo.sisproj.common.PaginationInfo;
+import com.siszo.sisproj.common.SearchVO;
 import com.siszo.sisproj.common.Utility;
 import com.siszo.sisproj.dept.model.DeptService;
 import com.siszo.sisproj.dept.model.DeptVO;
@@ -56,7 +59,7 @@ public class AddrBookController {
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 		logger.info("searchVo 최종값 : {}", searchVo);
 		
-		List<AddrGroupVO> groupList=groupService.selectGroupName();
+		List<AddrGroupVO> groupList=groupService.selectGroupName(empNo);
 		logger.info("개인주소록 그룹명 조회결과, groupList.size()={}", groupList.size());
 
 		List<AddrBookVO> addrList=addrBookService.selectAddrBookAll(searchVo);
@@ -204,4 +207,20 @@ public class AddrBookController {
 		
 		return "common/message";		
 	}
+	
+	@RequestMapping("/pageCount.do")
+	@ResponseBody
+	public List<AddrBookVO> pageCount(@ModelAttribute AddrSearchVO searchVo, 
+			@RequestParam(defaultValue="10") int count){
+		logger.info("페이지수 정하기, 파라미터 searchVo={}, count={}", searchVo, count);
+		
+		searchVo.setRecordCountPerPage(count);
+		logger.info("searchVo에 count값 설정 후 searchVo={}", searchVo);
+		
+		List<AddrBookVO> list=addrBookService.selectAddrBookAll(searchVo);
+		logger.info("조회 결과 list.size()={}", list.size());
+		
+		return list;
+	}
+	
 }

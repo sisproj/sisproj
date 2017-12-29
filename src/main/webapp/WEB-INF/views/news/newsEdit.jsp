@@ -22,15 +22,13 @@
 				bUseModeChanger : false,
 			}
 		});
-
-		$('#newsTitle').keyup(function() {
+		setInterval(function() {
 			$('#previewTitle').text($('#newsTitle').val());
-		});
+		}, 100);
 
 		setInterval(function() {
 			submitContents();
 			$('#previewContent').html($('#taNewsWrite').val());
-
 		}, 100);
 
 		$('#savebutton').click(function() {
@@ -107,8 +105,8 @@
 	text-align: left;
 }
 #imageinput{
-	text-align:right;
-	width:40%;
+	text-align:left;
+	width:30%;
 	float:left;
 }
 
@@ -147,7 +145,7 @@
 
 	<!-- 2. 페이지 이름 지정 // 북마크 지정 여부 .bookmark || .nobook -->
 	<h1>
-		<i class="fa fa-book" aria-hidden="true"></i>&nbsp;뉴스 등록&nbsp;<a
+		<i class="fa fa-book" aria-hidden="true"></i>&nbsp;뉴스 수정&nbsp;<a
 			href="#"><i class="fa fa-bookmark bookmark" aria-hidden="true"></i></a>
 	</h1>
 	<!-- 2. 페이지 이름 지정 끝 -->
@@ -157,8 +155,10 @@
 	<div id="newsWriteDiv">
 		<!-- 3. 내용 -->
 		<form method="post" id="newsFrm"
-			action="<c:url value='/news/newsWriteOk.do'/>"
+			action="<c:url value='/news/newsEdit.do'/>"
 			enctype="multipart/form-data">
+			<input type="hidden" id="newsNo" name="newsNo" value="${newsVo.newsNo}">
+			<input type="hidden" id="newsImage" name="newsImage" value="${newsVo.newsImage}">
 			<div class="se2_tool" id="se2_tool">
 				<div class="se2_text_tool husky_seditor_text_tool">
 					<div id="writetopDiv">
@@ -171,12 +171,12 @@
 						</div>
 						<div id="titleDiv">
 							<label>제목:</label><input type="text" name="newsTitle"
-								id="newsTitle">
+								id="newsTitle" value="${newsVo.newsTitle }">
 						</div>
 					</div>
 
 					<textarea name="newsContent" id="taNewsWrite" rows="10" cols="100"
-						style="width: 100%; height: 500px;"></textarea>
+						style="width: 100%; height: 500px;">${newsVo.newsContent }</textarea>
 					<div id="photozone">
 					<br>
 						<div id="imageboxtext">
@@ -185,12 +185,18 @@
 							<p>* 등록된 사진은 마우스 오른쪽클릭으로 복사할 수 있습니다.</p>
 						</div>
 						
+						<c:if test="${newsVo.newsImage==null }">
 						<div id="imageinput">
 						<br>
-						<i class="fa fa-camera"><input type="file" id="newsUpImage" name="newsUpImage" /></i>
+						<i class="fa fa-camera"><input type="file" id="newsUploadImage" name="newsUploadImage"/></i>
 						</div>
+						</c:if>
+						<c:if test="${newsVo.newsImage!=null }">
+						<span><i class="fa fa-camera">${newsVo.newsImage }</i></span>
+						</c:if>
+						
 					</div>
-					<input type="submit" id="savebutton" value="뉴스등록" /> <input
+					<input type="submit" id="savebutton" value="뉴스수정" /> <input
 						type="button" id="nobutton" value="취소" />
 				</div>
 			</div>

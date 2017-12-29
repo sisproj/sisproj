@@ -105,10 +105,14 @@
 				alert('월급을 입력하세요.');
 				$("#empSal").focus();
 				return false;
-			}else if($('#tel2').val()=="" || $('#tel3').val()==""){
-				alert('전화번호를 입력하세요.');
+			}else if($('#tel2').val()=="" ){
+				alert('전화번호 앞자리를 입력하세요.');
 				$("#tel2").focus();
 				return false;			
+			}else if($('#tel3').val()==""|| $('#tel3').val().length!=4){
+				alert('전화번호 뒷자리를 입력하세요.');
+				$("#tel3").focus();
+				return false;	
 			}else if($('#empHiredate1').val()==""){
 				alert('입사일을 입력하세요.');
 				$("#empHiredate1").focus();
@@ -140,10 +144,10 @@
     	<div id="diInput">
       	<form id="frmEmp" name="frmEnp"    	
       	action="<c:url value='/employee/employeeEdit.do?empNo=${vo.empNo }'/>" method="post" enctype="multipart/form-data">
-      	<input type="text" name="empTel" id="empTel" value="${vo.empTel }">
-      	<input type="text" name="empSsn" id="empSsn" value="${vo.empSsn }">
-      	<input type="text" name="empEmail" id="empEmail" value="${vo.empEmail }">
-      	<input type="text" name="oldFileName" id="oldFileName" value="${vo.empImg}">
+      	<input type="hidden" name="empTel" id="empTel" value="${vo.empTel }">
+      	<input type="hidden" name="empSsn" id="empSsn" value="${vo.empSsn }">
+      	<input type="hidden" name="empEmail" id="empEmail" value="${vo.empEmail }">
+      	<input type="hidden" name="oldFileName" id="oldFileName" value="${vo.empImg}">
       	  <fieldset>
   		    <div id="diId">
       	 		<label for="name">사원번호</label>

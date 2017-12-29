@@ -9,7 +9,7 @@ public interface NoticeService {
 	public List<NoticeVO> selectAll(SearchVO searchVo);
 	public int selectTotalRecordCount(SearchVO searchVo);
 	public int updateReadCount(int notiNo);
-	
+	public int updateDownCount(int notiNo);
 	public NoticeVO selectByNo(int notiNo);
 	public int updateNotice(NoticeVO vo);	
 	public int deleteNotice(int notiNo);

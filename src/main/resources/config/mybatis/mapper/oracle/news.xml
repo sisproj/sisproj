@@ -9,8 +9,8 @@
 			select news_seq.nextval from dual
 		</selectKey>
 		
-		insert into news(news_no, news_title,emp_no,news_content,news_main)
-		values(#{newsNo},#{newsTitle},20170001,#{newsContent},#{newsMain})
+		insert into news(news_no, news_title,emp_no,news_content,news_image,news_main)
+		values(#{newsNo},#{newsTitle},20170001,#{newsContent},#{newsImage},#{newsMain})
 	</insert>
 
 
@@ -21,6 +21,27 @@
 	<select id="newsSearchByNo" resultType="NewsVO" parameterType="int">
 		select * from news where news_No=#{newsNo}
 	</select>
+	
+	<update id="newsUpdate" parameterType="NewsVO">
+	
+	update news
+	set news_title=#{newsTitle}, news_content=#{newsContent}, news_image=#{newsImage},news_main=#{newsMain} 
+	where news_No=#{newsNo}
+	
+	</update>
+	
+	<update id="newsUpdateImageException" parameterType="NewsVO">
+	
+	update news
+	set news_title=#{newsTitle}, news_content=#{newsContent},news_main=#{newsMain} 
+	where news_No=#{newsNo}
+	
+	</update>
+	
+	<delete id="newsDelete" parameterType="int">
+		delete from news where news_No=#{newsNo}
+	</delete>
+	
 	
 </mapper>
 

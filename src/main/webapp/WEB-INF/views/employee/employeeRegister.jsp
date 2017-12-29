@@ -11,19 +11,24 @@
 				location.href="<c:url value='/employee/employeeList.do' />";
 			}
 		});
+		
+		$('#email2').change(function(){
+			if($('#email2').val()=='etc'){
+				$('#email3').css('visibility','visible');
+				$('#email3').focus();
+				$('#email3').val('');
+			}else if($('#email2').val()!='etc'){
+				$('#email3').css('visibility','hidden');
+			}
+			
+		});
 		$('#empHiredate1').datepicker({
 			dateFormat:'yy-mm-dd',
 			changeYear:true,
 			dayNamesMin:['일','월','화','수','목','금','토'],
 			monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
 		});
-		$('#email2').change(function(){
-			if($('#email2').val()=='etc'){
-				$('#email3').css('visibility','visible');
-				$('#email3').focus();
-				$('#email3').val('');
-			}
-		});
+		
 		$('#frmEmp').submit(function(){
 			var email1 = $('#email1').val();
 			var email2 = $('#email2 option:selected').val();
@@ -55,6 +60,7 @@
 				var ssn=jumin1+"-"+jumin2;
 				$('#empSsn').val(ssn);
 			}
+			
 			if($('#empName').val()==""){
 				alert('이름을 입력하세요');
 				$('#empName').focus();
@@ -63,17 +69,25 @@
 				alert('영어이름를 입력하세요');
 				$('#empEName').focus();
 				return false;
-			}else if($('#jumin1').val()=="" || $('#jumin2').val()==""){
-				alert('주민번호를 입력하세요.');
-				$('#empSsn').focus();
+			}else if($('#jumin1').val()=="" || ('#jumin1').val().length!=6){
+				alert('주민번호 앞자리를 입력하세요.');
+				$('#jumin1').focus();
+				return false;
+			}else if($('#jumin2').val()=="" || ('#jumin1').val().length!=7){
+				alert('주민번호 뒷자리를 입력하세요.');
+				$('#jumin2').focus();
 				return false;
 			}else if($('#empHobby').val()==""){
 				alert('취미를 입력하세요.');
 				$("#empHobby").focus();
 				return false;
-			}else if($('#empEmail').val()==""){
+			}else if($('#email1').val()==""){
 				alert('이메일을 입력하세요.');
-				$("#empEmail").focus();
+				$("#email1").focus();
+				return false;
+			}else if($('#email2').val()=="etc" && $('#email3').val()==""){
+				alert('이메일을 입력하세요.');
+				$("#email3").focus();
 				return false;
 			}else if($('#empZipcode').val()==""){
 				alert('우편번호를 입력하세요.');
@@ -99,10 +113,14 @@
 				alert('월급을 입력하세요.');
 				$("#empSal").focus();
 				return false;
-			}else if($('#tel2').val()=="" || $('#tel3').val()==""){
-				alert('전화번호를 입력하세요.');
+			}else if($('#tel2').val()=="" ){
+				alert('전화번호 앞자리를 입력하세요.');
 				$("#tel2").focus();
 				return false;			
+			}else if($('#tel3').val()==""|| $('#tel3').val().length!=4){
+				alert('전화번호 뒷자리를 입력하세요.');
+				$("#tel3").focus();
+				return false;	
 			}else if($('#empHiredate1').val()==""){
 				alert('입사일을 입력하세요.');
 				$("#empHiredate1").focus();
@@ -148,7 +166,6 @@
        		<div id="diName">
       	 		<label for="name">이름</label><input type="text" id="empName" name="empName" maxlength="6">   
        		</div>
-	       <!-- <input type="image" src="" alt="이미지 등록" id="empImg" name="empImg">     -->
        		<div id="diEnName">
        		<label for="enName">영어이름</label> <input type="text" id="empEName" name="empEName">
        		</div>
@@ -245,7 +262,7 @@
 		        <input type="text" name="email3" id="email3" title="직접입력인 경우 이메일주소 뒷자리" style="visibility: hidden;"><br>
 			</div>
        		<div id="diFImg">
-       		   <label for="upfile" style="margin-top: 5px;">사원사진 업로드</label>
+       		   <label for="upfile" style="margin-top: 5px;">사원사진</label>
            	   <input type="file" id="fileupload" name="fileupload" style="margin-top: 5px;"/>	 
            	</div>
        		<div id="diReg">

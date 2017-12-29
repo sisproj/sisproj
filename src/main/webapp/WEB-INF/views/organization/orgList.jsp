@@ -47,7 +47,6 @@
 			});
 
 			$('#organbody ul li ul li').click(function(){
-				/* alert("789"); */
 				empInfomation(this);
 			});	
 				
@@ -95,13 +94,11 @@
 		
 		function empSetting(){
 			$('#organbody ul li ul li').click(function(){
-				/* alert("456"); */	
 				empInfomation(this);
 			});			
 		}
 		
 		function empInfomation(item){
-			/* alert("123"); */
 			if($('#choice_cfer').length){
                if($('#choice_cfer').attr('class')=='on'){
                   return false;
@@ -118,7 +115,6 @@
 	            }
         	}
 			var empNo="empNo="+$(item).attr('id');
-			/* alert(empNo); */
 			$.ajax({
 				url:"<c:url value='/organization/empInfo.do'/>",
 				data:empNo,
@@ -278,11 +274,11 @@
 	     <!-- 조직도에서 검색했을 경우 결과를 보여줌 -->
 	     <div	id="searchResult">
 	     	<ul>
-	     		<li><!-- <i class="fa fa-exclamation-circle"></i>  검색 결과 -->
-	     			<ul></ul>
+	     		<li>
+	     			<ul>
+	     			</ul>
 	     		</li>
 	     	</ul>
-	     	<!-- <br><hr><br> -->
 	     </div>
 	     <!-- 조직도 : 검색 결과 끝 -->
 	     
@@ -301,8 +297,6 @@
 	     		</li>
 	     	</ul>
      	</c:forEach>     	
-     </div>
-   
+     </div>   
 </body>
-</html>
-     
+</html>     

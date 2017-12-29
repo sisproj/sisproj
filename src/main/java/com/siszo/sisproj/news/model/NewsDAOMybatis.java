@@ -21,5 +21,14 @@ public class NewsDAOMybatis extends SqlSessionDaoSupport implements NewsDAO{
 		return getSqlSession().selectOne(namespace+".newsSearchByNo",newsNo);
 				
 	}
+	public int newsUpdate(NewsVO newsVo) {
+		return getSqlSession().update(namespace+".newsUpdate",newsVo);
+	}
+	public int newsUpdateImageException(NewsVO newsVo) {
+		return getSqlSession().update(namespace+".newsUpdateImageException",newsVo);
+	}
+	public int newsDelete(int newsNo) {
+		return getSqlSession().delete(namespace+".newsDelete",newsNo);
+	}
 
 }

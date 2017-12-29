@@ -26,8 +26,13 @@
 <script src="<c:url value="/resources/js/login.js"/>"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('form[name=forminfo]').submit(function(){
-			if($('#empNo').val()==''){
+		$('form[name=loginfrm]').submit(function(){
+			var re = /^[0-9]+$/;
+	        if(!re.test($('#empNo').val())) {			
+	               alert("사원번호는 숫자만 넣으셔야 합니다.");
+	               $('#empNo').val().focus();
+	               return false;		     
+			}else if($('#empNo').val()==''){
 				alert('사번을 입력하세요');
 				$('#empNo').focus();
 				return false;
@@ -35,12 +40,12 @@
 				alert('비밀번호를 입력하세요');
 				$('#empPwd').focus();
 				return false;
-			}			
+			}
 		});	
 		$('#pwSe').click(function() {			
 			 	window.open("<c:url value='/login/searchPwd.do' />",
 				'chk',
-				'left=0,top=0,width=400,height=250,locations=yes,resizable=yes');
+				'left=0,top=0,width=600,height=300,locations=yes,resizable=yes');
 		});
 	});
 </script>

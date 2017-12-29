@@ -106,6 +106,7 @@ h1 {
       <p>Lorem ipsum dolor..</p>
     </div>
   </div>
+  
   <div class="column nature">
     <div class="content">
     <img src="/w3images/lights.jpg" alt="Lights" style="width:100%">
@@ -113,6 +114,7 @@ h1 {
       <p>Lorem ipsum dolor..</p>
     </div>
   </div>
+  
   <div class="column nature">
     <div class="content">
     <img src="/w3images/nature.jpg" alt="Nature" style="width:100%">

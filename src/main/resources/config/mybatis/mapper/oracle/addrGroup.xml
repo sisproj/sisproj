@@ -3,8 +3,10 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="config.mybatis.mapper.oracle.addrGroup">	
-	<select id="selectGroupName" resultType="addrGroupVO">
-		select * from addrgroup order by group_no
+	<select id="selectGroupName" parameterType="int" resultType="addrGroupVO">
+		select * from addrgroup 
+		where emp_no=#{empNo}
+		order by group_no
 	</select>
 </mapper>
 

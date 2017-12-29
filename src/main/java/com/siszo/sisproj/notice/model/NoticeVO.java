@@ -3,16 +3,16 @@ package com.siszo.sisproj.notice.model;
 import java.sql.Timestamp;
 
 public class NoticeVO {
-	private int notiNo;
-	private String notiTitle;
-	private int empNo;
-	private String notiContent;
-	private Timestamp notiRegdate;
-	private String notiFilename;
-	private String notiFilesize;
-	private String notiOfilename;
-	private int notiDowncnt;
-	private int notiReadcnt;
+	private int notiNo;	//공지번호
+	private String notiTitle;	//공지이름
+	private int empNo;	//사원번호
+	private String notiContent;	//공지내용
+	private Timestamp notiRegdate;	//입력날짜
+	private String notiFilename;	//파일이름
+	private long notiFilesize;	//파일사이즈
+	private String notiOfilename;	//원본파일이름
+	private int notiDowncnt;	//다운수
+	private int notiReadcnt;	//조회수
 	
 	
 	public int getNotiNo() {
@@ -51,10 +51,10 @@ public class NoticeVO {
 	public void setNotiFilename(String notiFilename) {
 		this.notiFilename = notiFilename;
 	}
-	public String getNotiFilesize() {
+	public long getNotiFilesize() {
 		return notiFilesize;
 	}
-	public void setNotiFilesize(String notiFilesize) {
+	public void setNotiFilesize(long notiFilesize) {
 		this.notiFilesize = notiFilesize;
 	}
 	public String getNotiOfilename() {

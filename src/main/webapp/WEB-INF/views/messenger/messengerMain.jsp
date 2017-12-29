@@ -21,6 +21,7 @@
         var initFlag = true;
         $(document).ready(function () {
             userId = $('#sessionId').val();
+            userName = $('#sessionName').val();
             if (initFlag) {
                 firebaseSetUser();
                 loadKeyListByUserId(userId);
@@ -31,6 +32,7 @@
         });
 
         var userId = "";
+        var userName = "";
         var chatKey = null;
 
         function firebaseSetUser() {
@@ -79,22 +81,22 @@
             var empNameArr;
             empNameArr = [];
 
-           /* var userRef = firebase.database().ref('users/');
-            userRef.once('value', function (snapshot) {
-                var i = 0;
-                snapshot.forEach(function (childSnapshot) {
-                    var childKey = childSnapshot.key;
-                    console.log("i : " + i);
-                    if (empIdArr[i] == childKey) {
-                        console.log(childSnapshot.val().emp_name);
-                        empNameArr.push(childSnapshot.val().emp_name);
-                    }
-                    i++;
-                })
-            }).then(function () { //불러오기 끝난후 실행
-                console.log(empNameArr);
-            });
-*/
+            /* var userRef = firebase.database().ref('users/');
+             userRef.once('value', function (snapshot) {
+                 var i = 0;
+                 snapshot.forEach(function (childSnapshot) {
+                     var childKey = childSnapshot.key;
+                     console.log("i : " + i);
+                     if (empIdArr[i] == childKey) {
+                         console.log(childSnapshot.val().emp_name);
+                         empNameArr.push(childSnapshot.val().emp_name);
+                     }
+                     i++;
+                 })
+             }).then(function () { //불러오기 끝난후 실행
+                 console.log(empNameArr);
+             });
+ */
 
             for (var i = 0; i < empIdArr.length; i++) {
                 var userRef = firebase.database().ref('users/' + empIdArr[i]);
@@ -212,7 +214,6 @@
 
         function resetUnreadCount() {
             var name, count;
-
             var membersRef = firebase.database().ref('members/' + chatKey + "/" + userId);
             membersRef.once('value', function (snapshot) {
                 count = snapshot.val().count;
@@ -333,7 +334,7 @@
             var message = data.val().message;
             var name = data.val().name;
 
-            if (userId == data.val().name) {
+            if (userName == data.val().name) {
                 $('#messengerContainer').append(
                     '<div class="message-wrap darker">' +
                     '<img src="' + userImg + '" alt="Avatar" class="right" style="width:100%;">' +
@@ -403,7 +404,7 @@
 
             message = $("#chatMsg").val();
             firebase.database().ref('messages/' + chatKey).push({
-                name: userId,
+                name: userName,
                 message: message,
                 timestamp: timestamp
             });
@@ -413,22 +414,19 @@
         }
 
         function updateUnreadCount(memberList) {
-            var name, count;
-            for (var i = 0; i < memberList.length; i++) {
-                if (memberList[i] != userId) {
-                    var membersRef = firebase.database().ref('members/' + chatKey + "/" + memberList[i]);
-                    membersRef.once('value', function (snapshot) {
-                        count = snapshot.val().count;
-                    }).then(function () {
-                        membersRef.set({
-                            count: count + 1,
-                            state: "true"
-                        })
-                    });
-                }
-            }
+            var membersRef = firebase.database().ref('members/' + chatKey);
+            membersRef.once('value', function (snapshot) {
+                var i = 0;
+                snapshot.forEach(function (data) {
+                    if (memberList[i] != userId) {
+                        firebase.database().ref('members/' + chatKey + "/" + memberList[i]).update({
+                            count: data.val().count + 1
+                        });
+                    }
+                    i++;
+                })
+            });
         }
-
     </script>
 
 
@@ -498,6 +496,7 @@
 <div class="messenger-header w3-card">
     <header class="w3-container w3-xlarge">
         <input type="hidden" value="${sessionScope.empVo.empNo}" id="sessionId">
+        <input type="hidden" value="${sessionScope.empVo.empName}" id="sessionName">
         <p class="w3-left w3-bar-item w3-padding-24" id="chatTitle">대화 하기</p>
         <p class="w3-right">
             <a href="#" class="w3-bar-item w3-button w3-padding-24 w3-right" name="hide-nav" id="sidebar-button">
