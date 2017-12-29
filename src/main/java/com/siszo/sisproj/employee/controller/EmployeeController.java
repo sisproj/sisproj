@@ -251,9 +251,6 @@ public class EmployeeController {
 		pagingInfo.setBlockSize(Utility.BLOCK_SIZE);
 		pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);
 		pagingInfo.setCurrentPage(seVo.getCurrentPage());
-		logger.info("페이징처리 값 확인 Utility.BLOCK_SIZE={}"
-				+ ",Utility.RECORD_COUNT_PER_PAGE={} ",Utility.BLOCK_SIZE,Utility.RECORD_COUNT_PER_PAGE);
-		logger.info("페이징처리 값 확인 seVo.getCurrentPage()={}",seVo.getCurrentPage());
 		
 		//SearchVo에 값 셋팅
 		seVo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);
@@ -261,10 +258,7 @@ public class EmployeeController {
 		logger.info("searchVo 최종값 : {}", seVo);
 
 		List<EmployeeVO> list =employeeService.selectAllEmployee(seVo);
-		for(EmployeeVO vo : list) {
-			vo.getEmpNo();
-			logger.info("사원 번호  vo.getEmpNo={}",vo.getEmpNo());
-		}
+		
 		logger.info("사원수 결과, list.size()={}", list.size());
 
 		int totalRecord = employeeService.selectTotalRecordCount(seVo);

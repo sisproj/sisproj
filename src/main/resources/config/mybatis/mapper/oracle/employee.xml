@@ -7,9 +7,6 @@
 		<if test="searchKeyword!=null and searchKeyword!=''">
 			where ${searchCondition} like '%' || #{searchKeyword} || '%'
 		</if>
-		<if test="searchKeyword==null and searchKeyword==''">
-			where empNo = ${empNo}
-		</if>
 	</sql>
 	<insert id="insertEmployee">
 		<selectKey keyProperty="empNo" resultType="int" order="BEFORE">
@@ -42,11 +39,23 @@
 		 <include refid="searchWhere"></include>  
 	</select>
 	
-	<select id="selectAllEmployee" resultType="EmployeeVO" parameterType="SearchVO">
-		select * from empView 
-		<include refid="searchWhere"></include>
-		order by pos_No
+	<select id="selectAllEmployee" resultType="EmployeeVO" parameterType="SearchVO">		
+		select *
+		from
+		(
+		    select rownum as RNUM, blist.*
+		    from(
+		        select  *
+				from empView
+				<include refid="searchWhere"></include>		        
+		        order by pos_no       
+		    ) blist
+		)
+		<![CDATA[
+		where RNUM>#{firstRecordIndex}
+		and RNUM<=#{firstRecordIndex}+#{recordCountPerPage}]]>
 	</select>
+
 
 	<update id="employeeOut" parameterType="int">
 		update empView set emp_outdate=sysdate

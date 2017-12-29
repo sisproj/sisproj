@@ -72,13 +72,15 @@
 
             $('#submitButton').click(function () {
                 var form = $('#writefrm');
-                console.log(form.serialize())
                 $.ajax({
                     type: "post",
                     url: form.attr('action'),
                     data: form.serialize(),
                     success: function (response) {
                         window.close();
+                    },
+                    error: function (e) {
+                        console.log(e);
                     }
                 });
             })

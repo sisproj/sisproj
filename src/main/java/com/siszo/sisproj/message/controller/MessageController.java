@@ -1,6 +1,8 @@
 package com.siszo.sisproj.message.controller;
 
 
+import com.siszo.sisproj.common.MessageSearchVO;
+import com.siszo.sisproj.common.SearchVO;
 import com.siszo.sisproj.dept.model.DeptService;
 import com.siszo.sisproj.dept.model.DeptVO;
 import com.siszo.sisproj.employee.model.EmployeeVO;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -68,6 +72,22 @@ public class MessageController {
                 messageService.insertMessageRec(messageRecVO);
             }
         }
+    }
 
+    @RequestMapping(value = "/message/messageReceive.do", method = RequestMethod.GET)
+    public String messageReceive_get(HttpSession session, Model model) {
+        EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
+        int empNo = empVo.getEmpNo();
+        logger.info("받은 쪽지함 들어옴 messageReceive_get(), 접속 ID = {}", empNo);
+
+        MessageSearchVO messageSearchVO = new MessageSearchVO();
+        messageSearchVO.setEmpNo(empNo);
+
+        List<MessageVO> msgList = messageService.selectRecMsgByEmpNo(messageSearchVO);
+
+        logger.info("{} msgList 조회결과 list.size={}", empNo, msgList.size());
+        model.addAttribute("msgList", msgList);
+
+        return "message/messageReceive";
     }
 }
