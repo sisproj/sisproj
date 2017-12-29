@@ -22,6 +22,27 @@
 		select * from news where news_No=#{newsNo}
 	</select>
 	
+	<update id="newsUpdate" parameterType="NewsVO">
+	
+	update news
+	set news_title=#{newsTitle}, news_content=#{newsContent}, news_image=#{newsImage},news_main=#{newsMain} 
+	where news_No=#{newsNo}
+	
+	</update>
+	
+	<update id="newsUpdateImageException" parameterType="NewsVO">
+	
+	update news
+	set news_title=#{newsTitle}, news_content=#{newsContent},news_main=#{newsMain} 
+	where news_No=#{newsNo}
+	
+	</update>
+	
+	<delete id="newsDelete" parameterType="int">
+		delete from news where news_No=#{newsNo}
+	</delete>
+	
+	
 </mapper>
 
 

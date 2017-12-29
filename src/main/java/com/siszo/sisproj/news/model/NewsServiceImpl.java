@@ -21,6 +21,17 @@ public class NewsServiceImpl implements NewsService{
 		return newsDao.newsSearchByNo(newsNo);
 	}
 	
+	public int newsUpdate(NewsVO newsVo) {
+		return newsDao.newsUpdate(newsVo);
+	}
 	
+	
+	public int newsUpdateImageException(NewsVO newsVo) {
+		return newsDao.newsUpdateImageException(newsVo);
+		
+	}
+	public int newsDelete(int newsNo) {
+		return newsDao.newsDelete(newsNo);
+	}
 	
 }
