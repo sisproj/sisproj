@@ -13,8 +13,10 @@
 		<selectKey resultType="int" keyProperty="notiNo" order="BEFORE">
 			select notino_seq.nextval from dual
 		</selectKey>
-		insert into notice(noti_no, noti_title, emp_no, noti_content) 
-		values(#{notiNo}, #{notiTitle}, #{empNo}, #{notiContent})
+		insert into notice(noti_no, noti_title, emp_no, noti_content,
+			noti_filename, noti_filesize, noti_ofilename) 
+		values(#{notiNo}, #{notiTitle}, #{empNo}, #{notiContent},
+			#{notiFilename}, #{notiFilesize}, #{notiOfilename})
 	</insert>
 	
 	<!-- private int notiNo;
@@ -28,9 +30,9 @@
 	private int notiDowncnt;
 	private int notiReadcnt; -->
 
-<!-- insert into notice(noti_no, noti_title, emp_no, noti_content, noti_regdate,
+<!-- insert into notice(noti_no, noti_title, emp_no, noti_content,
 		noti_filename, noti_filesize, noti_ofilename, noti_downcnt, noti_readcnt) 
-		values(notice_seq.nextval, 'test', 20170001,'글내용', sysdate,
+		values(notice_seq.nextval, 'test', 20170001,'글내용',
 		'파일이름','파일사이즈','원본파일이름',0,0); -->
 
 
@@ -56,6 +58,12 @@
 		select count(*) from notice
 		<include refid="searchWhere"></include>	
 	</select>
+	
+	<update id="updateDownCount" parameterType="int">
+		update notice
+		set noti_downcnt=noti_downcnt+1 
+		where noti_no=#{notiNo}
+	</update>
 	
 	<update id="updateReadCount" parameterType="int">
 		update notice

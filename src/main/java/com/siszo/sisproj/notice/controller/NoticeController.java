@@ -1,5 +1,8 @@
 package com.siszo.sisproj.notice.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +57,32 @@ public class NoticeController {
 		//int empNo=(Integer)session.getAttribute("empNo");
 		int empNo=20170001;
 		noticeVo.setEmpNo(empNo);
+		
+		//파일 업로드 처리
+				List<Map<String, Object>> list=null;
+				String fileName="", originalFileName="";
+				long fileSize=0;
+				try {
+					list=fileUtil.fileupload(request, FileUploadUtil.PDS_UPLOAD_NOTI);
+					
+					//파일 업로드 한 경우
+					if(list!=null && !list.isEmpty()) {
+						for(Map<String, Object> map : list) {
+							originalFileName=(String) map.get("originalFileName");
+							fileName=(String) map.get("fileName");
+							fileSize=(Long) map.get("fileSize");
+						}//for
+					}
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				//db작업
+				noticeVo.setNotiFilename(fileName);
+				noticeVo.setNotiOfilename(originalFileName);
+				noticeVo.setNotiFilesize(fileSize);
 		
 		int cnt = noticeService.insertNotice(noticeVo);
 		logger.info("공지사항 글쓰기 결과, cnt={}", cnt);
@@ -141,18 +170,18 @@ public class NoticeController {
 			vo.setNotiContent(content);
 		}
 		
-		/*String fileInfo="", downInfo="";
+		String fileInfo="", downInfo="";
 		String fileName=vo.getNotiFilename();
 		if(fileName!=null && !fileName.isEmpty()) {
 			fileInfo=Utility.getFileInfo(vo.getNotiOfilename(), 
 					vo.getNotiFilesize(), request);
 			
-			downInfo="다운 : "+vo.getDownCount();
-		}*/
+			downInfo="다운 : "+vo.getNotiDowncnt();
+		}
 		
 		model.addAttribute("vo", vo);
-		/*model.addAttribute("fileInfo", fileInfo);
-		model.addAttribute("downInfo", downInfo);*/
+		model.addAttribute("fileInfo", fileInfo);
+		model.addAttribute("downInfo", downInfo);
 		
 		return "notice/noticeDetail";
 	}
@@ -242,58 +271,34 @@ public class NoticeController {
 		
 	}
 	
-	
-	
-	
-	
-	
-	/*
-	@RequestMapping(value="/noticeDelete.do", method=RequestMethod.GET)
-	public String noticeDelete_get(@RequestParam(defaultValue="0") int notiNo,
-			@ModelAttribute NoticeVO vo, ModelMap model) {
-		logger.info("삭제 화면 파라미터, notiNo={}", notiNo);
+	@RequestMapping("/download.do")
+	public ModelAndView download(@RequestParam(defaultValue="0") int notiNo, 
+			@RequestParam String fileName,
+			HttpServletRequest request) {
+		logger.info("다운로드수 증가, 파라미터 no={}, fileName={}", notiNo, fileName);
+				
+		//다운로드 수 증가시키기
+		int cnt = noticeService.updateDownCount(notiNo);
+		logger.info("다운로드수 증가, 결과 cnt={}", cnt);
 		
-		String msg="";
-		String url="/notice/noticeDelete.do?notiNo="+vo.getNotiNo();
+		//map에 다운로드할 파일 객체를 저장해서 ModelAndView에 저장한 후 리턴
+		Map<String, Object> map = new HashMap<String, Object>();
 		
-		int cnt =noticeService.deleteNotice(vo);
+		String path=fileUtil.getUploadPath(request, FileUploadUtil.PDS_UPLOAD_NOTI);
+		File file = new File(path, fileName);
 		
-		if(cnt>0) {
-			msg="삭제되었습니다.";
-			url="/notice/noticeDelete.do?notiNo=?"+vo.getNotiNo();
-		}else {
-			msg="삭제 실패";
-		}
+		map.put("myfile", file);
 		
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
+		//ModelAndView(String viewName, Map<String, ?> model)
+		ModelAndView mav = new ModelAndView("downloadViewNotice", map);
 		
-		return "common/messge";
+		return mav;		
 	}
 	
-	@RequestMapping(value="/noticeDelete.do", method=RequestMethod.POST)
-	public String noticeDelete_post(@ModelAttribute NoticeVO vo,
-			HttpServletRequest request, Model model) {
-		logger.info("삭제처리 파라미터 vo={}", vo);
-		
-		String msg="";
-		String url="/notice/noticeDelete.do?notiNo="+vo.getNotiNo();
-		
-		int cnt =noticeService.deleteNotice(vo);
-		
-		if(cnt>0) {
-			msg="삭제되었습니다.";
-			url="/notice/noticeDelete.do?notiNo=?"+vo.getNotiNo();
-		}else {
-			msg="삭제 실패";
-		}
-		
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
-		
-		return "common/messge";
-	}
-	*/
+	
+	
+	
+	
 }
 
 

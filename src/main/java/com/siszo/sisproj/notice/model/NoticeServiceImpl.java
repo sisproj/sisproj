@@ -51,6 +51,11 @@ public class NoticeServiceImpl implements NoticeService{
 	public int updateReadCount(int notiNo) {
 		return noticeDao.updateReadCount(notiNo);
 	}
+
+	@Override
+	public int updateDownCount(int notiNo) {
+		return noticeDao.updateDownCount(notiNo);
+	}
 	
 	
 	

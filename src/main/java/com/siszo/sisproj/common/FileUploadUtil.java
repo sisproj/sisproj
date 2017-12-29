@@ -1,17 +1,24 @@
 package com.siszo.sisproj.common;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.*;
 
 @Component
 public class FileUploadUtil {
@@ -22,6 +29,8 @@ public class FileUploadUtil {
     public static final int EMP_IMAGE_UPLOAD = 2;  //상품등록시 이미지 업로드인 경우
     public static final int ATTACHFILE = 3;  //전자결재 첨부파일 처리
     public static final int USER_SIGN = 4;  //전자결재 서명 첨부파일 처리
+    public static final int PDS_UPLOAD_NOTI = 9;  //공지사항 첨부파일 처리
+    
 
     @Resource(name = "fileUploadProperties")
     private Properties fileProperties;
@@ -40,10 +49,10 @@ public class FileUploadUtil {
             String key = iter.next();
             MultipartFile tempFile = fileMap.get(key);
             //=> 업로드된 파일을 임시파일 형태로 제공
-
             //업로드 된경우
             if (!tempFile.isEmpty()) {
                 String ofileName = tempFile.getOriginalFilename();
+              
                 //unique한 파일명 구하기
                 String fileName = getUniqueFileName(ofileName);
 
@@ -57,14 +66,14 @@ public class FileUploadUtil {
 
                 //결과 저장
                 Map<String, Object> resultMap = new HashMap<String, Object>();
+               
                 resultMap.put("originalFileName", ofileName);
                 resultMap.put("fileName", fileName);
                 resultMap.put("fileSize", fileSize);
-
+                
                 list.add(resultMap);
             }
         }//while
-
         return list;
     }
 
@@ -82,7 +91,9 @@ public class FileUploadUtil {
                 upPath = fileProperties.getProperty("confirm.attachfile.path.test");
             } else if (uploadGb == USER_SIGN) {
                 upPath = fileProperties.getProperty("confirm.user_sign.path.test");
-            }
+            } else if (uploadGb == PDS_UPLOAD_NOTI) {
+            	upPath = fileProperties.getProperty("notifile.upload.path.test");
+            } 
 
             logger.info("test 경로:" + upPath);
         } else {
@@ -95,6 +106,8 @@ public class FileUploadUtil {
                 upPath = fileProperties.getProperty("confirm.attachfile.path");
             } else if (uploadGb == USER_SIGN) {
                 upPath = fileProperties.getProperty("confirm.user_sign.path");
+            } else if (uploadGb == PDS_UPLOAD_NOTI) {
+            	upPath = fileProperties.getProperty("notifile.upload.path");
             }
             logger.info("배포시 경로:" + upPath);
 

@@ -56,6 +56,13 @@
 								<td>내용</td>
 								<td colspan="2" style="max-height: 400px; height: 330px; text-align: left;">${vo.notiContent}</td>
 							</tr>
+							<tr>
+								<td>첨부파일</td>
+								<td><a href
+="<c:url value='/notice/download.do?notiNo=${vo.notiNo}&fileName=${vo.notiFilename}'/>">
+								${fileInfo }</a>
+								${downInfo }</td>
+							</tr>
 						</tbody>
 					</table>
 					<a href="noticeList.do" class="btn btn-primary">목록</a>
