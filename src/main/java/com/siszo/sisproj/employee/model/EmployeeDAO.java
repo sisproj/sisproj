@@ -9,7 +9,8 @@ public interface EmployeeDAO {
 	public EmployeeVO selectEmployeeByNo(int empNo);
 	public int editEmployee(EmployeeVO vo);
 	public List<EmployeeVO> selectEmployeeByEmpName(String empName);
-	public int employeeSelect(int empNo);
+	public int employeeOut(int empNo);
 	public List<EmployeeVO> selectAllEmployee(SearchVO vo);
 	public int selectTotalRecordCount(SearchVO vo);
+	public int employeeCome(int empNo);
 }

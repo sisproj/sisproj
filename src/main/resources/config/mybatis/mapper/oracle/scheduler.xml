@@ -5,11 +5,11 @@
 <mapper namespace="config.mybatis.mapper.oracle.scheduler">
 	<insert id="schedulerInsert" parameterType="SchedulerVO">
 		insert into pschedule(psch_No,psch_Text,psch_content,psch_eventlocation,psch_Start,psch_End,psch_Categ,emp_no)
-		values(#{pschNo},#{pschText},#{pschContent},#{pschEventLocation},#{pschStart},#{pschEnd}, #{pschCateg},20170001) 
+		values(#{pschNo},#{pschText},#{pschContent},#{pschEventLocation},#{pschStart},#{pschEnd}, #{pschCateg},${empNo}) 
 	</insert>
 	<!-- emp_no는 추후 수정 -->
 	<select id="schedulerSelectAll" resultType="SchedulerVO" parameterType="int">
-		select * from pschedule <!-- where emp_no=#{empNo} -->
+		select * from pschedule where emp_no=#{empNo}
 	</select>
 	
 	<delete id="schedulerDelete" parameterType="string">

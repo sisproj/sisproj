@@ -17,8 +17,8 @@
 		    from(
 		        select * from addrBookView
 		        where addr_isdel='N' and emp_no=#{empNo}
-		        <if test="addrGroupNo!=0">
-					and addr_groupno=#{addrGroupNo}		
+		        <if test="groupNo!=0">
+					and group_no=#{groupNo}		
 				</if>
 		        <include refid="searchWhere"></include>
 		        order by addr_no		        
@@ -57,8 +57,8 @@
 		<selectKey keyProperty="addrNo" resultType="int" order="BEFORE">
 			select addrbook_seq.nextval from dual
 		</selectKey>
-		insert into addrBookView(addr_no, addr_name, addr_comp, addr_tel, addr_email, addr_isdel, group_no, emp_no)
-		values(#{addrNo}, #{addrName}, #{addrComp}, #{addrTel}, #{addrEmail}, #{addrIsDel}, #{groupNo}, #{empNo})
+		insert into addrBookView(addr_no, addr_name, addr_comp, addr_tel, addr_email, addr_isdel, group_no, group_name, emp_no)
+		values(#{addrNo}, #{addrName}, #{addrComp}, #{addrTel}, #{addrEmail}, #{addrIsDel}, #{groupNo}, #{groupName}, #{empNo})
 	</insert>	
 	<update id="updateIsDelY" parameterType="int">
 		update addrBook

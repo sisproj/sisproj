@@ -2,6 +2,8 @@ package com.siszo.sisproj.schcontroller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.siszo.sisproj.common.SchedulerUtility;
+import com.siszo.sisproj.employee.model.EmployeeVO;
 import com.siszo.sisproj.schmodel.SchedulerService;
 import com.siszo.sisproj.schmodel.SchedulerVO;
 
@@ -29,7 +32,10 @@ public class SchdeulerController {
 	
 
 	@RequestMapping(value="/scheduler.do")
-	public String scheduler(@RequestParam (defaultValue="0")int empNo, Model model) {
+	public String scheduler(@RequestParam (defaultValue="0")int empNo, HttpSession session, Model model) {
+		EmployeeVO empVo =(EmployeeVO)session.getAttribute("empVo");
+		empNo=empVo.getEmpNo();
+		
 		List<SchedulerVO> list = schedulerService.schedulerSelectAll(empNo);
 		logger.info("스케줄화면 출력 listsize={}",list.size());
 		model.addAttribute("list",list);
@@ -38,9 +44,11 @@ public class SchdeulerController {
 	
 	private SchedulerUtility schUtil = new SchedulerUtility();
 	@RequestMapping(value="/schedulerOK.do")
-	public String scheduler_insert(@ModelAttribute SchedulerVO vo, Model model) {
+	public String scheduler_insert(@ModelAttribute SchedulerVO vo,HttpSession session ,Model model) {
+		EmployeeVO empVo =(EmployeeVO)session.getAttribute("empVo");
+		int empNo=empVo.getEmpNo();
+		vo.setEmpNo(empNo);
 		logger.info("스케줄 삽입 처리, 파라미터 vo={}",vo);
-	
 		vo.setPschStart(schUtil.ChangeDate(vo.getPschStart()));
 		vo.setPschEnd(schUtil.ChangeDate(vo.getPschEnd()));
 		int cnt = schedulerService.schedulerInsert(vo);

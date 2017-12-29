@@ -80,6 +80,8 @@
 		</div>
 		<hr>
 		<div id="newsDContent">
+		<img src="<c:url value='/news_images/${newsVo.newsImage }'/>"
+					style="width: 100%;max-height:500px; min-height: 200px">
 			<h3>${newsVo.newsContent }</h3>
 		</div>
 		<div id="likeCount">

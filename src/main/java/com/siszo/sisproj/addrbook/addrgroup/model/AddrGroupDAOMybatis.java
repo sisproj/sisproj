@@ -10,7 +10,7 @@ public class AddrGroupDAOMybatis extends SqlSessionDaoSupport implements AddrGro
 	private String namespace="config.mybatis.mapper.oracle.addrGroup";
 
 	@Override
-	public List<AddrGroupVO> selectGroupName() {
-		return getSqlSession().selectList(namespace+".selectGroupName");
+	public List<AddrGroupVO> selectGroupName(int empNo) {
+		return getSqlSession().selectList(namespace+".selectGroupName", empNo);
 	}
 }
