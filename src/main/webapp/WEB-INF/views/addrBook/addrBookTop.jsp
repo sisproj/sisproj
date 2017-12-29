@@ -19,15 +19,12 @@
 				success:function(res){
 					$('#groupList ul').html("<li>   전체주소록<ul></ul></li>");
 					if(res.length>0 ){
-					/* alert(res.length); */
-						$.each(res, function(idx, item){
-							/* alert("groupNo:"+item.groupNo+", groupName:"+item.groupName+", empNo:"+item.empNo); */
+						$.each(res, function(idx, item){				
 							$('#groupList ul li ul').append("<li>    └ "+item.groupName+"</li>");
 						});							
 					}else{
 						$('#searchResult ul li ul').html("<li>그룹을 생성하세요</li>");
 					}					
-					/* event.preventDefault(); */
 				},
 				error:function(xhr, status, error){
 					alert("에러 : "+status+"=>"+error);
@@ -63,7 +60,11 @@
 			$('#divWriteSection').hide();
 		});
 		
-		
+		$('#selectMenu select option:selected').change(function(){
+			var count=$(this).val();
+			
+			
+		});
 	});
 </script>
     <style>
@@ -155,19 +156,19 @@
 		}
 		
 		/* 연락처 입력부분 */
-	#divWriteSection{
+	#divWriteSection, #divUpdateSection{
 		width: 560px;
 		height: 290px;
 		border: 1px solid rgb(195, 195, 195);
 		position: fixed;
 		left: 40%;
 	}
-	.divWriteBody{
+	.divWriteBody, .divUpdateBody{
 		width: 530px;
 		height:230px;
 		padding: 10px;
 	}
-	.divWriteBody label{
+	.divWriteBody label, .divUpdateBody label{
 		width: 20%;
 		float: left;
 		text-align: right;
@@ -175,14 +176,14 @@
 		clear: left;
 		font-weight: bold;
 	}
-	.divWriteBody input{
+	.divWriteBody input, .divUpdateBody input{
 		line-height: 20px;
 		width: 120px;
 	}
-	.divWriteBody select{
+	.divWriteBody select, .divUpdateBody select{
 		height: 24px;
 	}
-	#btSubmit{
+	#btSubmit, #btEdit{
 		border: 1px solid rgb(195, 195, 195);
 		padding: 5px;
 		width: 60px;
@@ -193,7 +194,7 @@
 		width: 60px;
 		margin-left: 10px;
 	}
-	#btSubmit i{
+	#btSubmit i, #btEdit i{
 		color: #0f0;
 	}
 	#btCancel i{

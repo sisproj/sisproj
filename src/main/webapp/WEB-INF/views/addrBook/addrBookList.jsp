@@ -9,6 +9,7 @@
 <script type="text/javascript">
 	$(function(){
 		$('#divWriteSection').hide();
+		$('#divUpdateSection').hide();
 		
 		$('#divDeleteMulti').click(function(){
 			var len=$('td input[type=checkbox]:checked').length;
@@ -70,11 +71,7 @@
 			
 			$('#frmWrite').submit();
 			
-		});
-			
-		
-			
-		
+		});		
 		
 	});	
 	
@@ -153,6 +150,70 @@
 		</div>
 	</div>
     <!-- 연락처 insert 영역 끝 -->
+    
+    <!-- 연락처 update 영역 시작 -->
+    <div id="divUpdateSection">
+		<div class="divUpdateHeader">
+			<h3>연락처 수정</h3>
+		</div>
+		<div class="divUpdateBody">
+			<form action="<c:url value='/addrBook/addrBookUpdate.do'/>" method="post" id="frmUpdate">
+				<input type="hidden" name="addrTelUpdate" id="addrTelUpdate"> 
+				<input type="hidden" name="addrEmailUpdate" id="addrEmailUpdate">
+				<input type="hidden" name="groupName" id="groupName" value="${addrGroupVo.groupName }">
+				<div>
+					<label for="addrNameUpdate">이름</label> 
+					<input type="text" name="addrNameUpdate" id="addrNameUpdate" style="ime-mode: active">
+				</div>
+				<div>
+					<label for="hp1">핸드폰</label> 
+					<select name="hp1" id="hp1" title="휴대폰 앞자리">
+						<option value="010">010</option>
+						<option value="011">011</option>
+						<option value="016">016</option>
+						<option value="017">017</option>
+						<option value="018">018</option>
+						<option value="019">019</option>
+					</select>
+					 - <input type="text" name="hp2" id="hp2" maxlength="4"	title="휴대폰 가운데자리" size="10">
+					  - <input type="text" name="hp3" id="hp3" maxlength="4" title="휴대폰 뒷자리" size="10">
+				</div>
+				<div>
+					<label for="email1">이메일 주소</label> 
+					<input type="text" name="email1" id="email1" title="이메일주소 앞자리">
+					 @ <select name="email2" id="email2" title="이메일주소 뒷자리">
+							<option value="naver.com">naver.com</option>
+							<option value="hanmail.net">hanmail.net</option>
+							<option value="nate.com">nate.com</option>
+							<option value="gmail.com">gmail.com</option>
+							<option value="etc">직접입력</option>
+						</select> 
+					<input type="text" name="email3" id="email3" title="직접입력인 경우 이메일주소 뒷자리" style="visibility:hidden;">
+				</div>
+				<div>
+					<label for="addrComp">회사</label> 
+					<input type="text" name="addrComp"	id="addrComp" title="회사명">
+				</div>
+				<div>
+					<label for="groupNo">그룹</label> 
+					<select name="groupNo" id="groupNo">
+						<c:if test="${!empty groupList }">
+							<c:forEach var="addrGroupVo" items="${groupList }" >
+								<option value="${addrGroupVo.groupNo }">${addrGroupVo.groupName }</option>
+							</c:forEach>
+						</c:if>
+						
+					</select>
+				</div>
+				<hr>
+				<div class="center">
+					<a href="#"><span id="btEdit"><i class="fa fa-check"></i> 수정</span></a>
+					<a href="#"><span id="btCancel"><i class="fa fa-times"></i> 취소</span></a>
+				</div>
+			</form>
+		</div>
+	</div>
+    <!-- 연락처 upadte 영역 끝 -->
     
     
     
