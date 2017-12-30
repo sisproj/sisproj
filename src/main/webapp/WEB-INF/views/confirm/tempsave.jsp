@@ -36,38 +36,42 @@
 				검색어 : <input type="text" name="searchKey" id="searchKey" placeholder="문서번호, 제목, 내용" value="${param.searchKeyword }">
 				<input type="button" value="검색">
 			</div>
-			<table id="awaittb">
-				<thead>
-					<tr>
-						<th><input type="checkbox" id="allSelect" value="문서번호받기"></th>
-						<th>문서번호</th>
-						<th>제목</th>
-						<th>기안일</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:if test="${empty docuList }">
-						<tr><td colspan="4" rowspan="2">문서가 없습니다</td></tr>
-					</c:if>
-					<c:if test="${!empty docuList }">
-						<c:forEach var="docuVo" items="${docuList }" varStatus="status">
-							<tr>
-								<td><input type="checkbox" name="docuItems[${status.index }].cfNo" value="${docuVo.cfNo }"></td>
-								<td>${docuVo.cfNo }</td>
-								<td title="${docuVo.cfTitle }"><a href="<c:url value='/confirm/detail.do?cfNo=${docuVo.cfNo }'/>">
-									<c:if test="${docuVo.isRead == 'N' }">
-										<b>${docuVo.changeTitle } <img alt="New" src="<c:url value='/resources/images/icon_new.gif'/>"></b>
-									</c:if>
-									<c:if test="${docuVo.isRead == 'Y' }">
-										${docuVo.changeTitle }
-									</c:if>
-								</a></td>
-								<td><fmt:formatDate value="${docuVo.cfRegdate }" pattern="yyyy-MM-dd"/></td>
-							</tr>
-						</c:forEach>
-					</c:if>
-				</tbody>
-			</table>
+			<a class="deleteBtn" href="#">삭제</a>
+			<form id="tempList" name="tempList" method="post" action="<c:url value='/confirm/tempDocsDel.do'/>">
+				<table id="awaittb">
+					<thead>
+						<tr>
+							<th><input type="checkbox" id="allSelect"></th>
+							<th>문서번호</th>
+							<th>제목</th>
+							<th>기안일</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:if test="${empty docuList }">
+							<tr><td colspan="4" rowspan="2">문서가 없습니다</td></tr>
+						</c:if>
+						<c:if test="${!empty docuList }">
+							<c:forEach var="docuVo" items="${docuList }" varStatus="status">
+								<tr>
+									<td><input type="checkbox" class="delchkbox" name="docuItems[${status.index }].cfNo" value="${docuVo.cfNo }"></td>
+									<td>${docuVo.cfNo }</td>
+									<td title="${docuVo.cfTitle }"><a href="<c:url value='/confirm/detail.do?cfNo=${docuVo.cfNo }'/>">
+										<c:if test="${docuVo.isRead == 'N' }">
+											<b>${docuVo.changeTitle } <img alt="New" src="<c:url value='/resources/images/icon_new.gif'/>"></b>
+										</c:if>
+										<c:if test="${docuVo.isRead == 'Y' }">
+											${docuVo.changeTitle }
+										</c:if>
+									</a></td>
+									<td><fmt:formatDate value="${docuVo.cfRegdate }" pattern="yyyy-MM-dd"/></td>
+								</tr>
+							</c:forEach>
+						</c:if>
+					</tbody>
+				</table>
+			</form>
+			<a class="deleteBtn" href="#">삭제</a>
 			<c:if test="${!empty docuList}">
 				<div id="pagingbtn">
 					<c:if test="${pageInfo.currentPage!=1 }">
@@ -103,3 +107,39 @@
 <!-- 0. include부분 끝-->
 <%@ include file="../inc/bottom.jsp" %>
 <script type="text/javascript" src="<c:url value='/resources/js/pagejs/confirm_list.js'/>"></script>
+<script type="text/javascript">
+	$(function(){
+		$('input#allSelect').click(function(){
+			$('tbody input.delchkbox').prop('checked', this.checked);
+		});
+		$('td input.delchkbox').click(function(){
+			var inputcnt = $('td input.delchkbox').length;
+			var checkcnt = $('td input.delchkbox:checked').length;
+			if(inputcnt == checkcnt){
+				$('input#allSelect').prop('checked',true);
+			} else {
+				$('input#allSelect').prop('checked',false);
+			}
+		});
+		$('td input.delchkbox').click(function(){
+			if($('td input.delchkbox:checked').length>0){
+				$('.deleteBtn').css('visibility','visible');
+			} else {
+				$('.deleteBtn').css('visibility','hidden');				
+			}
+		});
+		$('input#allSelect').click(function(){
+			if($('td input.delchkbox:checked').length>0){
+				$('.deleteBtn').css('visibility','visible');
+			} else {
+				$('.deleteBtn').css('visibility','hidden');				
+			}
+		});
+		//delbtn
+		$('.deleteBtn').click(function(){
+			if(confirm('선택된 문서를 완전히 삭제 하시겠습니까?')){
+				$('#tempList').submit();
+			}
+		});
+	});
+</script>

@@ -10,7 +10,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +35,7 @@ import com.siszo.sisproj.confirm.file.model.ConfirmFileService;
 import com.siszo.sisproj.confirm.file.model.ConfirmFileVO;
 import com.siszo.sisproj.confirm.isread.model.CfIsReadService;
 import com.siszo.sisproj.confirm.isread.model.CfIsReadVO;
+import com.siszo.sisproj.confirm.model.DocumentListVO;
 import com.siszo.sisproj.confirm.model.DocumentService;
 import com.siszo.sisproj.confirm.model.DocumentVO;
 import com.siszo.sisproj.confirm.saveline.model.SaveLineService;
@@ -744,7 +744,7 @@ public class ConfirmController {
 		logger.info("해당 문서 결재라인 조회, clVoList.size()={}", clVoList.size());
 		
 		//4. 연계문서가 있다면 (docuVo.linkCfNo) confirm테이블에서 가져옴= DocumentVO = docuVo2 (cfNo, cfTitle)
-		DocumentVO linkDoc = new DocumentVO();
+		DocumentVO linkDoc = null;
 		if(docVo.getLinkCfNo()!=null && !docVo.getLinkCfNo().isEmpty()) {
 			linkDoc = dService.selectDocByCfNo(docVo.getLinkCfNo());
 			//스크립트 보안 : 꺽쇠 변환
@@ -1388,4 +1388,61 @@ public class ConfirmController {
 		
 		return "confirm/postbox";
 	}
+	
+	@RequestMapping("/tempDocsDel.do")
+	public String tempDocsDel(@ModelAttribute DocumentListVO docListVo, HttpServletRequest request, Model model) {
+		logger.info("임시 저장함 리스트에서 여러개 레코드 삭제, 파라미터, docListVo={}",docListVo);
+		
+		List<DocumentVO> docList = docListVo.getDocuItems();
+		logger.info("선택된 엘리먼트 개수 docList.size()={}",docList.size());
+		
+		//선택된 문서의 파일 리스트 추출
+		List<List<ConfirmFileVO>> docFilesList = new ArrayList<List<ConfirmFileVO>>();
+		for(DocumentVO dVo : docList) {
+			System.out.println("cfNo : "+dVo.getCfNo());
+			if(dVo.getCfNo()!=null && !dVo.getCfNo().isEmpty()) {
+				List<ConfirmFileVO> filesByDoc = cfService.selectCfFileByCfNo(dVo.getCfNo());
+				logger.info(dVo.getCfNo()+"의 파일 개수 filesByDoc.size()={}",filesByDoc.size());
+				docFilesList.add(filesByDoc);
+			}
+		}
+		
+		//db에서 문서 삭제
+		int result = dService.deleteMultiDoc(docList);
+		logger.info("db에서 문서삭제 결과, result={}",result);
+		
+		String msg ="", url="/confirm/tempsave.do";
+		if(result>0) {
+			//db에서 삭제 되었다면 파일도 삭제
+			if(docFilesList!=null && !docFilesList.isEmpty()) {
+				for(List<ConfirmFileVO> listfile : docFilesList) {
+					String path = fileUtil.getUploadPath(request, FileUploadUtil.ATTACHFILE);
+					for(ConfirmFileVO cfVo : listfile) {
+						File delFile = new File(path, cfVo.getFileName());
+						if(delFile.exists()) {
+							boolean bool = delFile.delete();
+							logger.info("문서번호 : "+cfVo.getCfNo()+" 파일 삭제 여부 bool={}",bool);
+						}
+					}
+				}
+			}
+			msg="선택된 "+result+"개의 문서가 삭제 되었습니다.";
+		} else {
+			msg="삭제 실패";
+		}
+		
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+		return "common/message";
+	}
+	
+	/*String path = fileUtil.getUploadPath(request, FileUploadUtil.ATTACHFILE);
+	for(ConfirmFileVO cfVo : oldFileList) {
+		File delFile = new File(path, cfVo.getFileName());
+		if(delFile.exists()) {
+			boolean bool = delFile.delete();
+			logger.info("기존 파일 삭제여부 bool={}", bool);
+		}
+	}*/
 }

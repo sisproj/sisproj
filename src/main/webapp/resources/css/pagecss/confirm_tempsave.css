@@ -131,3 +131,18 @@
 #awaittb td:nth-child(5){
 	text-align: center;
 }
+.deleteBtn{
+	display : inline-block;
+	width: 60px;
+	height:20px;
+	box-shadow : 2px 2px 5px #900;
+	background-color: #f00;
+	color: #fff;
+	border-radius: 10px;
+	text-align: center;
+	margin-left: 10px;
+	visibility: hidden;
+}
+.deleteBtn:hover {
+	box-shadow : 2px 2px 5px transparent;	
+}

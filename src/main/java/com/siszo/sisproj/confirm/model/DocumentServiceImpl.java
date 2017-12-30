@@ -397,4 +397,23 @@ public class DocumentServiceImpl implements DocumentService {
 		return dDao.selectReferCntFourType(dVo);
 	}
 
+	@Override
+	@Transactional
+	public int deleteMultiDoc(List<DocumentVO> docList) {
+		int result = 0;
+		
+		for(DocumentVO dvo : docList) {
+			if(dvo.getCfNo()!=null && !dvo.getCfNo().isEmpty()) {
+				int cnt = dDao.deleteDocuByCfNo(dvo.getCfNo());
+				if(cnt>0) {
+					result+=1;
+					System.out.println("삭제된 문서 번호 : "+dvo.getCfNo());
+				} else {
+					result+=0;				
+				}				
+			}
+		}
+		return result;
+	}
+
 }

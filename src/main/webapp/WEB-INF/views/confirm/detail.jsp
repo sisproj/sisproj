@@ -110,11 +110,8 @@
 						<div id="cf_info">
 							<div class="dr">
 								<label for="linkdoc" class="sd1">연계문서</label>	
-								<input type="text" name="linkdoc" id="linkdoc" value="
-								<c:if test="${!empty linkdoc }">
-									(${linkDoc.cfNo }) ${linkDoc.cfTitle }
-								</c:if>
-								" readonly>
+								<input type="text" name="linkdoc" id="linkdoc" value="<c:if test="${!empty linkDoc }">(${linkDoc.cfNo }) ${linkDoc.cfTitle }
+								</c:if>" readonly>
 							</div>
 							<div class="dr">
 								<label for="doctitle" class="sd1">제목</label>	

@@ -17,6 +17,4 @@ public class DocumentListVO {
 	public String toString() {
 		return "DocumentListVO [docuItems=" + docuItems + "]";
 	}
-	
-	
 }

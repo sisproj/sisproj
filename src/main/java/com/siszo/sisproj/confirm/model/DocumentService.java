@@ -31,6 +31,7 @@ public interface DocumentService {
 	public int yesConfirm(DocumentVO dVo, CfIsReadVO cirVo, ConfirmLineVO clVo, int nextConfirmer);
 	public List<EmployeeVO> selectEmpListByDeptNo(int deptNo);
 	public int insertSendDoc(List<ConfirmLineVO> clVoList);
+	public int deleteMultiDoc(List<DocumentVO> docList);
 	
 	//1타입 - 결재완료
 	public List<DocumentVO> selectCompleteOneType(ConfirmSearchVO csVo);
