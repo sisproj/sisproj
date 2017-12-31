@@ -5,6 +5,9 @@
 <!-- 0. include부분 -->
 
 <style>
+hr{
+	margin: 0;
+}
 .newsMaindiv {
 	width: 1500px;
 }

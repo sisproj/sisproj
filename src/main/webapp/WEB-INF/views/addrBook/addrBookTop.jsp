@@ -237,7 +237,7 @@
     <article id="headsection">
         <h1>
         	<i class="fa fa-phone"></i>&nbsp;주소록&nbsp;
-        	<a href="#"><i class="fa fa-bookmark bookmark" aria-hidden="true"></i></a>
+        	<a href="#"><i class="fa fa-bookmark nobook" aria-hidden="true"></i></a>
         </h1>
     </article>
     <!-- 2. 페이지 이름 지정 끝 -->

@@ -22,7 +22,7 @@
 		<!-- 왼쪽 사이드 메뉴 끝 -->
 		<article id="headsection">
 			<!-- 2. 페이지 이름 지정 // 북마크 지정 여부 .bookmark || .nobook -->
-			<h1><i class="fa fa-book" aria-hidden="true"></i>&nbsp;전자 결재&nbsp;<a href="#"><i class="fa fa-bookmark nobook" aria-hidden="true"></i></a></h1>
+			<h1><i class="fa fa-book" aria-hidden="true"></i>&nbsp;전자 결재&nbsp;<a href="#"><i class="fa fa-bookmark"></i></a></h1>
 			<!-- 2. 페이지 이름 지정 끝 -->
 		</article>	
 		<article id="bodysection">

@@ -310,7 +310,7 @@ html, body {
 	<!-- 2. 페이지 이름 지정 // 북마크 지정 여부 .bookmark || .nobook -->
 	<h1>
 		<i class="fa fa-calendar-check-o" aria-hidden="true"></i></i>&nbsp;스케쥴관리&nbsp;<a
-			href="#"> <i class="fa fa-bookmark bookmark" aria-hidden="true"></i></a>
+			href="#"> <i class="fa fa-bookmark" aria-hidden="true"></i></a>
 	</h1>
 	<!-- 2. 페이지 이름 지정 끝 -->
 </article>
