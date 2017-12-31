@@ -8,7 +8,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.aspectj.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.siszo.sisproj.common.FileUploadUtil;
 import com.siszo.sisproj.news.model.NewsService;
 import com.siszo.sisproj.news.model.NewsVO;
-import com.siszo.sisproj.schmodel.SchedulerVO;
 
 @Controller
 @RequestMapping("/news")
@@ -148,18 +146,37 @@ public class NewsController {
 	}
 
 	@RequestMapping(value="/newsEdit.do", method=RequestMethod.POST)
-	public String newsEdit_post(@ModelAttribute NewsVO newsVo, Model model) {
+	public String newsEdit_post(@ModelAttribute NewsVO newsVo, HttpServletRequest request,Model model) {
 		logger.info("뉴스 수정처리 newsvo={}",newsVo);
+		logger.info("뉴스 수정 이미지  getNewsImage={}",newsVo.getNewsImage());
 		String msg="", url="/news/dailyNews.do";
-			if(newsVo.getNewsImage()==null) {
+			if(newsVo.getNewsImage()==null || newsVo.getNewsImage().isEmpty()) {
+				List<Map<String, Object>> list=null;
+				String newsImage="";
+				try {
+					list=FileUtil.fileupload(request,FileUploadUtil.NEWS_IMAGES);			
+					//파일 업로드 한 경우
+					if(list!=null && !list.isEmpty()){
+						for(Map<String, Object> map : list){
+							newsImage=(String)map.get("fileName");		
+						}//for
+					}
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}		
+				newsVo.setNewsImage(newsImage);
+				logger.info("뉴스 수정 이미지#############3333 getNewsImage={}",newsVo.getNewsImage());
 			int cnt =0;
 			cnt=newsService.newsUpdate(newsVo);
+			
 			if(cnt>0) {
 				msg="뉴스 수정 성공";
 			}else {
 				msg="뉴스 수정 실패";
 			}
-		}else if(newsVo.getNewsImage()!=null) {
+		}else if(newsVo.getNewsImage()!=null && !newsVo.getNewsImage().isEmpty()) {
 			int cnt =0;
 			logger.info("뉴스 수정처리############################3 vo={}",newsVo);
 			cnt=newsService.newsUpdateImageException(newsVo);

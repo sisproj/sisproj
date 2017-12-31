@@ -288,9 +288,9 @@ html, body {
 <nav>
 	<ul>
 		<!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
-		<li class="active"><a href="#"><i
+		<li class="active"><a href="<c:url value='/scheduler/scheduler.do'/>"><i
 				class="fa fa-pencil-square-o"></i>&nbsp;<span>개인스케줄</span></a></li>
-		<li><a href="#"><i class="fa fa-floppy-o"></i>&nbsp;<span>공식
+		<li><a href="<c:url value='/scheduler/tscheduler.do'/>"><i class="fa fa-floppy-o"></i>&nbsp;<span>공식
 					스케줄</span></a></li>
 		<!-- <li><a href="#"><i class="fa fa-file-text"></i>&nbsp;<span>결재 완료함</span></a></li>
                 <li><a href="#"><i class="fa fa-history"></i>&nbsp;<span>결재 반려함</span></a></li>

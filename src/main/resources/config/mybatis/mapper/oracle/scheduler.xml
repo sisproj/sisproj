@@ -7,7 +7,7 @@
 		insert into pschedule(psch_No,psch_Text,psch_content,psch_eventlocation,psch_Start,psch_End,psch_Categ,emp_no)
 		values(#{pschNo},#{pschText},#{pschContent},#{pschEventLocation},#{pschStart},#{pschEnd}, #{pschCateg},${empNo}) 
 	</insert>
-	<!-- emp_no는 추후 수정 -->
+	
 	<select id="schedulerSelectAll" resultType="SchedulerVO" parameterType="int">
 		select * from pschedule where emp_no=#{empNo}
 	</select>
@@ -27,6 +27,32 @@
 		set psch_Text=#{pschText},psch_Content=#{pschContent},psch_eventlocation=#{pschEventLocation},psch_Categ=#{pschCateg},psch_start=#{pschStart},psch_end=#{pschEnd}
 		where psch_no=#{pschNo} 
 	</update>
+	
+	
+	
+	
+	<insert id="tschedulerInsert" parameterType="tschedulerVO">
+		insert into tschedule(tsch_No,tsch_Text,tsch_content,tsch_eventlocation,tsch_Start,tsch_End,tsch_Categ,dept_no)
+		values(#{tschNo},#{tschText},#{tschContent},#{tschEventLocation},#{tschStart},#{tschEnd}, #{tschCateg},${deptNo}) 
+	</insert>
+	<select id="tschedulerSelectAll" resultType="TschedulerVO" parameterType="int">
+		select * from tschedule where dept_No=#{deptNo}
+	</select>
+	<delete id="tschedulerDelete" parameterType="string">
+		delete from tschedule where tsch_no=#{tschNo}
+	</delete>
+	<update id="tschedulerUpdate" parameterType="TschedulerVO">
+		update tschedule
+		set tsch_start=#{tschStart},tsch_end=#{tschEnd}
+		where tsch_no=#{tschNo} 
+	</update>
+	<update id="tschedulerContentUpdate" parameterType="TschedulerVO">
+		update tschedule
+		set tsch_Text=#{tschText},tsch_Content=#{tschContent},tsch_eventlocation=#{tschEventLocation},tsch_Categ=#{pschCateg},tsch_start=#{tschStart},tsch_end=#{tschEnd}
+		where tsch_no=#{tschNo} 
+	</update>
+	
+	
 
 </mapper>
 

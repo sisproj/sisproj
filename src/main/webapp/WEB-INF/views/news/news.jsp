@@ -23,6 +23,9 @@
 	color: #069;
 	font-weight: bold;
 }
+.newsMainContent{
+line-height: 200%;
+}
 </style>
 <nav>
 	<ul>
@@ -68,14 +71,14 @@
 			<c:if test="${vo.newsMain=='Y'}">
 				<div class="w3-twothird">
 					<img src="<c:url value='/news_images/${vo.newsImage }'/>" alt="Notebook" style="width: 100%">
-					<c:if test="${fn:length(vo.newsTitle)>30 }">
+					<c:if test="${fn:length(vo.newsTitle)>50 }">
 							<h2 id="dnewstitle">
 								<a
 									href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
-									${fn:substring(vo.newsTitle,0,30) }...</a>
+									${fn:substring(vo.newsTitle,0,50) }...</a>
 							</h2>
 						</c:if>
-						<c:if test="${fn:length(vo.newsTitle)<=30}">
+						<c:if test="${fn:length(vo.newsTitle)<=50}">
 							<h2 id="dnewstitle">
 								<a
 									href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
@@ -84,13 +87,12 @@
 						</c:if>
 						
 					<div class="w3-justify">
-					<p>${vo.newsContent}</p>
-				<%-- 	<c:if test="${fn:length(vo.newsContent)>500 }">
-							<p>${fn:substring(vo.newsContent,0,500) }...</p>
+					<c:if test="${fn:length(vo.newsContent)>1000 }">
+							<p class="newsMainContent">${fn:substring(vo.newsContent,0,1000) }...</p>
 						</c:if>
-						<c:if test="${fn:length(vo.newsContent)<=500}">
-							<p style="height: 300px; width: 30%">${vo.newsContent}</p>
-						</c:if> --%>
+					<c:if test="${fn:length(vo.newsContent)<=1000}">
+							<p class="newsMainContent">${vo.newsContent}</p>
+						</c:if> 
 					</div>
 
 

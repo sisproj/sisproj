@@ -118,6 +118,13 @@
 }
 
 
+.preview{
+	color:red;
+	font-weight: bold;
+	text-align: center;
+}
+
+
 
 </style>
 
@@ -197,7 +204,7 @@
 
 		</form>
 		<div class="newsPreview">
-			미리보기
+			<div class="preview">미리보기</div>
 			<h2>
 				<div id="previewTitle"></div>
 			</h2>

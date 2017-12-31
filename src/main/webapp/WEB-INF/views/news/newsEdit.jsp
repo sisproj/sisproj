@@ -115,6 +115,11 @@
 	color: red;
 }
 
+.preview{
+	color:red;
+	font-weight: bold;
+	text-align: center;
+}
 
 
 </style>
@@ -165,8 +170,16 @@
 						<div id="newsSlc">
 							<select id="newsMain" name="newsMain">
 								<option value="0">분류</option>
-								<option value="Y">메인</option>
-								<option value="N">일반</option>
+								<option value="Y"
+								<c:if test="${newsVo.newsMain=='Y' }">
+								selected
+								</c:if>
+								>메인</option>
+								<option value="N"
+								<c:if test="${newsVo.newsMain=='N' }">
+								selected
+								</c:if>
+								>일반</option>
 							</select>
 						</div>
 						<div id="titleDiv">
@@ -188,7 +201,7 @@
 						<c:if test="${newsVo.newsImage==null }">
 						<div id="imageinput">
 						<br>
-						<i class="fa fa-camera"><input type="file" id="newsUploadImage" name="newsUploadImage"/></i>
+						<i class="fa fa-camera"><input type="file" id="newsUpImage" name="newsUpImage"/></i>
 						</div>
 						</c:if>
 						<c:if test="${newsVo.newsImage!=null }">
@@ -203,7 +216,7 @@
 
 		</form>
 		<div class="newsPreview">
-			미리보기
+			<div class="preview">미리보기</div>
 			<h2>
 				<div id="previewTitle"></div>
 			</h2>
