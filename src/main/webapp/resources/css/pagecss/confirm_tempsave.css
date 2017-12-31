@@ -131,6 +131,14 @@
 #awaittb td:nth-child(5){
 	text-align: center;
 }
+.divDelbtn{
+	width: 100%;
+	max-width:1100px;
+	margin: 0 auto;
+	padding : 10px;
+	padding-bottom:0;
+	box-sizing:border-box;	
+}
 .deleteBtn{
 	display : inline-block;
 	width: 60px;

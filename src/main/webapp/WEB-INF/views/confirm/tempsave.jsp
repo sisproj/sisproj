@@ -12,7 +12,9 @@
 				<li><a href="<c:url value='/confirm/return.do'/>"><i class="fa fa-history"></i>&nbsp;<span>결재 반려함</span></a></li>
 				<li><a href="<c:url value='/confirm/postbox.do'/>"><i class="fa fa-archive"></i>&nbsp;<span>참조 수신함</span></a></li>
 				<li><a href="<c:url value='/confirm/setting.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>결재 환경 설정</span></a></li>
-				<li><a href="<c:url value='/confirm/adm/typeform.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>결재 양식 관리</span></a></li>
+				<c:if test="${sessionScope.empVo.empLev == '관리자' }">
+					<li><a href="<c:url value='/confirm/adm/typeform.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>결재 양식 관리</span></a></li>
+				</c:if>
 			</ul>	
 			<!-- 1.왼쪽 사이드 메뉴 지정 끝-->
 			<div id="listbtn"><p><i class="fa fa-chevron-circle-left" style="text-align: center;"></i></p></div>
@@ -36,7 +38,7 @@
 				검색어 : <input type="text" name="searchKey" id="searchKey" placeholder="문서번호, 제목, 내용" value="${param.searchKeyword }">
 				<input type="button" value="검색">
 			</div>
-			<a class="deleteBtn" href="#">삭제</a>
+			<div class=divDelbtn><a class="deleteBtn" href="#">삭제</a></div>
 			<form id="tempList" name="tempList" method="post" action="<c:url value='/confirm/tempDocsDel.do'/>">
 				<table id="awaittb">
 					<thead>
@@ -71,7 +73,7 @@
 					</tbody>
 				</table>
 			</form>
-			<a class="deleteBtn" href="#">삭제</a>
+			<div class=divDelbtn><a class="deleteBtn" href="#">삭제</a></div>
 			<c:if test="${!empty docuList}">
 				<div id="pagingbtn">
 					<c:if test="${pageInfo.currentPage!=1 }">

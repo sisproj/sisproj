@@ -13,7 +13,7 @@ public interface BookmarkService {
 	
 	//북마크 플래그 str
 	public static final String STR_ADDR_BOOK = "주소록";
-	public static final String STR_SCHEDULER = "스케쥴관리";
+	public static final String STR_SCHEDULER = "스케쥴";
 	public static final String STR_RESOURCES = "자원관리";
 	public static final String STR_CONFIRM = "전자 결재";
 	public static final String STR_COMMUE = "근태 현황";
@@ -27,7 +27,7 @@ public interface BookmarkService {
 	public static final String ICON_RESOURCES = "자원관리 fa아이콘";
 	public static final String ICON_CONFIRM = "<i class='fa fa-book'></i>";
 	public static final String ICON_COMMUE = "<i class='fa fa-list-alt'></i>";
-	public static final String ICON_WEBHARD = "웹하드 fa아이콘";
+	public static final String ICON_WEBHARD = "<i class='fa fa-floppy-o'></i>";
 	public static final String ICON_NOTICE = "<i class='fa fa-bullhorn'></i>";
 	public static final String ICON_NEWS = "<i class='fa fa-newspaper-o'></i>";
 	
@@ -41,7 +41,7 @@ public interface BookmarkService {
 	public static final String URL_RESOURCES = "자원관리";
 	public static final String URL_CONFIRM = "/confirm/main.do";
 	public static final String URL_COMMUE = "/commue/commueMonthList.do";
-	public static final String URL_WEBHARD = "웹하드";
+	public static final String URL_WEBHARD = "/webhard/main.do";
 	public static final String URL_NOTICE = "/notice/noticeList.do";
 	public static final String URL_NEWS = "/news/news.do";
 	
