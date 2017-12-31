@@ -32,11 +32,11 @@
 			<!-- 3. 내용 -->
 				<div id="linebtn">
 					<!-- 내문서 && 임시 저장 || 결재대기 && !내문서  -->
-					<c:if test="${(docVo.empNo == sessionScope.empVo.empNo && docVo.cfStatus == '임시저장') || (docVo.empNo != sessionScope.empVo.empNo && docVo.cfStatus == '결재대기') }">
+					<c:if test="${(docVo.empNo == sessionScope.empVo.empNo && docVo.cfStatus == '임시저장') || (docVo.empNo != sessionScope.empVo.empNo && docVo.cfStatus == '결재대기' && docVo.cfConfirmer == sessionScope.empVo.empNo) }">
 						<input type="button" id="cf_ok" value="결재승인">&nbsp;&nbsp;
 					</c:if>
 					<!-- 내문서가 아니면서 && 결재대기 이면서&& 내 결재 차례인 경우 -->
-					<c:if test="${docVo.empNo != sessionScope.empVo.empNo && docVo.cfStatus == '결재대기' }">
+					<c:if test="${docVo.empNo != sessionScope.empVo.empNo && docVo.cfStatus == '결재대기' && docVo.cfConfirmer == sessionScope.empVo.empNo }">
 						<input type="button" id="cf_return" value="결재반려">&nbsp;&nbsp;
 					</c:if>
 					<!-- 임시저장이거나 결재반려인경우 -->
@@ -46,7 +46,7 @@
 					</c:if>
 					<!--엑셀파일로 다운로드는 결재완료인경우만-->
 					<c:if test="${docVo.cfStatus == '결재완료' }">
-						<a class="button" href="#">엑셀로 다운</a>
+						<a class="button" href="<c:url value='/confirm/getXFile.do?cfNo=${docVo.cfNo }'/>">엑셀로 다운</a>
 					</c:if>
 				</div>
 			<!-- writeform -->	

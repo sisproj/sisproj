@@ -258,11 +258,16 @@
 		});
 		
 		//유효성
+		var check = /[\\/:*?"<>|]/;
 		$('#writeFrm').submit(function(){
 			if($('input[name=cfTitle]').val()==''){
 				alert('결재문서의 제목을 입력하세요');
 				$('#doc_title').focus();
 				return false;
+			} else if(check.test($('input[name=cfTitle]').val())){
+				alert('결재문서의 제목에  \\, /, :, *, ?, ", <, >, | 문자는 사용될 수 없습니다.');
+				$('#doc_title').focus();
+				return false;				
 			} else if($('textarea[name=cfContent]').val()=='<p><br></p>'){
 				alert('결재문서의 내용을 입력하세요');
 				$('textarea[name=cfContent]').focus();
