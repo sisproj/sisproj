@@ -18,6 +18,8 @@
 	border-radius: 10px;
 	padding: 10px;
 	margin-bottom: 10px;
+	background-color: #efefef;
+	box-shadow: 1px 1px 3px #999;
 }
 #docFrm #link_cho div{
 	height: 30px;
@@ -63,6 +65,8 @@ margin-bottom: 0;
 	border-radius: 10px;
 	padding: 10px;
 	margin-bottom: 10px;
+	background-color: #efefef;
+	box-shadow: 1px 1px 3px #999;
 }
 #doc_type #dt_head input{
 	display: block;

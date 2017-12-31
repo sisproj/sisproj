@@ -11,7 +11,9 @@
 					<li><a href="<c:url value='/confirm/return.do'/>"><i class="fa fa-history"></i>&nbsp;<span>결재 반려함</span></a></li>
 					<li><a href="<c:url value='/confirm/postbox.do'/>"><i class="fa fa-archive"></i>&nbsp;<span>참조 수신함</span></a></li>
 					<li><a href="<c:url value='/confirm/setting.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>결재 환경 설정</span></a></li>
-					<li><a href="<c:url value='/confirm/adm/typeform.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>결재 양식 관리</span></a></li>
+					<c:if test="${sessionScope.empVo.empLev == '관리자' }">					
+						<li><a href="<c:url value='/confirm/adm/typeform.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>결재 양식 관리</span></a></li>
+					</c:if>
 				</ul>	
 				<!-- 1.왼쪽 사이드 메뉴 지정 끝-->
 				<div id="listbtn"><p><i class="fa fa-chevron-circle-left" style="text-align: center;"></i></p></div>
@@ -258,11 +260,16 @@
 		});
 		
 		//유효성
+		var check = /[\\/:*?"<>|]/;
 		$('#writeFrm').submit(function(){
 			if($('input[name=cfTitle]').val()==''){
 				alert('결재문서의 제목을 입력하세요');
 				$('#doc_title').focus();
 				return false;
+			} else if(check.test($('input[name=cfTitle]').val())){
+				alert('결재문서의 제목에  \\, /, :, *, ?, ", <, >, | 문자는 사용될 수 없습니다.');
+				$('#doc_title').focus();
+				return false;				
 			} else if($('textarea[name=cfContent]').val()=='<p><br></p>'){
 				alert('결재문서의 내용을 입력하세요');
 				$('textarea[name=cfContent]').focus();

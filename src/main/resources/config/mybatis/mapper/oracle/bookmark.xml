@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.bookmark">
+	<select id="selectBookMarkByEmpNo" parameterType="int" resultType="String">
+		select emp_bookmark from emp where emp_no=#{empNo}
+	</select>
+	
+	<update id="updateBookMark" parameterType="BookmarkVO">
+		update emp set emp_bookmark = #{empBookmark} where emp_no=#{empNo}
+	</update>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

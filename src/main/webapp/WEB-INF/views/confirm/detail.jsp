@@ -16,7 +16,9 @@
 					<li><a href="<c:url value='/confirm/return.do'/>"><i class="fa fa-history"></i>&nbsp;<span>결재 반려함</span></a></li>
 					<li><a href="<c:url value='/confirm/postbox.do'/>"><i class="fa fa-archive"></i>&nbsp;<span>참조 수신함</span></a></li>
 					<li><a href="<c:url value='/confirm/setting.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>결재 환경 설정</span></a></li>
-					<li><a href="<c:url value='/confirm/adm/typeform.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>결재 양식 관리</span></a></li>
+					<c:if test="${sessionScope.empVo.empLev == '관리자' }">
+						<li><a href="<c:url value='/confirm/adm/typeform.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>결재 양식 관리</span></a></li>
+					</c:if>
 				</ul>	
 				<!-- 1.왼쪽 사이드 메뉴 지정 끝-->
 				<div id="listbtn"><p><i class="fa fa-chevron-circle-left" style="text-align: center;"></i></p></div>
@@ -32,11 +34,11 @@
 			<!-- 3. 내용 -->
 				<div id="linebtn">
 					<!-- 내문서 && 임시 저장 || 결재대기 && !내문서  -->
-					<c:if test="${(docVo.empNo == sessionScope.empVo.empNo && docVo.cfStatus == '임시저장') || (docVo.empNo != sessionScope.empVo.empNo && docVo.cfStatus == '결재대기') }">
+					<c:if test="${(docVo.empNo == sessionScope.empVo.empNo && docVo.cfStatus == '임시저장') || (docVo.empNo != sessionScope.empVo.empNo && docVo.cfStatus == '결재대기' && docVo.cfConfirmer == sessionScope.empVo.empNo) }">
 						<input type="button" id="cf_ok" value="결재승인">&nbsp;&nbsp;
 					</c:if>
 					<!-- 내문서가 아니면서 && 결재대기 이면서&& 내 결재 차례인 경우 -->
-					<c:if test="${docVo.empNo != sessionScope.empVo.empNo && docVo.cfStatus == '결재대기' }">
+					<c:if test="${docVo.empNo != sessionScope.empVo.empNo && docVo.cfStatus == '결재대기' && docVo.cfConfirmer == sessionScope.empVo.empNo }">
 						<input type="button" id="cf_return" value="결재반려">&nbsp;&nbsp;
 					</c:if>
 					<!-- 임시저장이거나 결재반려인경우 -->
@@ -46,7 +48,7 @@
 					</c:if>
 					<!--엑셀파일로 다운로드는 결재완료인경우만-->
 					<c:if test="${docVo.cfStatus == '결재완료' }">
-						<a class="button" href="#">엑셀로 다운</a>
+						<a class="button" href="<c:url value='/confirm/getXFile.do?cfNo=${docVo.cfNo }'/>">엑셀로 다운</a>
 					</c:if>
 				</div>
 			<!-- writeform -->	

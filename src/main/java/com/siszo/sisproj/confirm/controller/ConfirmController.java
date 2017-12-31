@@ -1,7 +1,12 @@
 package com.siszo.sisproj.confirm.controller;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FilterOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,7 +14,15 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +33,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.siszo.sisproj.common.FileUploadUtil;
 import com.siszo.sisproj.common.PaginationInfo;
@@ -1437,12 +1451,53 @@ public class ConfirmController {
 		return "common/message";
 	}
 	
-	/*String path = fileUtil.getUploadPath(request, FileUploadUtil.ATTACHFILE);
-	for(ConfirmFileVO cfVo : oldFileList) {
-		File delFile = new File(path, cfVo.getFileName());
-		if(delFile.exists()) {
-			boolean bool = delFile.delete();
-			logger.info("기존 파일 삭제여부 bool={}", bool);
+	@RequestMapping("/getXFile.do")
+	public String getXlsx(@RequestParam String cfNo, HttpServletResponse response, Map<String,Object> map) {
+		logger.info("결재 완료 문서 엑셀로 파일 다운로드, 파라미터 cfNo={}", cfNo);
+		
+		//엑셀파일에 들어갈 문서
+		DocumentVO dVo = dService.selectDocByCfNo(cfNo);
+		logger.info("엑셀파일에 들어갈 문서 dVo={}",dVo);
+		
+		//해당문서 양식
+		DocumentFormVO dfVo = dfService.selectDocFormByFormNo(dVo.getFormNo());
+		
+		//해당문서 기안자
+		EmployeeVO writerEmpVo = dService.selectByEmpNo(dVo.getEmpNo());
+		
+		//해당문서 결재라인 
+		List<ConfirmLineVO> clVoList = clService.selectCfLineByCfNo(cfNo);
+		
+		//해당문서 연계문서
+		DocumentVO linkDoc = null;
+		if(dVo.getLinkCfNo()!=null && !dVo.getLinkCfNo().isEmpty()) {
+			linkDoc = dService.selectDocByCfNo(dVo.getLinkCfNo());
 		}
-	}*/
+		
+		//해당문서 첨부파일
+		List<ConfirmFileVO> fileList = new ArrayList<ConfirmFileVO>();
+		if(dVo.getCfIsfile().equals(DocumentService.HAVE_FILES)) {
+			fileList = cfService.selectCfFileByCfNo(cfNo);
+		}
+
+		//해당문서 의견
+		int isComment = commService.selectCommCNTByCfNo(cfNo);
+		List<CommentVO> commVoList = new ArrayList<CommentVO>();
+		if(isComment>0) {
+			commVoList = commService.selectCommByCfNo(cfNo);
+		}
+		
+		map.put("dVo", dVo);
+		map.put("dfVo", dfVo);
+		map.put("writerEmpVo", writerEmpVo);
+		map.put("clVoList", clVoList);
+		map.put("linkDoc", linkDoc);
+		map.put("fileList", fileList);
+		map.put("commVoList", commVoList);
+		
+			
+		return "confirmGetXls";
+	}
+	
+	
 }

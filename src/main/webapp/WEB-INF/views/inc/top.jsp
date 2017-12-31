@@ -43,7 +43,7 @@
             <li><a href="<c:url value=''/>">자원관리</a></li>
             <li><a href="<c:url value='/confirm/main.do'/>">전자결재</a></li>
             <li><a href="<c:url value='/commue/commueMonthList.do'/>">근태관리</a></li>
-            <li><a href="<c:url value=''/>">웹하드</a></li>
+            <li><a href="<c:url value='/webhard/main.do'/>">웹하드</a></li>
             <li><a href="<c:url value='/notice/noticeList.do'/>">공지사항</a></li>
             <li><a href="<c:url value='/news/news.do'/>">사내뉴스</a></li>
         </ul>
@@ -51,20 +51,7 @@
 </header>
 <section>
     <div id="bookmark" class="hidden">
-        <div id="bookmarkbtn">
-            <i class="fa fa-bookmark" aria-hidden="true"></i>
-            <span class="bold" style="display:none">Bookmark</span>
-        </div>
-        <ul>
-            <!-- 북마크 리스트 -->
-            <li>
-                <hr>
-            </li>
-            <li><a href="#"><i class="fa fa-pencil-square-o"></i><span style="display:none">&nbsp;전자결재</span></a></li>
-            <li><a href="#"><i class="fa fa-calendar"></i><span style="display:none">&nbsp;스케쥴</span></a></li>
-            <li><a href="#"><i class="fa fa-id-badge"></i><span style="display:none">&nbsp;근태관리</span></a></li>
-            <!-- 북마크 리스트 끝 -->
-        </ul>
+       <c:import url="/bookmark/bookmark.do" />
     </div>
     <!-- 왼쪽 사이드 메뉴 -->
     <aside>
