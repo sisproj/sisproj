@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@include file="../inc/top.jsp"%>
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="<c:url value='/resources/css/w3/w3.css'/>">
 <!-- 0. include부분 -->
 <script type="text/javascript">
 	$(function() {
