@@ -5,8 +5,13 @@
 <!-- 0. include부분 -->
 <script type="text/javascript">
 	$(function() {
+		var empno = ${sessionScope.empVo.empNo};
+		if(empno!=$('#empNochk').val()){
+			$('#editdeletechk').css('visibility','hidden');
+		} 
+		
 		$('#clickLike').click(function() {
-			$(this).css("color", "blue");
+			location.href="<c:url value='/news/newsLike.do?newsNo=${newsVo.newsNo}'/>";
 		});
 		
 		$('#btnewsEdit').click(function () {
@@ -21,7 +26,6 @@
 			}
 			
 		}); 
-		
 
 	});
 	
@@ -58,14 +62,22 @@
 #newsbtgroup{
 	float:right;
 }
+#newsempname{
+	font-weight: bold;
+}
+#reclabel{
+	font-weight: bold;
+}
+#editdeletechk{
+	float:right;
+}
 </style>
 <nav>
 	<ul>
 		<!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
-		<li class="active"><a href="<c:url value='/news/news.do'/>"><i
-				class="fa fa-pencil-square-o"></i>&nbsp;<span>뉴스 홈</span></a></li>
-		<li><a href="<c:url value='/news/dailyNews.do'/>"><i
-				class="fa fa-floppy-o"></i>&nbsp;<span>SIS 사내뉴스</span></a></li>
+		
+		<li class="active"><a href="<c:url value='/news/dailyNews.do'/>"><i
+				class="fa fa-floppy-o"></i>&nbsp;<span>SIS 뉴스홈</span></a></li>
 		<li><a href="<c:url value='/news/photoNews.do'/>"><i
 				class="fa fa-floppy-o"></i>&nbsp;<span>SIS 포토뉴스</span></a></li>
 
@@ -121,10 +133,23 @@
 			<div id="like">${newsVo.newsLike}</div>
 		</div>
 		<hr>
+		<form id="newsComfrm" method="post" action="<c:url value='/news/comWrite.do'/>">
+		<input type="hidden" id="newsNo" name="newsNo" value="${newsVo.newsNo }">
 		
-		<span id="reclabel">댓글</span>
-		<div id="rectext"><textarea style="width: 100%" rows="2"></textarea></div>
-	
+		<span id="reclabel">댓글   ${list.size() }개</span>
+		<div id="rectext"><textarea id="comContent" name="comContent" style="width: 90%" rows="2"></textarea><input style="width:10%" type="submit" value="댓글등록"></div>
+		<!-- 댓글 반복시작 -->
+		<c:forEach var="map" items="${list }">
+		<input type="hidden" id="empNochk" value="${map['EMP_NO'] }">
+		<label id="newsempname">${map['EMP_NAME'] } ${map['EMP_LEV'] }</label><br>
+		${map['COM_CONTENT'] }<br>
+		<fmt:formatDate value="${map['COM_REGDATE'] }" pattern="yyyy-MM-dd hh:mm:ss"/>
+		<div id="editdeletechk"><a href="#">수정</a>&nbsp;&nbsp;<a href="#">삭제</a></div> 
+		<br>
+		</c:forEach>		
+		
+		<!-- 댓글 반복 끝 -->
+		</form>
 	</div>
 
 
