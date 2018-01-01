@@ -93,10 +93,14 @@ public class WebhardController {
 	
 	@RequestMapping("/deleteItem.do")
 	@ResponseBody
-	public int deleteItem(@RequestParam int fileNo) {
+	public int deleteItem(@RequestParam int fileNo, HttpSession session) {
+		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
 		logger.info("파일 삭제 처리, 파라미터 fileNo={}",fileNo);
-		
-		int cnt = wService.deleteWebhard(fileNo);
+		int cnt=0;
+		WebhardVO wvo = wService.selectWebhardByFileNo(fileNo);
+		if(wvo.getEmpNo() == empVo.getEmpNo() || empVo.getEmpLev() == "관리자") {
+			cnt = wService.deleteWebhard(fileNo);			
+		}
 		
 		return cnt;
 	}

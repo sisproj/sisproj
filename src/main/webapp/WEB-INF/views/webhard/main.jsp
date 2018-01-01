@@ -26,7 +26,7 @@
         	</div>
         	<c:forEach var="file" items="${list }">
 	        	<a href="<c:url value='/webhard/${file.fileName }'/>"><div class="file" id="${file.fileNo }">
-	        		<i class="fa fa-floppy-o"></i> <span>${file.fileOriName } (업로드자  : ${file.empName })</span>
+	        		<i class="fa fa-floppy-o"></i> <span>${file.fileNo }${file.fileOriName } (업로드자  : ${file.empName })</span>
 	        	</div></a>
         	</c:forEach>
         </div>
@@ -143,7 +143,6 @@
 				window.oncontextmenu= function(){
 					 return false; 
 				}; 
-				
 				var positionLeft = e.pageX - 290;
 				var pasitionTop = e.pageY - 150;
 				
@@ -179,6 +178,8 @@
 					if(res>0){
 						alert('삭제 되었습니다.');
 						location.reload();
+					} else {
+						alert('본인이 아니면 삭제할 수 없습니다.');
 					}
 				},
 				error : function(xhr,status,error){

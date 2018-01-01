@@ -16,6 +16,7 @@
 		from webhard_file w
 		join emp e
 		on w.emp_no = e.emp_no
+		order by file_no desc
 	</select>
 	
 	<delete id="deleteWebhard" parameterType="int">
