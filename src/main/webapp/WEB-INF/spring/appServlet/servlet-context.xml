@@ -43,7 +43,9 @@
     		<mapping path="/scheduler/*"/>
     		<mapping path="/news/*"/>
     		<mapping path="/notice/*"/>  
-    		<mapping path="/confirm/*"/>  		    		  		    		
+    		<mapping path="/confirm/*"/>  
+    		<mapping path="/webhard/*"/>  
+    		<mapping path="/bookmark/*"/>  		    		  		    		
     		<mapping path="/home.do"/>
     		<beans:ref bean="loginInterceptor"/>
     	</interceptor>

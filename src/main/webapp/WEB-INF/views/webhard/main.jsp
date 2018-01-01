@@ -5,6 +5,7 @@
             <ul>
                 <!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
                 <li class="active"><a href="#"><i class="fa fa-floppy-o"></i>&nbsp;<span>웹하드</span></a></li>
+                <li class="active"><a href="#"><i class="fa fa-floppy-o"></i>&nbsp;<span>요청사항</span></a></li>
             </ul>
             <!-- 1.왼쪽 사이드 메뉴 지정 끝-->
             <div id="listbtn"><p><i class="fa fa-chevron-circle-left" style="text-align: center;"></i></p></div>
@@ -18,8 +19,11 @@
     </article>
     <article id="bodysection">
         <!-- 3. 내용 -->
-        <div id="webhard_table">
-        	
+        <div id="fileZone">
+        	Drag n Drop Here
+        	<form name="upfileFrm" id="upfileFrm" method="post" action="" enctype="multipart/form-data">
+        		<input type="file" name="upfile" multiple="multiple">
+        	</form>
         </div>
         <!-- 3. 내용 끝 -->
     </article>
