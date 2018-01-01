@@ -12,6 +12,15 @@ public class NewsVO {
 	private int newsReadCnt;
 	private int newsLike;
 	private String newsMain;
+	private int comCount;
+	
+	
+	public int getComCount() {
+		return comCount;
+	}
+	public void setComCount(int comCount) {
+		this.comCount = comCount;
+	}
 	public int getNewsNo() {
 		return newsNo;
 	}
