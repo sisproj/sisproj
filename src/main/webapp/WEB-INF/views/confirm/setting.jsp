@@ -357,6 +357,11 @@ $(function(){
 		}
 	});
 	
+	$('.modal').click(function(){
+		$('#inputTitle').fadeOut();
+		$('.modal').hide();
+	});
+	
 	//함수 : 앞 인덱스 맞춰 주기
 	function giveOrder(){
 		$('#line_detail table tbody tr').each(function(index){

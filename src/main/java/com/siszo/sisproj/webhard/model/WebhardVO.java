@@ -1,10 +1,14 @@
 package com.siszo.sisproj.webhard.model;
 
+import java.sql.Timestamp;
+
 public class WebhardVO {    
     private int fileNo;
     private String fileName;
     private String fileOriName;
     private long fileSize;
+    private Timestamp fileRegdate;
+    private String regdate;
     private int empNo;
     private String empName;
     
@@ -44,11 +48,27 @@ public class WebhardVO {
 	public void setEmpName(String empName) {
 		this.empName = empName;
 	}
+	public Timestamp getFileRegdate() {
+		return fileRegdate;
+	}
+	public void setFileRegdate(Timestamp fileRegdate) {
+		this.fileRegdate = fileRegdate;
+	}
+	public String getRegdate() {
+		return regdate;
+	}
+	public void setRegdate(String regdate) {
+		this.regdate = regdate;
+	}
 	@Override
 	public String toString() {
 		return "WebhardVO [fileNo=" + fileNo + ", fileName=" + fileName + ", fileOriName=" + fileOriName + ", fileSize="
-				+ fileSize + ", empNo=" + empNo + ", empName=" + empName + "]";
+				+ fileSize + ", fileRegdate=" + fileRegdate + ", regdate=" + regdate + ", empNo=" + empNo + ", empName="
+				+ empName + "]";
 	}
+	
+	
+	
 	
     
     

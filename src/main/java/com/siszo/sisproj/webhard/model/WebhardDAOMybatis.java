@@ -18,4 +18,14 @@ public class WebhardDAOMybatis extends SqlSessionDaoSupport implements WebhardDA
 	public List<WebhardVO> selectWebhard() {
 		return getSqlSession().selectList(namespace+".selectWebhard");
 	}
+
+	@Override
+	public int deleteWebhard(int fileNo) {
+		return getSqlSession().delete(namespace+".deleteWebhard", fileNo);
+	}
+
+	@Override
+	public WebhardVO selectWebhardByFileNo(int fileNo) {
+		return getSqlSession().selectOne(namespace+".selectWebhardByFileNo", fileNo);
+	}
 }

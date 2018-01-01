@@ -1,6 +1,7 @@
 package com.siszo.sisproj.webhard.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.siszo.sisproj.common.FileUploadUtil;
@@ -87,5 +89,28 @@ public class WebhardController {
 		}
 		
 		return result;
+	}
+	
+	@RequestMapping("/deleteItem.do")
+	@ResponseBody
+	public int deleteItem(@RequestParam int fileNo) {
+		logger.info("파일 삭제 처리, 파라미터 fileNo={}",fileNo);
+		
+		int cnt = wService.deleteWebhard(fileNo);
+		
+		return cnt;
+	}
+	
+	@RequestMapping("/fileInfo.do")
+	@ResponseBody
+	public WebhardVO fileInfo(@RequestParam int fileNo) {
+		logger.info("파일 상세정보 처리, fileNo={}",fileNo);
+		
+		WebhardVO wvo = wService.selectWebhardByFileNo(fileNo);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		wvo.setRegdate(sdf.format(wvo.getFileRegdate()));
+		
+		return wvo;
 	}
 }

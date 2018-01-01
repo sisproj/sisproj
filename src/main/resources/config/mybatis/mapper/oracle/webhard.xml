@@ -17,5 +17,17 @@
 		join emp e
 		on w.emp_no = e.emp_no
 	</select>
+	
+	<delete id="deleteWebhard" parameterType="int">
+		delete from webhard_file where file_no = #{fileNo}
+	</delete>
+	
+	<select id="selectWebhardByFileNo" resultType="WebhardVO" parameterType="int">
+		select w.*, emp_name
+		from webhard_file w
+		join emp e
+		on w.emp_no = e.emp_no
+		where file_no = #{fileNo}
+	</select>
 </mapper>
 

@@ -25,5 +25,15 @@ public class WebhardServiceImpl implements WebhardService{
 	public List<WebhardVO> selectWebhard() {
 		return wDao.selectWebhard();
 	}
+
+	@Override
+	public int deleteWebhard(int fileNo) {
+		return wDao.deleteWebhard(fileNo);
+	}
+
+	@Override
+	public WebhardVO selectWebhardByFileNo(int fileNo) {
+		return wDao.selectWebhardByFileNo(fileNo);
+	}
 	
 }
