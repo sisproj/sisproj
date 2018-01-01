@@ -139,13 +139,13 @@
 		var fileNo = 0;
 		
 		$(".file").mousedown(function(e){
-			window.oncontextmenu= function(){
-				 return false; 
-			}; 
-			/* alert("x좌표 :"+e.pageX+" ; y좌표 :"+e.pageY); */ 
-			if(e.which='3'){
-				var positionLeft = e.clientX - 290;
-				var pasitionTop = e.clientY - 150;
+			if(e.which=='3'){
+				window.oncontextmenu= function(){
+					 return false; 
+				}; 
+				
+				var positionLeft = e.pageX - 290;
+				var pasitionTop = e.pageY - 150;
 				
 				$('#rightMenu').css({
 					'top':pasitionTop,
@@ -153,7 +153,6 @@
 				});
 				
 				$('#rightMenu').fadeIn();
-				
 				fileNo = $(this).attr('id');
 			}
 		});
