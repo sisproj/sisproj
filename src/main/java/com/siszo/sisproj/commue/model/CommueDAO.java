@@ -1,5 +1,8 @@
 package com.siszo.sisproj.commue.model;
 
-public interface CommueDAO {
+import java.util.List;
 
+public interface CommueDAO {
+	public List<CommueVO> selectAllCom();
+	public int insertIn(int empNo);
 }

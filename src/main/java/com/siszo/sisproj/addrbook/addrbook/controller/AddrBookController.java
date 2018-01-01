@@ -209,18 +209,19 @@ public class AddrBookController {
 	}
 	
 	@RequestMapping("/pageCount.do")
-	@ResponseBody
-	public List<AddrBookVO> pageCount(@ModelAttribute AddrSearchVO searchVo, 
-			@RequestParam(defaultValue="10") int count){
-		logger.info("페이지수 정하기, 파라미터 searchVo={}, count={}", searchVo, count);
+	public String pageCount(@ModelAttribute AddrSearchVO searchVo, 
+			@RequestParam(defaultValue="10") int countPerPage, Model model){
+		logger.info("페이지수 정하기, 파라미터 searchVo={}, count={}", searchVo, countPerPage);
 		
-		searchVo.setRecordCountPerPage(count);
+		searchVo.setRecordCountPerPage(countPerPage);
 		logger.info("searchVo에 count값 설정 후 searchVo={}", searchVo);
 		
 		List<AddrBookVO> list=addrBookService.selectAddrBookAll(searchVo);
 		logger.info("조회 결과 list.size()={}", list.size());
 		
-		return list;
+		model.addAttribute("list", list);
+		
+		return "addrBook/addrBookList";
 	}
 	
 }
