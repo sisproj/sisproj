@@ -39,9 +39,12 @@
 				$('#searchEmp').prop('action','<c:url value="/employee/employeeCome.do"/>');
 				$('#searchEmp').submit();				
 			});
-			$('#.pl option:selected').(function () {
-				
-			})
+			
+			$('#pl option:selected').change(function () {
+				var total =  $('#pl option:selected').val();
+							
+			});
+			
 	});
 	 function pageFunc(curPage){
 		document.searchEmp.currentPage.value=curPage;
@@ -58,6 +61,7 @@
 <div id="dimyPage">
 	<form id="searchEmp" name="searchEmp" method="post" action="<c:url value='/employee/employeeList.do'/>">	
 	<input type="hidden" id="currentPage" name="currentPage" value="1">
+	
 	        <div id="dimyP">
 		        <select name="searchCondition">
 		            <option value="emp_name"

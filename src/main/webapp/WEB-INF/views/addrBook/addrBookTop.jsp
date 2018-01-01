@@ -5,6 +5,7 @@
 
 <script type="text/javascript">
 	$(function(){
+		$('#divWriteSection').hide();
 		$('#groupList').hide();
 		$('.myAddress').hover(function(){
 			$('#groupList').show();
@@ -56,15 +57,73 @@
 		$('#addressWrite').click(function(){
 			$('#divWriteSection').show();
 		});
+		
+		/* 연락처 입력 */
+		$('#btSubmit').click(function(){
+			if($('#addrName').val()==''){
+				alert("이름을 입력하세요");
+				$('#addrName').focus();
+				return false;
+			}
+			var hp="";
+			if($('#hp2').val()=='' || $('#hp3').val()==''){
+				alert("핸드폰 번호를  입력하세요");
+				$('#hp2').focus();
+				return false;
+			}else{
+				hp=$('#hp1 option:checked').val()+"-"+$('#hp2').val()+"-"+$('#hp3').val();
+			}
+			$('#addrTel').val(hp);
+			alert(hp);
+			
+			var email1 = $('#email1').val();
+			var email2 = $('#email2 option:selected').val();
+			var email3 = $('#email3').val();
+			var email="";
+			
+			if($('#email2').val()=="etc"){
+				if($('#email1').val()!="" && $('#email3').val()!=""){
+					email=email1+"@"+email3;
+				}
+			}else if($('#email1').val()!="" && $('#email2').val()!=""){
+				email=email1+"@"+email2;
+			}
+			$('#addrEmail').val(email);
+			alert("email1:"+email1);
+			alert("email2:"+email2);
+			alert("email3:"+email3);
+			alert("email:"+email);
+			
+			$('#frmWrite').submit();
+			
+		});
 		$('#btCancel').click(function(){
 			$('#divWriteSection').hide();
 		});
+		$('#btCancelU').click(function(){
+			$('#divUpdateSection').hide();
+		});
 		
+		$('#listName').click(function(){
+			$('#divUpdateSection').show();
+		});
+		
+		$('#email2').change(function(){
+			if($('#email2').val()=='etc'){
+				$('#email3').css('visibility','visible');
+				$('#email3').focus();
+				$('#email3').val('');
+			}
+		});
 		$('#selectMenu select option:selected').change(function(){
-			var count=$(this).val();
+			var countPerPage=$('#countPerPage').val();
+			countPerPage=$(this).val();
 			
+			$('#frmList').prop('action', '<c:url value="/addrBook/pageCount.do"/>');
+			$('#frmList').submit();
 			
 		});
+		
 	});
 </script>
     <style>
@@ -188,7 +247,7 @@
 		padding: 5px;
 		width: 60px;
 	}
-	#btCancel{
+	#btCancel, #btCancelU{
 		border: 1px solid rgb(195, 195, 195);
 		padding: 5px;
 		width: 60px;
@@ -197,7 +256,7 @@
 	#btSubmit i, #btEdit i{
 		color: #0f0;
 	}
-	#btCancel i{
+	#btCancel i,#btCancelU i{
 		color: #f00;
 	}
 	.center{
@@ -222,6 +281,7 @@
             <div id="listbtn"><p><i class="fa fa-chevron-circle-left" style="text-align: center;"></i></p></div>
         </nav>
     </aside>
+    
 	<!-- 내주소록 클릭시 그룹리스트 보여주기 -->		
     <div id="groupList">
        	<ul>
@@ -244,6 +304,7 @@
     
    <!--  주소록 - include 영역 시작 -->
    
+    
    
    <!--  주소록 - include 영역 끝 -->
        
