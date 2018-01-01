@@ -43,6 +43,40 @@
 	</delete>
 	
 	
+		<insert id="insertNewsCommand" parameterType="int">
+	<selectKey keyProperty="comNo" resultType="int" order="BEFORE">
+		select newscom_seq.nextval from dual
+	</selectKey>
+		insert into news_com(com_no,news_no,emp_no,com_content)
+		values(#{comNo},#{newsNo},#{empNo},#{comContent})
+	</insert>
+	
+	<select id="searchNewsCommand" resultType="map" parameterType="int">
+		select * from command_view
+		where news_no=#{news_no}
+	</select>
+	
+	<select id="countNewsCommand" resultType="int" parameterType="int">
+		select count(*) from news_com where news_no=#{newsNo}
+	</select>
+	
+	<update id="updatelikecnt" parameterType="NewsVO">
+		update news
+		set news_like=news_like+1
+		where news_no=#{newsNo}
+	</update>
+	
+	<insert id="insertlike" parameterType="NewsLikeVO">
+	<selectKey keyProperty="likeNo" resultType="int" order="BEFORE">
+		select news_like_seq.nextval from dual
+	</selectKey>
+		insert into news_like
+		values(#{likeNo},#{empNo},#{newsNo})
+	</insert>
+	
+	<select id="chklike" parameterType="NewsLikeVO" resultType="int">
+		select count(*) from newslike where emp_no=#{empNo} and news_no=#{newsNo}
+	</select>
 </mapper>
 
 

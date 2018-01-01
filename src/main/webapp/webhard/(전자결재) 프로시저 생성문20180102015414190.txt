@@ -1,0 +1,77 @@
+-- 양식(doc_form, doc_type) 등록 PL문
+create or replace procedure INS_DOC_FORM
+(
+	p_form_name doc_form.form_name%type,
+	p_type_type doc_type.type_type%type,
+	p_form_secu doc_form.form_secu%type,
+	p_form_life doc_form.form_life%type,
+	p_form_ex doc_form.form_ex%type
+)
+is
+--변수선언부
+    v_form_no number;
+    is_type_no number;
+    v_type_no number;
+begin
+--처리할 내용
+    select count(*) into is_type_no from doc_type where type_type = p_type_type;
+    
+    if(is_type_no > 0) then
+        select type_no into v_type_no from doc_type where type_type = p_type_type;
+    else
+        select doc_type_seq.nextval into v_type_no from dual;
+        insert into doc_type values(v_type_no, p_type_type);
+    end if;
+    
+    select doc_form_seq.nextval into v_form_no from dual;
+    insert into doc_form values(v_form_no, p_form_name, v_type_no, p_form_secu,p_form_life,p_form_ex);
+    commit;
+    
+EXCEPTION
+    WHEN OTHERS THEN
+	raise_application_error(-20010, '전자결재 문서 양식 등록 실패!');
+    ROLLBACK;
+end;
+
+실행문 : exec INS_DOC_FORM('시행기안서1','기안서','상1','5년1','시행할 기안이 있을 경우 이용1');
+
+
+
+
+
+
+
+-- 양식(doc_form, doc_type) 삭제 PL문
+create or replace procedure DEL_FORM_PROC
+(
+    p_form_no doc_form.form_no%type,
+    p_type_no doc_type.type_no%type
+)
+is
+    cnt_type number;
+begin
+        delete from doc_form where form_no = p_form_no;
+        select count(*) into cnt_type from doc_form where form_type_no = p_type_no;
+        if(cnt_type=0) then
+            delete from doc_type where type_no = p_type_no;
+        end if;
+        commit;
+    EXCEPTION
+        WHEN OTHERS THEN
+        raise_application_error(-20014, '전자결재 문서 양식 삭제 실패!');
+        ROLLBACK;
+end;
+
+실행문 : exec DEL_FORM_PROC(33,107);
+
+
+
+
+
+---------- 문서리스트 뷰
+create or replace view SELECT_CONFIRM
+as
+select c.*, r.is_read
+from confirm c
+join cf_is_read r
+on c.cf_no = r.cf_no;

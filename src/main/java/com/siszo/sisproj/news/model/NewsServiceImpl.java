@@ -1,9 +1,11 @@
 package com.siszo.sisproj.news.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class NewsServiceImpl implements NewsService{
@@ -33,5 +35,23 @@ public class NewsServiceImpl implements NewsService{
 	public int newsDelete(int newsNo) {
 		return newsDao.newsDelete(newsNo);
 	}
+	public int insertNewsCommand(NewsComVO vo) {
+		return newsDao.insertNewsCommand(vo);
+	}
+	public List<Map<String, Object>> searchNewsCommand(int newsNo){
+		return newsDao.searchNewsCommand(newsNo);
+	}
+	public int countNewsCommand(int newsNo) {
+		return newsDao.countNewsCommand(newsNo);
+	}
+	public int updatelikecnt(NewsVO newsVo) {
+		return newsDao.updatelikecnt(newsVo);
+	}
 	
+	public int insertlike(NewsLikeVO likeVo) {
+		return newsDao.insertlike(likeVo);
+	}
+	public int chklike(NewsLikeVO likeVo) {
+		return newsDao.chklike(likeVo);
+	}
 }
