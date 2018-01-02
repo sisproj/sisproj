@@ -32,7 +32,6 @@
     
     <!-- 엑셀 poi 관련 -->	
 	<beans:bean name="confirmGetXls" class="com.siszo.sisproj.confirm.common.ConfirmGetXls"/>
-	<beans:bean name="excelView" class="com.siszo.sisproj.emplyoee."/>
     <interceptors>
     	<interceptor>
     		<mapping path="/addrBook/*"/>
