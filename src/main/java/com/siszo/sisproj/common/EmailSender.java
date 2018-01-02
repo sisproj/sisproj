@@ -1,4 +1,4 @@
-package com.siszo.sisproj.login.controller;
+package com.siszo.sisproj.common;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
