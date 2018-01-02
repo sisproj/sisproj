@@ -1,8 +1,10 @@
 package com.siszo.sisproj.message.controller;
 
 
-import com.siszo.sisproj.common.MessageSearchVO;
+import com.siszo.sisproj.message.model.MessageSearchVO;
+import com.siszo.sisproj.common.PaginationInfo;
 import com.siszo.sisproj.common.SearchVO;
+import com.siszo.sisproj.common.Utility;
 import com.siszo.sisproj.dept.model.DeptService;
 import com.siszo.sisproj.dept.model.DeptVO;
 import com.siszo.sisproj.employee.model.EmployeeVO;
@@ -16,13 +18,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -74,20 +72,128 @@ public class MessageController {
         }
     }
 
-    @RequestMapping(value = "/message/messageReceive.do", method = RequestMethod.GET)
-    public String messageReceive_get(HttpSession session, Model model) {
+    @RequestMapping(value = "/message/messageReceive.do")
+    public String messageReceive_get(HttpSession session, @ModelAttribute MessageSearchVO messageSearchVO, Model model) {
         EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
         int empNo = empVo.getEmpNo();
         logger.info("받은 쪽지함 들어옴 messageReceive_get(), 접속 ID = {}", empNo);
 
-        MessageSearchVO messageSearchVO = new MessageSearchVO();
+        //Paging 처리에 필요한 변수를 계산해주는 PaginationInfo 생성
+        PaginationInfo pagingInfo = new PaginationInfo();
+        pagingInfo.setBlockSize(Utility.BLOCK_SIZE);
+        pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);
+        pagingInfo.setCurrentPage(messageSearchVO.getCurrentPage());
+
+        //SearchVO에 값 셋팅
+        messageSearchVO.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);
+        messageSearchVO.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
         messageSearchVO.setEmpNo(empNo);
 
-        List<MessageVO> msgList = messageService.selectRecMsgByEmpNo(messageSearchVO);
+        logger.info("messageSearchVO 입력값 : messageSearchVO={}",messageSearchVO );
 
+        List<MessageVO> msgList = messageService.selectRecMsgByEmpNo(messageSearchVO);
         logger.info("{} msgList 조회결과 list.size={}", empNo, msgList.size());
+
+        int totalRecord = messageService.selectTotalMsgRecCount(messageSearchVO);
+        logger.info("selectTotalMsgRecCount = {}", totalRecord);
+        pagingInfo.setTotalRecord(totalRecord);
+
         model.addAttribute("msgList", msgList);
+        model.addAttribute("pagingInfo", pagingInfo);
 
         return "message/messageReceive";
     }
+
+    @RequestMapping(value = "/message/messageDetail", method = RequestMethod.GET)
+    public String messageDetail_get(HttpSession session, @RequestParam(defaultValue = "0") int recNo, Model model) {
+        EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
+        int empNo = empVo.getEmpNo();
+        logger.info("상세보기 들어옴 messageDetail_get(), 입력값 recNo={}, empNo={}", recNo, empNo);
+        int result = messageService.updateReadFlag(recNo);
+        if(result > 0) {
+            MessageVO messageVO = messageService.selectRecMsgByRecNo(recNo);
+            model.addAttribute("messageVO", messageVO);
+        }
+        return "message/messageDetail";
+    }
+
+    @RequestMapping(value = "/message/messageImportantUpdate")
+    public @ResponseBody String messageImportantUpdate(@RequestParam String recNoStr) {
+        logger.info("중요쪽지 설정  messageImportant() : recNoStr={}", recNoStr);
+
+        String[] recNoArr = recNoStr.split(",");
+        for(int i = 0; i < recNoArr.length; i++) {
+            int recNo = Integer.parseInt(recNoArr[i]);
+            logger.info("chkArr 값 :  recNo={}", recNo);
+            int result = messageService.updateImpMsg(recNo);
+            logger.info("update 결과 :  result ={}", result);
+        }
+        return "OK";
+    }
+
+    @RequestMapping(value = "/message/messageImportant")
+    public String messageImportant(HttpSession session, @ModelAttribute MessageSearchVO messageSearchVO, Model model) {
+        EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
+        int empNo = empVo.getEmpNo();
+        logger.info("받은 쪽지함 들어옴 messageImportant(), 접속 ID = {}", empNo);
+
+        //Paging 처리에 필요한 변수를 계산해주는 PaginationInfo 생성
+        PaginationInfo pagingInfo = new PaginationInfo();
+        pagingInfo.setBlockSize(Utility.BLOCK_SIZE);
+        pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);
+        pagingInfo.setCurrentPage(messageSearchVO.getCurrentPage());
+
+        //SearchVO에 값 셋팅
+        messageSearchVO.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);
+        messageSearchVO.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+        messageSearchVO.setEmpNo(empNo);
+
+        logger.info("messageSearchVO 입력값 : messageSearchVO={}",messageSearchVO );
+
+        List<MessageVO> msgList = messageService.selectRecMsgByEmpNoImp(messageSearchVO);
+        logger.info("{} msgList 조회결과 list.size={}", empNo, msgList.size());
+
+        int totalRecord = messageService.selectTotalMsgRecImpCount(messageSearchVO);
+        logger.info("selectTotalMsgRecCount = {}", totalRecord);
+        pagingInfo.setTotalRecord(totalRecord);
+
+        model.addAttribute("msgList", msgList);
+        model.addAttribute("pagingInfo", pagingInfo);
+
+        return "message/messageImportant";
+    }
+
+    @RequestMapping(value = "/message/messageSend.do")
+    public String messageSend(HttpSession session, @ModelAttribute MessageSearchVO messageSearchVO, Model model) {
+        EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
+        int empNo = empVo.getEmpNo();
+        logger.info("보낸 쪽지함 들어옴 messageReceive_get(), 접속 ID = {}", empNo);
+
+        //Paging 처리에 필요한 변수를 계산해주는 PaginationInfo 생성
+        PaginationInfo pagingInfo = new PaginationInfo();
+        pagingInfo.setBlockSize(Utility.BLOCK_SIZE);
+        pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);
+        pagingInfo.setCurrentPage(messageSearchVO.getCurrentPage());
+
+        //SearchVO에 값 셋팅
+        messageSearchVO.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);
+        messageSearchVO.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+        messageSearchVO.setEmpNo(empNo);
+
+        logger.info("messageSearchVO 입력값 : messageSearchVO={}",messageSearchVO );
+
+        List<MessageVO> msgList = messageService.selectSendMsgByEmpNo(messageSearchVO);
+        logger.info("{} msgList 조회결과 list.size={}", empNo, msgList.size());
+
+        int totalRecord = messageService.selectTotalMsgSendCount(messageSearchVO);
+        logger.info("selectTotalMsgRecCount = {}", totalRecord);
+        pagingInfo.setTotalRecord(totalRecord);
+
+        model.addAttribute("msgList", msgList);
+        model.addAttribute("pagingInfo", pagingInfo);
+
+        return "message/messageSend";
+    }
+
+
 }
