@@ -6,8 +6,8 @@
 <script type="text/javascript">
 	$(function() {
 		var empno = ${sessionScope.empVo.empNo};
-		if(empno!=$('#empNochk').val()){
-			$('#editdeletechk').css('visibility','hidden');
+		if(empno!=$('.empNochk').val()){
+			$('.editdeletechk').css('visibility','hidden');
 		} 
 		
 		$('#clickLike').click(function() {
@@ -62,13 +62,13 @@
 #newsbtgroup{
 	float:right;
 }
-#newsempname{
+.newsempname{
 	font-weight: bold;
 }
 #reclabel{
 	font-weight: bold;
 }
-#editdeletechk{
+.editdeletechk{
 	float:right;
 }
 </style>
@@ -140,12 +140,13 @@
 		<div id="rectext"><textarea id="comContent" name="comContent" style="width: 90%" rows="2"></textarea><input style="width:10%" type="submit" value="댓글등록"></div>
 		<!-- 댓글 반복시작 -->
 		<c:forEach var="map" items="${list }">
-		<input type="hidden" id="empNochk" value="${map['EMP_NO'] }">
-		<label id="newsempname">${map['EMP_NAME'] } ${map['EMP_LEV'] }</label><br>
+		<input type="hidden" class="empNochk" value="${map['EMP_NO'] }">
+		<label class="newsempname">${map['EMP_NAME'] } ${map['EMP_LEV'] }</label><br>
 		${map['COM_CONTENT'] }<br>
 		<fmt:formatDate value="${map['COM_REGDATE'] }" pattern="yyyy-MM-dd hh:mm:ss"/>
-		<div id="editdeletechk"><a href="#">수정</a>&nbsp;&nbsp;<a href="#">삭제</a></div> 
+		<div class="editdeletechk"><a href="#">수정</a>&nbsp;&nbsp;<a href="#">삭제</a></div> 
 		<br>
+		<hr>
 		</c:forEach>		
 		
 		<!-- 댓글 반복 끝 -->

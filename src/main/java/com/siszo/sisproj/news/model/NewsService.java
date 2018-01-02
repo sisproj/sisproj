@@ -21,4 +21,10 @@ public interface NewsService {
 	public int updatelikecnt(NewsVO newsVo);
 	public int insertlike(NewsLikeVO likeVo);
 	public int chklike(NewsLikeVO likeVo);
+	
+	public List<NewsVO> newslikeRanking();
+	public List<Map<String, Object>> newscomRanking();
+	public int readcountup(int newsNo);
+	
+	public List<NewsVO> newsreadRanking();
 }
