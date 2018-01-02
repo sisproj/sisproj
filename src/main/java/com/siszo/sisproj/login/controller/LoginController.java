@@ -1,5 +1,6 @@
 package com.siszo.sisproj.login.controller;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.siszo.sisproj.common.EmailSender;
 import com.siszo.sisproj.employee.model.EmployeeService;
 import com.siszo.sisproj.employee.model.EmployeeVO;
 import com.siszo.sisproj.login.model.LoginService;
@@ -29,6 +31,9 @@ public class LoginController {
 
 	@Autowired
 	private LoginService loginService;
+	
+	@Autowired
+	private EmailSender emailSender;
 
 	@RequestMapping(value="/login.do",method=RequestMethod.GET)
 	public void login_get() {
@@ -105,20 +110,48 @@ public class LoginController {
 		
 		return "login/empInfo";
 	}
-	@RequestMapping("/searchPwd.do")
-	public String searchPwd(@ModelAttribute EmployeeVO vo,Model model) {
+	@RequestMapping(value="/searchPwd.do",method=RequestMethod.GET)
+	public void searchpwd_get() {
+		logger.info("비밀번호 찾기 화면 보여주기");
+	}
+	
+	@RequestMapping(value="/searchPwd.do",method=RequestMethod.POST)
+	public String searchPwd_post(@ModelAttribute EmployeeVO vo,Model model) {
 		logger.info("비밀번호 찾기 파라미터 vo={}",vo);
 		
-		String empPwd = loginService.selectPwd(vo);
-		logger.info("비밀번호 찾기 결과 empPwd={}",empPwd);
+		int result= loginService.searchPwd(vo.getEmpNo(), vo.getEmpName());
 		
-		model.addAttribute("empPwd",empPwd);
+		EmployeeVO empVo = employeeService.selectEmployeeByNo(vo.getEmpNo());
+		String msg="",url="/login/login.do";
+		if(result==loginService.ID_NONE) {
+			msg="사원번호가 일치하지않습니다";
+		}else if(result==loginService.NAME_DISAGREE){
+			msg="이름이 일치하지않습니다";
+		}else if(result==loginService.SUSSCES_SEARCH) {
+			int ranPwd=0;
+			
+			ranPwd = (int)(Math.random()*1000);				
+			
+			logger.info("변경된 비밀번호 ranPwd={}",ranPwd);
+			
+			String subject="비밀번호 찾기에 대한 이메일입니다";		
+			String content="변경된 비밀번호는 "+Integer.toString(ranPwd)+" 입니다";	
+			String receiver =empVo.getEmpEmail();			
+			String sender="admin@herbmall.com";
+			
+			try {
+				emailSender.sendEmail(subject, content, receiver, sender);
+				logger.info("이메일 발송 성공!");
+			}catch (MessagingException e) {
+				logger.info("이메일 발송 실패!");
+				e.printStackTrace();
+			}
+			
+			vo.setEmpPwd(Integer.toString(ranPwd));
+			logger.info("이메일이 발송됨과 동시에 랜던값이 비밀번호에 셋팅됨 파라미터 ranPwd={}",ranPwd);
+			msg="비밀번호가 이메일로 발송되었습니다";
+		}
 		
 		return "login/searchPwd";
 	}
-	/*@RequestMapping(value="/viewPwd.do",method=RequestMethod.GET)
-	public String viewPwd() {
-		logger.info("비밀번호 찾기후 화면 보여주기");
-		
-	}*/
 }

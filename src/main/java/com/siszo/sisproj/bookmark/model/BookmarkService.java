@@ -26,7 +26,7 @@ public interface BookmarkService {
 	public static final String ICON_SCHEDULER = "<i class='fa fa-calendar-check-o'></i>";
 	public static final String ICON_RESOURCES = "자원관리 fa아이콘";
 	public static final String ICON_CONFIRM = "<i class='fa fa-book'></i>";
-	public static final String ICON_COMMUE = "<i class='fa fa-list-alt'></i>";
+	public static final String ICON_COMMUE = "<i class='fa fa-clock-o'></i>";
 	public static final String ICON_WEBHARD = "<i class='fa fa-floppy-o'></i>";
 	public static final String ICON_NOTICE = "<i class='fa fa-bullhorn'></i>";
 	public static final String ICON_NEWS = "<i class='fa fa-newspaper-o'></i>";
