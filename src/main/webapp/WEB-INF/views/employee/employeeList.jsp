@@ -82,9 +82,7 @@
 		        </select>   
 		        <input type="text" name="searchKeyword" title="검색어 입력" value="${param.searchKeyword }">   
 				<input type="submit" value="검색">
-				<c:if test="${sessionScope.empVo.empLev=='관리자' }">
 				<input type="button" id="btEx" name="btEx" value="엑셀다운로드">
-				</c:if>
 			    <select id="pl" style="float: right;">
 					<option value="10">10명</option>
 					<option value="20">20명</option>
@@ -105,11 +103,8 @@
 				<col width="5%">
 			</colgroup>
 			<tr>
-			<c:if test="${sessionScope.empVo.empLev=='관리자' }">
 				<th><input type="checkbox" id="chkAll" name="chkAll"></th>
-			</c:if>
-			<th></th>
-				<th style="width: 10%">사원번호</th>
+				<th>사원번호</th>
 				<th>사원이름</th>
 				<th>사원부서</th>
 				<th>사원직급</th>
@@ -122,13 +117,8 @@
 				<c:if test="${empty list}">
 					<td colspan="7">사원 데이터가 없습니다</td>
 				</c:if>
-					<tr>	
-					<c:if test="${sessionScope.empVo.empLev=='관리자' }">
+					<tr>
 						<td><input type="checkbox" name="empItems[${status.index}].empNo" value="${vo.empNo}"></td>	
-					</c:if>	
-					<c:if test="${sessionScope.empVo.empLev!='관리자' }">	
-					<td></td>
-					</c:if>
 						<td>${vo.empNo }</td>
 						<!-- 사원번호로 사원 디테일 이동 -->
 						<td><a href="<c:url value='/employee/employeeDetail.do?empNo=${vo.empNo }'/>">${vo.empName}</a></td>

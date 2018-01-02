@@ -24,7 +24,7 @@
 		update empView set emp_name=#{empName},
 		emp_eName=#{empEName},emp_tel=#{empTel},emp_ssn=#{empSsn},
 		emp_email=#{empEmail},emp_zipcode=#{empZipcode},emp_addr=#{empAddr},
-		emp_addr2=#{empAddr2},emp_hiredate=#{empHiredate},emp_school=#{empSchool},
+		emp_addr2=#{empAddr2},emp_hobby=#{empHobby},emp_hiredate=#{empHiredate},emp_school=#{empSchool},
 		emp_major=#{empMajor}
 		<if test="empImg!=null and !empImg.isEmpty()">
 		,emp_img=#{empImg}

@@ -8,16 +8,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
-	$(function () {
-		$('#seFrm').submit(function () {
-			window.open("<c:url value='/login/viewPwd.do?' />",'chkPwd',
-			'left=0,top=0,width=400,height=250,locations=yes,resizable=yes');
+	$('#seBt').submit(function () {
+		$('#seFrm').prop('action','/login/searchPwd.do')
+		self.close();
 	});
 </script>
 </head>
 <body>
 <div id="dimyPage">
-	<form id="seFrm" name="seFrm" method="post" action="<c:url value='/login/searchPwd.do' />">
+	<form id="seFrm" name="seFrm" method="post">
 		<div>
 			<label>사원번호</label>
 			<input type="text" id="empNo" name="empNo">
