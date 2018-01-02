@@ -77,5 +77,13 @@ public class AddrBookServiceImpl implements AddrBookService{
 	public int selectTotalRecordCountY(AddrSearchVO searchVo) {
 		return addrBookDao.selectTotalRecordCountY(searchVo);
 	}
+	@Override
+	public AddrBookVO selectByAddrNo(int addrNo) {
+		return addrBookDao.selectByAddrNo(addrNo);
+	}
+	@Override
+	public int updateAddrBook(AddrBookVO vo) {
+		return addrBookDao.updateAddrBook(vo);
+	}
 	
 }

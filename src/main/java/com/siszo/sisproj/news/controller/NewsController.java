@@ -90,13 +90,13 @@ public class NewsController {
 			NewsVO vo = list1.get(i);
 			String cont = vo.getNewsContent().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
 			vo.setNewsContent(cont);
-			
+
 			int comcount = newsService.countNewsCommand(vo.getNewsNo());
 			vo.setComCount(comcount);
-			
+
 			list.add(vo);
 		}
-		
+
 		logger.info("데일리뉴스화면 출력 listsize={}",list.size());
 		model.addAttribute("list",list);
 
@@ -120,6 +120,7 @@ public class NewsController {
 	public String newsDetail(@RequestParam(defaultValue="0") int newsNo, Model model) {
 		NewsVO newsVo=newsService.newsSearchByNo(newsNo);
 		
+		int cnt = newsService.readcountup(newsNo);
 		List<Map<String, Object>>list=newsService.searchNewsCommand(newsNo);
 		logger.info("뉴스 디테일 화면 출력,newsVo ={}",newsVo);
 
@@ -146,27 +147,27 @@ public class NewsController {
 		logger.info("뉴스 수정처리 newsvo={}",newsVo);
 		logger.info("뉴스 수정 이미지  getNewsImage={}",newsVo.getNewsImage());
 		String msg="", url="/news/dailyNews.do";
-			if(newsVo.getNewsImage()==null || newsVo.getNewsImage().isEmpty()) {
-				List<Map<String, Object>> list=null;
-				String newsImage="";
-				try {
-					list=FileUtil.fileupload(request,FileUploadUtil.NEWS_IMAGES);			
-					//파일 업로드 한 경우
-					if(list!=null && !list.isEmpty()){
-						for(Map<String, Object> map : list){
-							newsImage=(String)map.get("fileName");		
-						}//for
-					}
-				} catch (IllegalStateException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}		
-				newsVo.setNewsImage(newsImage);
-				logger.info("뉴스 수정 이미지#############3333 getNewsImage={}",newsVo.getNewsImage());
+		if(newsVo.getNewsImage()==null || newsVo.getNewsImage().isEmpty()) {
+			List<Map<String, Object>> list=null;
+			String newsImage="";
+			try {
+				list=FileUtil.fileupload(request,FileUploadUtil.NEWS_IMAGES);			
+				//파일 업로드 한 경우
+				if(list!=null && !list.isEmpty()){
+					for(Map<String, Object> map : list){
+						newsImage=(String)map.get("fileName");		
+					}//for
+				}
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}		
+			newsVo.setNewsImage(newsImage);
+			logger.info("뉴스 수정 이미지#############3333 getNewsImage={}",newsVo.getNewsImage());
 			int cnt =0;
 			cnt=newsService.newsUpdate(newsVo);
-			
+
 			if(cnt>0) {
 				msg="뉴스 수정 성공";
 			}else {
@@ -182,20 +183,20 @@ public class NewsController {
 				msg="뉴스 수정 실패";
 			}
 		}
-		
+
 		model.addAttribute("url",url);
 		model.addAttribute("msg",msg);
 
 		return "common/message";
 	}
 
-	
+
 	@RequestMapping("/newsDelete.do")
 	public String newsDelete(@RequestParam (defaultValue="0") int newsNo, @RequestParam String newsImage, HttpServletRequest request ,Model model) {
 		logger.info("뉴스 삭제처리 newsNo={}",newsNo);
 		logger.info("oldfileName####={}",newsImage);
 		int cnt = newsService.newsDelete(newsNo);
-		
+
 		String msg="", url="";
 
 		if(cnt>0)
@@ -219,10 +220,10 @@ public class NewsController {
 
 		return "common/message";
 
-		
-		
+
+
 	}
-	
+
 	@RequestMapping("/comWrite.do")
 	public String insertCom(@ModelAttribute NewsComVO vo,@RequestParam int newsNo, HttpSession session ,Model model) {
 		EmployeeVO empVo =(EmployeeVO)session.getAttribute("empVo");
@@ -244,8 +245,8 @@ public class NewsController {
 
 		return "common/message";
 	}
-	
-	
+
+
 	@RequestMapping("/newsLike.do")
 	public String cntuplike(@ModelAttribute NewsVO vo, @RequestParam int newsNo, HttpSession session, Model model) {
 		EmployeeVO empVo =(EmployeeVO)session.getAttribute("empVo");
@@ -262,8 +263,8 @@ public class NewsController {
 				msg="추천은 한번만 가능합니다.";
 				url="/news/newsDetail.do?newsNo="+newsNo;
 			}else {*/
-				msg="추천 성공";
-				url="/news/newsDetail.do?newsNo="+newsNo;
+			msg="추천 성공";
+			url="/news/newsDetail.do?newsNo="+newsNo;
 		}else {
 			msg="추천 실패";
 			url="/news/dailyNews.do";
@@ -273,7 +274,20 @@ public class NewsController {
 
 		return "common/message";
 	}
-	
-		
-	
+
+
+	@RequestMapping("/topDailynews.do")
+	public void newslikeRanking(Model model) {
+		List<NewsVO> likelist = newsService.newslikeRanking();
+		List<Map<String, Object>> comlist = newsService.newscomRanking();
+		List<NewsVO> readlist = newsService.newsreadRanking();
+
+		model.addAttribute("likelist",likelist);
+		model.addAttribute("comlist",comlist);
+		model.addAttribute("readlist",readlist);
+	}
+
+
+
+
 }

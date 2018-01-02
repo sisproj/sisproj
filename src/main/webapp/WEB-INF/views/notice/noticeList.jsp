@@ -90,7 +90,7 @@ action="<c:url value='/notice/noticeList.do'/>">
 													</c:if>
 												</a>
 										</td>									
-										<td>${vo.empNo }</td>									
+										<td>${vo.empName }</td>									
 										<td><fmt:formatDate value="${vo.notiRegdate}" 
 											pattern="yyyy-MM-dd" /></td>								
 										<td>${vo.notiReadcnt}</td>								
@@ -129,28 +129,30 @@ action="<c:url value='/notice/noticeList.do'/>">
 				</div>
 				
 		
-		<div class="divSearch" style="text-align: center;">
-			<form name="frmSearch" method="post"
-				action="<c:url value='/notice/noticeList.do'/>">
-				<select name="searchCondition">
-					<option value="noti_title"
-						<c:if test="${param.searchCondition=='notiTitle' }"> 
-            		selected
-            	</c:if>>제목</option>
-					<option value="noti_content"
-						<c:if test="${param.searchCondition=='notiContent' }"> 
-            		selected
-            	</c:if>>내용</option>
-					<option value="emp_no"
-						<c:if test="${param.searchCondition=='empNo' }"> 
-            		selected
-            	</c:if>>작성자</option>
-				</select> <input type="text" name="searchKeyword" title="검색어 입력"
-					value="${param.searchKeyword }"> <input type="submit" class="btn btn-primary"
-					value="검색">
-			</form>
-			<a href="noticeWrite.do" class="btn btn-primary pull-right">글쓰기</a>
-			</div>
+				<div class="divSearch" style="text-align: center;">
+					<form name="frmSearch" method="post"
+						action="<c:url value='/notice/noticeList.do'/>">
+						<select name="searchCondition">
+							<option value="noti_title"
+								<c:if test="${param.searchCondition=='notiTitle' }"> 
+		            		selected
+		            	</c:if>>제목</option>
+							<option value="noti_content"
+								<c:if test="${param.searchCondition=='notiContent' }"> 
+		            		selected
+		            	</c:if>>내용</option>
+							<option value="emp_no"
+								<c:if test="${param.searchCondition=='empNo' }"> 
+		            		selected
+		            	</c:if>>작성자</option>
+						</select> <input type="text" name="searchKeyword" title="검색어 입력"
+							value="${param.searchKeyword }"> <input type="submit" class="btn btn-primary"
+							value="검색">
+					</form>
+					<c:if test="${sessionScope.empVo.empLev=='관리자'}">
+						<a href="noticeWrite.do" class="btn btn-primary pull-right">글쓰기</a>
+					</c:if>
+				</div>
 			</div>
 		</div>
 			<!-- 3. 내용 끝 -->

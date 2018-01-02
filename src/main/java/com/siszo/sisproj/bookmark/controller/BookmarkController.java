@@ -105,11 +105,11 @@ public class BookmarkController {
 	public String bookmark(HttpSession session, Model model) {
 		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
 		logger.info("북마크 리스트 불러오기");
-		
+		List<Map<String, String>> bookmarkList = null;
 		String bookmark = bService.selectBookMarkByEmpNo(empVo.getEmpNo());
 		if(bookmark!=null && !bookmark.isEmpty()) {
 			String[] bookmarkArr = bookmark.split(",");
-			List<Map<String, String>> bookmarkList = new ArrayList<Map<String,String>>();
+			bookmarkList = new ArrayList<Map<String,String>>();
 			
 			for(int i=0; i<bookmarkArr.length; i++) {
 				if(!bookmarkArr[i].equals("") && !bookmark.isEmpty()) {
@@ -120,9 +120,10 @@ public class BookmarkController {
 			}
 			logger.info("북마리 리스트 사이즈, bookmarkList.size()={}",bookmarkList.size());
 			
-			model.addAttribute("list",bookmarkList);
-			model.addAttribute("bookmark",bookmark);
 		}
+		
+		model.addAttribute("bookmarkList",bookmarkList);
+		model.addAttribute("bookmark",bookmark);
 		
 		return "bookmark/bookmark";
 	}

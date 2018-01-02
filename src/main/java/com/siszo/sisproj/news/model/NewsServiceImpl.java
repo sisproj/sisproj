@@ -54,4 +54,16 @@ public class NewsServiceImpl implements NewsService{
 	public int chklike(NewsLikeVO likeVo) {
 		return newsDao.chklike(likeVo);
 	}
+	public List<NewsVO> newslikeRanking() {
+		return newsDao.newslikeRanking();
+	}
+	public List<Map<String, Object>> newscomRanking(){
+		return newsDao.newscomRanking();
+	}
+	public int readcountup(int newsNo) {
+		return newsDao.readcountup(newsNo);
+	}
+	public List<NewsVO> newsreadRanking(){
+		return newsDao.newsreadRanking();
+	}
 }

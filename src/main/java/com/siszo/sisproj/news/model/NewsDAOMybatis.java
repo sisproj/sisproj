@@ -53,5 +53,16 @@ public class NewsDAOMybatis extends SqlSessionDaoSupport implements NewsDAO{
 	public int chklike(NewsLikeVO likeVo) {
 		return getSqlSession().selectOne(namespace+".chklike",likeVo);
 	}
-
+	public List<NewsVO> newslikeRanking() {
+		return getSqlSession().selectList(namespace+".newslikeRanking");
+	}
+	public List<Map<String, Object>> newscomRanking(){
+		return getSqlSession().selectList(namespace+".newscomRanking");
+	}
+	public int readcountup(int newsNo) {
+		return getSqlSession().update(namespace+".readcountup",newsNo);
+	}
+	public List<NewsVO> newsreadRanking(){
+		return getSqlSession().selectList(namespace+".newsreadRanking");
+	}
 }
