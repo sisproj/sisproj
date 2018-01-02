@@ -98,10 +98,10 @@ public class WebhardController {
 		logger.info("파일 삭제 처리, 파라미터 fileNo={}",fileNo);
 		int cnt=0;
 		WebhardVO wvo = wService.selectWebhardByFileNo(fileNo);
-		if(wvo.getEmpNo() == empVo.getEmpNo() || empVo.getEmpLev() == "관리자") {
+		if(wvo.getEmpNo() == empVo.getEmpNo() || empVo.getEmpLev().equals("관리자")) {
 			cnt = wService.deleteWebhard(fileNo);			
 		}
-		
+		logger.info("파일 삭제처리 결과 cnt={}",cnt);
 		return cnt;
 	}
 	

@@ -25,6 +25,7 @@ import com.siszo.sisproj.common.FileUploadUtil;
 import com.siszo.sisproj.common.PaginationInfo;
 import com.siszo.sisproj.common.SearchVO;
 import com.siszo.sisproj.common.Utility;
+import com.siszo.sisproj.employee.model.EmployeeVO;
 import com.siszo.sisproj.notice.model.NoticeService;
 import com.siszo.sisproj.notice.model.NoticeVO;
 
@@ -53,9 +54,9 @@ public class NoticeController {
 			HttpSession session,
 			Model model) {
 		logger.info("공지사항 글쓰기 처리-파라미터, vo={}", noticeVo);
-		
-		//int empNo=(Integer)session.getAttribute("empNo");
-		int empNo=20170001;
+		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
+        int empNo = empVo.getEmpNo();
+
 		noticeVo.setEmpNo(empNo);
 		
 		//파일 업로드 처리
@@ -65,6 +66,7 @@ public class NoticeController {
 				try {
 					list=fileUtil.fileupload(request, FileUploadUtil.PDS_UPLOAD_NOTI);
 					
+					logger.info("공지사항 글쓰기 list={}", list);
 					//파일 업로드 한 경우
 					if(list!=null && !list.isEmpty()) {
 						for(Map<String, Object> map : list) {
@@ -72,6 +74,8 @@ public class NoticeController {
 							fileName=(String) map.get("fileName");
 							fileSize=(Long) map.get("fileSize");
 						}//for
+						
+						logger.info("공지사항 글쓰기 fileName={}", fileName);
 					}
 				} catch (IllegalStateException e) {
 					e.printStackTrace();

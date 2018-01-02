@@ -42,7 +42,7 @@
 							</tr>
 							<tr>
 								<td>작성자</td>
-								<td colspan="2">${vo.empNo}</td>
+								<td colspan="2">${vo.empName}</td>
 							</tr>
 							<tr>
 								<td>작성일자</td>
@@ -65,12 +65,14 @@
 							</tr>
 						</tbody>
 					</table>
-					<a href="noticeList.do" class="btn btn-primary">목록</a>
-					<a href="noticeUpdate.do?notiNo=${param.notiNo}" class="btn btn-primary">수정</a>
-					<%-- <a href="noticeDelete.do?notiNo=${param.notiNo}" class="btn btn-primary">삭제</a> --%>
-					<!-- <a href="#" class="btn btn-primary" id="deleteNotice">삭제</a> -->
-					<a href="#" class="btn btn-primary" onclick="del(${param.notiNo })">삭제</a>
-					<a href="noticeWrite.do" class="btn btn-primary pull-right">글쓰기</a>
+						<a href="noticeList.do" class="btn btn-primary">목록</a>
+					<c:if test="${sessionScope.empVo.empLev=='관리자'}">
+						<a href="noticeUpdate.do?notiNo=${param.notiNo}" class="btn btn-primary">수정</a>
+						<%-- <a href="noticeDelete.do?notiNo=${param.notiNo}" class="btn btn-primary">삭제</a> --%>
+						<!-- <a href="#" class="btn btn-primary" id="deleteNotice">삭제</a> -->
+						<a href="#" class="btn btn-primary" onclick="del(${param.notiNo })">삭제</a>
+						<a href="noticeWrite.do" class="btn btn-primary pull-right">글쓰기</a>
+					</c:if>
 				</div>
 			</div>
 				<!-- 3. 내용 끝 -->
