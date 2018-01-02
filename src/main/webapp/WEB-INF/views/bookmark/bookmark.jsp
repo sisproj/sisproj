@@ -9,8 +9,8 @@
     <li>
         <hr>
     </li>
-    <c:if test="${!empty list }">
-	    <c:forEach var="map" items="${list }">    
+    <c:if test="${!empty bookmarkList }">
+	    <c:forEach var="map" items="${bookmarkList }">    
 		    <li><a href="<c:url value='${map.URL }'/>">${map.ICON }<span style="display:none">&nbsp;${map.STR }</span></a></li>
 	    </c:forEach>
     </c:if>
