@@ -52,4 +52,14 @@ public class AddrBookDAOMybatis extends SqlSessionDaoSupport implements AddrBook
 	public int selectTotalRecordCountY(AddrSearchVO searchVo) {
 		return getSqlSession().selectOne(namespace+".selectTotalRecordCountY",searchVo);
 	}
+
+	@Override
+	public AddrBookVO selectByAddrNo(int addrNo) {
+		return getSqlSession().selectOne(namespace+".selectByAddrNo",addrNo);
+	}
+
+	@Override
+	public int updateAddrBook(AddrBookVO vo) {
+		return getSqlSession().update(namespace+".updateAddrBook", vo);
+	}
 }
