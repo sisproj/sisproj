@@ -13,9 +13,12 @@ public class MessageVO {
     private String deptName;
     private String empName;
     private String posName;
+    private int empNo;
 
     private int recNo;
     private String msgReadflag;
+
+    private int cnt;
 
     public MessageVO() {
     }
@@ -27,6 +30,15 @@ public class MessageVO {
         this.msgImpflag = msgImpflag;
         this.msgRegdate = msgRegdate;
         this.sendempNo = sendempNo;
+    }
+
+
+    public int getCnt() {
+        return cnt;
+    }
+
+    public void setCnt(int cnt) {
+        this.cnt = cnt;
     }
 
     public int getMsgNo() {
@@ -115,6 +127,14 @@ public class MessageVO {
 
     public void setPosName(String posName) {
         this.posName = posName;
+    }
+
+    public int getEmpNo() {
+        return empNo;
+    }
+
+    public void setEmpNo(int empNo) {
+        this.empNo = empNo;
     }
 
     @Override

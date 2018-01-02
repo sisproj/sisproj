@@ -42,7 +42,20 @@ public class LoginServiceImpl implements LoginService{
 	}
 
 	@Override
-	public String selectPwd(EmployeeVO vo) {
-		return loginDao.selectPwd(vo);
+	public int searchPwd(int empNo, String empName) {
+		int result =0;
+		EmployeeVO vo = loginDao.selectAdmin(empNo);
+		
+		logger.info("비밀번호 찾기 파라미터  vo={}",vo);
+		
+		if(vo.getEmpNo()!=empNo) {
+			result=ID_NONE;
+		}else if(!vo.getEmpName().equals(empName)) {
+			result=NAME_DISAGREE;
+		}else if(empNo==vo.getEmpNo() && empName.equals(vo.getEmpName())) {
+			result=SUSSCES_SEARCH;
+		}
+		logger.info("비밀번호 찾기 후 결과 result={}",result);
+		return result;	
 	}
 }

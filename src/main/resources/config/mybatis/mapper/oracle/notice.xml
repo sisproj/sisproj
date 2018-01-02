@@ -43,7 +43,9 @@
 		(
 		    select rownum as RNUM, blist.*
 		    from(
-		        select * from notice 
+		        select n.*, e.emp_name 
+		        from notice n join emp e
+				on n.emp_no = e.emp_no
 		        <include refid="searchWhere"></include>
 		        order by noti_no desc		        
 		    ) blist
@@ -72,7 +74,11 @@
 	</update>
 	
 	<select id="selectByNo" parameterType="int" resultType="NoticeVO">
-		select * from notice where noti_no=#{notiNo}
+		select * from 
+			(select n.*, e.emp_name 
+	        from notice n join emp e
+			on n.emp_no = e.emp_no)
+		where noti_no=#{notiNo}
 	</select>
 	
 	<update id="updateNotice" parameterType="NoticeVO">

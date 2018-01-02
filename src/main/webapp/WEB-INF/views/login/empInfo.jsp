@@ -26,7 +26,7 @@
 		       </c:if>
 		       <c:if test="${sessionScope.empVo.empLev eq ('사원') }">
 			       <li><i class="fa fa-id-card"></i>&nbsp;<span class="name bold">${sessionScope.empVo.empName }</span></li>
-			       <li><i class="fa fa-cog"></i>&nbsp;<span><a href="<c:url value='/employee/employeeList.do'/>">마이페이지</a></span></li>
+			       <li><i class="fa fa-cog"></i>&nbsp;<span><a href="<c:url value='/employee/employeeEdit.do?empNo=${sessionScope.empVo.empNo }'/>">마이페이지</a></span></li>
 	           </c:if> 
 			</c:if>
 	        <li><i class="fa fa-envelope"></i>&nbsp;<span><a href="<c:url value='/message/message.do'/>">쪽지</a></span>&nbsp;<span

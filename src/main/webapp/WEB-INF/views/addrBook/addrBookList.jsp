@@ -31,9 +31,12 @@
 				$('#email3').focus();
 				$('#email3').val('');
 			}
-		});
+		});	
 		
-				
+		/* countPerPage 변경하기 */
+		$('#recordCountPerPage').change(function(){
+			$('#frmList').submit();			
+		});
 		
 	});	
 	
@@ -120,11 +123,12 @@
 		</div>
 		<div class="divUpdateBody">
 			<form action="<c:url value='/addrBook/addrBookUpdate.do'/>" method="post" id="frmUpdate">
-				<input type="hidden" name="addrTelUpdate" id="addrTelUpdate"> 
-				<input type="hidden" name="addrEmailUpdate" id="addrEmailUpdate">
+				<input type="hidden" name="addrTel" id="addrTelUpdate"> 
+				<input type="hidden" name="addrEmail" id="addrEmailUpdate">
+				<input type="hidden" name="addrNo" id="addrNoUpdate">
 				<div>
 					<label for="addrNameUpdate">이름</label> 
-					<input type="text" name="addrNameUpdate" id="addrNameUpdate" style="ime-mode: active">
+					<input type="text" name="addrName" id="addrNameUpdate" style="ime-mode: active">
 				</div>
 				<div>
 					<label for="hp1">핸드폰</label> 
@@ -185,16 +189,15 @@
 			        <a href="#"><div><i class="fa fa-envelope-o"></i><span> 메일 보내기</span></div></a>
 			        <a href="#"><div><i class="fa fa-file-excel-o"></i><span> 주소록 내보내기</span></div></a>
 			        <input type="hidden" id="currentPage" name="currentPage" value="1">
-			        <input type="hidden" id="countPerPage" name="countPerPage" value="10">
 			        <div>
 			        	<input type="text" placeholder="연락처 검색" id="searchKeyword" name="searchKeyword" value='${param.searchKeyword}'>
 			        	<a href="#"><i id="addrSearch" class="fa fa-search"></i></a>
 		        	</div>
 			        <div id="selectMenu">
-			        	<select>
-					        <option value="10">10개씩 보기</option>
-					        <option value="30">30개씩 보기</option>
-					        <option value="50">50개씩 보기</option>
+			        	<select id="recordCountPerPage" name="recordCountPerPage">
+					        <option value="10"<c:if test="${param.recordCountPerPage==10 }">selected</c:if>>10개씩 보기</option>
+					        <option value="30"<c:if test="${param.recordCountPerPage==30 }">selected</c:if>>30개씩 보기</option>
+					        <option value="50"<c:if test="${param.recordCountPerPage==50 }">selected</c:if>>50개씩 보기</option>
 				        </select>
 			        </div>
 			    </div>
@@ -218,11 +221,11 @@
 		        		</tr>
 		        		<c:forEach var="addrBookVo" items="${addrList }" varStatus="status">
 			        		<tr>
-			        			<td id="listNo"><input type="checkbox" name="addrItems[${status.index }].addrNo" value="${addrBookVo.addrNo}"></td>
-			        			<td id="listName"><a href="#">${addrBookVo.addrName }</a></td>
-			        			<td id="listTel">${addrBookVo.addrTel }</td>
-			        			<td id="listEmail"><a href="#">${addrBookVo.addrEmail}</a></td>
-			        			<td id="listComp">${addrBookVo.addrComp}</td>
+			        			<td><input type="checkbox" name="addrItems[${status.index }].addrNo" value="${addrBookVo.addrNo}"></td>
+			        			<td id="${addrBookVo.addrNo }"><a href="#">${addrBookVo.addrName }</a></td>
+			        			<td>${addrBookVo.addrTel }</td>
+			        			<td><a href="#">${addrBookVo.addrEmail}</a></td>
+			        			<td>${addrBookVo.addrComp}</td>
 			        			<c:forEach var="addrGroupVo" items="${groupList }">
 			        				<c:if test="${addrBookVo.groupNo==addrGroupVo.groupNo }">
 			        					<td>${addrGroupVo.groupName}</td>
