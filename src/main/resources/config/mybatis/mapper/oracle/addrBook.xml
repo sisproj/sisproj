@@ -74,6 +74,14 @@
 		delete from addrBook
 		where addr_isDel='Y' and emp_No=#{empNo}
 	</delete>
+	<select id="selectByAddrNo" parameterType="int" resultType="AddrBookVO">
+		select * from addrBookView where addr_no=#{addrNo}
+	</select>
+	<update id="updateAddrBook" parameterType="AddrBookVO">
+		update addrBook
+		set addr_Name=#{addrName}, addr_Tel=#{addrTel}, addr_Email=#{addrEmail}, addr_Comp=#{addrComp}, group_No=#{groupNo}
+		where addr_No=#{addrNo}
+	</update>
 </mapper>
 
 

@@ -133,7 +133,7 @@
 </script>
 <article id="headsection">
         <!-- 2. 페이지 이름 지정 // 북마크 지정 여부 .bookmark || .nobook -->
-        <h1><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;사원정보 수정&nbsp;<a href="#"><i class="fa fa-bookmark bookmark"
+        <h1><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;정보 수정&nbsp;<a href="#"><i class="fa fa-bookmark bookmark"
                                                                                          aria-hidden="false"></i></a>
         </h1>
     </article>
@@ -144,10 +144,10 @@
     	<div id="diInput">
       	<form id="frmEmp" name="frmEnp"    	
       	action="<c:url value='/employee/employeeEdit.do?empNo=${vo.empNo }'/>" method="post" enctype="multipart/form-data">
-      	<input type="hidden" name="empTel" id="empTel" value="${vo.empTel }">
-      	<input type="hidden" name="empSsn" id="empSsn" value="${vo.empSsn }">
-      	<input type="hidden" name="empEmail" id="empEmail" value="${vo.empEmail }">
-      	<input type="hidden" name="oldFileName" id="oldFileName" value="${vo.empImg}">
+      	<input type="text" name="empTel" id="empTel" value="${vo.empTel }">
+      	<input type="text" name="empSsn" id="empSsn" value="${vo.empSsn }">
+      	<input type="text" name="empEmail" id="empEmail" value="${vo.empEmail }">
+      	<input type="text" name="oldFileName" id="oldFileName" value="${vo.empImg}">
       	  <fieldset>
   		    <div id="diId">
       	 		<label for="name">사원번호</label>
@@ -210,7 +210,7 @@
 				<option value="7" 
 				<c:if test="${vo.posName=='사원' }">
 				selected</c:if>
-				>인턴</option>
+				>사원</option>
 				<option value="6" 
 				<c:if test="${vo.posName=='대리' }">
 				selected</c:if>
@@ -226,11 +226,11 @@
 				<option value="3" 
 				<c:if test="${vo.posName=='전무' }">
 				selected</c:if>
-				>차장</option>
+				>전무</option>
 				<option value="2" 
 				<c:if test="${vo.posName=='이사' }">
 				selected</c:if>
-				>부사장</option>
+				>이사</option>
 				<option value="1" 
 				<c:if test="${vo.posName=='사장' }">
 				selected</c:if>

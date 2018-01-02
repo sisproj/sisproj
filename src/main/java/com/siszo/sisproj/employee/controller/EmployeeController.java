@@ -96,11 +96,8 @@ public class EmployeeController {
 
 		EmployeeVO vo = employeeService.selectEmployeeByNo(empNo);
 
-		List<DeptVO> list = deptService.selectDeptName();
-
 		logger.info("사원 상세 화면 보여주기 결과 vo={}",vo);
 		model.addAttribute("vo",vo);
-		model.addAttribute("list",list);
 
 		return "employee/employeeDetail";
 	}
@@ -111,24 +108,13 @@ public class EmployeeController {
 		EmployeeVO vo =  employeeService.selectEmployeeByNo(empNo);
 
 		List<DeptVO> list= deptService.selectDeptName();
+		
 		model.addAttribute("vo",vo);
 		model.addAttribute("list",list);
 
 		logger.info("회원 수정 화면 결과값  vo={}",vo);	
 
 		return "employee/employeeEdit";
-	}
-
-	@RequestMapping(value="/employeeDetailSearch.do",method=RequestMethod.GET)
-	public String employeeDetailSerach_get(Model model) {
-		logger.info("사원 상세검색 화면 보여주기");
-
-		List<DeptVO> list = deptService.selectDeptName();
-		logger.info("사원 부서이름 구하기 list.size()={}",list.size());
-
-		model.addAttribute("list",list);
-
-		return "employee/employeeDetailSearch";
 	}
 
 	@RequestMapping(value="/employeeEdit.do",method=RequestMethod.POST)

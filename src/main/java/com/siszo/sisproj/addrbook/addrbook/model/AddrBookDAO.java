@@ -14,4 +14,6 @@ public interface AddrBookDAO {
 	public int deleteAddrBook(int empNo);
 	public int selectTotalRecordCountN(AddrSearchVO searchVo);
 	public int selectTotalRecordCountY(AddrSearchVO searchVo);
+	public AddrBookVO selectByAddrNo(int addrNo);
+	public int updateAddrBook(AddrBookVO vo);
 }
