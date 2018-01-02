@@ -26,7 +26,7 @@
         	</div>
         	<c:forEach var="file" items="${list }">
 	        	<a href="<c:url value='/webhard/${file.fileName }'/>"><div class="file" id="${file.fileNo }">
-	        		<i class="fa fa-floppy-o"></i> <span>${file.fileNo }${file.fileOriName } (업로드자  : ${file.empName })</span>
+	        		<i class="fa fa-floppy-o"></i> <span>${file.fileOriName } (업로드자  : ${file.empName })</span>
 	        	</div></a>
         	</c:forEach>
         </div>
