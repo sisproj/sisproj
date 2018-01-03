@@ -90,7 +90,6 @@
 		set group_no=(select group_no from addrgroup where group_name='미지정' and emp_no=#{empNo})
 		where group_no=#{groupNo};
 	</update>
-	
 </mapper>
 
 

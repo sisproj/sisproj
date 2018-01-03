@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.siszo.sisproj.common.EmailSender;
 import com.siszo.sisproj.commue.model.CommueService;
-import com.siszo.sisproj.commue.model.CommueVO;
 import com.siszo.sisproj.employee.model.EmployeeService;
 import com.siszo.sisproj.employee.model.EmployeeVO;
 import com.siszo.sisproj.login.model.LoginService;
@@ -73,9 +72,6 @@ public class LoginController {
 				response.addCookie(ck);
 			}
 			
-			/*int check = commueService.insertIn(vo.getEmpNo());
-			logger.info("로그인과 동시에 출근 결과 check={}",check);*/
-			
 			msg=empVo.getEmpName() +"님 로그인되었습니다.";
 			url="/home.do";
 		}else if(cnt==loginService.ID_NONE) {
@@ -110,8 +106,8 @@ public class LoginController {
 	public String detailEmployee(HttpSession session,Model model) {
 		logger.info("사원  간략정보 화면 보여주기");
 		
-		/*		String empName = (String)session.getAttribute("empName");
-		String empLev = (String)session.getAttribute("empLev");*/
+		String empName = (String)session.getAttribute("empName");
+		String empLev = (String)session.getAttribute("empLev");
 		
 		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
 	

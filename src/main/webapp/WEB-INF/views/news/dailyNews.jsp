@@ -194,6 +194,54 @@ to {
 	opacity: 1
 }
 }
+/*하단 페이징 버튼*/
+	#pagingbtn{
+		width: 100%;
+		max-width:1100px;
+		margin: 0 auto;
+		height: 40px;
+		width: auto;
+		box-sizing:border-box;
+		padding-bottom: 10px;
+		text-align:center;
+		margin-top: 10px;
+	}
+	#pagingbtn span, #pagingbtn a{
+		display: inline-block;
+		width: 24px;
+		line-height: 24px;
+		border-radius:12px;
+		background-color: #369;
+		color: fff;
+		text-align: center;
+		font-weight: bold;
+		margin-left: 5px;
+		box-shadow:2px 2px 3px #333;
+		font-size: 0.8em;
+	}
+	#pagingbtn a:hover,
+	#pagingbtn span.thispage{
+		background-color:#09f;
+		box-shadow:2px 2px 3px transparent;	
+	}
+	#pagingbtn span:first-child{
+		margin-left: 0;	
+	}
+	#pagingbtn a i {
+		line-height: 24px;
+		color: fff;
+		text-align: center;
+		font-size: 0.8em;
+	}
+	#pagingbtn #firstbtn,
+	#pagingbtn #lastbtn{
+		background-color: #333;
+	}
+	#pagingbtn #prevbtn,
+	#pagingbtn #nextbtn{
+		background-color: #306;
+	}
+	
 </style>
 <nav>
 	<ul>
@@ -388,19 +436,28 @@ to {
 			</form>
 
 			<div class="w3-bar w3-margin w3-center">
-				<a href="#" class="w3-button"
-					onclick="pageFunc(${pagingInfo.firstPage})">&laquo;</a>
-				<c:forEach var="i" begin="${pagingInfo.firstPage}"
-					end="${pagingInfo.lastPage}">
-					<c:if test="${i==pagingInfo.currentPage}">
-						<span style="font-weight: bold; color: blue" class="w3-button">${i}</span>
-					</c:if>
-					<c:if test="${i != pagingInfo.currentPage}">
-						<a href="#" onclick="pageFunc(${i})" class="w3-button">${i}</a>
-					</c:if>
-				</c:forEach>
-				<a href="#" class="w3-button"
-					onclick="pageFunc(${pagingInfo.lastPage})">&raquo;</a>
+				<div id="pagingbtn">
+						<!-- 이전 블럭으로 이동 ◀ -->
+						<c:if test="${pagingInfo.firstPage>1 }">
+							<a id="prevbtn" href="#" onclick="pageFunc(${pageInfo.firstPage-1})"><i class="fa fa-chevron-left"></i></a>	
+						</c:if>
+					
+						<!-- [1][2][3][4][5][6][7][8][9][10] -->
+						<c:forEach var="i" begin="${pagingInfo.firstPage}" end="${pagingInfo.lastPage}">
+							<c:if test="${i==pagingInfo.currentPage}">
+								<span class="thispage">${i }</span>	
+							</c:if>
+							<c:if test="${i!=pagingInfo.currentPage}">
+								<a href="#" onclick="pageFunc(${i })">${i }</a>		
+					 		</c:if>				
+						</c:forEach>
+					
+						<!-- 다음 블럭으로 이동 ▶ -->
+						<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage}">
+							<a id=nextbtn href="#" onclick="pageFunc(${pagingInfo.lastPage+1})"><i class="fa fa-chevron-right"></i></a>
+						</c:if>
+					
+				</div>
 			</div>
 		</div>
 	</c:if>

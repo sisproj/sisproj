@@ -6,9 +6,9 @@ public class MessageVO {
     private int msgNo;
     private String msgTitle;
     private String msgContent;
-    private String msgImpflag;
     private Timestamp msgRegdate;
     private int sendempNo;
+    private String sendDelflag;
 
     private String deptName;
     private String empName;
@@ -16,8 +16,8 @@ public class MessageVO {
     private int empNo;
 
     private int recNo;
+    private String msgImpflag;
     private String msgReadflag;
-
     private String msgDelflag;
 
     private int cnt;
@@ -25,30 +25,14 @@ public class MessageVO {
     public MessageVO() {
     }
 
-    public MessageVO(int msgNo, String msgTitle, String msgContent, String msgImpflag, Timestamp msgRegdate, int sendempNo) {
+
+    public MessageVO(int msgNo, String msgTitle, String msgContent, Timestamp msgRegdate, int sendempNo, String sendDelflag) {
         this.msgNo = msgNo;
         this.msgTitle = msgTitle;
         this.msgContent = msgContent;
-        this.msgImpflag = msgImpflag;
         this.msgRegdate = msgRegdate;
         this.sendempNo = sendempNo;
-    }
-
-
-    public String getMsgDelflag() {
-        return msgDelflag;
-    }
-
-    public void setMsgDelflag(String msgDelflag) {
-        this.msgDelflag = msgDelflag;
-    }
-
-    public int getCnt() {
-        return cnt;
-    }
-
-    public void setCnt(int cnt) {
-        this.cnt = cnt;
+        this.sendDelflag = sendDelflag;
     }
 
     public int getMsgNo() {
@@ -75,14 +59,6 @@ public class MessageVO {
         this.msgContent = msgContent;
     }
 
-    public String getMsgImpflag() {
-        return msgImpflag;
-    }
-
-    public void setMsgImpflag(String msgImpflag) {
-        this.msgImpflag = msgImpflag;
-    }
-
     public Timestamp getMsgRegdate() {
         return msgRegdate;
     }
@@ -99,20 +75,12 @@ public class MessageVO {
         this.sendempNo = sendempNo;
     }
 
-    public int getRecNo() {
-        return recNo;
+    public String getSendDelflag() {
+        return sendDelflag;
     }
 
-    public void setRecNo(int recNo) {
-        this.recNo = recNo;
-    }
-
-    public String getMsgReadflag() {
-        return msgReadflag;
-    }
-
-    public void setMsgReadflag(String msgReadflag) {
-        this.msgReadflag = msgReadflag;
+    public void setSendDelflag(String sendDelflag) {
+        this.sendDelflag = sendDelflag;
     }
 
     public String getDeptName() {
@@ -147,20 +115,64 @@ public class MessageVO {
         this.empNo = empNo;
     }
 
+    public int getRecNo() {
+        return recNo;
+    }
+
+    public void setRecNo(int recNo) {
+        this.recNo = recNo;
+    }
+
+    public String getMsgReadflag() {
+        return msgReadflag;
+    }
+
+    public void setMsgReadflag(String msgReadflag) {
+        this.msgReadflag = msgReadflag;
+    }
+
+    public String getMsgDelflag() {
+        return msgDelflag;
+    }
+
+    public void setMsgDelflag(String msgDelflag) {
+        this.msgDelflag = msgDelflag;
+    }
+
+    public int getCnt() {
+        return cnt;
+    }
+
+    public void setCnt(int cnt) {
+        this.cnt = cnt;
+    }
+
+    public String getMsgImpflag() {
+        return msgImpflag;
+    }
+
+    public void setMsgImpflag(String msgImpflag) {
+        this.msgImpflag = msgImpflag;
+    }
+
     @Override
     public String toString() {
         return "MessageVO{" +
                 "msgNo=" + msgNo +
                 ", msgTitle='" + msgTitle + '\'' +
                 ", msgContent='" + msgContent + '\'' +
-                ", msgImpflag='" + msgImpflag + '\'' +
                 ", msgRegdate=" + msgRegdate +
                 ", sendempNo=" + sendempNo +
+                ", sendDelflag='" + sendDelflag + '\'' +
                 ", deptName='" + deptName + '\'' +
                 ", empName='" + empName + '\'' +
                 ", posName='" + posName + '\'' +
+                ", empNo=" + empNo +
                 ", recNo=" + recNo +
+                ", msgImpflag='" + msgImpflag + '\'' +
                 ", msgReadflag='" + msgReadflag + '\'' +
+                ", msgDelflag='" + msgDelflag + '\'' +
+                ", cnt=" + cnt +
                 '}';
     }
 }

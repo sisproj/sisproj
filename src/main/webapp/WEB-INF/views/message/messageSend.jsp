@@ -2,7 +2,8 @@
 <jsp:useBean id="now" class="java.util.Date"/>
 <%@include file="../inc/top.jsp" %>
 <!-- 0. include부분 -->
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="<c:url value='/resources/css/w3/w3.css'/>">
+<link rel="stylesheet" href="<c:url value='/resources/css/pagecss/message.css'/>">
 <style>
     .message-button {
         margin: 30px;
@@ -68,12 +69,12 @@
     <!-- 3. 내용 -->
     <div class="w3-container w3-margin">
         <h5>
-            <b class="w3-bar-item">받은 쪽지함</b>
+            <b class="w3-bar-item">보낸 쪽지함</b>
         </h5>
         <table class="w3-table w3-bordered" style="width: 90%; margin-left: 5%">
             <thead>
             <tr class=" w3-border-bottom">
-                <th>
+                <th style="width: 68px">
                     <div class="w3-button w3-light-grey">
                         <input type="checkbox" id="checkAllMessage">
                     </div>
@@ -105,9 +106,8 @@
             </thead>
             <c:if test="${empty msgList}">
                 <tr>
-                    <td colspan="3">받은 쪽지가 없습니다.</td>
+                    <td colspan="3">보낸 쪽지가 없습니다.</td>
                 </tr>
-
             </c:if>
             <c:forEach items="${msgList}" var="msgVO">
                 <tr class="hoverable" id="msg-${msgVO.recNo}">
@@ -117,9 +117,6 @@
                     <td style="width: 65%">
                         <div onclick="window.open('<c:url
                                 value="/message/sendDetail.do?msgNo=${msgVO.msgNo}"/>', 'messageWindow', 'width=540,height=500,left=300,top=300,toolbar=no,scrollbars=no,resizable=no');">
-                            <c:if test="${msgVO.msgImpflag eq 'Y'}">
-                                <span class="w3-border w3-round w3-tiny w3-light-gray">중요 쪽지</span>
-                            </c:if>
                             <a href="#" onclick="messageDetailOpen('msg-${msgVO.recNo}')">${msgVO.msgTitle}</a>
                         </div>
 
@@ -139,24 +136,33 @@
         </table>
 
         <%--페이징 처리--%>
-        <form name="frmPage" method="post" action="<c:url value='/message/receive.do'/>">
+        <form name="frmPage" method="post" action="<c:url value='/message/send.do'/>">
             <input type="hidden" name="searchKeyword"
                    value="${param.searchKeyword }">
             <input type="hidden" name="currentPage">
         </form>
 
-        <div class="w3-bar w3-margin w3-center">
-            <a href="#" class="w3-button" onclick="pageFunc(${pagingInfo.firstPage})">&laquo;</a>
-            <c:forEach var="i" begin="${pagingInfo.firstPage}" end="${pagingInfo.lastPage}">
-                <c:if test="${i==pagingInfo.currentPage}">
-                    <span style="font-weight:bold;color:blue" class="w3-button">${i}</span>
-                </c:if>
-                <c:if test="${i != pagingInfo.currentPage}">
-                    <a href="#" onclick="pageFunc(${i})" class="w3-button">${i}</a>
-                </c:if>
-            </c:forEach>
-            <a href="#" class="w3-button" onclick="pageFunc(${pagingInfo.lastPage})">&raquo;</a>
-        </div>
+        <div id="pagingbtn">
+			<!-- 이전 블럭으로 이동 ◀ -->
+			<c:if test="${pagingInfo.firstPage>1 }">
+				<a id="prevbtn" href="#" onclick="pageFunc(${pageInfo.firstPage-1})"><i class="fa fa-chevron-left"></i></a>	
+			</c:if>
+		
+			<!-- [1][2][3][4][5][6][7][8][9][10] -->
+			<c:forEach var="i" begin="${pagingInfo.firstPage}" end="${pagingInfo.lastPage}">
+				<c:if test="${i==pagingInfo.currentPage}">
+					<span class="thispage">${i }</span>	
+				</c:if>
+				<c:if test="${i!=pagingInfo.currentPage}">
+					<a href="#" onclick="pageFunc(${i })">${i }</a>		
+				</c:if>				
+			</c:forEach>
+		
+			<!-- 다음 블럭으로 이동 ▶ -->
+			<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage}">
+				<a id=nextbtn href="#" onclick="pageFunc(${pagingInfo.lastPage+1})"><i class="fa fa-chevron-right"></i></a>
+			</c:if>
+		</div>
         <!-- 3. 내용 끝 -->
 </article>
 <!-- 4. 상단 네비 색먹이기 // li태그 순서(전자결재 : 6번째) 입력 -->
@@ -164,10 +170,6 @@
     function pageFunc(curPage) {
         document.frmPage.currentPage.value = curPage;
         frmPage.submit();
-    }
-
-    function messageDetailOpen(data) {
-        $('#' + data).attr("class", "w3-light-gray readMessage");
     }
 
     function updateImpMsg() {

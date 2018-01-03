@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.siszo.sisproj.addrbook.addrgroup.model.AddrGroupDAO;
+import com.siszo.sisproj.addrbook.addrgroup.model.AddrGroupVO;
 import com.siszo.sisproj.common.AddrSearchVO;
 
 @Service

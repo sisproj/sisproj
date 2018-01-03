@@ -4,12 +4,12 @@
 
 <mapper namespace="config.mybatis.mapper.oracle.commue">
 	
-	<insert id="insertIn" parameterType="int">
+	<insert id="insertIn" parameterType="CommueVO">
 		<selectKey keyProperty="cmtNo" resultType="int" order="BEFORE">
 			select cmt_seq.nextval from dual
 		</selectKey>
-			insert into commute(cmt_no,emp_no,cmt_in)
-			values(#{cmtNo},#{empNo},sysdate)
+			insert into commute(cmt_no,emp_no)
+			values(#{cmtNo},#{empNo})
 	</insert>
 	
 	<update id="updateOut" parameterType="int">
@@ -18,8 +18,20 @@
 		where cmt_no=#{cmtNo}
 	</update>
 	
-	<select id="selectAll" resultType="CommueVO">
+	
+	<select id="checkCmt" parameterType="int" resultType="CommueVO">
 		select * from commute
+		where emp_no=#{empNo} and cmt_no=#{cmtNo}
+	</select>
+	
+	<select id="selectByEmpNo" parameterType="int" resultType="CommueVO">
+		select cmt.*
+		from (select * from commute where emp_no=#{empNo} order by cmt_no desc) cmt
+		<![CDATA[where rownum<2 ]]>
+	</select>
+	
+	<select id="selectAll" resultType="CommueVO">
+		select * from cmtView
 	</select>
 </mapper>
 
