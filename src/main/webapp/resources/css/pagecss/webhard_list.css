@@ -6,6 +6,7 @@
 	padding-bottom:0;
 	box-sizing:border-box;
 	text-align: right;
+	margin-bottom: 10px;
 }
 #search input[type=text]{
 	width:200px;
@@ -29,6 +30,7 @@
 	box-sizing:border-box;
 	padding-bottom: 10px;
 	text-align:center;
+	margin-top: 10px;
 }
 #pagingbtn span, #pagingbtn a{
 	display: inline-block;

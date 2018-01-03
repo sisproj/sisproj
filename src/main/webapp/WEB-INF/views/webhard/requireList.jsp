@@ -31,7 +31,6 @@
 				검색어 : <input type="text" name="searchKey" id="searchKey" placeholder="제목, 작성자, 내용" value="${param.searchKeyword }">
 				<input type="button" value="검색">
 			</div>
-			<div class=divDelbtn><a class="deleteBtn" href="#">삭제</a></div>
 			<form id="tempList" name="tempList" method="post" action="<c:url value='/confirm/tempDocsDel.do'/>">
 				<table id="awaittb">
 					<thead>
@@ -53,12 +52,7 @@
 						<c:if test="${!empty webBoardList }">
 							<c:forEach var="webBoard" items="${webBoardList }" varStatus="status">
 								<tr>
-									<c:if test="${sessionScope.empVo.empLev == '관리자' }">
-										<td><input type="checkbox" class="delchkbox" name="docuItems[${status.index }].cfNo" value="${webBoard.webNo }"></td>
-									</c:if>
-									<c:if test="${sessionScope.empVo.empLev != '관리자' }">
-										<td>${webBoard.webNo }</td>
-									</c:if>
+									<td>${webBoard.webNo }</td>
 									<td><a href="<c:url value='/webhard/detail.do?webNo=${webBoard.webNo }'/>">
 										${webBoard.webTitle }
 										<c:if test="${webBoard.commCnt > 0 }">
@@ -74,9 +68,6 @@
 					</tbody>
 				</table>
 			</form>
-			<div class=divDelbtn>
-				<a class="deleteBtn" href="#">삭제</a>			
-			</div>
 			<c:if test="${!empty webBoardList}">
 				<div id="pagingbtn">
 					<c:if test="${pageInfo.currentPage!=1 }">
