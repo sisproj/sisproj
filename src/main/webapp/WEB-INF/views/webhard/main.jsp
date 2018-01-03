@@ -21,6 +21,7 @@
     </article>
     <article id="bodysection">
         <!-- 3. 내용 -->
+        <p style="font-size: 0.8em; text-align:right;" class="red">- 파일을 드래그 해서 업로드 하세요 -</p>
         <div id="fileZone">
         	<div id=searchSec>
         		<label>파일 검색 </label><input type="text" id="searchFile">

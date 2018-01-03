@@ -60,7 +60,11 @@
 										<td>${webBoard.webNo }</td>
 									</c:if>
 									<td><a href="<c:url value='/webhard/detail.do?webNo=${webBoard.webNo }'/>">
-										${webBoard.webTitle } <img alt="New" src="<c:url value='/resources/images/icon_new.gif'/>">
+										${webBoard.webTitle }
+										<c:if test="${webBoard.commCnt > 0 }">
+											[${webBoard.commCnt }]
+										</c:if> 
+										<%-- <img alt="New" src="<c:url value='/resources/images/icon_new.gif'/>"> --%>
 									</a></td>
 									<td>${webBoard.empName }</td>
 									<td><fmt:formatDate value="${webBoard.webRegdate }" pattern="yyyy-MM-dd"/></td>
