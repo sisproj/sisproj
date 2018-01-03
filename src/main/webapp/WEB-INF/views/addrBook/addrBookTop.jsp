@@ -106,7 +106,7 @@
 		});	
 		
 		/* 리스트의 이름 클릭시 수정창 띄우며 정보 보여주기 */
-		$('.divAddrBody table tbody tr td: ).click(function(){
+		$('.divAddrBody table tbody tr td:nth-child(2) ').click(function(){
 			$('#divUpdateSection').css('visibility', 'visible');
 			
 			$('#addrNameUpdate').val('');
@@ -211,6 +211,17 @@
 			$('#frmUpdate').submit();
 		});
 		
+		
+		/* 그룹추가 영역 */
+		$('#insertGroup').click(function(){
+			$('#divInsertGroup').css('visibility','visible');
+		});
+		
+		$('#btExit').click(function(){
+			$('#divInsertGroup').css('visibility','hidden');
+		});
+		
+		/*그룹추가 영역 끝*/
 
 	});
 </script>
@@ -258,11 +269,11 @@
     		margin-top: 10px;
     		overflow: auto;
     	}
-    	.divAddrBody table{
+    	.divAddrBody table, .divInsertGroupList table{
     		border-collapse: collapse;
     		width: 100%;
     	}
-    	.divAddrBody table tr{
+    	.divAddrBody table tr, .divInsertGroupList table tr{
     		border-bottom: 1px solid rgb(245,245,245);
     		border-top: 1px solid rgb(195,195,195);
     		background-color: #fff;
@@ -313,9 +324,25 @@
 		left: 40%;
 		visibility: hidden;
 	}
+	#divInsertGroup{
+		width: 440px;
+		border: 1px solid rgb(195, 195, 195);
+		position: fixed;
+		left: 40%;
+		visibility: hidden;
+	}
 	.divWriteBody, .divUpdateBody{
 		width: 530px;
 		height:230px;
+		padding: 10px;
+	}
+	.divInsertGroupList{
+		width: 400px;
+		padding: 10px;
+	}
+	.divInsertNewGroup{
+		width: 400px;
+		height : 50px;
 		padding: 10px;
 	}
 	.divWriteBody label, .divUpdateBody label{
@@ -326,28 +353,34 @@
 		clear: left;
 		font-weight: bold;
 	}
-	.divWriteBody input, .divUpdateBody input{
+	.divWriteBody input, .divUpdateBody input {
 		line-height: 20px;
 		width: 120px;
+	}
+	.divInsertNewGroup input{
+		line-height: 27px;
+		width: 183px;
+		align:absmiddle;
+		margin-right: 40px;
 	}
 	.divWriteBody select, .divUpdateBody select{
 		height: 24px;
 	}
-	#btSubmit, #btEdit{
+	#btSubmit, #btEdit, #btNewGroup{
 		border: 1px solid rgb(195, 195, 195);
 		padding: 5px;
 		width: 60px;
 	}
-	#btCancel, #btCancelU{
+	#btCancel, #btCancelU, #btExit{
 		border: 1px solid rgb(195, 195, 195);
 		padding: 5px;
 		width: 60px;
 		margin-left: 10px;
 	}
-	#btSubmit i, #btEdit i{
+	#btSubmit i, #btEdit i, #btNewGroup i{
 		color: #0f0;
 	}
-	#btCancel i,#btCancelU i{
+	#btCancel i,#btCancelU i, #btExit i{
 		color: #f00;
 	}
 	.center{
@@ -364,7 +397,7 @@
                 	<i id="myAddressRight" class="myAddress fa fa-chevron-right"></i></a>
                 </li>
                 <li id="addressWrite"><a href="#"><i class="fa fa-user-plus"></i>&nbsp;<span>연락처 추가</span></a></li>
-                <li><a href="#"><i class="fa fa-users"></i>&nbsp;<span>그룹 추가</span></a></li>
+                <li id="insertGroup"><a href="#"><i class="fa fa-users"></i>&nbsp;<span>그룹 추가</span></a></li>
                 <li><a href="<c:url value='/addrBook/addrBookTrash.do'/>"><i class="fa fa-trash"></i>&nbsp;<span>휴지통</span></a></li>
             </ul>
             <!-- 1.왼쪽 사이드 메뉴 지정 끝-->

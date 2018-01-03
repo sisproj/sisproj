@@ -175,6 +175,35 @@
 	</div>
     <!-- 연락처 upadte 영역 끝 -->
     
+    <!-- 그룹 추가 영역 -->
+    <div id="divInsertGroup">
+    	<div class="divInsertGroupHeader">
+			<h3>그룹 추가</h3>
+		</div>
+		<div class="divInsertGroupList">
+			<table>
+				<colgroup>
+					<col style="width: 70%">
+					<col style="width: 30%">
+				</colgroup>
+				<tr>
+					<td>가족</td>
+					<td><a href="#">삭제</a></td>
+				</tr>
+	
+			</table>
+		</div>
+    	<div class="divInsertNewGroup">
+    	<hr><br>
+    		<input type="text" placeholder="그룹명 입력">
+    		<a href="#"><span id="btNewGroup"><i class="fa fa-check"></i> 그룹생성</span></a>
+    		<a href="#"><span id="btExit"><i class="fa fa-times"></i> 닫기</span></a>
+    	</div>
+    </div>
+    
+    <!-- 그룹 추가 영역 끝 --> 
+    
+    
     
     
 	    <form name="frmList" id="frmList" method="post" action="<c:url value='/addrBook/addrBookList.do'/>">
