@@ -5,10 +5,8 @@
 
 <script type="text/javascript">
 	$(function(){
-		$('#divWriteSection').hide();
-		$('#groupList').hide();
 		$('.myAddress').mouseenter(function(){
-			$('#groupList').show();
+			$('#groupList').css('visibility', 'visible');
 			var empNo="empNo="+${sessionScope.empVo.empNo};
 			/* alert(empNo); */
 			$('#groupList ul').val("");
@@ -18,29 +16,32 @@
 				dataType:"json",
 				type:"get",
 				success:function(res){
-					$('#groupList ul').html("<li>   전체주소록<ul></ul></li>");
+					$('#groupList ul').html("<li>   <span id='0'>전체주소록</span><ul></ul></li>");
 					if(res.length>0 ){
 						$.each(res, function(idx, item){				
-							$('#groupList ul li ul').append("<li id='"+item.groupNo+"'>    └ "+item.groupName+"</li>");
-							
-							
-							
-							$('#groupList ul li').click(function(){
-								$('#groupList').hide(); 
-							});
-						});							
+							$('#groupList ul li ul').append("<li>    <span id='"+item.groupNo+"'>└ "+item.groupName+"</span></li>");
+						});						
+						
+						$('#groupList li span').click(function(){
+							var groupNo=$(this).attr('id');							
+							$('#frmList #groupNo').val(groupNo);
+							$('#frmList').submit();							
+						$('#groupList').css('visibility', 'hidden');
+						}); 		
+						
+													
 					}else{
 						$('#searchResult ul li ul').html("<li>그룹을 생성하세요</li>");
 					}					
 				},
 				error:function(xhr, status, error){
 					alert("에러 : "+status+"=>"+error);
-				}
-			
+				}			
 			});			
-		});
+		});//////
 		
-
+		
+		
 		$('.divAddrBody table td').hover(function(){
 			$(this).parent().css('background','rgb(245,245,245)');
 		},function(){
@@ -60,7 +61,7 @@
 		$('.divAddrBody table tr:eq(0)').css('border-bottom','1px solid rgb(195, 195, 195)');
 		
 		$('#addressWrite').click(function(){
-			$('#divWriteSection').show();
+			$('#divWriteSection').css('visibility', 'visible');
 		});
 		
 		/* 연락처 입력 */
@@ -98,15 +99,15 @@
 			
 		});
 		$('#btCancel').click(function(){
-			$('#divWriteSection').hide();
+			$('#divWriteSection').css('visibility', 'hidden');
 		});
 		$('#btCancelU').click(function(){
-			$('#divUpdateSection').hide();
+			$('#divUpdateSection').css('visibility', 'hidden');
 		});	
 		
 		/* 리스트의 이름 클릭시 수정창 띄우며 정보 보여주기 */
-		$('.divAddrBody table tbody tr td:nth-child(2)').click(function(){
-			$('#divUpdateSection').show();
+		$('.divAddrBody table tbody tr td: ).click(function(){
+			$('#divUpdateSection').css('visibility', 'visible');
 			
 			$('#addrNameUpdate').val('');
 			$('#hp1Update').val('010');
@@ -293,6 +294,7 @@
 			transition : all 500ms linear;
 			z-index: 9999;
 			cursor: pointer;
+			visibility: hidden;
 		}
 		#groupList ul > li{
 			list-style: none;
@@ -309,6 +311,7 @@
 		border: 1px solid rgb(195, 195, 195);
 		position: fixed;
 		left: 40%;
+		visibility: hidden;
 	}
 	.divWriteBody, .divUpdateBody{
 		width: 530px;
@@ -357,13 +360,12 @@
         <nav>
             <ul>
                 <!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
-                <li id="addressList"><a href="#"><i class="fa fa-address-book-o"></i>&nbsp;<span>내 주소록</span>
+                <li id="addressList"><a href="<c:url value='/addrBook/addrBookList.do'/>"><i class="fa fa-address-book-o"></i>&nbsp;<span>내 주소록</span>
                 	<i id="myAddressRight" class="myAddress fa fa-chevron-right"></i></a>
                 </li>
                 <li id="addressWrite"><a href="#"><i class="fa fa-user-plus"></i>&nbsp;<span>연락처 추가</span></a></li>
                 <li><a href="#"><i class="fa fa-users"></i>&nbsp;<span>그룹 추가</span></a></li>
                 <li><a href="<c:url value='/addrBook/addrBookTrash.do'/>"><i class="fa fa-trash"></i>&nbsp;<span>휴지통</span></a></li>
-                <li><a href="#"><i class="fa fa-cog"></i>&nbsp;<span>환경설정</span></a></li>
             </ul>
             <!-- 1.왼쪽 사이드 메뉴 지정 끝-->
             <div id="listbtn"><p><i class="fa fa-chevron-circle-left" style="text-align: center;"></i></p></div>
