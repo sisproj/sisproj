@@ -31,6 +31,9 @@
 	<select id="selectTotalRecordCountN" resultType="int" parameterType="AddrSearchVO">
 		select count(*) from addrBookView
 		where addr_isdel='N' and emp_no=#{empNo}
+		<if test="groupNo!=0">
+			and group_no=#{groupNo}		
+		</if>
 		<include refid="searchWhere"></include>		
 	</select>
 	<select id="selectTotalRecordCountY" resultType="int" parameterType="AddrSearchVO">

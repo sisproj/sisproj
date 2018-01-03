@@ -7,10 +7,7 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="<c:url value='/resources/js/bootstrap/bootstrap.min.js'/>"></script>
 <script type="text/javascript">
-	$(function(){
-		
-		$('#divUpdateSection').hide();
-		
+	$(function(){		
 		$('#divDeleteMulti').click(function(){
 			var len=$('td input[type=checkbox]:checked').length;
 			if(len==0){
@@ -35,6 +32,9 @@
 		
 		/* countPerPage 변경하기 */
 		$('#recordCountPerPage').change(function(){
+			if($('#groupNo').val()==''){
+				$('#groupNo').val('0');
+			}
 			$('#frmList').submit();			
 		});
 		
@@ -93,17 +93,12 @@
 				</div>
 				<div>
 					<label for="groupNo">그룹</label> 
-					<select name="groupNo" id="groupNo">
+					<select name="groupNo">
 						<c:if test="${!empty groupList }">
 							<c:forEach var="addrGroupVo" items="${groupList }" >
 								<option value="${addrGroupVo.groupNo }">${addrGroupVo.groupName }</option>
 							</c:forEach>
 						</c:if>
-						<!-- 	<option value=""></option>
-				    	<option value="2">가족</option>
-				    	<option value="3">친구</option>
-				    	<option value="4">거래처</option>
-				    	<option value="5">동아리</option> -->
 					</select>
 				</div>
 				<hr>
@@ -189,8 +184,9 @@
 			        <a href="#"><div><i class="fa fa-envelope-o"></i><span> 메일 보내기</span></div></a>
 			        <a href="#"><div><i class="fa fa-file-excel-o"></i><span> 주소록 내보내기</span></div></a>
 			        <input type="hidden" id="currentPage" name="currentPage" value="1">
+			        <input type="hidden" id="groupNo" name="groupNo" value="${param.groupNo }">
 			        <div>
-			        	<input type="text" placeholder="연락처 검색" id="searchKeyword" name="searchKeyword" value='${param.searchKeyword}'>
+			        	<input type="text" placeholder="이름 검색" id="searchKeyword" name="searchKeyword" value='${param.searchKeyword}'>
 			        	<a href="#"><i id="addrSearch" class="fa fa-search"></i></a>
 		        	</div>
 			        <div id="selectMenu">
