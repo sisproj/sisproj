@@ -66,4 +66,19 @@ public class MessageServiceImpl implements MessageService {
         return messageDAO.selectTotalMsgSendCount(messageSearchVO);
     }
 
+    @Override
+    public int updateDelMsg(int recNo) {
+        return messageDAO.updateDelMsg(recNo);
+    }
+
+    @Override
+    public List<MessageVO> selectRecycleMsgByEmpNo(MessageSearchVO messageSearchVO) {
+        return messageDAO.selectRecycleMsgByEmpNo(messageSearchVO);
+    }
+
+    @Override
+    public int selectTotalMsgRecycleCount(MessageSearchVO messageSearchVO) {
+        return messageDAO.selectTotalMsgRecycleCount(messageSearchVO);
+    }
+
 }

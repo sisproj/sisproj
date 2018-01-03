@@ -15,13 +15,13 @@
     <div style="width: 298px; text-align: center">
         <button class="message-button w3-btn"
                 onclick="window.open('<c:url
-                        value="/message/messageWrite.do"/>', 'messageWindow', 'width=540,height=500,left=300,top=300,toolbar=no,scrollbars=no,resizable=no')">
+                        value="/message/write.do"/>', 'messageWindow', 'width=540,height=500,left=300,top=300,toolbar=no,scrollbars=no,resizable=no')">
             쪽지 작성
         </button>
     </div>
     <ul>
         <!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
-        <li><a href="<c:url value='/message/messageReceive.do'/> "><i class="fa fa-envelope-o" aria-hidden="true"></i>&nbsp;<span>받은 쪽지함</span></a>
+        <li><a href="<c:url value='/message/receive.do'/> "><i class="fa fa-envelope-o" aria-hidden="true"></i>&nbsp;<span>받은 쪽지함</span></a>
         </li>
         <li><a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i>&nbsp;<span>보낸 쪽지함</span></a></li>
         <li><a href="#"><i class="fa fa-star-o " aria-hidden="true"></i>&nbsp;<span>중요 쪽지함</span></a></li>
