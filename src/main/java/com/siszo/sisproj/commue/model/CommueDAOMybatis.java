@@ -9,13 +9,10 @@ import org.springframework.stereotype.Repository;
 public class CommueDAOMybatis extends SqlSessionDaoSupport implements CommueDAO{
 
 	private String namespace = "config.mybatis.mapper.oracle.commue";
+
 	@Override
-	public List<CommueVO> selectAllCom() {
-		return getSqlSession().selectList(namespace+".selectAllCom");
-	}
-	@Override
-	public int insertIn(int empNo) {
-		return getSqlSession().insert(namespace+".insertIn",empNo);
+	public int insertIn(CommueVO comVo) {
+		return getSqlSession().insert(namespace+".insertIn",comVo);
 	}
 	@Override
 	public int updateOut(int cmtNo) {
@@ -25,5 +22,18 @@ public class CommueDAOMybatis extends SqlSessionDaoSupport implements CommueDAO{
 	public CommueVO selectByNo(int cmtNo) {
 		return getSqlSession().selectOne(namespace+".selectByNo",cmtNo);
 	}
+	@Override
+	public CommueVO checkCmt(int empNo) {
+		return getSqlSession().selectOne(namespace+".checkCmt",empNo);
+	}
+	@Override
+	public CommueVO selectByEmpNo(int empNo) {
+		return getSqlSession().selectOne(namespace+".selectByEmpNo",empNo);
+	}
+	@Override
+	public List<CommueVO> selectAll() {
+		return getSqlSession().selectList(namespace+".selectAll");
+	}
+	
 
 }

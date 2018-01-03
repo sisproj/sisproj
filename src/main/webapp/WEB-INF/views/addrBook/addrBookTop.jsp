@@ -262,7 +262,7 @@
     		color: rgb(195, 195, 195);
     	}
     	#bodysection div{
-    		margin: 10px;
+    		margin: 0 auto;
     	}
     	.divAddrBody{
     		height: 570px;

@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!-- <script type="text/javascript">
-	$('#asidebtn ul li:eq(0) a').click(function () {
-		$('#frm123').prop('action',
-		"<c:url value='/commue/commueIn.do?empNo="+${sessionScope.empVo.empNo }+"' />");	
-		$('#frm123').submit();			
+<script type="text/javascript">
+	$(function () {
+		$('#asidebtn ul li:ntn-child(1)').click(function () {
+			
+		});
 	});
-</script>  -->
+</script>
 	<div id="photo">
          <c:if test="${empty sessionScope.empVo.empImg }">
          	<img src="${pageContext.request.contextPath }/emp_images/defaultImg.png" alt="${sessionScope.empVo.empName }">
@@ -38,8 +38,10 @@
 	    </ul>
 	</div>
 		<div id="asidebtn">
-		    <ul>
-		        <li><a href="<c:url value='/commue/commueOut.do?empNo=${sessionScope.empVo.empNo }'/>">퇴근</a></li>
+		    <ul>	    	
+		        <li><a href="<c:url value='/commue/commueIn.do' />">출근</a></li>	
+		        	<!-- 잠시 보류 -->
+		        <%-- <li><a href="<c:url value='/commue/commueOut.do' />">퇴근</a></li>  --%>
 		        <li><a href="#" onclick="window.open('<c:url value="/messenger/messenger.do"/>', 'messengerWindow', 'width=1100,height=640,toolbar=no,scrollbars=yes')">메신저</a></li>
 		        <li><a href="<c:url value='/login/logout.do'/>">로그 아웃</a></li>
 		    </ul>

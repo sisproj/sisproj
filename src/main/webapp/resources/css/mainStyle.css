@@ -104,6 +104,9 @@ aside #loginfo #info i{
 	font-weight: 600;
 	font-size: 0.8em;
 }
+.t-a-center{
+	text-align: center;
+}
 aside #loginfo #asidebtn ul {
 	display:-webkit-box;
 }
