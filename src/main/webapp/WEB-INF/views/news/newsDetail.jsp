@@ -109,7 +109,7 @@ float:right;
 		<li><a href="<c:url value='/news/newsWrite.do'/>"><i
 				class="fa fa-floppy-o"></i>&nbsp;<span>SIS 뉴스등록</span></a></li>
 		
-		<li><a href="<c:url value='#'/>"><i
+		<li><a href="<c:url value='/news/newsRegdit.do'/>"><i
 				class="fa fa-floppy-o"></i>&nbsp;<span>SIS 뉴스관리</span></a></li>
 				</c:if>
 

@@ -12,7 +12,7 @@
  <div id="news">
 	<c:if test="${!empty mainlist }">
 		<c:forEach var="vo" items="${mainlist}">
-				<div><a href="<c:url value='/news/newsDetailcnt.do?newsNo=${vo.newsNo }'/>">${fn:substring(vo.newsTitle,0,70) }...</a></div>
+				<div><a href="<c:url value='/news/newsDetailcnt.do?newsNo=${vo.newsNo }'/>">${fn:substring(vo.newsTitle,0,70) }</a></div>
 		</c:forEach>
 	</c:if>
 </div>
