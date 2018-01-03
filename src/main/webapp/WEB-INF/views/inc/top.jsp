@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="<c:url value="/resources/jquery-ui/jquery-ui.min.css"/>">
 
     <!-- jquery -->
-    <script src="<c:url value="/resources/jquery/jquery-3.2.1.min.js"/>"></script>
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
     <script src="<c:url value="/resources/jquery/jquery.easing.1.3.js"/>"></script>
     <!-- jquery-ui -->
     <script src="<c:url value="/resources/jquery-ui/jquery-ui.min.js"/>"></script>
