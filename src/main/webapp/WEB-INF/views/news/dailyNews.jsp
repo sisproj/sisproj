@@ -198,8 +198,14 @@ to {
 <nav>
 	<ul>
 		<!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
-		<li class="active"><a href="<c:url value='/news/dailyNews.do'/>"><i class='fa fa-newspaper-o'></i>
-		&nbsp;<span>SIS 뉴스홈</span></a></li>
+		<li class="active"><a href="<c:url value='/news/dailyNews.do'/>"><i class='fa fa-newspaper-o'></i>&nbsp;<span>SIS 뉴스홈</span></a></li>
+	<c:if test="${sessionScope.empVo.empLev eq '관리자'}">
+		<li><a href="<c:url value='/news/newsWrite.do'/>"><i
+				class="fa fa-floppy-o"></i>&nbsp;<span>SIS 뉴스등록</span></a></li>
+		
+		<li><a href="<c:url value='/news/newsRegdit.do'/>"><i
+				class="fa fa-floppy-o"></i>&nbsp;<span>SIS 뉴스관리</span></a></li>
+				</c:if>
 	</ul>
 	<!-- 1.왼쪽 사이드 메뉴 지정 끝-->
 	<div id="listbtn">
@@ -245,19 +251,19 @@ to {
 							<div class="mySlides fade">
 								<div class="numbertext"></div>
 								<img src="<c:url value='/news_images/${vo.newsImage }'/>"
-									style="width: 100%; height: 500px;">
+									style="width: 100%; height: 400px;"> 
 
 								<c:if test="${fn:length(vo.newsTitle)>30 }">
 									<div class="text">
 										<a
-											href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
+											href="<c:url value='/news/newsDetailcnt.do?newsNo=${vo.newsNo }'/>">
 											[메인]${fn:substring(vo.newsTitle,0,30) }...</a>
 									</div>
 								</c:if>
 								<c:if test="${fn:length(vo.newsTitle)<=30}">
 									<div class="text">
 										<a
-											href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
+											href="<c:url value='/news/newsDetailcnt.do?newsNo=${vo.newsNo }'/>">
 											[메인]${vo.newsTitle}</a>
 									</div>
 								</c:if>
@@ -315,14 +321,14 @@ to {
 								<c:if test="${fn:length(vo.newsTitle)>25 }">
 									<h4 class="dnewstitle">
 										<a
-											href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
+											href="<c:url value='/news/newsDetailcnt.do?newsNo=${vo.newsNo }'/>">
 											[일반]${fn:substring(vo.newsTitle,0,25) }...</a>
 									</h4>
 								</c:if>
 								<c:if test="${fn:length(vo.newsTitle)<=25}">
 									<h4 class="dnewstitle">
 										<a
-											href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
+											href="<c:url value='/news/newsDetailcnt.do?newsNo=${vo.newsNo }'/>">
 											[일반]${vo.newsTitle}</a>
 									</h4>
 								</c:if>
@@ -338,14 +344,14 @@ to {
 								<c:if test="${fn:length(vo.newsTitle)>20 }">
 									<h4 class="dnewstitle">
 										<a
-											href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
+											href="<c:url value='/news/newsDetailcnt.do?newsNo=${vo.newsNo }'/>">
 											[포토]${fn:substring(vo.newsTitle,0,20) }...</a>
 									</h4>
 								</c:if>
 								<c:if test="${fn:length(vo.newsTitle)<=20}">
 									<h4 class="dnewstitle">
 										<a
-											href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
+											href="<c:url value='/news/newsDetailcnt.do?newsNo=${vo.newsNo }'/>">
 											[포토]${vo.newsTitle}</a>
 									</h4>
 								</c:if>
@@ -368,6 +374,7 @@ to {
 								<div class="comcount">
 									<i class="fa fa-commenting-o" aria-hidden="true">&nbsp;${vo.comCount }</i>
 									<i class="fa fa-thumbs-o-up" aria-hidden="true">&nbsp;${vo.newsLike }</i>
+									<i class="fa fa-eye" aria-hidden="true">&nbsp;${vo.newsReadCnt }</i>
 								</div>
 							</div>
 						</div>

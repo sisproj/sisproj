@@ -10,9 +10,9 @@
 </head>
 <body>
  <div id="news">
-	<c:if test="${!empty list }">
-		<c:forEach var="vo" items="${list}">
-				<div><a href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">${fn:substring(vo.newsTitle,0,70) }...</a></div>
+	<c:if test="${!empty mainlist }">
+		<c:forEach var="vo" items="${mainlist}">
+				<div><a href="<c:url value='/news/newsDetailcnt.do?newsNo=${vo.newsNo }'/>">${fn:substring(vo.newsTitle,0,70) }...</a></div>
 		</c:forEach>
 	</c:if>
 </div>
