@@ -13,4 +13,5 @@ public interface EmployeeDAO {
 	public List<EmployeeVO> selectAllEmployee(SearchVO vo);
 	public int selectTotalRecordCount(SearchVO vo);
 	public int employeeCome(int empNo);
+    public int employeeEditPwd(EmployeeVO empVo);
 }

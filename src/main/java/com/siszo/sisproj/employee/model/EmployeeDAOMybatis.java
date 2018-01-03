@@ -1,6 +1,7 @@
 package com.siszo.sisproj.employee.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -21,9 +22,6 @@ public class EmployeeDAOMybatis extends SqlSessionDaoSupport implements Employee
 	public EmployeeVO selectEmployeeByNo(int empNo) {
 		return getSqlSession().selectOne(namespace+".selectEmployeeByNo",empNo);
 	}
-
-	
-
 	@Override
 	public int editEmployee(EmployeeVO vo) {
 		return getSqlSession().update(namespace+".editEmployee",vo);
@@ -52,7 +50,11 @@ public class EmployeeDAOMybatis extends SqlSessionDaoSupport implements Employee
 	public int employeeCome(int empNo) {
 		return getSqlSession().update(namespace+".employeeCome",empNo);
 	}
-	
 
-	
+	@Override
+	public int employeeEditPwd(EmployeeVO empVo) {
+		return getSqlSession().update(namespace+".employeeEditPwd",empVo);
+	}
+
+
 }

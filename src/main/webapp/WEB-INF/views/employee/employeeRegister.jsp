@@ -134,17 +134,6 @@
 				$("#empImg").focus();
 				return false;
 			}
-			 
-			 /*else if($('#deptNo').val()==""){
-			alert('부서를 선택하세요.');
-			$("#deptNo").focus();
-			return false;
-			}else if($('#empPosition').val()==""){
-			alert('직급을 선택하세요.');
-			$("#empPosition").focus();
-			return false;
-			}
-			} */
 		});	 
 	});
 </script>

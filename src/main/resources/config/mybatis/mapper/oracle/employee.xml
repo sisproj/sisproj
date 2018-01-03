@@ -66,6 +66,11 @@
 		update empView set emp_outdate=null
 		where emp_no = #{empNo}
 	</update>
+	
+	<update id="employeeEditPwd" parameterType="EmployeeVO">
+		update empView set emp_pwd=#{empPwd}
+		where emp_no=#{empNo}
+	</update>
 </mapper>
 
 
