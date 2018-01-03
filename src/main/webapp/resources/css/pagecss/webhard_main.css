@@ -1,6 +1,12 @@
+#bodysection p{
+	font-size: 0.8em; 
+	text-align:right;
+	width: 1200px;
+	margin : 0 auto;
+}
 #fileZone{
 	background-color: #ff0;
-	width: 1000px;
+	width: 1200px;
 	min-height: 70%;
 	margin : 0 auto;
 	border: 2px solid #fff;
@@ -10,6 +16,7 @@
 	box-sizing: border-box;
 	padding: 20px;
 	overflow: auto;
+	margin-top: 10px;
 }
 
 #searchSec{
@@ -98,6 +105,7 @@
 	box-shadow: 1px 1px 3px #555;
 	padding : 5px;
 	box-sizing: border-box;
+	border:1px solid #aaa;
 	display:none;
 	z-index: 9999;
 }

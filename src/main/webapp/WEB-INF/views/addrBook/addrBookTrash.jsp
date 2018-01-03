@@ -24,6 +24,14 @@
 				$('#frmTrash').submit();
 			}
 		});
+		
+		/* countPerPage 변경하기 */
+		$('#recordCountPerPage').change(function(){
+			if($('#groupNo').val()==''){
+				$('#groupNo').val('0');
+			}
+			$('#frmTrash').submit();			
+		});
 	});
 	
 	function pageFunc(curPage){
@@ -35,16 +43,15 @@
     <article id="bodysection">
     <form name="frmTrash" id="frmTrash" action='<c:url value="/addrBook/addrBookTrash.do"/>' method="post">
         <input type="hidden" id="currentPage" name="currentPage" value="1">
-        <input type="hidden" id="countPerPage" name="countPerPage" value="10">
         <div id="divBodysection">
 	        <div class="divAddrHeader">
 		        <a href="#"><div id="divClear"><i class="fa fa-trash"></i><span> 휴지통 비우기</span></div></a>		        
 		        <a href="#"><div id="divRestore"><i class="fa fa-share-square-o"></i><span> 주소록으로 되돌리기</span></div></a>		        
 		        <div id="selectMenu">
-		        	<select>
-				        <option>10개씩 보기</option>
-				        <option>30개씩 보기</option>
-				        <option>50개씩 보기</option>
+		        	<select id="recordCountPerPage" name="recordCountPerPage">
+				        <option value="10"<c:if test="${param.recordCountPerPage==10 }">selected</c:if>>10개씩 보기</option>
+				        <option value="30"<c:if test="${param.recordCountPerPage==30 }">selected</c:if>>30개씩 보기</option>
+				        <option value="50"<c:if test="${param.recordCountPerPage==50 }">selected</c:if>>50개씩 보기</option>
 			        </select>
 		        </div>
 		    </div>
@@ -74,7 +81,7 @@
 		        			<td><a href="#">${addrBookVo.addrEmail}</a></td>
 		        			<td>${addrBookVo.addrComp }</td>
 		        			<c:forEach var="addrGroupVo" items="${groupList }">
-		        				<c:if test="${addrBookVo.addrGroupNo==addrGroupVo.groupNo }">
+		        				<c:if test="${addrBookVo.groupNo==addrGroupVo.groupNo }">
 		        					<td>${addrGroupVo.groupName}</td>
 		        				</c:if>
 		        			</c:forEach>

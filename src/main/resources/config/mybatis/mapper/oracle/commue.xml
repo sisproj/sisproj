@@ -12,12 +12,15 @@
 			values(#{cmtNo},#{empNo},sysdate)
 	</insert>
 	
-	<update id="updateOut" parameterType="CommueVO">
+	<update id="updateOut" parameterType="int">
 		update commute
-		set cmt_out=sysdate
+		set cmt_out=sysdate,cmt_status='N'
 		where cmt_no=#{cmtNo}
 	</update>
 	
+	<select id="selectAll" resultType="CommueVO">
+		select * from commute
+	</select>
 </mapper>
 
 

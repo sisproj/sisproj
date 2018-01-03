@@ -7,6 +7,7 @@
 	padding-bottom:0;
 	box-sizing:border-box;
 	text-align: right;
+	margin-bottom: 10px;
 }
 #search input[type=text]{
 	width:200px;
@@ -30,6 +31,7 @@
 	box-sizing:border-box;
 	padding-bottom: 10px;
 	text-align:center;
+	margin-top: 10px;
 }
 #pagingbtn span, #pagingbtn a{
 	display: inline-block;
@@ -74,6 +76,7 @@
 	margin: 0 auto;
 	padding : 10px;
 	box-sizing:border-box;
+	border-collapse: collapse;
 }
 #awaittb tr{
 	transition:all 300ms linear;
@@ -81,17 +84,17 @@
 #awaittb td b{
 	color: #306;	
 }
-#awaittb tr:hover{
+#awaittb tbody tr:hover{
 	background-color: #e1e1e1;
 }
 #awaittb th{
 	box-sizing:border-box;
 	padding: 5px;
-	background-color: #036;
-	border-radius:10px;
 	height: 30px;
-	color: #fff;
+	color: #036;
 	font-size: 1.17em;
+	border-top: 2px solid #e1e1e1;
+	border-bottom: 2px solid #e1e1e1;
 }
 #awaittb th:nth-child(1){
 	width: 20%;
@@ -120,11 +123,8 @@
 }
 #awaittb td:nth-child(3){
 	padding-left: 10px;
-	text-align: left;
-}
-#awaittb td:nth-child(4){
 	text-align: center;
 }
-#awaittb td:nth-child(5){
+#awaittb td:nth-child(4){
 	text-align: center;
 }

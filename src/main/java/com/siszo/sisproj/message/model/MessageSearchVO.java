@@ -1,4 +1,4 @@
-package com.siszo.sisproj.common;
+package com.siszo.sisproj.message.model;
 
 
 /**

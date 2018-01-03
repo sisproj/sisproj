@@ -31,6 +31,9 @@
 	<select id="selectTotalRecordCountN" resultType="int" parameterType="AddrSearchVO">
 		select count(*) from addrBookView
 		where addr_isdel='N' and emp_no=#{empNo}
+		<if test="groupNo!=0">
+			and group_no=#{groupNo}		
+		</if>
 		<include refid="searchWhere"></include>		
 	</select>
 	<select id="selectTotalRecordCountY" resultType="int" parameterType="AddrSearchVO">
@@ -74,6 +77,14 @@
 		delete from addrBook
 		where addr_isDel='Y' and emp_No=#{empNo}
 	</delete>
+	<select id="selectByAddrNo" parameterType="int" resultType="AddrBookVO">
+		select * from addrBookView where addr_no=#{addrNo}
+	</select>
+	<update id="updateAddrBook" parameterType="AddrBookVO">
+		update addrBook
+		set addr_Name=#{addrName}, addr_Tel=#{addrTel}, addr_Email=#{addrEmail}, addr_Comp=#{addrComp}, group_No=#{groupNo}
+		where addr_No=#{addrNo}
+	</update>
 </mapper>
 
 

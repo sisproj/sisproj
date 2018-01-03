@@ -30,7 +30,7 @@ public class AddrSearchVO {
     private int lastRecordIndex = 1;
     
     /**페이지 별 레코드 갯수 (pageSize) */
-    private int recordCountPerPage; 
+    private int recordCountPerPage=10; 
     
    /**
      * 검색 조건을  설정한다.
@@ -44,7 +44,7 @@ public class AddrSearchVO {
     	this.blockSize = bean.blockSize;
     	this.firstRecordIndex = bean.firstRecordIndex;
     	this.lastRecordIndex = bean.lastRecordIndex;
-    	this.recordCountPerPage = bean.recordCountPerPage;
+    	this.recordCountPerPage = bean.getRecordCountPerPage();
     }
 
     public int getGroupNo() {

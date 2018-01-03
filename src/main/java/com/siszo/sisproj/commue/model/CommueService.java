@@ -5,4 +5,5 @@ import java.util.List;
 public interface CommueService {
 	public List<CommueVO> selectAllCom();
 	public int insertIn(int empNo);
+	public int updateOut(int cmtNo);
 }

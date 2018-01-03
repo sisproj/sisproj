@@ -1,0 +1,153 @@
+#search{
+	width: 100%;
+	max-width:1100px;
+	margin: 0 auto;
+	padding : 10px;
+	padding-bottom:0;
+	box-sizing:border-box;
+	text-align: right;
+	margin-bottom: 10px;
+}
+#search input[type=text]{
+	width:200px;
+	height:27px;
+	border:0;
+	box-sizing:border-box;
+	padding-left: 10px;
+	border-radius: 5px;
+	border-bottom:2px solid #069;
+}
+#search input[type=button]{
+	width:40px;
+	height:20px;
+}
+#pagingbtn{
+	width: 100%;
+	max-width:1100px;
+	margin: 0 auto;
+	height: 40px;
+	width: auto;
+	box-sizing:border-box;
+	padding-bottom: 10px;
+	text-align:center;
+	margin-top: 10px;
+}
+#pagingbtn span, #pagingbtn a{
+	display: inline-block;
+	width: 24px;
+	line-height: 24px;
+	border-radius:12px;
+	background-color: #369;
+	color: fff;
+	text-align: center;
+	font-weight: bold;
+	margin-left: 5px;
+	box-shadow:2px 2px 3px #333;
+	font-size: 0.8em;
+}
+#pagingbtn a:hover,
+#pagingbtn span.thispage{
+	background-color:#09f;
+	box-shadow:2px 2px 3px transparent;	
+}
+#pagingbtn span:first-child{
+	margin-left: 0;	
+}
+#pagingbtn a i {
+	line-height: 24px;
+	color: fff;
+	text-align: center;
+	font-size: 0.8em;
+}
+#pagingbtn #firstbtn,
+#pagingbtn #lastbtn{
+	background-color: #333;
+}
+#pagingbtn #prevbtn,
+#pagingbtn #nextbtn{
+	background-color: #306;
+}
+
+
+#awaittb {
+	width: 100%;
+	max-width:1100px;
+	margin: 0 auto;
+	padding : 10px;
+	box-sizing:border-box;
+	border-collapse: collapse;
+}
+#awaittb tr{
+	transition:all 300ms linear;
+}
+#awaittb td b{
+	color: #306;	
+}
+#awaittb tbody tr:hover{
+	background-color: #e1e1e1;
+}
+#awaittb th{
+	box-sizing:border-box;
+	padding: 5px;
+	height: 30px;
+	color: #036;
+	font-size: 1.17em;
+	border-top: 2px solid #e1e1e1;
+	border-bottom: 2px solid #e1e1e1;
+}
+#awaittb th:nth-child(1){
+	width: 5%;
+}
+#awaittb th:nth-child(2){
+	width: 45%;
+}
+#awaittb th:nth-child(3){
+	width: 15%;
+}
+#awaittb th:nth-child(4){
+	width: 20%;
+}
+#awaittb td {
+	box-sizing:border-box;
+	padding: 5px;
+	border-bottom: 2px solid #e1e1e1;
+}
+#awaittb td:nth-child(1){
+	text-align: center;
+	font-size: 0.8em;
+}
+#awaittb td:nth-child(2){
+	padding-left: 10px;
+	text-align: center;
+}
+#awaittb td:nth-child(3){
+	padding-left: 10px;
+	text-align: center;
+}
+#awaittb td:nth-child(4){
+	text-align: center;
+}
+.divDelbtn{
+	width: 100%;
+	max-width:1100px;
+	margin: 0 auto;
+	padding : 10px;
+	padding-bottom:0;
+	box-sizing:border-box;	
+	margin-bottom: 10px;
+}
+.deleteBtn{
+	display : inline-block;
+	width: 60px;
+	height:20px;
+	box-shadow : 2px 2px 5px #900;
+	background-color: #f00;
+	color: #fff;
+	border-radius: 10px;
+	text-align: center;
+	margin-left: 10px;
+	visibility: hidden;
+}
+.deleteBtn:hover {
+	box-shadow : 2px 2px 5px transparent;	
+}

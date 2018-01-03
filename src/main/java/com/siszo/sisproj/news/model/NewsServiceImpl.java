@@ -15,10 +15,12 @@ public class NewsServiceImpl implements NewsService{
 	public int insertNews(NewsVO newsVo) {
 		return newsDao.insertNews(newsVo);
 	}
-	public List<NewsVO> dailyNewsList(){
-		return newsDao.dailyNewsList();
+	public List<NewsVO> dailyNewsList(NewsSearchVO newsSearchVO){
+		return newsDao.dailyNewsList(newsSearchVO);
 	}
-	
+	public List<NewsVO> dailyNewsMainList(){
+		return newsDao.dailyNewsMainList();
+	}
 	public NewsVO newsSearchByNo(int newsNo) {
 		return newsDao.newsSearchByNo(newsNo);
 	}
@@ -53,5 +55,23 @@ public class NewsServiceImpl implements NewsService{
 	}
 	public int chklike(NewsLikeVO likeVo) {
 		return newsDao.chklike(likeVo);
+	}
+	public List<NewsVO> newslikeRanking() {
+		return newsDao.newslikeRanking();
+	}
+	public List<Map<String, Object>> newscomRanking(){
+		return newsDao.newscomRanking();
+	}
+	public int readcountup(int newsNo) {
+		return newsDao.readcountup(newsNo);
+	}
+	public List<NewsVO> newsreadRanking(){
+		return newsDao.newsreadRanking();
+	}
+	public int deleteNewsCom(NewsComVO comVo) {
+		return newsDao.deleteNewsCom(comVo);
+	}
+	public int newstotalrecord() {
+		return newsDao.newstotalrecord();
 	}
 }

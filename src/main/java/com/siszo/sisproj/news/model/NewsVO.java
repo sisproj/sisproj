@@ -75,6 +75,8 @@ public class NewsVO {
 	public void setNewsMain(String newsMain) {
 		this.newsMain = newsMain;
 	}
+	
+	
 	@Override
 	public String toString() {
 		return "NewsVO [newsNo=" + newsNo + ", newsTitle=" + newsTitle + ", empNo=" + empNo + ", newsContent="

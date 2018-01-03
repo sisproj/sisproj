@@ -43,7 +43,7 @@ public interface BookmarkService {
 	public static final String URL_COMMUE = "/commue/commueMonthList.do";
 	public static final String URL_WEBHARD = "/webhard/main.do";
 	public static final String URL_NOTICE = "/notice/noticeList.do";
-	public static final String URL_NEWS = "/news/news.do";
+	public static final String URL_NEWS = "/news/dailyNews.do";
 	
 	public String selectBookMarkByEmpNo(int empNo);
 	public int updateBookMark(BookmarkVO bVo);

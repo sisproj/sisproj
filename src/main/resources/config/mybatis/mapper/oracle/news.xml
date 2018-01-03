@@ -3,80 +3,159 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="config.mybatis.mapper.oracle.news">
-	
+
 	<insert id="insertNews" parameterType="NewsVO">
 		<selectKey keyProperty="newsNo" resultType="int" order="BEFORE">
 			select news_seq.nextval from dual
 		</selectKey>
-		
-		insert into news(news_no, news_title,emp_no,news_content,news_image,news_main)
+
+		insert into news(news_no,
+		news_title,emp_no,news_content,news_image,news_main)
 		values(#{newsNo},#{newsTitle},20170001,#{newsContent},#{newsImage},#{newsMain})
 	</insert>
 
+	<select id="dailyNewsMainList" resultType="NewsVO">
+	select * from news where news_main='Y' order by news_no desc	
+	</select>
 
-	<select id="dailyNewsList" resultType="NewsVO">
-		select * from news
+	<select id="dailyNewsList"  parameterType="NewsSearchVO" resultType="NewsVO">
+		select * from (
+		    select rownum as RNUM, blist.*
+		    from(
+		        select * 
+		        from news 
+		        where news_main='N'
+		        order by news_no desc		        
+		   	 ) blist
+			
+		) 
+		<![CDATA[
+		where RNUM > #{firstRecordIndex} 
+		and RNUM<=#{firstRecordIndex}+ #{recordCountPerPage} ]]>
 	</select>
 	
+	<select id="newstotalrecord" resultType="int">
+	select count(*) 
+		        from news 
+		        where news_main='N'
+		        order by news_no desc
+	</select>
+
 	<select id="newsSearchByNo" resultType="NewsVO" parameterType="int">
 		select * from news where news_No=#{newsNo}
 	</select>
-	
+
 	<update id="newsUpdate" parameterType="NewsVO">
-	
-	update news
-	set news_title=#{newsTitle}, news_content=#{newsContent}, news_image=#{newsImage},news_main=#{newsMain} 
-	where news_No=#{newsNo}
-	
+
+		update news
+		set
+		news_title=#{newsTitle}, news_content=#{newsContent},
+		news_image=#{newsImage},news_main=#{newsMain}
+		where news_No=#{newsNo}
+
 	</update>
-	
+
 	<update id="newsUpdateImageException" parameterType="NewsVO">
-	
-	update news
-	set news_title=#{newsTitle}, news_content=#{newsContent},news_main=#{newsMain} 
-	where news_No=#{newsNo}
-	
+
+		update news
+		set news_title=#{newsTitle},
+		news_content=#{newsContent},news_main=#{newsMain}
+		where
+		news_No=#{newsNo}
+
 	</update>
-	
+
 	<delete id="newsDelete" parameterType="int">
-		delete from news where news_No=#{newsNo}
+		delete from news where
+		news_No=#{newsNo}
 	</delete>
-	
-	
-		<insert id="insertNewsCommand" parameterType="int">
-	<selectKey keyProperty="comNo" resultType="int" order="BEFORE">
-		select newscom_seq.nextval from dual
-	</selectKey>
+
+
+	<insert id="insertNewsCommand" parameterType="int">
+		<selectKey keyProperty="comNo" resultType="int" order="BEFORE">
+			select newscom_seq.nextval from dual
+		</selectKey>
 		insert into news_com(com_no,news_no,emp_no,com_content)
 		values(#{comNo},#{newsNo},#{empNo},#{comContent})
 	</insert>
-	
+
 	<select id="searchNewsCommand" resultType="map" parameterType="int">
 		select * from command_view
 		where news_no=#{news_no}
 	</select>
-	
+
 	<select id="countNewsCommand" resultType="int" parameterType="int">
 		select count(*) from news_com where news_no=#{newsNo}
 	</select>
-	
+
 	<update id="updatelikecnt" parameterType="NewsVO">
 		update news
-		set news_like=news_like+1
+		set
+		news_like=news_like+1
 		where news_no=#{newsNo}
 	</update>
-	
+
 	<insert id="insertlike" parameterType="NewsLikeVO">
-	<selectKey keyProperty="likeNo" resultType="int" order="BEFORE">
-		select news_like_seq.nextval from dual
-	</selectKey>
-		insert into news_like
+		<selectKey keyProperty="likeNo" resultType="int" order="BEFORE">
+			select news_like_seq.nextval from dual
+		</selectKey>
+		insert into newslike
 		values(#{likeNo},#{empNo},#{newsNo})
 	</insert>
-	
+
 	<select id="chklike" parameterType="NewsLikeVO" resultType="int">
-		select count(*) from newslike where emp_no=#{empNo} and news_no=#{newsNo}
+		select count(*) from newslike where emp_no=#{empNo} and
+		news_no=#{newsNo}
 	</select>
+
+	<select id="newslikeRanking" resultType="NewsVO">
+		select * from(
+		select * from news order by news_like desc)
+		 <![CDATA[
+		where rownum<=10
+		]]>
+	</select>
+
+
+	<select id="newscomRanking" resultType="map">
+		select*
+		from(
+		select n.news_no, n.news_title,n.news_like, count(*) as
+		total_com_count
+		from news n join news_com nc
+		on n.news_no=nc.NEWS_NO
+		group by n.news_no, n.news_title,n.news_like
+		order by count(*) desc
+		)
+			 <![CDATA[
+		where rownum<=10
+			]]>
+
+
+	</select>
+
+
+	<update id="readcountup" parameterType="int">
+		update news
+		set news_readcnt=news_readcnt+1
+		where news_no=#{news_no}
+
+	</update>
+	
+	<select id="newsreadRanking" resultType="NewsVO">
+		select * from(
+		select * from news order by news_readcnt desc)
+		 <![CDATA[
+		where rownum<=10
+		]]>
+	</select>
+	
+	
+	<delete id="deleteNewsCom" parameterType="NewsComVO">
+		delete from news_com where com_no=#{comNo} and news_no=#{newsNo}
+	</delete>	
+	
+	
 </mapper>
 
 
