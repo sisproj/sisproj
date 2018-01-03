@@ -38,7 +38,7 @@ public class MessageController {
         return "message/messageMain";
     }
 
-    @RequestMapping(value = "/message/messageWrite.do", method = RequestMethod.GET)
+    @RequestMapping(value = "/message/write.do", method = RequestMethod.GET)
     public String messageWrite_get(@RequestParam(defaultValue = "0") int deptNo, Model model) {
         logger.info("쪽지 보내기 화면보여주기 messageWrite_get");
         logger.info("조직도 부서명 리스트 and 부서별 사원리스트, 파라미터 deptNo={}", deptNo);
@@ -55,7 +55,7 @@ public class MessageController {
         return "message/messageWrite";
     }
 
-    @RequestMapping(value = "/message/messageWrite.do", method = RequestMethod.POST)
+    @RequestMapping(value = "/message/write.do", method = RequestMethod.POST)
     public void messageWrite_post(@ModelAttribute MessageVO messageVO,
                                   @RequestParam String empNo) {
         logger.info("쪽지 보내기 messageWrite_post(), 파라미터 messageVO={}, empNo={}", messageVO, empNo);
@@ -72,7 +72,7 @@ public class MessageController {
         }
     }
 
-    @RequestMapping(value = "/message/messageReceive.do")
+    @RequestMapping(value = "/message/receive.do")
     public String messageReceive_get(HttpSession session, @ModelAttribute MessageSearchVO messageSearchVO, Model model) {
         EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
         int empNo = empVo.getEmpNo();
@@ -104,7 +104,7 @@ public class MessageController {
         return "message/messageReceive";
     }
 
-    @RequestMapping(value = "/message/messageDetail", method = RequestMethod.GET)
+    @RequestMapping(value = "/message/detail", method = RequestMethod.GET)
     public String messageDetail_get(HttpSession session, @RequestParam(defaultValue = "0") int recNo, Model model) {
         EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
         int empNo = empVo.getEmpNo();
@@ -117,7 +117,7 @@ public class MessageController {
         return "message/messageDetail";
     }
 
-    @RequestMapping(value = "/message/messageImportantUpdate")
+    @RequestMapping(value = "/message/importantUpdate")
     public @ResponseBody String messageImportantUpdate(@RequestParam String recNoStr) {
         logger.info("중요쪽지 설정  messageImportant() : recNoStr={}", recNoStr);
 
@@ -131,7 +131,23 @@ public class MessageController {
         return "OK";
     }
 
-    @RequestMapping(value = "/message/messageImportant")
+    @RequestMapping(value = "/message/delete")
+    public @ResponseBody String messageDelete(@RequestParam String recNoStr) {
+        logger.info("선택 쪽지 휴지통으로 이동 messageDelete() : recNoStr={}", recNoStr);
+
+        String[] recNoArr = recNoStr.split(",");
+        for(int i = 0; i < recNoArr.length; i++) {
+            int recNo = Integer.parseInt(recNoArr[i]);
+            logger.info("chkArr 값 :  recNo={}", recNo);
+            int result = messageService.updateDelMsg(recNo);
+            logger.info("update 결과 :  result ={}", result);
+        }
+        return "OK";
+    }
+
+
+
+    @RequestMapping(value = "/message/important")
     public String messageImportant(HttpSession session, @ModelAttribute MessageSearchVO messageSearchVO, Model model) {
         EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
         int empNo = empVo.getEmpNo();
@@ -163,7 +179,7 @@ public class MessageController {
         return "message/messageImportant";
     }
 
-    @RequestMapping(value = "/message/messageSend.do")
+    @RequestMapping(value = "/message/send.do")
     public String messageSend(HttpSession session, @ModelAttribute MessageSearchVO messageSearchVO, Model model) {
         EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
         int empNo = empVo.getEmpNo();
@@ -193,6 +209,38 @@ public class MessageController {
         model.addAttribute("pagingInfo", pagingInfo);
 
         return "message/messageSend";
+    }
+
+    @RequestMapping(value = "/message/recycleBin.do")
+    public String messageRecycleBin(HttpSession session, @ModelAttribute MessageSearchVO messageSearchVO, Model model) {
+        EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
+        int empNo = empVo.getEmpNo();
+        logger.info("휴지통 들어옴 messageReceive_get(), 접속 ID = {}", empNo);
+
+        //Paging 처리에 필요한 변수를 계산해주는 PaginationInfo 생성
+        PaginationInfo pagingInfo = new PaginationInfo();
+        pagingInfo.setBlockSize(Utility.BLOCK_SIZE);
+        pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);
+        pagingInfo.setCurrentPage(messageSearchVO.getCurrentPage());
+
+        //SearchVO에 값 셋팅
+        messageSearchVO.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);
+        messageSearchVO.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+        messageSearchVO.setEmpNo(empNo);
+
+        logger.info("messageSearchVO 입력값 : messageSearchVO={}",messageSearchVO );
+
+        List<MessageVO> msgList = messageService.selectRecycleMsgByEmpNo(messageSearchVO);
+        logger.info("{} msgList 조회결과 list.size={}", empNo, msgList.size());
+
+        int totalRecord = messageService.selectTotalMsgRecycleCount(messageSearchVO);
+        logger.info("selectTotalMsgRecCount = {}", totalRecord);
+        pagingInfo.setTotalRecord(totalRecord);
+
+        model.addAttribute("msgList", msgList);
+        model.addAttribute("pagingInfo", pagingInfo);
+
+        return "message/messageRecycleBin";
     }
 
 

@@ -25,4 +25,10 @@ public interface MessageDAO {
 
     public int selectTotalMsgSendCount(MessageSearchVO messageSearchVO);
 
+    public int updateDelMsg(int recNo);
+
+    public List<MessageVO> selectRecycleMsgByEmpNo(MessageSearchVO messageSearchVO);
+
+    public int selectTotalMsgRecycleCount(MessageSearchVO messageSearchVO);
+
 }

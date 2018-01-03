@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.siszo.sisproj.common.EmailSender;
+import com.siszo.sisproj.commue.model.CommueService;
+import com.siszo.sisproj.commue.model.CommueVO;
 import com.siszo.sisproj.employee.model.EmployeeService;
 import com.siszo.sisproj.employee.model.EmployeeVO;
 import com.siszo.sisproj.login.model.LoginService;
@@ -34,6 +36,9 @@ public class LoginController {
 	
 	@Autowired
 	private EmailSender emailSender;
+	
+	@Autowired
+	private CommueService commueService;
 
 	@RequestMapping(value="/login.do",method=RequestMethod.GET)
 	public void login_get() {
@@ -67,6 +72,10 @@ public class LoginController {
 				ck.setMaxAge(0);
 				response.addCookie(ck);
 			}
+			
+			/*int check = commueService.insertIn(vo.getEmpNo());
+			logger.info("로그인과 동시에 출근 결과 check={}",check);*/
+			
 			msg=empVo.getEmpName() +"님 로그인되었습니다.";
 			url="/home.do";
 		}else if(cnt==loginService.ID_NONE) {
@@ -146,9 +155,10 @@ public class LoginController {
 				logger.info("이메일 발송 실패!");
 				e.printStackTrace();
 			}
+			empVo.setEmpPwd(Integer.toString(ranPwd));
+			int cnt = employeeService.employeeEditPwd(empVo);
 			
-			vo.setEmpPwd(Integer.toString(ranPwd));
-			logger.info("이메일이 발송됨과 동시에 랜던값이 비밀번호에 셋팅됨 파라미터 ranPwd={}",ranPwd);
+			logger.info("이메일이 발송됨과 동시에 랜던값이 비밀번호에 셋팅됨 파라미터 ranPwd={},empVo={}",ranPwd,empVo);
 			msg="비밀번호가 이메일로 발송되었습니다";
 		}
 		

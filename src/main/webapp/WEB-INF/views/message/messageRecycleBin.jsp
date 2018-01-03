@@ -34,7 +34,7 @@
                 <i class="fa fa-envelope-o" aria-hidden="true"></i>&nbsp;<span>받은 쪽지함</span>
             </a>
         </li>
-        <li class="active">
+        <li>
             <a href="<c:url value='/message/send.do'/> ">
                 <i class="fa fa-envelope-o" aria-hidden="true"></i>&nbsp;<span>보낸 쪽지함</span>
             </a>
@@ -44,7 +44,7 @@
                 <i class="fa fa-star-o" aria-hidden="true"></i>&nbsp;<span>중요 쪽지함</span>
             </a>
         </li>
-        <li>
+        <li class="active">
             <a href="<c:url value='/message/recycleBin.do'/> ">
                 <i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp;<span>휴지통</span>
             </a>
@@ -81,10 +81,11 @@
                     </div>
                 </th>
                 <th class="w3-text-white">
-                    <button class="w3-button w3-small w3-light-grey" onclick="updateImpMsg()"><i class="fa fa-star-o"
-                                                                                                 aria-hidden="true"></i>
+                    <button class="w3-button w3-small w3-light-grey" onclick="updateImpMsg()">
+                        <i class="fa fa-star-o" aria-hidden="true"></i>
                     </button>
-                    <button class="w3-button w3-small w3-light-grey"><i class="fa fa-trash-o" aria-hidden="true"></i>
+                    <button class="w3-button w3-small w3-light-grey" onclick="deleteMsg()">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
                     </button>
                 </th>
                 <th colspan="2">
@@ -114,7 +115,7 @@
                 <tr>
                     <td style="width: 5%" class="w3-center"><input type="checkbox" name="chk" value="${msgVO.recNo}">
                     </td>
-                    <td style="width: 20%">${msgVO.empName}(${msgVO.cnt})</td>
+                    <td style="width: 20%">${msgVO.empName}</td>
                     <td style="width: 65%">
                         <div onclick="window.open('<c:url
                                 value="/message/detail.do?recNo=${msgVO.recNo}"/>', 'messageWindow', 'width=540,height=500,left=300,top=300,toolbar=no,scrollbars=no,resizable=no');">
@@ -178,7 +179,6 @@
     }
 
     function updateImpMsg() {
-
         var recNoStr = "";
         var total = $("input[name=chk]:checked").length;
         $("input[name=chk]:checked").each(function (index) {
@@ -202,7 +202,35 @@
                 console.log(e);
             }
         });
+    }
 
+    function deleteMsg() {
+        var recNoStr = "";
+        var total = $("input[name=chk]:checked").length;
+        $("input[name=chk]:checked").each(function (index) {
+            if (index === total - 1) {
+                recNoStr += $(this).val();
+            } else {
+                recNoStr += $(this).val() + ","
+            }
+        });
+
+        var choice = confirm("선택한 쪽지를 정말 삭제하시겠습니까?");
+        if(choice) {
+            $.ajax({
+                type: "post",
+                url: "<c:url value='/message/delete.do'/>",
+                data: {"recNoStr": recNoStr},
+                success: function (response) {
+                    if (response == "OK") {
+                        location.reload();
+                    }
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+        }
     }
 
     $(function () {

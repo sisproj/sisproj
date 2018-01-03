@@ -69,17 +69,25 @@
 				alert('영어이름를 입력하세요');
 				$('#empEName').focus();
 				return false;
-			}else if($('#jumin1').val()=="" || $('#jumin2').val()==""){
-				alert('주민번호를 입력하세요.');
-				$('#empSsn').focus();
+			}else if($('#jumin1').val()=="" || ('#jumin1').val().length!=6){
+				alert('주민번호 앞자리를 입력하세요.');
+				$('#jumin1').focus();
+				return false;
+			}else if($('#jumin2').val()=="" || ('#jumin1').val().length!=7){
+				alert('주민번호 뒷자리를 입력하세요.');
+				$('#jumin2').focus();
 				return false;
 			}else if($('#empHobby').val()==""){
 				alert('취미를 입력하세요.');
 				$("#empHobby").focus();
 				return false;
-			}else if($('#empEmail').val()==""){
+			}else if($('#email1').val()==""){
 				alert('이메일을 입력하세요.');
-				$("#empEmail").focus();
+				$("#email1").focus();
+				return false;
+			}else if($('#email2').val()=="etc" && $('#email3').val()==""){
+				alert('이메일을 입력하세요.');
+				$("#email3").focus();
 				return false;
 			}else if($('#empZipcode').val()==""){
 				alert('우편번호를 입력하세요.');
@@ -121,12 +129,9 @@
 				alert('이메일을 입력하세요.');
 				$("#empEmail").focus();
 				return false;
-			}else if($('#empImg').val()==""){
-				alert('이미지를 등록하세요.');
-				$("#empImg").focus();
-				return false;
 			}else{
 				alert('등록 실패!');
+				return false;
 			}
 		});
 	});
@@ -143,7 +148,7 @@
     <div id="dimyPage">
     	<div id="diInput">
       	<form id="frmEmp" name="frmEnp"    	
-      	action="<c:url value='/employee/employeeEdit.do?empNo=${vo.empNo }'/>" method="post" enctype="multipart/form-data">
+  		action="<c:url value='/employee/employeeEdit.do?empNo=${vo.empNo }'/>" method="post" enctype="multipart/form-data">
       	<input type="text" name="empTel" id="empTel" value="${vo.empTel }">
       	<input type="text" name="empSsn" id="empSsn" value="${vo.empSsn }">
       	<input type="text" name="empEmail" id="empEmail" value="${vo.empEmail }">

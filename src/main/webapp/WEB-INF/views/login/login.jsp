@@ -22,8 +22,6 @@
     <!-- jquery-ui -->
     <script src="<c:url value="/resources/jquery-ui/jquery-ui.min.js"/>"></script>
 
-    <!-- loginjs -->
-<script src="<c:url value="/resources/js/login.js"/>"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('form[name=loginfrm]').submit(function(){
@@ -45,7 +43,7 @@
 		$('#pwSe').click(function() {			
 			 	window.open("<c:url value='/login/searchPwd.do' />",
 				'chk',
-				'left=0,top=0,width=600,height=300,locations=yes,resizable=yes');
+				'left=0,top=0,width=500,height=200,locations=yes,resizable=yes');
 		});
 	});
 </script>

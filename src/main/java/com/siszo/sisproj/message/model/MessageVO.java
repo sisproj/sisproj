@@ -18,6 +18,8 @@ public class MessageVO {
     private int recNo;
     private String msgReadflag;
 
+    private String msgDelflag;
+
     private int cnt;
 
     public MessageVO() {
@@ -32,6 +34,14 @@ public class MessageVO {
         this.sendempNo = sendempNo;
     }
 
+
+    public String getMsgDelflag() {
+        return msgDelflag;
+    }
+
+    public void setMsgDelflag(String msgDelflag) {
+        this.msgDelflag = msgDelflag;
+    }
 
     public int getCnt() {
         return cnt;

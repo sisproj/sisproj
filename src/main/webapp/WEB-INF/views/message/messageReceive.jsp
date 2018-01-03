@@ -23,29 +23,29 @@
 <nav>
     <div style="width: 298px; text-align: center">
         <button class="message-button w3-btn" onclick="window.open('<c:url
-                value="/message/messageWrite.do"/>', 'messageWindow', 'width=540,height=500,left=300,top=300,toolbar=no,scrollbars=no,resizable=no')">
+                value="/message/write.do"/>', 'messageWindow', 'width=540,height=500,left=300,top=300,toolbar=no,scrollbars=no,resizable=no')">
             쪽지 작성
         </button>
     </div>
     <ul>
         <!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
         <li class="active">
-            <a href="<c:url value='/message/messageReceive.do'/> ">
+            <a href="<c:url value='/message/receive.do'/> ">
                 <i class="fa fa-envelope-o" aria-hidden="true"></i>&nbsp;<span>받은 쪽지함</span>
             </a>
         </li>
         <li>
-            <a href="<c:url value='/message/messageSend.do'/> ">
+            <a href="<c:url value='/message/send.do'/> ">
                 <i class="fa fa-envelope-o" aria-hidden="true"></i>&nbsp;<span>보낸 쪽지함</span>
             </a>
         </li>
         <li>
-            <a href="<c:url value='/message/messageImportant.do'/> ">
+            <a href="<c:url value='/message/important.do'/> ">
                 <i class="fa fa-star-o" aria-hidden="true"></i>&nbsp;<span>중요 쪽지함</span>
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="<c:url value='/message/recycleBin.do'/> ">
                 <i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp;<span>휴지통</span>
             </a>
         </li>
@@ -81,15 +81,16 @@
                     </div>
                 </th>
                 <th class="w3-text-white">
-                    <button class="w3-button w3-small w3-light-grey" onclick="updateImpMsg()"><i class="fa fa-star-o"
-                                                                                                 aria-hidden="true"></i>
+                    <button class="w3-button w3-small w3-light-grey" onclick="updateImpMsg()">
+                        <i class="fa fa-star-o" aria-hidden="true"></i>
                     </button>
-                    <button class="w3-button w3-small w3-light-grey"><i class="fa fa-trash-o" aria-hidden="true"></i>
+                    <button class="w3-button w3-small w3-light-grey" onclick="deleteMsg()">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
                     </button>
                 </th>
                 <th colspan="2">
                     <div class="w3-right">
-                        <form name="frmSearch" method="post" action="<c:url value='/message/messageReceive.do'/>"
+                        <form name="frmSearch" method="post" action="<c:url value='/message/receive.do'/>"
                               id="frmSearch">
                             <input class="w3-bar-item w3-border w3-left"
                                    style="width: 82%; height: 28px; padding: 10px;"
@@ -117,7 +118,7 @@
                     <td style="width: 20%">${msgVO.empName}</td>
                     <td style="width: 65%">
                         <div onclick="window.open('<c:url
-                                value="/message/messageDetail.do?recNo=${msgVO.recNo}"/>', 'messageWindow', 'width=540,height=500,left=300,top=300,toolbar=no,scrollbars=no,resizable=no');">
+                                value="/message/detail.do?recNo=${msgVO.recNo}"/>', 'messageWindow', 'width=540,height=500,left=300,top=300,toolbar=no,scrollbars=no,resizable=no');">
                             <c:if test="${msgVO.msgImpflag eq 'Y'}">
                                 <span class="w3-border w3-round w3-tiny">중요 쪽지</span>
                             </c:if>
@@ -146,7 +147,7 @@
         </table>
 
         <%--페이징 처리--%>
-        <form name="frmPage" method="post" action="<c:url value='/message/messageReceive.do'/>">
+        <form name="frmPage" method="post" action="<c:url value='/message/receive.do'/>">
             <input type="hidden" name="searchKeyword"
                    value="${param.searchKeyword }">
             <input type="hidden" name="currentPage">
@@ -178,7 +179,6 @@
     }
 
     function updateImpMsg() {
-
         var recNoStr = "";
         var total = $("input[name=chk]:checked").length;
         $("input[name=chk]:checked").each(function (index) {
@@ -191,7 +191,7 @@
 
         $.ajax({
             type: "post",
-            url: "<c:url value='/message/messageImportantUpdate.do'/>",
+            url: "<c:url value='/message/importantUpdate.do'/>",
             data: {"recNoStr": recNoStr},
             success: function (response) {
                 if (response == "OK") {
@@ -202,7 +202,35 @@
                 console.log(e);
             }
         });
+    }
 
+    function deleteMsg() {
+        var recNoStr = "";
+        var total = $("input[name=chk]:checked").length;
+        $("input[name=chk]:checked").each(function (index) {
+            if (index === total - 1) {
+                recNoStr += $(this).val();
+            } else {
+                recNoStr += $(this).val() + ","
+            }
+        });
+
+        var choice = confirm("선택한 쪽지를 정말 삭제하시겠습니까?");
+        if(choice) {
+            $.ajax({
+                type: "post",
+                url: "<c:url value='/message/delete.do'/>",
+                data: {"recNoStr": recNoStr},
+                success: function (response) {
+                    if (response == "OK") {
+                        location.reload();
+                    }
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+        }
     }
 
     $(function () {

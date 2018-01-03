@@ -13,4 +13,5 @@ public interface EmployeeService {
 	public List<EmployeeVO> selectAllEmployee(SearchVO vo);
 	public int selectTotalRecordCount(SearchVO vo);
 	public int employeeCome(List<EmployeeVO> list);
+	public int employeeEditPwd(EmployeeVO empVo);
 }
