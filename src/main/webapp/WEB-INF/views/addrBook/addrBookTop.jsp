@@ -7,7 +7,7 @@
 	$(function(){
 		$('#divWriteSection').hide();
 		$('#groupList').hide();
-		$('.myAddress').hover(function(){
+		$('.myAddress').mouseenter(function(){
 			$('#groupList').show();
 			var empNo="empNo="+${sessionScope.empVo.empNo};
 			/* alert(empNo); */
@@ -21,7 +21,13 @@
 					$('#groupList ul').html("<li>   전체주소록<ul></ul></li>");
 					if(res.length>0 ){
 						$.each(res, function(idx, item){				
-							$('#groupList ul li ul').append("<li>    └ "+item.groupName+"</li>");
+							$('#groupList ul li ul').append("<li id='"+item.groupNo+"'>    └ "+item.groupName+"</li>");
+							
+							
+							
+							$('#groupList ul li').click(function(){
+								$('#groupList').hide(); 
+							});
 						});							
 					}else{
 						$('#searchResult ul li ul').html("<li>그룹을 생성하세요</li>");
@@ -32,9 +38,8 @@
 				}
 			
 			});			
-		},function(){
-			$('#groupList').hide();
 		});
+		
 
 		$('.divAddrBody table td').hover(function(){
 			$(this).parent().css('background','rgb(245,245,245)');
@@ -74,8 +79,7 @@
 				hp=$('#hp1 option:checked').val()+"-"+$('#hp2').val()+"-"+$('#hp3').val();
 			}
 			$('#addrTel').val(hp);
-			alert(hp);
-			
+
 			var email1 = $('#email1').val();
 			var email2 = $('#email2 option:selected').val();
 			var email3 = $('#email3').val();
@@ -89,10 +93,6 @@
 				email=email1+"@"+email2;
 			}
 			$('#addrEmail').val(email);
-			alert("email1:"+email1);
-			alert("email2:"+email2);
-			alert("email3:"+email3);
-			alert("email:"+email);
 			
 			$('#frmWrite').submit();
 			
@@ -102,28 +102,115 @@
 		});
 		$('#btCancelU').click(function(){
 			$('#divUpdateSection').hide();
-		});
+		});	
 		
-		$('#listName').click(function(){
+		/* 리스트의 이름 클릭시 수정창 띄우며 정보 보여주기 */
+		$('.divAddrBody table tbody tr td:nth-child(2)').click(function(){
 			$('#divUpdateSection').show();
+			
+			$('#addrNameUpdate').val('');
+			$('#hp1Update').val('010');
+			$('#hp2Update').val('');
+			$('#hp3Update').val('');
+			$('#email1Update').val('');
+			$('#email2Update').val('naver.com');
+			$('#email3Update').val('');
+			$('#addrCompUpdate').val('');
+			$('#groupNoUpdate').val('');
+			
+			var addrNo="addrNo="+$(this).attr('id');
+			$.ajax({
+				url:"<c:url value='/addrBook/displayUpdate.do'/>",
+				data:addrNo,
+				type:"get",
+				dataType:"json",
+				success:function(res){
+					$('#addrNoUpdate').val(res.addrNo);
+					$('#addrNameUpdate').val(res.addrName);
+					$('#addrCompUpdate').val(res.addrComp);
+					$('#groupNoUpdate').val(res.groupNo);
+					var hpArr=(res.addrTel).split('-');
+					$('#hp1Update').val(hpArr[0]);
+					$('#hp2Update').val(hpArr[1]);
+					$('#hp3Update').val(hpArr[2]);
+					
+					if(res.addrEmail !='' && res.addrEmail !=null){
+						var emailArr=(res.addrEmail).split('@');
+
+						$('#email1Update').val(emailArr[0]);
+
+						if(emailArr[1]=="naver.com" || emailArr[1]=="hanmail.net" 
+								|| emailArr[1]=="nate.com" || emailArr[1]=="gmail.com"){
+							$('#email2Update').val(emailArr[1]);
+							$('#email3Update').css('visibility','hidden');
+						} else {
+							$('#email2Update').val('etc');
+							$('#email3Update').css('visibility','visible');
+							$('#email3Update').val(emailArr[1]);								
+						}
+					}
+				},
+				error:function(xhr, status, error){
+					alert("에러 : "+status+"=>"+error);
+				}
+			});
 		});
 		
+		$('#email2Update').change(function(){
+			if($('#email2Update').val()=='etc'){
+				$('#email3Update').css('visibility','visible');
+				$('#email3Update').focus();
+				$('#email3Update').val('');
+			}else if($('#email2Update').val()!='etc'){
+				$('#email3Update').css('visibility','hidden');
+			}
+		});
 		$('#email2').change(function(){
 			if($('#email2').val()=='etc'){
 				$('#email3').css('visibility','visible');
 				$('#email3').focus();
 				$('#email3').val('');
+			}else if($('#email2').val()!='etc'){
+				$('#email3').css('visibility','hidden');
 			}
 		});
-		$('#selectMenu select option:selected').change(function(){
-			var countPerPage=$('#countPerPage').val();
-			countPerPage=$(this).val();
+		
+		
+		/* 연락처 수정버튼 클릭 */
+		$('#btEdit').click(function(){
+			if($('#addrNameUpdate').val()==''){
+				alert("이름을 입력하세요");
+				$('#addrNameUpdate').focus();
+				return false;
+			}
+			var hp="";
+			if($('#hp2Update').val()=='' || $('#hp3Update').val()==''){
+				alert("핸드폰 번호를  입력하세요");
+				$('#hp2Update').focus();
+				return false;
+			}else{
+				hp=$('#hp1Update option:checked').val()+"-"+$('#hp2Update').val()+"-"+$('#hp3Update').val();
+			}
+			$('#addrTelUpdate').val(hp);
 			
-			$('#frmList').prop('action', '<c:url value="/addrBook/pageCount.do"/>');
-			$('#frmList').submit();
+			var email1 = $('#email1Update').val();
+			var email2 = $('#email2Update option:selected').val();
+			var email3 = $('#email3Update').val();
+			var email="";
 			
+			if($('#email2Update').val()=="etc"){
+				if($('#email1Update').val()!="" && $('#email3Update').val()!=""){
+					email=email1+"@"+email3;
+				}
+			}else if($('#email1Update').val()!="" && $('#email2Update').val()!=""){
+				email=email1+"@"+email2;
+			}
+			$('#addrEmailUpdate').val(email);
+			
+			$('#frmUpdate').submit();
 		});
 		
+
 	});
 </script>
     <style>
@@ -168,6 +255,7 @@
     	.divAddrBody{
     		height: 570px;
     		margin-top: 10px;
+    		overflow: auto;
     	}
     	.divAddrBody table{
     		border-collapse: collapse;

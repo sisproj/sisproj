@@ -3,6 +3,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="config.mybatis.mapper.oracle.message">
+    <sql id="messageSearchWhere">
+        <if test="searchKeyword !=null and searchKeyword!=''">
+            AND (MSG_TITLE like '%' || #{searchKeyword} || '%'
+            OR MSG_CONTENT like '%' || #{searchKeyword} || '%'
+            OR EMP_NAME like '%' || #{searchKeyword} || '%')
+        </if>
+    </sql>
+
     <insert id="insertMessage">
         <selectKey keyProperty="msgNo" resultType="int" order="BEFORE">
             select message_seq.nextval from dual
@@ -21,8 +29,164 @@
     </insert>
 
     <select id="selectRecMsgByEmpNo" parameterType="MessageSearchVO" resultType="MessageVO">
-        SELECT * FROM MSGRECVIEW WHERE EMP_NO = #{empNo} ORDER BY MSG_REGDATE DESC
+        SELECT *
+        FROM
+            (
+                SELECT
+                    rownum AS RNUM,
+                    mlist.*
+                FROM (
+                         SELECT m.*
+                         FROM MSGRECVIEW m
+                         WHERE EMP_NO = #{empNo} AND MSG_DELFLAG = 'N'
+                         <include refid="messageSearchWhere"></include>
+                         ORDER BY MSG_REGDATE DESC
+                     ) mlist
+            )
+        <![CDATA[
+        WHERE RNUM > #{firstRecordIndex}
+              AND RNUM <= #{firstRecordIndex} + #{recordCountPerPage}
+        ]]>
     </select>
+
+    <select id="selectRecycleMsgByEmpNo" parameterType="MessageSearchVO" resultType="MessageVO">
+        SELECT *
+        FROM
+            (
+                SELECT
+                    rownum AS RNUM,
+                    mlist.*
+                FROM (
+                    SELECT m.*
+                    FROM MSGRECVIEW m
+                    WHERE EMP_NO = #{empNo} AND MSG_DELFLAG = 'Y'
+                    <include refid="messageSearchWhere"></include>
+                    ORDER BY MSG_REGDATE DESC
+                ) mlist
+            )
+        <![CDATA[
+        WHERE RNUM > #{firstRecordIndex}
+              AND RNUM <= #{firstRecordIndex} + #{recordCountPerPage}
+        ]]>
+    </select>
+
+
+
+    <select id="selectSendMsgByEmpNo" parameterType="MessageSearchVO" resultType="MessageVO">
+        SELECT *
+            FROM(
+                SELECT
+                    ROWNUM AS RNUM,
+                    mlist.*
+                FROM(
+                    SELECT
+                        MSG_NO,
+                        MIN(EMP_NAME) as EMP_NAME,
+                        MIN(EMP_NO) as EMP_NO,
+                        MIN(MSG_TITLE) as MSG_TITLE,
+                        MIN(MSG_REGDATE) as MSG_REGDATE,
+                        count(MSG_NO) as CNT
+                    FROM MSGSENDVIEW
+                    <include refid="messageSearchWhere"></include>
+                    GROUP BY MSG_NO
+                    ORDER BY MSG_NO DESC
+                ) mlist
+            )
+        <![CDATA[
+        WHERE RNUM > #{firstRecordIndex}
+              AND RNUM <= #{firstRecordIndex} + #{recordCountPerPage}
+        ]]>
+    </select>
+
+
+    <select id="selectRecMsgByEmpNoImp" parameterType="MessageSearchVO" resultType="MessageVO">
+        SELECT *
+        FROM
+            (
+                SELECT
+                    rownum AS RNUM,
+                    mlist.*
+                FROM (
+                         SELECT m.*
+                         FROM MSGRECVIEW m
+                         WHERE EMP_NO = #{empNo} and MSG_IMPFLAG = 'Y'
+                         <include refid="messageSearchWhere"></include>
+                         ORDER BY MSG_REGDATE DESC
+                     ) mlist
+            )
+        <![CDATA[
+        WHERE RNUM > #{firstRecordIndex}
+              AND RNUM <= #{firstRecordIndex} + #{recordCountPerPage}
+        ]]>
+    </select>
+
+
+    <select id="selectRecMsgByRecNo" parameterType="int" resultType="MessageVO">
+        SELECT *
+        FROM MSGRECVIEW
+        WHERE REC_NO = #{recNo}
+    </select>
+
+    <select id="selectTotalMsgRecCount" parameterType="MessageSearchVO" resultType="int">
+        SELECT COUNT(*) FROM MSGRECVIEW
+        WHERE EMP_NO = #{empNo} and MSG_DELFLAG = 'N'
+        <include refid="messageSearchWhere"></include>
+    </select>
+
+    <select id="selectTotalMsgRecImpCount" parameterType="MessageSearchVO" resultType="int">
+        SELECT COUNT(*) FROM MSGRECVIEW
+        WHERE EMP_NO = #{empNo} and MSG_IMPFLAG = 'Y'and MSG_DELFLAG = 'N'
+        <include refid="messageSearchWhere"></include>
+    </select>
+
+    <select id="selectTotalMsgSendCount" parameterType="MessageSearchVO" resultType="int">
+        SELECT count(*)
+        FROM (
+            SELECT
+                MSG_NO,
+                MIN(EMP_NAME)    AS EMP_NAME,
+                MIN(EMP_NO)      AS EMP_NO,
+                MIN(MSG_TITLE)   AS MSG_TITLE,
+                MIN(MSG_REGDATE) AS MSG_REGDATE,
+                MIN(MSG_DELFLAG) AS MSG_DELFLAG,
+                count(MSG_NO)    AS CNT
+            FROM MSGSENDVIEW
+            GROUP BY MSG_NO
+            ORDER BY MSG_NO DESC
+        )
+        WHERE EMP_NO = #{empNo} and MSG_DELFLAG = 'N'
+        <include refid="messageSearchWhere"></include>
+    </select>
+    <select id="selectTotalMsgRecycleCount" parameterType="MessageSearchVO" resultType="int">
+        SELECT COUNT(*) FROM MSGRECVIEW
+        WHERE EMP_NO = #{empNo} and MSG_DELFLAG = 'Y'
+        <include refid="messageSearchWhere"></include>
+    </select>
+
+
+    <update id="updateImpMsg" parameterType="int">
+        UPDATE MESSAGE_REC
+        SET MSG_IMPFLAG =
+        CASE
+        WHEN MSG_IMPFLAG = 'Y'
+            THEN 'N'
+        WHEN MSG_IMPFLAG = 'N'
+            THEN 'Y'
+        END
+        WHERE REC_NO = #{recNo}
+    </update>
+
+    <update id="updateDelMsg" parameterType="int">
+        UPDATE MESSAGE_REC
+        SET MSG_DELFLAG = 'Y'
+        WHERE REC_NO = #{recNo}
+    </update>
+
+    <update id="updateReadFlag" parameterType="int">
+        UPDATE MESSAGE_REC
+        SET MSG_READFLAG = 'Y'
+        WHERE REC_NO = #{recNo}
+    </update>
 </mapper>
 
 

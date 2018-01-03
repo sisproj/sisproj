@@ -43,19 +43,19 @@ public class AddrBookController {
 	public String list(@ModelAttribute AddrSearchVO searchVo,HttpSession session, Model model) {
 		EmployeeVO empVo =(EmployeeVO)session.getAttribute("empVo");
 		int empNo=empVo.getEmpNo();
-		logger.info("###################empVO={}",empVo);
+		logger.info("empVO={}",empVo);
 		searchVo.setEmpNo(empNo);
 		
-		logger.info("개인주소록 리스트 조회하기, searchVo={}", searchVo);		
+		logger.info("개인주소록 리스트 조회하기111111111111111, searchVo={}", searchVo);		
 		
 		//Paging 처리에 필요한 변수를 계산해주는 PaginationInfo 생성
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(Utility.BLOCK_SIZE);
-		pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);
+		pagingInfo.setRecordCountPerPage(searchVo.getRecordCountPerPage());
 		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
 				
 		//SearchVo에 값 셋팅
-		searchVo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);
+		/*searchVo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);*/
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 		logger.info("searchVo 최종값 : {}", searchVo);
 		
@@ -118,17 +118,20 @@ public class AddrBookController {
 		//Paging 처리에 필요한 변수를 계산해주는 PaginationInfo 생성
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(Utility.BLOCK_SIZE);
-		pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);
+		pagingInfo.setRecordCountPerPage(searchVo.getRecordCountPerPage());
 		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
 		logger.info("레코드 test{}",pagingInfo);
 				
 		//SearchVo에 값 셋팅
-		searchVo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);
+		/*searchVo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);*/
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 		logger.info("searchVo 최종값 : {}", searchVo);
 		
 		List<AddrBookVO> addrList=addrBookService.selectAddrBookIsDelY(searchVo);
 		logger.info("휴지통 조회결과, addrList.size()={}", addrList.size());
+		
+		List<AddrGroupVO> groupList=groupService.selectGroupName(empNo);
+		logger.info("휴지통 그룹명 조회결과, groupList.size()={}", groupList.size());
 
 		int totalRecord = addrBookService.selectTotalRecordCountY(searchVo);
 		logger.info("글 전체 개수 조회 결과, totalRecord={}", totalRecord);
@@ -137,6 +140,7 @@ public class AddrBookController {
 		logger.info("레코드 test{}",pagingInfo);
 		
 		model.addAttribute("addrList", addrList);
+		model.addAttribute("groupList", groupList);
 		model.addAttribute("pagingInfo", pagingInfo);		
 		
 		return "addrBook/addrBookTrash";
@@ -209,11 +213,9 @@ public class AddrBookController {
 	}
 	
 	@RequestMapping("/pageCount.do")
-	public String pageCount(@ModelAttribute AddrSearchVO searchVo, 
-			@RequestParam(defaultValue="10") int countPerPage, Model model){
-		logger.info("페이지수 정하기, 파라미터 searchVo={}, count={}", searchVo, countPerPage);
+	public String pageCount(@ModelAttribute AddrSearchVO searchVo, Model model){
+		logger.info("페이지수 정하기, 파라미터 searchVo={}", searchVo);
 		
-		searchVo.setRecordCountPerPage(countPerPage);
 		logger.info("searchVo에 count값 설정 후 searchVo={}", searchVo);
 		
 		List<AddrBookVO> list=addrBookService.selectAddrBookAll(searchVo);
@@ -224,4 +226,34 @@ public class AddrBookController {
 		return "addrBook/addrBookList";
 	}
 	
+	@RequestMapping("/displayUpdate.do")
+	@ResponseBody
+	public AddrBookVO selectByAddrNo(@RequestParam(defaultValue="0") int addrNo) {
+		logger.info("주소록 번호로 조회, 파라미터 addrNo={}", addrNo);
+		
+		AddrBookVO vo=addrBookService.selectByAddrNo(addrNo);
+		logger.info("주소록 번호로 조회 결과, vo={}", vo);
+		
+		return vo;
+	}
+	
+	@RequestMapping(value="/addrBookUpdate.do", method=RequestMethod.POST)
+	public String update(@ModelAttribute AddrBookVO addrBookVo, Model model) {
+		logger.info("주소록 연락처 수정처리, 파라미터 addrBookVo={}", addrBookVo);
+		
+		int cnt=addrBookService.updateAddrBook(addrBookVo);
+		logger.info("주소록 수정처리 결과, cnt={}", cnt);
+		
+		String msg="",url="/addrBook/addrBookList.do";
+		if(cnt>0) {
+			msg="수정 성공";
+		}else {
+			msg="수정 실패";			
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "common/message";
+	}
 }

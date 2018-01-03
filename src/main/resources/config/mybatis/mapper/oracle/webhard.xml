@@ -30,5 +30,57 @@
 		on w.emp_no = e.emp_no
 		where file_no = #{fileNo}
 	</select>
+	
+	<insert id="insertWebBoard" parameterType="WebhardBoardVO">
+		<selectKey keyProperty="webNo" resultType="int" order="BEFORE">
+			select webhard_seq.nextval from dual
+		</selectKey>
+		insert into webhard(web_no, emp_no, web_title, web_content)
+		values(#{webNo}, #{empNo}, #{webTitle}, #{webContent})
+	</insert>
+	
+	<select id="selectWebBoardByWebNo" parameterType="int" resultType="WebhardBoardVO">
+		select w.*, e.emp_name
+		from webhard w
+		join emp e
+		on w.emp_no = e.emp_no
+		where w.web_no = #{webNo}
+	</select>
+	
+	<select id="selectWebBoardList" parameterType="WebhardSearchVO" resultType="WebhardBoardVO">
+		select * from (
+		    select rownum as RNUM, blist.* from
+		    (
+				select w.*, e.emp_name
+				from webhard w
+				join emp e
+				on w.emp_no = e.emp_no
+				<if test="searchKeyword !=null and searchKeyword!=''">
+		        where (w.web_title like '%' || #{searchKeyword} || '%' or e.emp_name like '%' || #{searchKeyword} || '%' or w.web_content like '%' || #{searchKeyword} || '%')
+		        </if>
+		        order by w.web_no desc
+		    ) blist
+		)
+		<![CDATA[
+		where RNUM>#{firstRecordIndex} and RNUM<=#{firstRecordIndex}+#{recordCountPerPage} ]]>
+	</select>
+	
+	<select id="cntWebBoardList"  parameterType="WebhardSearchVO" resultType="int">
+		select count(*)
+		from webhard w
+		join emp e
+		on w.emp_no = e.emp_no
+        <if test="searchKeyword !=null and searchKeyword!=''">
+        where (w.web_title like '%' || #{searchKeyword} || '%' or e.emp_name like '%' || #{searchKeyword} || '%' or w.web_content like '%' || #{searchKeyword} || '%')
+        </if>
+	</select>
+	
+	<update id="updateWebBoard" parameterType="WebhardBoardVO">
+		update webhard set web_title=#{webTitle}, web_content=#{webContent} where web_no = #{webNo}
+	</update>
+	
+	<delete id="deleteWebBoard" parameterType="int">
+		delete from webhard where web_no = #{webNo}
+	</delete>
 </mapper>
 
