@@ -3,8 +3,12 @@ package com.siszo.sisproj.commue.model;
 import java.util.List;
 
 public interface CommueDAO {
-	public List<CommueVO> selectAllCom();
+	
 	public CommueVO selectByNo(int cmtNo);
-	public int insertIn(int empNo);
+	public int insertIn(CommueVO comVo);
 	public int updateOut(int cmtNo);
+	public CommueVO checkCmt(int empNo);
+	public CommueVO selectByEmpNo(int empNo);
+	
+	public List<CommueVO> selectAll();
 }

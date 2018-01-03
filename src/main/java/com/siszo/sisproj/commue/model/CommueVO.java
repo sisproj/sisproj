@@ -8,6 +8,11 @@ public class CommueVO {
 	private Timestamp cmtIn;
 	private Timestamp cmtOut;
 	private String cmtStatus;
+	//join
+	private String deptName;
+	private String posName;
+	private String empName;
+	
 	public int getCmtNo() {
 		return cmtNo;
 	}
@@ -38,10 +43,28 @@ public class CommueVO {
 	public void setCmtStatus(String cmtStatus) {
 		this.cmtStatus = cmtStatus;
 	}
+	public String getDeptName() {
+		return deptName;
+	}
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+	public String getPosName() {
+		return posName;
+	}
+	public void setPosName(String posName) {
+		this.posName = posName;
+	}
+	public String getEmpName() {
+		return empName;
+	}
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
 	@Override
 	public String toString() {
 		return "CommueVO [cmtNo=" + cmtNo + ", empNo=" + empNo + ", cmtIn=" + cmtIn + ", cmtOut=" + cmtOut
-				+ ", cmtStatus=" + cmtStatus + "]";
+				+ ", cmtStatus=" + cmtStatus + ", deptName=" + deptName + ", posName=" + posName + ", empName="
+				+ empName + "]";
 	}
-	
 }
