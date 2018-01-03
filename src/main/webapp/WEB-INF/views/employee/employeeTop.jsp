@@ -2,7 +2,7 @@
     pageEncoding="utf-8"%>
 <%@include file="../inc/top.jsp" %>
      <!-- 0. include부분 -->
-         <link rel="stylesheet" href="<c:url value="/resources/css/mypage.css"/>">
+        <link rel="stylesheet" href="<c:url value="/resources/css/mypage.css"/>">
         <c:if test="${sessionScope.empVo.empLev eq ('관리자') }">
         <nav>
             <ul>

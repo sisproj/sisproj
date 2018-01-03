@@ -6,7 +6,8 @@ import java.util.Map;
 
 public interface NewsDAO {
 	public int insertNews(NewsVO newsVo);
-	public List<NewsVO> dailyNewsList();
+	public List<NewsVO> dailyNewsList(NewsSearchVO newsSearchVO);
+	public List<NewsVO> dailyNewsMainList();
 	public NewsVO newsSearchByNo(int newsNo);
 	public int newsUpdate(NewsVO newsVo);
 	public int newsUpdateImageException(NewsVO newsVo);
@@ -21,4 +22,6 @@ public interface NewsDAO {
 	public List<Map<String, Object>> newscomRanking();
 	public int readcountup(int newsNo);
 	public List<NewsVO> newsreadRanking();
+	public int deleteNewsCom(NewsComVO comVo);
+	public int newstotalrecord();
 }

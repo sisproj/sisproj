@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@include file="employeeTop.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <!-- Bootstrap -->
-<script src="<c:url value='/resources/jquery/jquery-3.2.1.min.js'/>"></script>
-<link href="<c:url value='/resources/css/bootstrap/bootstrap.min.css'/>" rel="stylesheet">
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="<c:url value='/resources/js/bootstrap/bootstrap.min.js'/>"></script>
 <script type="text/javascript">
 	$(function () {	
 		$('#btDeSe').click(function(){
@@ -144,28 +139,26 @@
 		<input type="button" id="btCo" name="btCo" value="복직">
 	</div>
 	</c:if>
-		<div id="diPage">
-			<ul class="pagination">
-				<!-- 이전 블럭으로 이동 ◀ -->
-				<c:if test="${pagingInfo.firstPage>1 }">
-					<li><a href="#" onclick="pageFunc(${pagingInfo.firstPage-1})">«</a></li>	
-				</c:if>	
-			
-				<!-- [1][2][3][4][5][6][7][8][9][10] -->
-				<c:forEach var="i" begin="${pagingInfo.firstPage}" end="${pagingInfo.lastPage}">
-					<c:if test="${i==pagingInfo.currentPage}">
-						<li><a href="#" class="active">${i }</a></li>
-					</c:if>
-					<c:if test="${i!=pagingInfo.currentPage}">
-						<li><a href="#" onclick="pageFunc(${i })" class="active">${i }</a></li>
-			 		</c:if>				
-				</c:forEach>
-			
-				<!-- 다음 블럭으로 이동 ▶ -->
-				<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage}">
-					<li><a href="#" onclick="pageFunc(${pagingInfo.lastPage+1})">»</a></li>
+		<div id="pagingbtn">
+			<!-- 이전 블럭으로 이동 ◀ -->
+			<c:if test="${pagingInfo.firstPage>1 }">
+				<a id="prevbtn" href="#" onclick="pageFunc(${pageInfo.firstPage-1})"><i class="fa fa-chevron-left"></i></a>	
+			</c:if>	
+		
+			<!-- [1][2][3][4][5][6][7][8][9][10] -->
+			<c:forEach var="i" begin="${pagingInfo.firstPage}" end="${pagingInfo.lastPage}">
+				<c:if test="${i==pagingInfo.currentPage}">
+					<span class="thispage">${i }</span>	
 				</c:if>
-			</ul>
+				<c:if test="${i!=pagingInfo.currentPage}">
+					<a href="#" onclick="pageFunc(${i })">${i }</a>		
+		 		</c:if>				
+			</c:forEach>
+		
+			<!-- 다음 블럭으로 이동 ▶ -->
+			<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage}">
+				<a id=nextbtn href="#" onclick="pageFunc(${pagingInfo.lastPage+1})"><i class="fa fa-chevron-right"></i></a>
+			</c:if>
 		</div>
 	</div> 
 </form>
@@ -176,8 +169,88 @@
 		text-align: center;
 		width: 90%;
 	}
-	#diPage ul li{
-		
+	#dimyP{
+		margin: 0 auto;
+		margin-bottom:10px;
 	}
+	#allList {
+		width: 90%;
+		margin: 0 auto;
+		padding : 10px;
+		box-sizing:border-box;
+		border:0;
+		border-collapse: collapse;
+	}
+	#allList tr{
+		transition:all 300ms linear;
+	}
+	#allList tbody tr:hover{
+		background-color: #e1e1e1;
+	}
+	#allList th{
+		box-sizing:border-box;
+		padding: 5px;
+		height: 30px;
+		color: #036;
+		font-size: 1.17em;
+		border:0;
+		border-top: 2px solid #e1e1e1;
+		border-bottom: 2px solid #e1e1e1;
+	}
+	#allList td {
+		box-sizing:border-box;
+		padding: 5px;
+		border:0;
+		text-align: center;
+		border-bottom: 2px solid #e1e1e1;
+	}
+	/*하단 페이징 버튼*/
+	#pagingbtn{
+		width: 100%;
+		max-width:1100px;
+		margin: 0 auto;
+		height: 40px;
+		width: auto;
+		box-sizing:border-box;
+		padding-bottom: 10px;
+		text-align:center;
+		margin-top: 10px;
+	}
+	#pagingbtn span, #pagingbtn a{
+		display: inline-block;
+		width: 24px;
+		line-height: 24px;
+		border-radius:12px;
+		background-color: #369;
+		color: fff;
+		text-align: center;
+		font-weight: bold;
+		margin-left: 5px;
+		box-shadow:2px 2px 3px #333;
+		font-size: 0.8em;
+	}
+	#pagingbtn a:hover,
+	#pagingbtn span.thispage{
+		background-color:#09f;
+		box-shadow:2px 2px 3px transparent;	
+	}
+	#pagingbtn span:first-child{
+		margin-left: 0;	
+	}
+	#pagingbtn a i {
+		line-height: 24px;
+		color: fff;
+		text-align: center;
+		font-size: 0.8em;
+	}
+	#pagingbtn #firstbtn,
+	#pagingbtn #lastbtn{
+		background-color: #333;
+	}
+	#pagingbtn #prevbtn,
+	#pagingbtn #nextbtn{
+		background-color: #306;
+	}
+	
 </style>
 <%@include file="employeeBottom.jsp" %>

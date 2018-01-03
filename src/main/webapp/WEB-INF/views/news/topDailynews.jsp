@@ -160,7 +160,7 @@ text-align: center;
 			<c:set var="num" value="${num+1 }" />
 			<div class="rank">
 				<span class="ranktitle"> <span class="rankNum">${num }</span>
-					<a href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">${fn:substring(vo.newsTitle,0,28) }...</a>
+					<a href="<c:url value='/news/newsDetailcnt.do?newsNo=${vo.newsNo }'/>">${fn:substring(vo.newsTitle,0,28) }...</a>
 				</span>
 			</div>
 		</c:forEach>
@@ -183,7 +183,7 @@ text-align: center;
 			<c:set var="num" value="${num+1 }" />
 			<div class="rank">
 				<span class="ranktitle"> <span class="rankNum">${num }</span>
-					<a href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">${fn:substring(map['NEWS_TITLE'],0,28) }...</a>
+					<a href="<c:url value='/news/newsDetailcnt.do?newsNo=${vo.newsNo }'/>">${fn:substring(map['NEWS_TITLE'],0,28) }...</a>
 				</span>
 			</div>
 		</c:forEach>
@@ -203,7 +203,7 @@ text-align: center;
 			<c:set var="num" value="${num+1 }" />
 			<div class="rank">
 				<span class="ranktitle"> <span class="rankNum">${num }</span>
-					<a href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">${fn:substring(vo.newsTitle,0,28) }...</a>
+					<a href="<c:url value='/news/newsDetailcnt.do?newsNo=${vo.newsNo }'/>">${fn:substring(vo.newsTitle,0,28) }...</a>
 				</span>
 			</div>
 		</c:forEach>

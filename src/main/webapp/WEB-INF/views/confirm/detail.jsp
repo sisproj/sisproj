@@ -173,7 +173,7 @@
 											<div class="comm_con">${commVo.commContent }</div>
 											<!-- 수정용 -->
 											<form name="comm_ed" class="comm_ed" method="post" action="<c:url value='/confirm/editComm.do'/>">
-												<textarea name="commContent" placeholder="줄바꿈이 되지 않습니다."></textarea>
+												<textarea name="commContent">${commVo.commContent }</textarea>
 												<input type="hidden" name="commNo" value="${commVo.commNo }">
 												<input type="hidden" name="cfNo" value="${docVo.cfNo }">
 												<input type="submit" class="bold" value="댓글 수정">

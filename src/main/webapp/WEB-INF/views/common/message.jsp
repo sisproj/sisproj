@@ -8,7 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	
 	<script type="text/javascript">
 		<c:if test="${!empty msg}">
 			alert("${msg}");

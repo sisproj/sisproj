@@ -24,6 +24,9 @@
 }
 #btns{
 	text-align: right;
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+	border-bottom: 2px solid #036;
 }
 #btns a.button{
 	display: inline-block;
@@ -31,4 +34,78 @@
 	height: 20px;
 	margin-left: 10px;
 	line-height: 20px;
+}
+#cf_comment{
+	box-sizing:border-box;
+	width: 900px;
+	margin: 0 auto;
+	border-radius: 10px;
+	padding: 10px;
+}
+#cf_comment #comm_wr{
+	padding: 10px;
+	height: 40px;
+}
+#cf_comment #comm_wr #con{
+	box-sizing:border-box;
+	width: 80%;
+	height: 100%;
+	float:left;
+	margin-right: 10px;
+	padding: 10px;
+	resize:none;
+	border: 2px solid #efefef;
+	border-radius:10px ;
+	outline: 0;
+}
+#cf_comment #comm_wr input[type=submit]{
+	width: 15%;
+	max-width: 150px;
+	height: 100%;
+	float:right;
+	margin-right: 10px;
+}
+#cf_comment .selcomm{
+	box-sizing:border-box;
+	min-height: 100px;
+	padding: 10px;
+	border-bottom: 2px solid #fff;
+}
+#cf_comment .selcomm .comm_info{
+	position: relative;
+	margin-bottom: 20px;
+}
+#cf_comment .selcomm .comm_info span:last-child{
+	position: absolute;
+	right: 0;
+	font-size: 0.8em;
+}
+#cf_comment .selcomm .comm_content .comm_ed{
+	display: none;
+}
+#cf_comment .selcomm .comm_content .comm_ed textarea{
+	box-sizing:border-box;
+	width: 80%;
+	height: 40px;
+	float:left;
+	margin-right: 10px;
+	padding: 10px;
+	resize:none;
+	border: 2px solid #fff;
+	border-radius:10px ;
+	border: 2px solid #efefef;
+	outline: 0;
+}
+#cf_comment .selcomm .comm_content .comm_ed input[type=submit]{
+	width: 15%;
+	max-width: 150px;
+	height: 40px;
+	float:right;
+	margin-right: 10px;
+}
+#cf_comment .selcomm .comm_con{
+	margin-top: 10x;
+}
+#cf_comment .selcomm:last-child{
+	border-bottom: 2px solid transparent;
 }

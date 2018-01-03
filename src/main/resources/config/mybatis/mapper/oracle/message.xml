@@ -81,12 +81,12 @@
                 FROM(
                     SELECT
                         MSG_NO,
-                        MIN(EMP_NAME) as EMP_NAME,
-                        MIN(EMP_NO) as EMP_NO,
-                        MIN(MSG_TITLE) as MSG_TITLE,
-                        MIN(MSG_REGDATE) as MSG_REGDATE,
-                        count(MSG_NO) as CNT
+                        LISTAGG(EMP_NAME, ',') WITHIN GROUP (ORDER BY EMP_NAME) AS EMP_NAME,
+                        MIN(MSG_TITLE)       AS MSG_TITLE,
+                        MIN(MSG_REGDATE)     AS MSG_REGDATE,
+                        count(MSG_NO)        AS CNT
                     FROM MSGSENDVIEW
+                    WHERE SENDEMP_NO = #{empNo}
                     <include refid="messageSearchWhere"></include>
                     GROUP BY MSG_NO
                     ORDER BY MSG_NO DESC
@@ -127,6 +127,12 @@
         WHERE REC_NO = #{recNo}
     </select>
 
+    <select id="selectSendMsgByMsgNo" parameterType="int" resultType="MessageVO">
+        SELECT *
+        FROM MSGRECVIEW
+        WHERE MSG_NO = #{msgNo}
+    </select>
+
     <select id="selectTotalMsgRecCount" parameterType="MessageSearchVO" resultType="int">
         SELECT COUNT(*) FROM MSGRECVIEW
         WHERE EMP_NO = #{empNo} and MSG_DELFLAG = 'N'
@@ -148,7 +154,7 @@
                 MIN(EMP_NO)      AS EMP_NO,
                 MIN(MSG_TITLE)   AS MSG_TITLE,
                 MIN(MSG_REGDATE) AS MSG_REGDATE,
-                MIN(MSG_DELFLAG) AS MSG_DELFLAG,
+                MIN(SEND_DELFLAG) AS MSG_DELFLAG,
                 count(MSG_NO)    AS CNT
             FROM MSGSENDVIEW
             GROUP BY MSG_NO
@@ -179,6 +185,12 @@
     <update id="updateDelMsg" parameterType="int">
         UPDATE MESSAGE_REC
         SET MSG_DELFLAG = 'Y'
+        WHERE REC_NO = #{recNo}
+    </update>
+
+    <update id="delMsgUndo" parameterType="int">
+        UPDATE MESSAGE_REC
+        SET MSG_DELFLAG = 'N'
         WHERE REC_NO = #{recNo}
     </update>
 

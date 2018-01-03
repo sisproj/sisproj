@@ -288,10 +288,9 @@ html, body {
 <nav>
 	<ul>
 		<!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
-		<li class="active"><a href="<c:url value='/scheduler/scheduler.do'/>"><i
-				class="fa fa-pencil-square-o"></i>&nbsp;<span>개인스케줄</span></a></li>
-		<li><a href="<c:url value='/scheduler/tscheduler.do'/>"><i class="fa fa-floppy-o"></i>&nbsp;<span>공식
-					스케줄</span></a></li>
+		<li class="active"><a href="<c:url value='/scheduler/scheduler.do'/>"><i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+		</i>&nbsp;<span>개인스케줄</span></a></li>
+		<li><a href="<c:url value='/scheduler/tscheduler.do'/>"><i class="fa fa-calendar" aria-hidden="true"></i></i>&nbsp;<span>공식 팀 스케줄</span></a></li>
 		<!-- <li><a href="#"><i class="fa fa-file-text"></i>&nbsp;<span>결재 완료함</span></a></li>
                 <li><a href="#"><i class="fa fa-history"></i>&nbsp;<span>결재 반려함</span></a></li>
                 <li><a href="#"><i class="fa fa-cog"></i>&nbsp;<span>결재 환경 설정</span></a></li> -->
@@ -309,7 +308,7 @@ html, body {
 <article id="headsection">
 	<!-- 2. 페이지 이름 지정 // 북마크 지정 여부 .bookmark || .nobook -->
 	<h1>
-		<i class="fa fa-calendar-check-o" aria-hidden="true"></i></i>&nbsp;스케쥴관리&nbsp;<a
+		<i class="fa fa-calendar-check-o" aria-hidden="true"></i></i>&nbsp;개인 스케쥴관리&nbsp;<a
 			href="#"> <i class="fa fa-bookmark" aria-hidden="true"></i></a>
 	</h1>
 	<!-- 2. 페이지 이름 지정 끝 -->

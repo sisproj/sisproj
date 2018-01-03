@@ -5,8 +5,14 @@
 <!-- 0. include부분 -->
 <script type="text/javascript">
 	$(function() {
-		var empno = ${sessionScope.empVo.empNo};
-		if(empno!=$('.empNochk').val()){
+		var empNo='${sessionScope.empVo.empLev}';
+		$(".comContent").keydown(function (key) {
+	        if(key.keyCode == 13){//키가 13이면 실행 (엔터는 13)
+	           $('form[name=newsComfrm]').submit();
+	        }
+	 
+	    });
+		if(empNo!=$('.empNochk').val()){
 			$('.editdeletechk').css('visibility','hidden');
 		} 
 		
@@ -36,8 +42,23 @@
 #newsDmain {
 	width: 60%;
 	margin: 0 auto;
+} 
+
+.newsDtitle{
+text-align:center;
 }
 
+.newsregdate{
+	color:blue; 
+}
+.readcnt{
+	color: gray;
+}
+
+.nocommantd{
+	color: gray;
+	text-align: center;
+}
 #likeCount {
 	margin: 0 auto;
 	border: 3px solid blue;
@@ -71,15 +92,27 @@
 .editdeletechk{
 	float:right;
 }
+
+.comsubmit{
+width:9%;
+display: inline-block;
+height:45px; 
+float:right;
+} 
 </style>
 <nav>
 	<ul>
 		<!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
 		
-		<li class="active"><a href="<c:url value='/news/dailyNews.do'/>"><i
-				class="fa fa-floppy-o"></i>&nbsp;<span>SIS 뉴스홈</span></a></li>
-		<li><a href="<c:url value='/news/photoNews.do'/>"><i
-				class="fa fa-floppy-o"></i>&nbsp;<span>SIS 포토뉴스</span></a></li>
+		<li class="active"><a href="<c:url value='/news/dailyNews.do'/>"><i class='fa fa-newspaper-o'></i>&nbsp;<span>SIS 뉴스홈</span></a></li>
+			<c:if test="${sessionScope.empVo.empLev eq '관리자'}">
+		<li><a href="<c:url value='/news/newsWrite.do'/>"><i
+				class="fa fa-floppy-o"></i>&nbsp;<span>SIS 뉴스등록</span></a></li>
+		
+		<li><a href="<c:url value='#'/>"><i
+				class="fa fa-floppy-o"></i>&nbsp;<span>SIS 뉴스관리</span></a></li>
+				</c:if>
+
 
 
 	</ul>
@@ -103,18 +136,20 @@
 </article>
 <article id="bodysection">
 	<!-- 3. 내용 -->
+	<input type="hidden" id="newsDetailempLv" name="newsDetailempLv"  value="${sessionScope.empVo.empLev  }">
 	<div id="newsDmain">
 		<hr>
 		<div id="newsDTitle">
-			<h3>${newsVo.newsTitle }</h3>
+			<h3 class="newsDtitle">${newsVo.newsTitle }</h3>
 			<div>
-				<span>기사입력 : <fmt:formatDate value="${newsVo.newsRegdate }"
+				<span class="newsregdate">기사입력 : <fmt:formatDate value="${newsVo.newsRegdate }"
 						pattern="yyyy-MM-dd hh:MM" />
+			</span>
 					<div id="newsbtgroup">
+						<span class="readcnt">조회수 : ${newsVo.newsReadCnt }</span>
 						<input type="button" id="btnewsEdit" value="수정" > 
 						<input type="button" id="btnewsDelete" value="삭제">
 					</div>
-			</span>
 			</div>
 		</div>
 		<hr>
@@ -137,14 +172,23 @@
 		<input type="hidden" id="newsNo" name="newsNo" value="${newsVo.newsNo }">
 		
 		<span id="reclabel">댓글   ${list.size() }개</span>
-		<div id="rectext"><textarea id="comContent" name="comContent" style="width: 90%" rows="2"></textarea><input style="width:10%" type="submit" value="댓글등록"></div>
+		<div id="rectext"><input type="text" id="comContent" name="comContent" style="width: 90%; height:45px;"><input class="comsubmit" type="submit" value="댓글등록"></div>
+		
+		<c:if test="${empty list }">
+		<hr>
+		<span class="nocommantd">등록된 댓글이 없습니다.</span>
+		</c:if>
 		<!-- 댓글 반복시작 -->
+		<hr>
 		<c:forEach var="map" items="${list }">
 		<input type="hidden" class="empNochk" value="${map['EMP_NO'] }">
 		<label class="newsempname">${map['EMP_NAME'] } ${map['EMP_LEV'] }</label><br>
 		${map['COM_CONTENT'] }<br>
 		<fmt:formatDate value="${map['COM_REGDATE'] }" pattern="yyyy-MM-dd hh:mm:ss"/>
-		<div class="editdeletechk"><a href="#">수정</a>&nbsp;&nbsp;<a href="#">삭제</a></div> 
+		
+		<div class="editdeletechk">
+		<a href="<c:url value="/news/newsComDelete.do?comNo=${map['COM_NO'] }&newsNo=${newsVo.newsNo }"/>">삭제</a>
+		</div> 
 		<br>
 		<hr>
 		</c:forEach>		
@@ -154,8 +198,6 @@
 	</div>
 
 
-
-	</div>
 
 	<!-- 3. 내용 끝 -->
 </article>

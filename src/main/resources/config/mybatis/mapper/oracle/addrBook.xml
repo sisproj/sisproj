@@ -31,6 +31,9 @@
 	<select id="selectTotalRecordCountN" resultType="int" parameterType="AddrSearchVO">
 		select count(*) from addrBookView
 		where addr_isdel='N' and emp_no=#{empNo}
+		<if test="groupNo!=0">
+			and group_no=#{groupNo}		
+		</if>
 		<include refid="searchWhere"></include>		
 	</select>
 	<select id="selectTotalRecordCountY" resultType="int" parameterType="AddrSearchVO">
@@ -82,6 +85,12 @@
 		set addr_Name=#{addrName}, addr_Tel=#{addrTel}, addr_Email=#{addrEmail}, addr_Comp=#{addrComp}, group_No=#{groupNo}
 		where addr_No=#{addrNo}
 	</update>
+	<update id="deleteGroup" parameterType="AddrGroupVo">
+		update addrbook
+		set group_no=(select group_no from addrgroup where group_name='미지정' and emp_no=#{empNo})
+		where group_no=#{groupNo};
+	</update>
+	
 </mapper>
 
 
