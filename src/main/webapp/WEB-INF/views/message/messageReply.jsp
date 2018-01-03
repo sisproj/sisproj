@@ -135,7 +135,6 @@
         .tokenfield {
             width: 80%;
             float: left;
-            border: 1px solid #ccc !important;
             overflow-y: auto;
             max-height: 34px;
         }
@@ -152,56 +151,21 @@
 <body>
 
 <!-- Sidebar -->
-<div class="w3-sidebar w3-bar-block w3-card w3-animate-right" style="display:none;right:0;" id="rightMenu">
-    <div class="w3-bar">
-        <input type="text" class="w3-input w3-bar-item w3-left" id="userSearch" placeholder="Search.."
-               onkeyup="findUser()" style="width: 140px;">
-        <button onclick="closeRightMenu()" class="w3-bar-item w3-button w3-large w3-right" style="width: 42px">&times;
-        </button>
-    </div>
-    <div id="userProfile">
-        <c:forEach var="deptVo" items="${deptList}">
-            <div class="w3-light-grey w3-tiny" style="margin: 2px">${deptVo.deptName }</div>
-            <ul class="w3-ul">
-                <c:forEach var="empVo" items="${empList }">
-                    <c:if test="${empVo.deptNo == deptVo.deptNo and empVo.empNo != sessionScope.empVo.empNo}">
-                        <label for="check-${empVo.empNo}">
-                            <li class="w3-bar w3-button" style="padding: 0">
-                                <input class="bar-item w3-white w3-tiny w3-right"
-                                       type="checkbox"
-                                       value="${empVo.empName}(${empVo.empNo})"
-                                       name="empCheck"
-                                       id="check-${empVo.empNo}"
-                                       style="margin: 20px">
-                                <div class="w3-bar-item">
-                                    <span class="w3-small">${empVo.empName } ${empVo.posName }</span><br>
-                                    <span class="w3-tiny">(${empVo.empNo })</span>
-                                </div>
-                            </li>
-                        </label>
-                    </c:if>
-                </c:forEach>
-            </ul>
-        </c:forEach>
-    </div>
-</div>
-
-
 <div class="w3-container" id="writeContainer">
     <form id="writefrm" name="writefrm" action="<c:url value='/message/write.do'/>" method="POST">
         <div class="w3-row w3-section" style="height: 34px">
-            <div class="w3-col message-label">받는 사람</div>
             <div class="w3-rest">
                 <div class="w3-bar">
-                    <%--<input class="w3-bar-item w3-border w3-left message-input" style="width: 80%" type="text">--%>
-                    <input type="hidden" id="sendempNo" name="sendempNo" value="${sessionScope.empVo.empNo}">
-                    <input type="hidden" id="choiceEmpId" name="choiceEmpId" value="">
-                    <input type="text" id="tokenField" value="">
-                    <button type="button" id="openRightButton" class="w3-bar-item w3-button w3-blue w3-small"
-                            style="width: 20%; height: 34px"
-                            onclick="openRightMenu()">
-                        주소록
-                    </button>
+                    <div class="w3-col message-label">받는 사람</div>
+                    <div class="w3-rest">
+                        <div class="w3-bar">
+                            <input type="hidden" id="sendempNo" name="sendempNo" value="${sessionScope.empVo.empNo}">
+                            <input type="hidden" id="choiceEmpId" name="choiceEmpId" value="${employeeVO.empNo}">
+                            <%--<input class="w3-bar-item w3-border w3-left message-input" style="width: 80%" type="text">--%>
+                            <input type="text" id="tokenField" value="${employeeVO.empName}(${employeeVO.empNo})"
+                                   readonly="readonly">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

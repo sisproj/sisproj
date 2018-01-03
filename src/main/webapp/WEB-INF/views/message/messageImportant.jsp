@@ -76,19 +76,19 @@
     <!-- 3. 내용 -->
     <div class="w3-container w3-margin">
         <h5>
-            <b class="w3-bar-item">받은 쪽지함</b>
+            <b class="w3-bar-item">중요 쪽지함</b>
         </h5>
         <table class="w3-table w3-bordered" style="width: 90%; margin-left: 5%">
             <thead>
             <tr class=" w3-border-bottom">
-                <th>
+                <th  style="width: 68px">
                     <div class="w3-button w3-light-grey">
                         <input type="checkbox" id="checkAllMessage">
                     </div>
                 </th>
                 <th class="w3-text-white">
                     <button class="w3-button w3-small w3-light-grey" onclick="updateImpMsg()">
-                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                        <i class="fa fa-ban" aria-hidden="true"></i>
                     </button>
                     <button class="w3-button w3-small w3-light-grey" onclick="deleteMsg()">
                         <i class="fa fa-trash-o" aria-hidden="true"></i>
@@ -115,7 +115,6 @@
                 <tr>
                     <td colspan="3">중요 쪽지가 없습니다.</td>
                 </tr>
-
             </c:if>
             <c:forEach items="${msgList}" var="msgVO">
                 <c:if test="${msgVO.msgReadflag eq 'Y'}">

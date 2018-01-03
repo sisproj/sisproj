@@ -34,4 +34,5 @@ public interface MessageService {
     public int delMsgUndo(int recNo);
 
     public MessageVO selectSendMsgByMsgNo(int msgNo);
+
 }

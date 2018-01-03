@@ -69,12 +69,12 @@
     <!-- 3. 내용 -->
     <div class="w3-container w3-margin">
         <h5>
-            <b class="w3-bar-item">받은 쪽지함</b>
+            <b class="w3-bar-item">보낸 쪽지함</b>
         </h5>
         <table class="w3-table w3-bordered" style="width: 90%; margin-left: 5%">
             <thead>
             <tr class=" w3-border-bottom">
-                <th>
+                <th style="width: 68px">
                     <div class="w3-button w3-light-grey">
                         <input type="checkbox" id="checkAllMessage">
                     </div>
@@ -106,9 +106,8 @@
             </thead>
             <c:if test="${empty msgList}">
                 <tr>
-                    <td colspan="3">받은 쪽지가 없습니다.</td>
+                    <td colspan="3">보낸 쪽지가 없습니다.</td>
                 </tr>
-
             </c:if>
             <c:forEach items="${msgList}" var="msgVO">
                 <tr class="hoverable" id="msg-${msgVO.recNo}">
@@ -118,9 +117,6 @@
                     <td style="width: 65%">
                         <div onclick="window.open('<c:url
                                 value="/message/sendDetail.do?msgNo=${msgVO.msgNo}"/>', 'messageWindow', 'width=540,height=500,left=300,top=300,toolbar=no,scrollbars=no,resizable=no');">
-                            <c:if test="${msgVO.msgImpflag eq 'Y'}">
-                                <span class="w3-border w3-round w3-tiny w3-light-gray">중요 쪽지</span>
-                            </c:if>
                             <a href="#" onclick="messageDetailOpen('msg-${msgVO.recNo}')">${msgVO.msgTitle}</a>
                         </div>
 
@@ -174,10 +170,6 @@
     function pageFunc(curPage) {
         document.frmPage.currentPage.value = curPage;
         frmPage.submit();
-    }
-
-    function messageDetailOpen(data) {
-        $('#' + data).attr("class", "w3-light-gray readMessage");
     }
 
     function updateImpMsg() {

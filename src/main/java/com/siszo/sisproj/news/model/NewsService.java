@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 
+
 public interface NewsService {
 	
 	public static final int EXIST_LIKE=1;  
@@ -14,6 +15,7 @@ public interface NewsService {
 	public int newsUpdate(NewsVO newsVo);
 	public int newsUpdateImageException(NewsVO newsVo);
 	public int newsDelete(int newsNo);
+	public int deleteMulti(List<NewsVO>list);
 		
 	public int insertNewsCommand(NewsComVO vo);
 	public List<Map<String, Object>> searchNewsCommand(int newsNo);
@@ -30,4 +32,8 @@ public interface NewsService {
 	public int deleteNewsCom(NewsComVO comVo);
 	public List<NewsVO> dailyNewsMainList();
 	public int newstotalrecord() ;
+	
+	public List<NewsVO> newsAllselect(NewsSearchVO newsSearchVO);
+	
+	
 }

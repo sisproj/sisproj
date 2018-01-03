@@ -3,7 +3,12 @@
 <%@include file="../inc/top.jsp"%>
 <link rel="stylesheet" href="<c:url value='/resources/css/w3/w3.css'/>">
 <script type="text/javascript">
+	function pageFunc(curPage) {
+	      document.frmPage.currentPage.value = curPage;
+	      frmPage.submit();
+	}
 	$(function(){
+		
 		$('input[name=chkAll]').click(function(){
 			$('tbody input[type=checkbox]').prop('checked', this.checked);
 		});
@@ -12,48 +17,21 @@
 			//선택한 상품들 삭제
 			var len = $('tbody input[type=checkbox]:checked').length;
 			if(len==0){
-				alert('삭제할 상품을 먼저 체크하세요');
+				alert('삭제할 항목을 먼저 체크하세요');
 				return;
 			}
-			
 			$('#frmList').prop('action',
-				'<c:url value="/admin/product/deleteMulti.do"/>');
-			$('#frmList').submit();
-			
-		});
-		
-			
-		
-		$('#btEventMulti').click(function(){
-			//선택한 상품을 이벤트 등록
-			var len = $('tbody input[type=checkbox]:checked').length;
-			if(len==0){
-				alert('등록할 상품을 먼저 체크하세요');
-				return;
-			}
-			
-			if($('#eventSel').val()==''){
-				alert('등록할 이벤트 네임을 선택해주세요');
-				
-				return;
-				
-			}
-			
-			$('#frmList').prop('action',
-				'<c:url value="/admin/product/eventMulti.do"/>');
+				'<c:url value="/news/deleteMulti.do"/>');
 			$('#frmList').submit();
 		});
-		
-		
 	});
-	
-	function boardList(curPage){
-		document.frmPage.currentPage.value=curPage;
-		frmPage.submit();
-	}
 </script>	
 
 <style>
+.align_center{
+	text-align: center;
+}
+
 
 </style>
 
@@ -63,14 +41,12 @@
 		<!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
 	<li><a href="<c:url value='/news/dailyNews.do'/>"><i class='fa fa-newspaper-o'></i>&nbsp;<span>SIS 뉴스홈</span></a></li>
 	<c:if test="${sessionScope.empVo.empLev eq '관리자'}">
-		<li><a href="<c:url value='/news/newsWrite.do.do'/>"><i
+		<li><a href="<c:url value='/news/newsWrite.do'/>"><i
 				class="fa fa-floppy-o"></i>&nbsp;<span>SIS 뉴스등록</span></a></li>
 		
-		<li class="active"><a href="<c:url value='#'/>"><i
+		<li class="active"><a href="<c:url value='/news/newsRegdit.do'/>"><i
 				class="fa fa-floppy-o"></i>&nbsp;<span>SIS 뉴스관리</span></a></li>
 				</c:if>
-
-
 
 	</ul>
 	<!-- 1.왼쪽 사이드 메뉴 지정 끝-->
@@ -86,7 +62,7 @@
 
 	<!-- 2. 페이지 이름 지정 // 북마크 지정 여부 .bookmark || .nobook -->
 	<h1>
-		<i class="fa fa-book" aria-hidden="true"></i>&nbsp;뉴스 등록&nbsp;<a
+		<i class="fa fa-book" aria-hidden="true"></i>&nbsp;뉴스 관리&nbsp;<a
 			href="#"><i class="fa fa-bookmark bookmark" aria-hidden="true"></i></a>
 	</h1>
 	<!-- 2. 페이지 이름 지정 끝 -->
@@ -94,18 +70,11 @@
 <article id="bodysection">
 	<br>
 		<!-- 3. 내용 -->
-	<h2>뉴스 목록</h2>
-
-
-<!-- 페이징 처리를 위한 form 시작-->
-<!-- 페이징 처리 form 끝 -->
 
 <form name="frmList" id="frmList" method="post" 
 action="<c:url value='/news/newsRegdit.do'/>">
-<div>
-<div class="divList">
+<div class="divList"> 
 <table width="1200" class="box2" >
-	<caption>상품 목록</caption> 
 	<colgroup>
 		<col style="width:5%" />
 		<col style="width:15%" />
@@ -141,15 +110,28 @@ action="<c:url value='/news/newsRegdit.do'/>">
 				name="newsItem[${status.index}].newsImage"
 					value="${vo.newsImage }">
 					</td>
-				<td><img src="<c:url value='/news_images/${vo.newsImage}'/>"
-					alt="${vo.newsImage }" width="50">
+				<td>
+				<c:if test="${empty vo.newsImage }">
+				<div style="width: 90px;height: 70px;"></div>
+				</c:if>
+				<c:if test="${!empty vo.newsImage }">
+				<img src="<c:url value='/news_images/${vo.newsImage}'/>"
+					alt="${vo.newsImage }" width="90px" height="70px">
+				</c:if>
 				</td>
-				<td class="align_left"><a href="<c:url value='/news/newsDetailcnt.do?newsNo=${vo.newsNo }'/>">${vo.newsTitle }</a></td>
+				<td class="align_left"><a href="<c:url value='/news/newsDetailcnt.do?newsNo=${vo.newsNo }'/>">
+				<c:if test="${vo.newsMain=='Y'}">
+				[메인]&nbsp;
+				 </c:if>
+				<c:if test="${vo.newsMain=='N'}">
+				[일반]&nbsp; 
+				</c:if>
+				${vo.newsTitle }</a></td>
 				<td><fmt:formatDate value="${vo.newsRegdate }" 
 					pattern="yyyy-MM-dd"/>
 				</td>
-				<td><a href="">수정</a></td>	
-				<td><a href="">삭제</a></td>	
+				<td><a href="<c:url value='/news/newsEdit.do?newsNo=${vo.newsNo }'/>">수정</a></td>	
+				<td><a href="<c:url value='/news/newsDelete.do?newsNo=${vo.newsNo}&newsImage=${vo.newsImage}'/>" class="deleteNews">삭제</a></td>	
 			</tr>
 		</c:forEach>
 		<!-- 반복 끝 -->
@@ -158,17 +140,13 @@ action="<c:url value='/news/newsRegdit.do'/>">
 </table>
 
 
-
-
-
 </div>
 </form>
-</div>
-<form name="frmPage" method="post"
-				action="<c:url value='/news/dailyNews.do'/>">
+<input type="button" id="btDeleteMulti" value="선택한 뉴스 삭제" >
+	<form name="frmPage" method="post"
+				action="<c:url value='/news/newsRegdit.do'/>">
 				 <input type="hidden" name="currentPage">
 			</form>
-
 			<div class="w3-bar w3-margin w3-center">
 				<a href="#" class="w3-button"
 					onclick="pageFunc(${pagingInfo.firstPage})">&laquo;</a>
@@ -184,6 +162,7 @@ action="<c:url value='/news/newsRegdit.do'/>">
 				<a href="#" class="w3-button"
 					onclick="pageFunc(${pagingInfo.lastPage})">&raquo;</a>
 			</div>
+			
 			
 		<!-- 3. 내용 끝 -->
 </article>

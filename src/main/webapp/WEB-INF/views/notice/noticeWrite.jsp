@@ -9,20 +9,7 @@
 <nav>
 	<ul>
 		<!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
-		<li><a href="newcho.html"><i class="fa fa-pencil-square-o"></i>&nbsp;<span>새
-					결재 진행</span></a></li>
-		<li><a href="save.html"><i class="fa fa-floppy-o"></i>&nbsp;<span>임시
-					저장함</span></a></li>
-		<li><a href="await.html"><i class="fa fa-hdd-o"></i>&nbsp;<span>결재
-					대기함</span></a></li>
-		<li><a href="complete.html"><i class="fa fa-file-text"></i>&nbsp;<span>결재
-					완료함</span></a></li>
-		<li><a href="return.html"><i class="fa fa-history"></i>&nbsp;<span>결재
-					반려함</span></a></li>
-		<li><a href="setting.html"><i class="fa fa-cog"></i>&nbsp;<span>결재
-					환경 설정</span></a></li>
-		<li><a href="typeform.html"><i class="fa fa-cog"></i>&nbsp;<span>결재
-					양식 관리</span></a></li>
+		<li class="active"><a href="<c:url value='/notice/noticeList.do'/>"><i class="fa fa-pencil-square-o"></i>&nbsp;<span>공지사항 홈</span></a></li>
 	</ul>
 	<!-- 1.왼쪽 사이드 메뉴 지정 끝-->
 	<div id="listbtn">

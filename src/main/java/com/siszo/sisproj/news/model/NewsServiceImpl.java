@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+
 @Service
 public class NewsServiceImpl implements NewsService{
 
@@ -73,5 +74,24 @@ public class NewsServiceImpl implements NewsService{
 	}
 	public int newstotalrecord() {
 		return newsDao.newstotalrecord();
+	}
+	public int deleteMulti(List<NewsVO>list) {
+		int cnt = 0;
+		try {
+			for (NewsVO vo : list) {
+				int newsNo = vo.getNewsNo();
+				// 체크한 상품만 삭제
+				if (newsNo != 0) {
+					cnt = newsDao.newsDelete(newsNo);
+				}
+			}
+		} catch (RuntimeException e) {
+			cnt = 0;
+		}
+
+		return cnt;
+	}
+	public List<NewsVO> newsAllselect(NewsSearchVO newsSearchVO){
+		return newsDao.newsAllselect(newsSearchVO);
 	}
 }

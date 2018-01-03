@@ -24,4 +24,6 @@ public interface NewsDAO {
 	public List<NewsVO> newsreadRanking();
 	public int deleteNewsCom(NewsComVO comVo);
 	public int newstotalrecord();
+	public List<NewsVO> newsAllselect(NewsSearchVO newsSearchVO);
+	
 }
