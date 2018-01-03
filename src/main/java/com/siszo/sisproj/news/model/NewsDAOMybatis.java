@@ -76,5 +76,8 @@ public class NewsDAOMybatis extends SqlSessionDaoSupport implements NewsDAO{
 		return getSqlSession().selectOne(namespace+".newstotalrecord");
 				
 	}
+	public List<NewsVO> newsAllselect(NewsSearchVO newsSearchVO){
+		return getSqlSession().selectList(namespace+".newsAllselect",newsSearchVO);
+	}
 	
 }
