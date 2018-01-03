@@ -8,6 +8,9 @@
 <script src="<c:url value='/resources/js/bootstrap/bootstrap.min.js'/>"></script>
 <script type="text/javascript">
 	$(function(){		
+		if($('#groupNo').val()==''){
+			$('#groupNo').val('0');
+		}
 		$('#divDeleteMulti').click(function(){
 			var len=$('td input[type=checkbox]:checked').length;
 			if(len==0){
@@ -32,9 +35,6 @@
 		
 		/* countPerPage 변경하기 */
 		$('#recordCountPerPage').change(function(){
-			if($('#groupNo').val()==''){
-				$('#groupNo').val('0');
-			}
 			$('#frmList').submit();			
 		});
 		
