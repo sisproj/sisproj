@@ -12,7 +12,7 @@
 		<selectKey keyProperty="groupNo" resultType="int" order="BEFORE">
 			select group_seq.nextval from dual
 		</selectKey>
-		insert into addrgroup
+		insert into addrgroup(group_no, group_name, emp_no)
 		values(#{groupNo}, #{groupName}, #{empNo})
 	</insert>
 	<insert id="insertGroupDefault" parameterType="AddrGroupVO">

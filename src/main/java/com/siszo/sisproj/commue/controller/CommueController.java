@@ -47,7 +47,6 @@ public class CommueController {
 		int empNo = empVo.getEmpNo();
 		logger.info("출근 하기 파라미터 empNo={},cmtVo={}",empNo,cmtVo);
 		
-		
 		cmtVo.setEmpNo(empNo);
 		int cnt = commueService.insertIn(cmtVo);
 		logger.info("출근 하기 결과 cnt={}",cnt);
@@ -88,5 +87,8 @@ public class CommueController {
 		
 		return "common/message";
 	}
-	
+	/*@RequestMapping("/commuePage.do")
+	public String commuePage() {
+		
+	}*/
 }
