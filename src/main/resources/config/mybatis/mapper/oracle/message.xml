@@ -16,8 +16,8 @@
             select message_seq.nextval from dual
         </selectKey>
 
-        INSERT INTO MESSAGE (MSG_NO, MSG_TITLE, MSG_CONTENT, MSG_IMPFLAG, MSG_REGDATE, SENDEMP_NO)
-        VALUES (#{msgNo}, #{msgTitle}, #{msgContent}, 'N', DEFAULT, #{sendempNo})
+        INSERT INTO MESSAGE (MSG_NO, MSG_TITLE, MSG_CONTENT, MSG_REGDATE, SENDEMP_NO)
+        VALUES (#{msgNo}, #{msgTitle}, #{msgContent}, DEFAULT, #{sendempNo})
     </insert>
 
     <insert id="insertMessageRec">
@@ -128,9 +128,14 @@
     </select>
 
     <select id="selectSendMsgByMsgNo" parameterType="int" resultType="MessageVO">
-        SELECT *
-        FROM MSGRECVIEW
+        SELECT
+            SENDEMP_NO,
+            LISTAGG(EMP_NAME||'('||EMP_NO||')', ',') WITHIN GROUP (ORDER BY EMP_NAME) AS EMP_NAME,
+            MIN(MSG_TITLE) AS MSG_TITLE,
+            MIN(TO_CHAR(MSG_CONTENT)) AS MSG_CONTENT
+        FROM MSGSENDVIEW
         WHERE MSG_NO = #{msgNo}
+        GROUP BY SENDEMP_NO
     </select>
 
     <select id="selectTotalMsgRecCount" parameterType="MessageSearchVO" resultType="int">
@@ -152,8 +157,6 @@
                 MSG_NO,
                 MIN(EMP_NAME)    AS EMP_NAME,
                 MIN(EMP_NO)      AS EMP_NO,
-                MIN(MSG_TITLE)   AS MSG_TITLE,
-                MIN(MSG_REGDATE) AS MSG_REGDATE,
                 MIN(SEND_DELFLAG) AS MSG_DELFLAG,
                 count(MSG_NO)    AS CNT
             FROM MSGSENDVIEW

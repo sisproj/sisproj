@@ -140,27 +140,25 @@
 	</div>
 	</c:if>
 		<div id="pagingbtn">
-			<ul>
-				<!-- 이전 블럭으로 이동 ◀ -->
-				<c:if test="${pagingInfo.firstPage>1 }">
-					<a id="prevbtn" href="#" onclick="pageFunc(${pageInfo.firstPage-1})"><i class="fa fa-chevron-left"></i></a>	
-				</c:if>	
-			
-				<!-- [1][2][3][4][5][6][7][8][9][10] -->
-				<c:forEach var="i" begin="${pagingInfo.firstPage}" end="${pagingInfo.lastPage}">
-					<c:if test="${i==pagingInfo.currentPage}">
-						<span class="thispage">${i }</span>	
-					</c:if>
-					<c:if test="${i!=pagingInfo.currentPage}">
-						<a href="#" onclick="pageFunc(${i })">${i }</a>		
-			 		</c:if>				
-				</c:forEach>
-			
-				<!-- 다음 블럭으로 이동 ▶ -->
-				<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage}">
-					<a id=nextbtn href="#" onclick="pageFunc(${pagingInfo.lastPage+1})"><i class="fa fa-chevron-right"></i></a>
+			<!-- 이전 블럭으로 이동 ◀ -->
+			<c:if test="${pagingInfo.firstPage>1 }">
+				<a id="prevbtn" href="#" onclick="pageFunc(${pageInfo.firstPage-1})"><i class="fa fa-chevron-left"></i></a>	
+			</c:if>	
+		
+			<!-- [1][2][3][4][5][6][7][8][9][10] -->
+			<c:forEach var="i" begin="${pagingInfo.firstPage}" end="${pagingInfo.lastPage}">
+				<c:if test="${i==pagingInfo.currentPage}">
+					<span class="thispage">${i }</span>	
 				</c:if>
-			</ul>
+				<c:if test="${i!=pagingInfo.currentPage}">
+					<a href="#" onclick="pageFunc(${i })">${i }</a>		
+		 		</c:if>				
+			</c:forEach>
+		
+			<!-- 다음 블럭으로 이동 ▶ -->
+			<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage}">
+				<a id=nextbtn href="#" onclick="pageFunc(${pagingInfo.lastPage+1})"><i class="fa fa-chevron-right"></i></a>
+			</c:if>
 		</div>
 	</div> 
 </form>
@@ -177,7 +175,6 @@
 	}
 	#allList {
 		width: 90%;
-		max-width:1100px;
 		margin: 0 auto;
 		padding : 10px;
 		box-sizing:border-box;
@@ -186,9 +183,6 @@
 	}
 	#allList tr{
 		transition:all 300ms linear;
-	}
-	#allList td b{
-		color: #306;	
 	}
 	#allList tbody tr:hover{
 		background-color: #e1e1e1;

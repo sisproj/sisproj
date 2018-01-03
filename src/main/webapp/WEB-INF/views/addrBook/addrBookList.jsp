@@ -45,6 +45,87 @@
 		frmList.submit();
 	}
 </script>
+<style>
+	#addrTable{
+		width:100%;
+		margin: 0 auto;
+		padding : 10px;
+		box-sizing:border-box;
+		border:0;
+		border-collapse: collapse;	
+		margin-top: 10px;	
+		margin-bottom: 10px;
+	}
+	#addrTable tr{
+		transition:all 300ms linear;
+	}
+	#addrTable tbody tr:hover{
+		background-color: #e1e1e1;
+	}
+	#addrTable th{
+		box-sizing:border-box;
+		padding: 5px;
+		height: 30px;
+		color: #036;
+		font-size: 1.17em;
+		border:0;
+		border-top: 2px solid #e1e1e1;
+		border-bottom: 2px solid #e1e1e1;
+	}
+	#addrTable td {
+		box-sizing:border-box;
+		padding: 5px;
+		border:0;
+		text-align: center;
+		border-bottom: 2px solid #e1e1e1;
+	}
+	/*하단 페이징 버튼*/
+	#pagingbtn{
+		width: 100%;
+		max-width:1100px;
+		margin: 0 auto;
+		height: 40px;
+		width: auto;
+		box-sizing:border-box;
+		padding-bottom: 10px;
+		text-align:center;
+	}
+	#pagingbtn span, #pagingbtn a{
+		display: inline-block;
+		width: 24px;
+		line-height: 24px;
+		border-radius:12px;
+		background-color: #369;
+		color: fff;
+		text-align: center;
+		font-weight: bold;
+		margin-left: 5px;
+		box-shadow:2px 2px 3px #333;
+		font-size: 0.8em;
+	}
+	#pagingbtn a:hover,
+	#pagingbtn span.thispage{
+		background-color:#09f;
+		box-shadow:2px 2px 3px transparent;	
+	}
+	#pagingbtn span:first-child{
+		margin-left: 0;	
+	}
+	#pagingbtn a i {
+		line-height: 24px;
+		color: fff;
+		text-align: center;
+		font-size: 0.8em;
+	}
+	#pagingbtn #firstbtn,
+	#pagingbtn #lastbtn{
+		background-color: #333;
+	}
+	#pagingbtn #prevbtn,
+	#pagingbtn #nextbtn{
+		background-color: #306;
+	}
+</style>
     <!-- 3. 내용 -->
     <article id="bodysection">
     
@@ -226,66 +307,66 @@
 				        </select>
 			        </div>
 			    </div>
-		        <div class="divAddrBody">
-		        	<table>
-		        		<colgroup>
-		        			<col width="5%">
-		        			<col width="15%">
-		        			<col width="15%">
-		        			<col width="25%">
-		        			<col width="20%">
-		        			<col width="20%">
-		        		</colgroup>
+	        	<table id="addrTable">
+	        		<colgroup>
+	        			<col width="5%">
+	        			<col width="15%">
+	        			<col width="15%">
+	        			<col width="25%">
+	        			<col width="20%">
+	        			<col width="20%">
+	        		</colgroup>
+	        		<thead>
+	        		<tr>
+	        			<th><input type="checkbox" id="checkAll"></th>
+	        			<th><a href="#">이름</a></th>
+	        			<th>전화번호</th>
+	        			<th>이메일</th>
+	        			<th>회사</th>
+	        			<th>그룹</th>
+	        		</tr>
+	        		</thead>
+	        		<tbody>
+	        		<c:forEach var="addrBookVo" items="${addrList }" varStatus="status">
 		        		<tr>
-		        			<th><input type="checkbox" id="checkAll"></th>
-		        			<th><a href="#">이름</a></th>
-		        			<th>전화번호</th>
-		        			<th>이메일</th>
-		        			<th>회사</th>
-		        			<th>그룹</th>
+		        			<td><input type="checkbox" name="addrItems[${status.index }].addrNo" value="${addrBookVo.addrNo}"></td>
+		        			<td id="${addrBookVo.addrNo }"><a href="#">${addrBookVo.addrName }</a></td>
+		        			<td>${addrBookVo.addrTel }</td>
+		        			<td><a href="#">${addrBookVo.addrEmail}</a></td>
+		        			<td>${addrBookVo.addrComp}</td>
+		        			<c:forEach var="addrGroupVo" items="${groupList }">
+		        				<c:if test="${addrBookVo.groupNo==addrGroupVo.groupNo }">
+		        					<td>${addrGroupVo.groupName}</td>
+		        				</c:if>
+		        			</c:forEach>
 		        		</tr>
-		        		<c:forEach var="addrBookVo" items="${addrList }" varStatus="status">
-			        		<tr>
-			        			<td><input type="checkbox" name="addrItems[${status.index }].addrNo" value="${addrBookVo.addrNo}"></td>
-			        			<td id="${addrBookVo.addrNo }"><a href="#">${addrBookVo.addrName }</a></td>
-			        			<td>${addrBookVo.addrTel }</td>
-			        			<td><a href="#">${addrBookVo.addrEmail}</a></td>
-			        			<td>${addrBookVo.addrComp}</td>
-			        			<c:forEach var="addrGroupVo" items="${groupList }">
-			        				<c:if test="${addrBookVo.groupNo==addrGroupVo.groupNo }">
-			        					<td>${addrGroupVo.groupName}</td>
-			        				</c:if>
-			        			</c:forEach>
-			        		</tr>
-		        		</c:forEach>
-		        	</table>
-		        </div>
+	        		</c:forEach>
+	        		</tbody>
+	        	</table>
 		        
 		        <!-- 페이징처리 -->
-		    	<div id="paging">
-		        	<nav aria-label="..." style="text-align: center;">
-						<ul class="pagination">
-							<!-- 이전 블럭으로 이동 ◀ -->
-							<c:if test="${pagingInfo.firstPage>1 }">
-								<li><a href="#" onclick="pageFunc(${pagingInfo.firstPage-1})">«</a></li>	
-							</c:if>	
-						
-							<!-- [1][2][3][4][5][6][7][8][9][10] -->
-							<c:forEach var="i" begin="${pagingInfo.firstPage}" end="${pagingInfo.lastPage}">
-								<c:if test="${i==pagingInfo.currentPage}">
-									<li><a href="#" class="active">${i }</a></li>
-								</c:if>
-								<c:if test="${i!=pagingInfo.currentPage}">
-									<li><a href="#" onclick="pageFunc(${i })" class="active">${i }</a></li>
-						 		</c:if>				
-							</c:forEach>
-						
-							<!-- 다음 블럭으로 이동 ▶ -->
-							<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage}">
-								<li><a href="#" onclick="pageFunc(${pagingInfo.lastPage+1})">»</a></li>
+		    	<div id="pagingbtn">
+					<ul>
+						<!-- 이전 블럭으로 이동 ◀ -->
+						<c:if test="${pagingInfo.firstPage>1 }">
+							<a id="prevbtn" href="#" onclick="pageFunc(${pagingInfo.firstPage-1})"><i class="fa fa-chevron-left"></i></a>		
+						</c:if>	
+					
+						<!-- [1][2][3][4][5][6][7][8][9][10] -->
+						<c:forEach var="i" begin="${pagingInfo.firstPage}" end="${pagingInfo.lastPage}">
+							<c:if test="${i==pagingInfo.currentPage}">
+								<span class="thispage">${i }</span>	
 							</c:if>
-						</ul>
-					</nav>
+							<c:if test="${i!=pagingInfo.currentPage}">
+								<a href="#" onclick="pageFunc(${i })" class="active">${i }</a>
+					 		</c:if>				
+						</c:forEach>
+					
+						<!-- 다음 블럭으로 이동 ▶ -->
+						<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage}">
+							<a id=nextbtn href="#" onclick="pageFunc(${pagingInfo.lastPage+1})"><i class="fa fa-chevron-right"></i></a>
+						</c:if>
+					</ul>
 		        </div>
 		        <!-- 페이징 처리 끝 -->
 		        

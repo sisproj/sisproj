@@ -5,6 +5,7 @@ import com.siszo.sisproj.common.PaginationInfo;
 import com.siszo.sisproj.common.Utility;
 import com.siszo.sisproj.dept.model.DeptService;
 import com.siszo.sisproj.dept.model.DeptVO;
+import com.siszo.sisproj.employee.model.EmployeeService;
 import com.siszo.sisproj.employee.model.EmployeeVO;
 import com.siszo.sisproj.message.model.MessageRecVO;
 import com.siszo.sisproj.message.model.MessageSearchVO;
@@ -30,6 +31,8 @@ public class MessageController {
     private OrganizationService orgService;
     @Autowired
     private MessageService messageService;
+    @Autowired
+    private EmployeeService employeeService;
 
     @RequestMapping("/message/message.do")
     public String message_get() {
@@ -37,9 +40,8 @@ public class MessageController {
     }
 
     @RequestMapping(value = "/message/write.do", method = RequestMethod.GET)
-    public String messageWrite_get(@RequestParam(defaultValue = "0") int deptNo, Model model) {
+    public String messageWrite_get(Model model) {
         logger.info("쪽지 보내기 화면보여주기 messageWrite_get");
-        logger.info("조직도 부서명 리스트 and 부서별 사원리스트, 파라미터 deptNo={}", deptNo);
 
         List<DeptVO> deptList = deptService.selectDeptName();
         logger.info("부서명 조회결과 deptList.size()={}", deptList.size());
@@ -53,15 +55,23 @@ public class MessageController {
         return "message/messageWrite";
     }
 
+    @RequestMapping(value = "/message/reply.do", method = RequestMethod.GET)
+    public String messageReply_get(@RequestParam(defaultValue = "0") int sendempNo, Model model) {
+        logger.info("쪽지 답변 보내기 화면보여주기 messageReply_get");
+
+        EmployeeVO employeeVO = employeeService.selectEmployeeByNo(sendempNo);
+        model.addAttribute("employeeVO", employeeVO);
+        return "message/messageReply";
+    }
+
     @RequestMapping(value = "/message/write.do", method = RequestMethod.POST)
-    public void messageWrite_post(@ModelAttribute MessageVO messageVO,
-                                  @RequestParam String empNo) {
-        logger.info("쪽지 보내기 messageWrite_post(), 파라미터 messageVO={}, empNo={}", messageVO, empNo);
+    public @ResponseBody void messageWrite_post(@ModelAttribute MessageVO messageVO,
+                                  @RequestParam String choiceEmpId) {
+        logger.info("쪽지 보내기 messageWrite_post(), 파라미터 messageVO={}, choiceEmpId={}", messageVO, choiceEmpId);
 
         int cnt = messageService.insertMessage(messageVO);
-
         if (cnt > 0) {
-            String[] empNoArr = empNo.split(",");
+            String[] empNoArr = choiceEmpId.split(",");
             for (int i = 0; i < empNoArr.length; i++) {
                 MessageRecVO messageRecVO = new MessageRecVO();
                 messageRecVO.setEmpNo(Integer.parseInt(empNoArr[i]));

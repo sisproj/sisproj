@@ -194,12 +194,66 @@ to {
 	opacity: 1
 }
 }
+/*하단 페이징 버튼*/
+	#pagingbtn{
+		width: 100%;
+		max-width:1100px;
+		margin: 0 auto;
+		height: 40px;
+		width: auto;
+		box-sizing:border-box;
+		padding-bottom: 10px;
+		text-align:center;
+		margin-top: 10px;
+	}
+	#pagingbtn span, #pagingbtn a{
+		display: inline-block;
+		width: 24px;
+		line-height: 24px;
+		border-radius:12px;
+		background-color: #369;
+		color: fff;
+		text-align: center;
+		font-weight: bold;
+		margin-left: 5px;
+		box-shadow:2px 2px 3px #333;
+		font-size: 0.8em;
+	}
+	#pagingbtn a:hover,
+	#pagingbtn span.thispage{
+		background-color:#09f;
+		box-shadow:2px 2px 3px transparent;	
+	}
+	#pagingbtn span:first-child{
+		margin-left: 0;	
+	}
+	#pagingbtn a i {
+		line-height: 24px;
+		color: fff;
+		text-align: center;
+		font-size: 0.8em;
+	}
+	#pagingbtn #firstbtn,
+	#pagingbtn #lastbtn{
+		background-color: #333;
+	}
+	#pagingbtn #prevbtn,
+	#pagingbtn #nextbtn{
+		background-color: #306;
+	}
+	
 </style>
 <nav>
 	<ul>
 		<!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
-		<li class="active"><a href="<c:url value='/news/dailyNews.do'/>"><i class='fa fa-newspaper-o'></i>
-		&nbsp;<span>SIS 뉴스홈</span></a></li>
+		<li class="active"><a href="<c:url value='/news/dailyNews.do'/>"><i class='fa fa-newspaper-o'></i>&nbsp;<span>SIS 뉴스홈</span></a></li>
+	<c:if test="${sessionScope.empVo.empLev eq '관리자'}">
+		<li><a href="<c:url value='/news/newsWrite.do'/>"><i
+				class="fa fa-floppy-o"></i>&nbsp;<span>SIS 뉴스등록</span></a></li>
+		
+		<li><a href="<c:url value='/news/newsRegdit.do'/>"><i
+				class="fa fa-floppy-o"></i>&nbsp;<span>SIS 뉴스관리</span></a></li>
+				</c:if>
 	</ul>
 	<!-- 1.왼쪽 사이드 메뉴 지정 끝-->
 	<div id="listbtn">
@@ -245,19 +299,19 @@ to {
 							<div class="mySlides fade">
 								<div class="numbertext"></div>
 								<img src="<c:url value='/news_images/${vo.newsImage }'/>"
-									style="width: 100%; height: 500px;">
+									style="width: 100%; height: 400px;"> 
 
 								<c:if test="${fn:length(vo.newsTitle)>30 }">
 									<div class="text">
 										<a
-											href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
+											href="<c:url value='/news/newsDetailcnt.do?newsNo=${vo.newsNo }'/>">
 											[메인]${fn:substring(vo.newsTitle,0,30) }...</a>
 									</div>
 								</c:if>
 								<c:if test="${fn:length(vo.newsTitle)<=30}">
 									<div class="text">
 										<a
-											href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
+											href="<c:url value='/news/newsDetailcnt.do?newsNo=${vo.newsNo }'/>">
 											[메인]${vo.newsTitle}</a>
 									</div>
 								</c:if>
@@ -315,14 +369,14 @@ to {
 								<c:if test="${fn:length(vo.newsTitle)>25 }">
 									<h4 class="dnewstitle">
 										<a
-											href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
+											href="<c:url value='/news/newsDetailcnt.do?newsNo=${vo.newsNo }'/>">
 											[일반]${fn:substring(vo.newsTitle,0,25) }...</a>
 									</h4>
 								</c:if>
 								<c:if test="${fn:length(vo.newsTitle)<=25}">
 									<h4 class="dnewstitle">
 										<a
-											href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
+											href="<c:url value='/news/newsDetailcnt.do?newsNo=${vo.newsNo }'/>">
 											[일반]${vo.newsTitle}</a>
 									</h4>
 								</c:if>
@@ -338,14 +392,14 @@ to {
 								<c:if test="${fn:length(vo.newsTitle)>20 }">
 									<h4 class="dnewstitle">
 										<a
-											href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
+											href="<c:url value='/news/newsDetailcnt.do?newsNo=${vo.newsNo }'/>">
 											[포토]${fn:substring(vo.newsTitle,0,20) }...</a>
 									</h4>
 								</c:if>
 								<c:if test="${fn:length(vo.newsTitle)<=20}">
 									<h4 class="dnewstitle">
 										<a
-											href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
+											href="<c:url value='/news/newsDetailcnt.do?newsNo=${vo.newsNo }'/>">
 											[포토]${vo.newsTitle}</a>
 									</h4>
 								</c:if>
@@ -368,6 +422,7 @@ to {
 								<div class="comcount">
 									<i class="fa fa-commenting-o" aria-hidden="true">&nbsp;${vo.comCount }</i>
 									<i class="fa fa-thumbs-o-up" aria-hidden="true">&nbsp;${vo.newsLike }</i>
+									<i class="fa fa-eye" aria-hidden="true">&nbsp;${vo.newsReadCnt }</i>
 								</div>
 							</div>
 						</div>
@@ -381,19 +436,28 @@ to {
 			</form>
 
 			<div class="w3-bar w3-margin w3-center">
-				<a href="#" class="w3-button"
-					onclick="pageFunc(${pagingInfo.firstPage})">&laquo;</a>
-				<c:forEach var="i" begin="${pagingInfo.firstPage}"
-					end="${pagingInfo.lastPage}">
-					<c:if test="${i==pagingInfo.currentPage}">
-						<span style="font-weight: bold; color: blue" class="w3-button">${i}</span>
-					</c:if>
-					<c:if test="${i != pagingInfo.currentPage}">
-						<a href="#" onclick="pageFunc(${i})" class="w3-button">${i}</a>
-					</c:if>
-				</c:forEach>
-				<a href="#" class="w3-button"
-					onclick="pageFunc(${pagingInfo.lastPage})">&raquo;</a>
+				<div id="pagingbtn">
+						<!-- 이전 블럭으로 이동 ◀ -->
+						<c:if test="${pagingInfo.firstPage>1 }">
+							<a id="prevbtn" href="#" onclick="pageFunc(${pageInfo.firstPage-1})"><i class="fa fa-chevron-left"></i></a>	
+						</c:if>
+					
+						<!-- [1][2][3][4][5][6][7][8][9][10] -->
+						<c:forEach var="i" begin="${pagingInfo.firstPage}" end="${pagingInfo.lastPage}">
+							<c:if test="${i==pagingInfo.currentPage}">
+								<span class="thispage">${i }</span>	
+							</c:if>
+							<c:if test="${i!=pagingInfo.currentPage}">
+								<a href="#" onclick="pageFunc(${i })">${i }</a>		
+					 		</c:if>				
+						</c:forEach>
+					
+						<!-- 다음 블럭으로 이동 ▶ -->
+						<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage}">
+							<a id=nextbtn href="#" onclick="pageFunc(${pagingInfo.lastPage+1})"><i class="fa fa-chevron-right"></i></a>
+						</c:if>
+					
+				</div>
 			</div>
 		</div>
 	</c:if>
