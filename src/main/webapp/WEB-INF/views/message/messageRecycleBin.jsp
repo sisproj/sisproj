@@ -44,12 +44,12 @@
                 <i class="fa fa-envelope-o" aria-hidden="true"></i>&nbsp;<span>보낸 쪽지함</span>
             </a>
         </li>
-        <li class="active">
+        <li>
             <a href="<c:url value='/message/important.do'/> ">
                 <i class="fa fa-star-o" aria-hidden="true"></i>&nbsp;<span>중요 쪽지함</span>
             </a>
         </li>
-        <li>
+        <li class="active">
             <a href="<c:url value='/message/recycleBin.do'/> ">
                 <i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp;<span>휴지통</span>
             </a>
@@ -80,22 +80,22 @@
         <table class="w3-table w3-bordered" style="width: 90%; margin-left: 5%">
             <thead>
             <tr class=" w3-border-bottom">
-                <th>
+                <th style="max-width: 68px">
                     <div class="w3-button w3-light-grey">
                         <input type="checkbox" id="checkAllMessage">
                     </div>
                 </th>
                 <th class="w3-text-white">
-                    <button class="w3-button w3-small w3-light-grey" onclick="updateImpMsg()">
-                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                    <button class="w3-button w3-small w3-light-grey" onclick="undoMsg()">
+                        <i class="fa fa-undo" aria-hidden="true"></i>
                     </button>
-                    <button class="w3-button w3-small w3-light-grey" onclick="deleteMsg()">
-                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    <button class="w3-button w3-small w3-light-grey" onclick="realDeleteMsg()">
+                        <b><i class="fa fa-trash" aria-hidden="true"></i></b>
                     </button>
                 </th>
                 <th colspan="2">
                     <div class="w3-right">
-                        <form name="frmSearch" method="post" action="<c:url value='/message/important.do'/>"
+                        <form name="frmSearch" method="post" action="<c:url value='/message/recycleBin.do'/>"
                               id="frmSearch">
                             <input class="w3-bar-item w3-border w3-left"
                                    style="width: 82%; height: 28px; padding: 10px;"
@@ -112,7 +112,7 @@
             </thead>
             <c:if test="${empty msgList}">
                 <tr>
-                    <td colspan="3">중요 쪽지가 없습니다.</td>
+                    <td colspan="3">휴지통에 쪽지가 없습니다.</td>
                 </tr>
 
             </c:if>
@@ -123,7 +123,7 @@
                 <c:if test="${msgVO.msgReadflag eq 'N'}">
                     <tr class="hoverable unReadMessage" id="msg-${msgVO.recNo}">
                 </c:if>
-                <td style="width: 5%" class="w3-center"><input type="checkbox" name="chk" value="${msgVO.recNo}">
+                <td style="width: 5%; max-width: 68px" class="w3-center"><input type="checkbox" name="chk" value="${msgVO.recNo}">
                 </td>
                 <td style="width: 20%">${msgVO.empName}</td>
                 <td style="width: 65%">
@@ -151,7 +151,7 @@
         </table>
 
         <%--페이징 처리--%>
-        <form name="frmPage" method="post" action="<c:url value='/message/important.do'/>">
+        <form name="frmPage" method="post" action="<c:url value='/message/recycleBin.do'/>">
             <input type="hidden" name="searchKeyword"
                    value="${param.searchKeyword }">
             <input type="hidden" name="currentPage">
@@ -182,7 +182,7 @@
         $('#' + data).attr("class", "w3-light-gray readMessage");
     }
 
-    function updateImpMsg() {
+    function undoMsg() {
         var recNoStr = "";
         var total = $("input[name=chk]:checked").length;
         $("input[name=chk]:checked").each(function (index) {
@@ -195,7 +195,7 @@
 
         $.ajax({
             type: "post",
-            url: "<c:url value='/message/importantUpdate.do'/>",
+            url: "<c:url value='/message/delMsgUndo.do'/>",
             data: {"recNoStr": recNoStr},
             success: function (response) {
                 if (response == "OK") {
@@ -208,7 +208,7 @@
         });
     }
 
-    function deleteMsg() {
+    function realDeleteMsg() {
         var recNoStr = "";
         var total = $("input[name=chk]:checked").length;
         $("input[name=chk]:checked").each(function (index) {
@@ -219,11 +219,11 @@
             }
         });
 
-        var choice = confirm("선택한 쪽지를 정말 삭제하시겠습니까?");
+        var choice = confirm("삭제한 쪽지는 복구할 수 없습니다.\n정말 삭제하시겠습니까?");
         if (choice) {
             $.ajax({
                 type: "post",
-                url: "<c:url value='/message/delete.do'/>",
+                url: "<c:url value='/message/deleteMsg.do'/>",
                 data: {"recNoStr": recNoStr},
                 success: function (response) {
                     if (response == "OK") {

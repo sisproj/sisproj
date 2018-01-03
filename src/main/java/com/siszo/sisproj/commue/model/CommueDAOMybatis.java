@@ -17,5 +17,13 @@ public class CommueDAOMybatis extends SqlSessionDaoSupport implements CommueDAO{
 	public int insertIn(int empNo) {
 		return getSqlSession().insert(namespace+".insertIn",empNo);
 	}
+	@Override
+	public int updateOut(int cmtNo) {
+		return getSqlSession().update(namespace+".updateOut",cmtNo);
+	}
+	@Override
+	public CommueVO selectByNo(int cmtNo) {
+		return getSqlSession().selectOne(namespace+".selectByNo",cmtNo);
+	}
 
 }

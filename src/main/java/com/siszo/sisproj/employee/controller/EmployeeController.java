@@ -257,11 +257,4 @@ public class EmployeeController {
 		
 		return "employee/employeeList";
 	}
-
-	@RequestMapping(value="/employeeDetailSearch.do",method=RequestMethod.POST)
-	public void employeeDetailSerach_post(@RequestParam String empName,
-			@RequestParam String posName,Model model) {
-		logger.info("사원 상세 검색 결과 보여주기 empName={},posName={}",empName,posName);
-	}
-
 }

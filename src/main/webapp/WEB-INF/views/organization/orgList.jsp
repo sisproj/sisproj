@@ -32,9 +32,9 @@
 
 			$('.deptPlus').each(function(){
 				$(this).click(function(){
-						$(this).parent().children().children().show();
-						$(this).parent().find('.deptMinus').show();
-						$(this).hide();
+					$(this).parent().children().children().show();
+					$(this).parent().find('.deptMinus').show();
+					$(this).hide();
 				});
 			});
 			 

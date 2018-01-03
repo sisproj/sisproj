@@ -20,4 +20,10 @@ public class CommueServiceImpl implements CommueService{
 	public int insertIn(int empNo) {
 		return commueDao.insertIn(empNo);
 	}
+
+	@Override
+	public int updateOut(int cmtNo) {
+		return commueDao.updateOut(cmtNo);
+	}
+
 }

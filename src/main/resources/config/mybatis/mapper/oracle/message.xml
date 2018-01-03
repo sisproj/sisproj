@@ -38,7 +38,7 @@
                 FROM (
                          SELECT m.*
                          FROM MSGRECVIEW m
-                         WHERE EMP_NO = #{empNo}
+                         WHERE EMP_NO = #{empNo} AND MSG_DELFLAG = 'N'
                          <include refid="messageSearchWhere"></include>
                          ORDER BY MSG_REGDATE DESC
                      ) mlist
@@ -49,6 +49,29 @@
         ]]>
     </select>
 
+    <select id="selectRecycleMsgByEmpNo" parameterType="MessageSearchVO" resultType="MessageVO">
+        SELECT *
+        FROM
+            (
+                SELECT
+                    rownum AS RNUM,
+                    mlist.*
+                FROM (
+                    SELECT m.*
+                    FROM MSGRECVIEW m
+                    WHERE EMP_NO = #{empNo} AND MSG_DELFLAG = 'Y'
+                    <include refid="messageSearchWhere"></include>
+                    ORDER BY MSG_REGDATE DESC
+                ) mlist
+            )
+        <![CDATA[
+        WHERE RNUM > #{firstRecordIndex}
+              AND RNUM <= #{firstRecordIndex} + #{recordCountPerPage}
+        ]]>
+    </select>
+
+
+
     <select id="selectSendMsgByEmpNo" parameterType="MessageSearchVO" resultType="MessageVO">
         SELECT *
             FROM(
@@ -58,12 +81,12 @@
                 FROM(
                     SELECT
                         MSG_NO,
-                        MIN(EMP_NAME) as EMP_NAME,
-                        MIN(EMP_NO) as EMP_NO,
-                        MIN(MSG_TITLE) as MSG_TITLE,
-                        MIN(MSG_REGDATE) as MSG_REGDATE,
-                        count(MSG_NO) as CNT
+                        LISTAGG(EMP_NAME, ',') WITHIN GROUP (ORDER BY EMP_NAME) AS EMP_NAME,
+                        MIN(MSG_TITLE)       AS MSG_TITLE,
+                        MIN(MSG_REGDATE)     AS MSG_REGDATE,
+                        count(MSG_NO)        AS CNT
                     FROM MSGSENDVIEW
+                    WHERE SENDEMP_NO = #{empNo}
                     <include refid="messageSearchWhere"></include>
                     GROUP BY MSG_NO
                     ORDER BY MSG_NO DESC
@@ -104,15 +127,21 @@
         WHERE REC_NO = #{recNo}
     </select>
 
+    <select id="selectSendMsgByMsgNo" parameterType="int" resultType="MessageVO">
+        SELECT *
+        FROM MSGRECVIEW
+        WHERE MSG_NO = #{msgNo}
+    </select>
+
     <select id="selectTotalMsgRecCount" parameterType="MessageSearchVO" resultType="int">
         SELECT COUNT(*) FROM MSGRECVIEW
-        WHERE EMP_NO = #{empNo}
+        WHERE EMP_NO = #{empNo} and MSG_DELFLAG = 'N'
         <include refid="messageSearchWhere"></include>
     </select>
 
     <select id="selectTotalMsgRecImpCount" parameterType="MessageSearchVO" resultType="int">
         SELECT COUNT(*) FROM MSGRECVIEW
-        WHERE EMP_NO = #{empNo} and MSG_IMPFLAG = 'Y'
+        WHERE EMP_NO = #{empNo} and MSG_IMPFLAG = 'Y'and MSG_DELFLAG = 'N'
         <include refid="messageSearchWhere"></include>
     </select>
 
@@ -125,14 +154,21 @@
                 MIN(EMP_NO)      AS EMP_NO,
                 MIN(MSG_TITLE)   AS MSG_TITLE,
                 MIN(MSG_REGDATE) AS MSG_REGDATE,
+                MIN(SEND_DELFLAG) AS MSG_DELFLAG,
                 count(MSG_NO)    AS CNT
             FROM MSGSENDVIEW
             GROUP BY MSG_NO
             ORDER BY MSG_NO DESC
         )
-        WHERE EMP_NO = #{empNo}
+        WHERE EMP_NO = #{empNo} and MSG_DELFLAG = 'N'
         <include refid="messageSearchWhere"></include>
     </select>
+    <select id="selectTotalMsgRecycleCount" parameterType="MessageSearchVO" resultType="int">
+        SELECT COUNT(*) FROM MSGRECVIEW
+        WHERE EMP_NO = #{empNo} and MSG_DELFLAG = 'Y'
+        <include refid="messageSearchWhere"></include>
+    </select>
+
 
     <update id="updateImpMsg" parameterType="int">
         UPDATE MESSAGE_REC
@@ -143,6 +179,18 @@
         WHEN MSG_IMPFLAG = 'N'
             THEN 'Y'
         END
+        WHERE REC_NO = #{recNo}
+    </update>
+
+    <update id="updateDelMsg" parameterType="int">
+        UPDATE MESSAGE_REC
+        SET MSG_DELFLAG = 'Y'
+        WHERE REC_NO = #{recNo}
+    </update>
+
+    <update id="delMsgUndo" parameterType="int">
+        UPDATE MESSAGE_REC
+        SET MSG_DELFLAG = 'N'
         WHERE REC_NO = #{recNo}
     </update>
 

@@ -9,6 +9,7 @@ public class WebhardBoardVO {
 	private String webTitle;
 	private String webContent;
 	private Timestamp webRegdate;
+	private int commCnt;
 	
 	public int getWebNo() {
 		return webNo;
@@ -46,11 +47,18 @@ public class WebhardBoardVO {
 	public void setEmpName(String empName) {
 		this.empName = empName;
 	}
+	public int getCommCnt() {
+		return commCnt;
+	}
+	public void setCommCnt(int commCnt) {
+		this.commCnt = commCnt;
+	}
 	@Override
 	public String toString() {
 		return "WebhardBoardVO [webNo=" + webNo + ", empNo=" + empNo + ", empName=" + empName + ", webTitle=" + webTitle
-				+ ", webContent=" + webContent + ", webRegdate=" + webRegdate + "]";
+				+ ", webContent=" + webContent + ", webRegdate=" + webRegdate + ", commCnt=" + commCnt + "]";
 	}
+	
 	
 	
 	

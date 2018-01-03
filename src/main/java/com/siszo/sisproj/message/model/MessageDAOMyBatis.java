@@ -63,4 +63,29 @@ public class MessageDAOMyBatis extends SqlSessionDaoSupport implements MessageDA
     public int selectTotalMsgSendCount(MessageSearchVO messageSearchVO) {
         return getSqlSession().selectOne(namespace + ".selectTotalMsgSendCount", messageSearchVO);
     }
+
+    @Override
+    public int updateDelMsg(int recNo) {
+        return getSqlSession().update(namespace + ".updateDelMsg", recNo);
+    }
+
+    @Override
+    public int delMsgUndo(int recNo) {
+        return getSqlSession().update(namespace + ".delMsgUndo", recNo);
+    }
+
+    @Override
+    public List<MessageVO> selectRecycleMsgByEmpNo(MessageSearchVO messageSearchVO) {
+        return getSqlSession().selectList(namespace + ".selectRecycleMsgByEmpNo", messageSearchVO);
+    }
+
+    @Override
+    public int selectTotalMsgRecycleCount(MessageSearchVO messageSearchVO) {
+        return getSqlSession().selectOne(namespace + ".selectTotalMsgRecycleCount", messageSearchVO);
+    }
+
+    @Override
+    public MessageVO selectSendMsgByMsgNo(int msgNo) {
+        return getSqlSession().selectOne(namespace + ".selectSendMsgByMsgNo", msgNo);
+    }
 }

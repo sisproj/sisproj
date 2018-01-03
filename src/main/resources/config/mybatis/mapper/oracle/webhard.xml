@@ -82,5 +82,33 @@
 	<delete id="deleteWebBoard" parameterType="int">
 		delete from webhard where web_no = #{webNo}
 	</delete>
+	
+	<insert id="insertWebComment" parameterType="WebhardCommentVO">
+		<selectKey keyProperty="commNo" resultType="int" order="BEFORE">
+			select webhard_comm_seq.nextval from dual
+		</selectKey>
+		insert into webhard_comm (comm_no, emp_no, comm_content, web_no)
+		values(#{commNo}, #{empNo}, #{commContent}, #{webNo})
+	</insert>
+	
+	<select id="selectWebComment" parameterType="int" resultType="WebhardCommentVO">
+		select c.*, e.emp_name 
+		from webhard_comm c
+		join emp e
+		on c.emp_no = e.emp_no
+		where c.web_no=#{webNo}
+	</select>
+	
+	<select id="webCommCnt" parameterType="int" resultType="int">
+		select count(*) from webhard_comm where web_no=#{webNo}
+	</select>
+	
+	<update id="updateWebComment" parameterType="WebhardCommentVO">
+		update webhard_comm set comm_content = #{commContent} where comm_no=#{commNo}
+	</update>
+	
+	<delete id="deleteWebComment" parameterType="int">
+		delete from webhard_comm where comm_no=#{commNo}
+	</delete>
 </mapper>
 

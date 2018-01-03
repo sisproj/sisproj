@@ -29,6 +29,8 @@ import com.siszo.sisproj.confirm.common.ConfirmUtility;
 import com.siszo.sisproj.employee.model.EmployeeVO;
 import com.siszo.sisproj.webhard.board.model.WebhardBoardService;
 import com.siszo.sisproj.webhard.board.model.WebhardBoardVO;
+import com.siszo.sisproj.webhard.comm.model.WebhardCommentService;
+import com.siszo.sisproj.webhard.comm.model.WebhardCommentVO;
 import com.siszo.sisproj.webhard.common.WebhardSearchVO;
 import com.siszo.sisproj.webhard.model.WebhardService;
 import com.siszo.sisproj.webhard.model.WebhardVO;
@@ -44,6 +46,8 @@ public class WebhardController {
 	private WebhardService wService;
 	@Autowired
 	private WebhardBoardService wbService;
+	@Autowired
+	private WebhardCommentService wcService;
 	
 	@RequestMapping("/main.do")
 	public String main(Model model) {
@@ -164,6 +168,12 @@ public class WebhardController {
 		List<WebhardBoardVO> webBoardList = wbService.selectWebBoardList(webSearchVo);
 		logger.info("요청 게시판 리스트 수집 결과 webBoardList.size()={}",webBoardList.size());
 		
+		//댓글 개수 넣어주기
+		for(WebhardBoardVO wbVo : webBoardList) {
+			int commCnt = wcService.webCommCnt(wbVo.getWebNo());
+			wbVo.setCommCnt(commCnt);
+		}
+		
 		int totalRecord = wbService.cntWebBoardList(webSearchVo);
 		pageInfo.setTotalRecord(totalRecord);
 		for(WebhardBoardVO wbVo : webBoardList) {
@@ -207,14 +217,19 @@ public class WebhardController {
 	
 	@RequestMapping("/detail.do")
 	public String detail(@RequestParam int webNo, Model model) {
-		logger.info("요청 상세 보기");
+		logger.info("요청 글 상세 보기");
 		
 		WebhardBoardVO wbVo = wbService.selectWebBoardByWebNo(webNo);
-		logger.info("요청 상세보기 처리 결과  wbVo={}",wbVo);
+		logger.info("요청 글 상세보기 처리 결과  wbVo={}",wbVo);
+		
+		//해당 글 댓글 수집
+		List<WebhardCommentVO> commVoList = wcService.selectWebComment(webNo);
+		logger.info("해당 글 댓글 수집 결과 commVoList.size", commVoList.size());
 		
 		wbVo.setWebTitle(ConfirmUtility.changeTag(wbVo.getWebTitle()));
 		
 		model.addAttribute("wbVo",wbVo);
+		model.addAttribute("commVoList",commVoList);
 		
 		return "webhard/detail";
 	}
@@ -273,4 +288,71 @@ public class WebhardController {
 		return "common/message";
 	}
 	
+	@RequestMapping("/writeComm.do")
+	public String writeComm(@ModelAttribute WebhardCommentVO wcVo, HttpSession session, Model model) {
+		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
+		wcVo.setEmpNo(empVo.getEmpNo());
+		logger.info("웹하드 보드 댓글 등록, 파라미터 wcVo={}", wcVo);
+		
+		int cnt = wcService.insertWebComment(wcVo);
+		logger.info("웹하드 보드 댓글 등록 결과, cnt={}",cnt);
+		
+		String msg="", url="";
+		if(cnt>0) {
+			msg="댓글 등록 되었습니다.";
+			url="/webhard/detail.do?webNo="+wcVo.getWebNo()+"#"+wcVo.getCommNo();
+		} else {
+			msg="댓글 등록 실패";
+			url="/webhard/detail.do?webNo="+wcVo.getWebNo();
+		}
+		
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+		return "common/message";
+	}
+	
+	@RequestMapping("/editComm.do")
+	public String editComm(@ModelAttribute WebhardCommentVO wcVo, Model model) {
+		logger.info("웹하드 보드 댓글 수정, 파라미터 wcVo={}",wcVo);
+		
+		int cnt = wcService.updateWebComment(wcVo);
+		logger.info("웹하드 보드 댓글 수정 결과, cnt={}",cnt);
+		
+		String msg="", url="";
+		if(cnt>0) {
+			msg="댓글 수정 등록 되었습니다.";
+			url="/webhard/detail.do?webNo="+wcVo.getWebNo()+"#"+wcVo.getCommNo();
+		} else {
+			msg="댓글 수정 등록 실패";
+			url="/webhard/detail.do?webNo="+wcVo.getWebNo();
+		}
+		
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+		return "common/message";
+	}
+	
+	@RequestMapping("/deleteComm.do")
+	public String deleteComm(@RequestParam int commNo, @RequestParam int webNo, Model model) {
+		logger.info("웹하드 보드 댓글 삭제, 파라미터 commNo={}", commNo);
+		
+		int cnt = wcService.deleteWebComment(commNo);
+		logger.info("웹하드 보드 댓글 삭제 결과, cnt", cnt);
+		
+		String msg="", url="";
+		if(cnt>0) {
+			msg="댓글이 삭제 되었습니다.";
+			url="/webhard/detail.do?webNo="+webNo;
+		} else {
+			msg="댓글 수정 등록 실패";
+			url="/webhard/detail.do?webNo="+webNo;
+		}
+		
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+		return "common/message";
+	}
 }

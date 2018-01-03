@@ -1,0 +1,7 @@
+/*홈디자인*/
+section #homesection{
+	position: relative;
+	top: 94px;
+	width: calc(100% - 300px);
+	margin:0 40px 50px 300px;	
+}
