@@ -5,7 +5,19 @@
 <!-- 0. include부분 -->
 <script type="text/javascript">
 	$(function() {
-		var empno = ${sessionScope.empVo.empNo};
+		if($('.newsDetailempLv').val() !="관리자"){
+			$('#btnewsEdit').hide();
+			$('#btnewsDelete').hide(); 
+		}
+		 
+		
+		$(".comContent").keydown(function (key) {
+	        if(key.keyCode == 13){//키가 13이면 실행 (엔터는 13)
+	           $('form[name=newsComfrm]').submit();
+	        }
+	 
+	    });
+		
 		if(empno!=$('.empNochk').val()){
 			$('.editdeletechk').css('visibility','hidden');
 		} 
@@ -36,8 +48,12 @@
 #newsDmain {
 	width: 60%;
 	margin: 0 auto;
-}
+} 
 
+.nocommantd{
+	color: gray;
+	text-align: center;
+}
 #likeCount {
 	margin: 0 auto;
 	border: 3px solid blue;
@@ -71,6 +87,13 @@
 .editdeletechk{
 	float:right;
 }
+
+.comsubmit{
+width:9%;
+display: inline-block;
+height:45px; 
+float:right;
+} 
 </style>
 <nav>
 	<ul>
@@ -103,6 +126,7 @@
 </article>
 <article id="bodysection">
 	<!-- 3. 내용 -->
+	<input type="hidden" id="newsDetailempLv" name="newsDetailempLv"  value="${sessionScope.empVo.empLev  }">
 	<div id="newsDmain">
 		<hr>
 		<div id="newsDTitle">
@@ -137,14 +161,23 @@
 		<input type="hidden" id="newsNo" name="newsNo" value="${newsVo.newsNo }">
 		
 		<span id="reclabel">댓글   ${list.size() }개</span>
-		<div id="rectext"><textarea id="comContent" name="comContent" style="width: 90%" rows="2"></textarea><input style="width:10%" type="submit" value="댓글등록"></div>
+		<div id="rectext"><input type="text" id="comContent" name="comContent" style="width: 90%; height:45px;"><input class="comsubmit" type="submit" value="댓글등록"></div>
+		
+		<c:if test="${empty list }">
+		<hr>
+		<span class="nocommantd">등록된 댓글이 없습니다.</span>
+		</c:if>
 		<!-- 댓글 반복시작 -->
+		<hr>
 		<c:forEach var="map" items="${list }">
 		<input type="hidden" class="empNochk" value="${map['EMP_NO'] }">
 		<label class="newsempname">${map['EMP_NAME'] } ${map['EMP_LEV'] }</label><br>
 		${map['COM_CONTENT'] }<br>
 		<fmt:formatDate value="${map['COM_REGDATE'] }" pattern="yyyy-MM-dd hh:mm:ss"/>
-		<div class="editdeletechk"><a href="#">수정</a>&nbsp;&nbsp;<a href="#">삭제</a></div> 
+		
+		<div class="editdeletechk">
+		<a href="<c:url value="/news/newsComDelete.do?comNo=${map['COM_NO'] }&newsNo=${newsVo.newsNo }"/>">삭제</a>
+		</div> 
 		<br>
 		<hr>
 		</c:forEach>		
@@ -154,8 +187,6 @@
 	</div>
 
 
-
-	</div>
 
 	<!-- 3. 내용 끝 -->
 </article>

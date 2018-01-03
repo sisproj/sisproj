@@ -16,9 +16,13 @@ public class NewsDAOMybatis extends SqlSessionDaoSupport implements NewsDAO{
 		return getSqlSession().insert(namespace+".insertNews",newsVo);
 	}
 	
-	public List<NewsVO> dailyNewsList(){
-		return getSqlSession().selectList(namespace+".dailyNewsList");
+	public List<NewsVO> dailyNewsList(NewsSearchVO newsSearchVO){
+		return getSqlSession().selectList(namespace+".dailyNewsList",newsSearchVO);
 		}
+	
+	public List<NewsVO> dailyNewsMainList(){
+		return getSqlSession().selectList(namespace+".dailyNewsMainList");
+	}
 	public NewsVO newsSearchByNo(int newsNo) {
 		return getSqlSession().selectOne(namespace+".newsSearchByNo",newsNo);
 				
@@ -65,4 +69,12 @@ public class NewsDAOMybatis extends SqlSessionDaoSupport implements NewsDAO{
 	public List<NewsVO> newsreadRanking(){
 		return getSqlSession().selectList(namespace+".newsreadRanking");
 	}
+	public int deleteNewsCom(NewsComVO comVo) {
+		return getSqlSession().delete(namespace+".deleteNewsCom",comVo);
+	}
+	public int newstotalrecord() {
+		return getSqlSession().selectOne(namespace+".newstotalrecord");
+				
+	}
+	
 }

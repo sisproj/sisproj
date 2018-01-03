@@ -275,9 +275,8 @@ html, body {
 <nav>
 	<ul>
 		<!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
-		<li><a href="<c:url value='/scheduler/scheduler.do'/>"><i
-				class="fa fa-pencil-square-o"></i>&nbsp;<span>개인스케줄</span></a></li>
-		<li class="active"><a href="<c:url value='/scheduler/tscheduler.do'/>"><i class="fa fa-floppy-o"></i>&nbsp;<span>공식
+		<li><a href="<c:url value='/scheduler/scheduler.do'/>"><i class="fa fa-calendar-check-o" aria-hidden="true"></i>&nbsp;<span>개인 스케줄</span></a></li>
+		<li class="active"><a href="<c:url value='/scheduler/tscheduler.do'/>"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;<span>공식
 					스케줄</span></a></li>
 		<!-- <li><a href="#"><i class="fa fa-file-text"></i>&nbsp;<span>결재 완료함</span></a></li>
                 <li><a href="#"><i class="fa fa-history"></i>&nbsp;<span>결재 반려함</span></a></li>
@@ -296,8 +295,8 @@ html, body {
 <article id="headsection">
 	<!-- 2. 페이지 이름 지정 // 북마크 지정 여부 .bookmark || .nobook -->
 	<h1>
-		<i class="fa fa-calendar-check-o" aria-hidden="true"></i></i>&nbsp;스케쥴관리&nbsp;<a
-			href="#"> <i class="fa fa-bookmark bookmark" aria-hidden="true"></i></a>
+		<i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;공식 팀 스케쥴관리&nbsp;<a href="#"> 
+		<i class="fa fa-bookmark bookmark" aria-hidden="true"></i></a>
 	</h1>
 	<!-- 2. 페이지 이름 지정 끝 -->
 </article>
@@ -305,14 +304,14 @@ html, body {
 <article id="bodysection">
 	<!-- 3. 내용 -->
 	<form name="tschfrm" id="tschfrm" method="post" action="tschedulerOK.do">
-		<input type="text" id="tschStart" name="tschStart"> 
-		<input type="text" id="tschEnd" name="tschEnd">
-		<input type="text" id="tschContent" name="tschContent"><!-- 내용 -->
-		<input type="text" id="tschCateg" name="tschCateg">
-		<input type="text" id="tschNo" name="tschNo">
-		<input type="text" id="tschEventLocation" name="tschEventLocation">
-		<input type="text" id="tschText" name="tschText"><!-- 제목 -->
-		<input type="text" id="tschDept" name="tschDept"  value="${sessionScope.empVo.empLev  }"><!-- 등급 -->
+		<input type="hidden" id="tschStart" name="tschStart"> 
+		<input type="hidden" id="tschEnd" name="tschEnd">
+		<input type="hidden" id="tschContent" name="tschContent"><!-- 내용 -->
+		<input type="hidden" id="tschCateg" name="tschCateg">
+		<input type="hidden" id="tschNo" name="tschNo">
+		<input type="hidden" id="tschEventLocation" name="tschEventLocation">
+		<input type="hidden" id="tschText" name="tschText"><!-- 제목 -->
+		<input type="hidden" id="tschDept" name="tschDept"  value="${sessionScope.empVo.empLev  }"><!-- 등급 -->
 	</form>
 	<div id="scheduler_here" class="dhx_cal_container"
 		style='width: 1500px; height: 750px;'>

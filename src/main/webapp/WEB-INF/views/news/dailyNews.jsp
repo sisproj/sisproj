@@ -6,6 +6,11 @@
 <!-- 0. include부분 -->
 <script type="text/javascript">
 	$(function() {
+
+		if($('.sessionLv').val()!="관리자"){
+			$('.newsregbt').hide();
+		}
+		
 		$('.newsImageChk').each(function(idx, item) {
 			if ($(this).val() == '') {
 				$(this).siblings('.dnewsContentDiv').css('width', '95%');
@@ -19,23 +24,24 @@
 		});
 
 		$('header nav ul li:nth-child(9) a').addClass('active');
-
+	
 	});
+	
 </script>
 
 <style>
-.newsbigDiv{
-	width:1100px;
-	float:left;
+.newsbigDiv {
+	width: 1100px;
+	float: left;
 }
 
-.importdiv{
-	margin-left:25px;
-	width:400px;
-	float:left;
+.importdiv {
+	margin-left: 25px;
+	width: 400px;
+	float: left;
 }
 
-.mainNews{
+.mainNews {
 	height: 400px;
 }
 
@@ -44,7 +50,7 @@
 }
 
 .newsmainDiv {
-	width: 33%;
+	width: 522px;
 	height: 150px;
 	float: left;
 	box-shadow: 0 4px 4px #b8b8b8;
@@ -88,9 +94,13 @@ img {
 	vertical-align: middle;
 }
 
+.w3-jumbo {
+	
+}
+
 /* Slideshow container */
 .slideshow-container {
- 	position: relative;
+	position: relative;
 }
 
 /* Next & previous buttons */
@@ -188,10 +198,8 @@ to {
 <nav>
 	<ul>
 		<!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
-		<li class="active"><a href="<c:url value='/news/dailyNews.do'/>"><i
-				class="fa fa-floppy-o"></i>&nbsp;<span>SIS 뉴스홈</span></a></li>
-		<li><a href="<c:url value='/news/photoNews.do'/>"><i
-				class="fa fa-floppy-o"></i>&nbsp;<span>SIS 포토뉴스</span></a></li>
+		<li class="active"><a href="<c:url value='/news/dailyNews.do'/>"><i class='fa fa-newspaper-o'></i>
+		&nbsp;<span>SIS 뉴스홈</span></a></li>
 	</ul>
 	<!-- 1.왼쪽 사이드 메뉴 지정 끝-->
 	<div id="listbtn">
@@ -205,7 +213,7 @@ to {
 <article id="headsection">
 	<!-- 2. 페이지 이름 지정 // 북마크 지정 여부 .bookmark || .nobook -->
 	<h1>
-		<i class="fa fa-book" aria-hidden="true"></i>&nbsp;SIS 뉴스&nbsp;<a
+		<i class='fa fa-newspaper-o'></i>&nbsp;SIS 뉴스&nbsp;<a
 			href="#"><i class="fa fa-bookmark bookmark" aria-hidden="true"></i></a>
 	</h1>
 	<!-- 2. 페이지 이름 지정 끝 -->
@@ -213,67 +221,70 @@ to {
 <article id="bodysection">
 	<!-- 3. 내용 -->
 
+	<input type="hidden" class="sessionLv"
+		value="${sessionScope.empVo.empLev}">
 	<div class="testText" style="visibility: hidden;"></div>
 	<div class="w3-light-grey w3-padding-32 w3-center">
-		<h1 class="w3-jumbo" style="font-style: oblique;">SIS News</h1> 
+		<h1 class="w3-jumbo" style="font-style: oblique;">SIS News</h1>
 	</div>
 	<div class="newsbtdiv">
-		<input type="button" value="뉴스등록">
+		<input type="button" class="newsregbt" value="뉴스등록">
 	</div>
-
+	<br>
+	<br>
 
 	<!-- Slideshow container -->
 	<div class="newsbigDiv">
 		<div id="mainNews">
 			<div class="slideshow-container">
-				<c:if test="${!empty list}">
-					<c:forEach var="vo" items="${list}">
+				<c:if test="${!empty mainlist}">
+					<c:forEach var="vo" items="${mainlist}">
 						<c:set var="i"></c:set>
 						<c:if test="${vo.newsMain=='Y'}">
 							<!-- Full-width images with number and caption text -->
 							<div class="mySlides fade">
 								<div class="numbertext"></div>
 								<img src="<c:url value='/news_images/${vo.newsImage }'/>"
-									style="width: 100%; height: 500px;"> 
-	
+									style="width: 100%; height: 500px;">
+
 								<c:if test="${fn:length(vo.newsTitle)>30 }">
 									<div class="text">
 										<a
 											href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
-											${fn:substring(vo.newsTitle,0,30) }...</a>
+											[메인]${fn:substring(vo.newsTitle,0,30) }...</a>
 									</div>
 								</c:if>
 								<c:if test="${fn:length(vo.newsTitle)<=30}">
 									<div class="text">
 										<a
 											href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
-											${vo.newsTitle}</a>
+											[메인]${vo.newsTitle}</a>
 									</div>
 								</c:if>
 							</div>
-	
+
 						</c:if>
 					</c:forEach>
 				</c:if>
-	
-	
-	
-			<!-- Next and previous buttons -->
-			<a class="prev" onclick="plusSlides(-1)">&#10094;</a> <a class="next"
-				onclick="plusSlides(1)">&#10095;</a>
-		</div>
-		<br>
 
-		<!-- The dots/circles -->
-		<div style="text-align: center">
-			<span class="dot activity" onclick="currentSlide(1)"></span>
-			 <span	class="dot" onclick="currentSlide(2)"></span>
-			  <span class="dot"	onclick="currentSlide(3)"> </span>
-			  <span class="dot"onclick="currentSlide(4)"> </span> 
-			<span class="dot"onclick="currentSlide(5)"></span> 
+
+
+				<!-- Next and previous buttons -->
+				<a class="prev" onclick="plusSlides(-1)">&#10094;</a> <a
+					class="next" onclick="plusSlides(1)">&#10095;</a>
+			</div>
+			<br>
+
+			<!-- The dots/circles -->
+			<div style="text-align: center">
+				<span class="dot activity" onclick="currentSlide(1)"></span> <span
+					class="dot" onclick="currentSlide(2)"></span> <span class="dot"
+					onclick="currentSlide(3)"> </span> <span class="dot"
+					onclick="currentSlide(4)"> </span> <span class="dot"
+					onclick="currentSlide(5)"></span>
+			</div>
 		</div>
 	</div>
- </div>
 	<div class="importdiv">
 		<c:import url="/news/topDailynews.do"></c:import>
 	</div>
@@ -301,41 +312,41 @@ to {
 						</c:if>
 						<div class="dnewsContentDiv">
 							<c:if test="${empty vo.newsImage }">
-								<c:if test="${fn:length(vo.newsTitle)>23 }">
+								<c:if test="${fn:length(vo.newsTitle)>25 }">
 									<h4 class="dnewstitle">
 										<a
 											href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
-											${fn:substring(vo.newsTitle,0,25) }...</a>
+											[일반]${fn:substring(vo.newsTitle,0,25) }...</a>
 									</h4>
 								</c:if>
 								<c:if test="${fn:length(vo.newsTitle)<=25}">
 									<h4 class="dnewstitle">
 										<a
 											href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
-											${vo.newsTitle}</a>
+											[일반]${vo.newsTitle}</a>
 									</h4>
 								</c:if>
 
-								<c:if test="${fn:length(vo.newsContent)>90 }">
-									<div>${fn:substring(vo.newsContent,0,90) }...</div>
+								<c:if test="${fn:length(vo.newsContent)>80 }">
+									<div>${fn:substring(vo.newsContent,0,80) }...</div>
 								</c:if>
-								<c:if test="${fn:length(vo.newsContent)<=90}">
+								<c:if test="${fn:length(vo.newsContent)<=80}">
 									<div>${vo.newsContent}</div>
 								</c:if>
 							</c:if>
 							<c:if test="${!empty vo.newsImage }">
-								<c:if test="${fn:length(vo.newsTitle)>23 }">
+								<c:if test="${fn:length(vo.newsTitle)>20 }">
 									<h4 class="dnewstitle">
 										<a
 											href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
-											${fn:substring(vo.newsTitle,0,23) }...</a>
+											[포토]${fn:substring(vo.newsTitle,0,20) }...</a>
 									</h4>
 								</c:if>
-								<c:if test="${fn:length(vo.newsTitle)<=23}">
+								<c:if test="${fn:length(vo.newsTitle)<=20}">
 									<h4 class="dnewstitle">
 										<a
 											href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
-											${vo.newsTitle}</a>
+											[포토]${vo.newsTitle}</a>
 									</h4>
 								</c:if>
 
@@ -363,6 +374,27 @@ to {
 					</div>
 				</c:if>
 			</c:forEach>
+			<%--페이징 처리--%>
+			<form name="frmPage" method="post"
+				action="<c:url value='/news/dailyNews.do'/>">
+				 <input type="hidden" name="currentPage">
+			</form>
+
+			<div class="w3-bar w3-margin w3-center">
+				<a href="#" class="w3-button"
+					onclick="pageFunc(${pagingInfo.firstPage})">&laquo;</a>
+				<c:forEach var="i" begin="${pagingInfo.firstPage}"
+					end="${pagingInfo.lastPage}">
+					<c:if test="${i==pagingInfo.currentPage}">
+						<span style="font-weight: bold; color: blue" class="w3-button">${i}</span>
+					</c:if>
+					<c:if test="${i != pagingInfo.currentPage}">
+						<a href="#" onclick="pageFunc(${i})" class="w3-button">${i}</a>
+					</c:if>
+				</c:forEach>
+				<a href="#" class="w3-button"
+					onclick="pageFunc(${pagingInfo.lastPage})">&raquo;</a>
+			</div>
 		</div>
 	</c:if>
 	<!-- 반복끝 -->
@@ -373,6 +405,11 @@ to {
 	var slideIndex = 1;
 	showSlides(slideIndex);
 
+	function pageFunc(curPage) {
+        document.frmPage.currentPage.value = curPage;
+        frmPage.submit();
+    }
+	
 	function plusSlides(n) {
 		showSlides(slideIndex += n);
 	}
