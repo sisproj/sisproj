@@ -3,9 +3,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
 	$(function () {
-		$('#asidebtn ul li:ntn-child(1)').click(function () {
+		 $('#asidebtn ul li:nth-child(1)').click(function () {
 			
-		});
+		}); 
 	});
 </script>
 	<div id="photo">

@@ -11,6 +11,15 @@
 <form method="get" action="<c:url value='/commue/commueDateList.do' />">
 	<div id="dimyPage">
 		<table id="DList" border="1" >
+		
+		<colgroup>
+			<col width="15%">
+			<col width="15%">
+			<col width="15%">
+			<col width="20%">
+			<col width="20%">
+			<col width="15%">
+		</colgroup>
 				<tr>
 					<th>사원이름</th>
 					<th>부서명</th>
@@ -31,6 +40,9 @@
 					</c:if>
 					<c:if test="${vo.cmtStatus eq ('N') }">
 						<td>퇴근</td>
+					</c:if>
+					<c:if test="${empty vo.cmtStatus }">
+						<td>기록이 없습니다</td>
 					</c:if>
 				</tr>
 			</c:forEach>
