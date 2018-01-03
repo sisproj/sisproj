@@ -13,6 +13,7 @@ public class NoticeVO {
 	private String notiOfilename;	//원본파일이름
 	private int notiDowncnt;	//다운수
 	private int notiReadcnt;	//조회수
+	private String notiCategory;	//카테고리
 	
 	private String empName;
 	
@@ -20,6 +21,13 @@ public class NoticeVO {
 	
 	public String getEmpName() {
 		return empName;
+	}
+	public String getNotiCategory() {
+		return notiCategory;
+	}
+	
+	public void setNotiCategory(String notiCategory) {
+		this.notiCategory = notiCategory;
 	}
 	public void setEmpName(String empName) {
 		this.empName = empName;
@@ -92,7 +100,7 @@ public class NoticeVO {
 		return "NoticeVO [notiNo=" + notiNo + ", notiTitle=" + notiTitle + ", empNo=" + empNo + ", notiContent="
 				+ notiContent + ", notiRegdate=" + notiRegdate + ", notiFilename=" + notiFilename + ", notiFilesize="
 				+ notiFilesize + ", notiOfilename=" + notiOfilename + ", notiDowncnt=" + notiDowncnt + ", notiReadcnt="
-				+ notiReadcnt + "]";
+				+ notiReadcnt + ", notiCategory=" + notiCategory + ", empName=" + empName + "]";
 	}
 	
 		
