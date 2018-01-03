@@ -86,10 +86,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#tokenField').tokenfield();
-        if ("${sessionScope.empVo.empNo}" != "${messageVO.empNo}") {
-            alert("잘못된 경로입니다.");
-            window.close();
-        }
     })
 </script>
 </body>

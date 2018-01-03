@@ -1,20 +1,18 @@
 package com.siszo.sisproj.message.controller;
 
 
-import com.siszo.sisproj.message.model.MessageSearchVO;
 import com.siszo.sisproj.common.PaginationInfo;
-import com.siszo.sisproj.common.SearchVO;
 import com.siszo.sisproj.common.Utility;
 import com.siszo.sisproj.dept.model.DeptService;
 import com.siszo.sisproj.dept.model.DeptVO;
 import com.siszo.sisproj.employee.model.EmployeeVO;
 import com.siszo.sisproj.message.model.MessageRecVO;
+import com.siszo.sisproj.message.model.MessageSearchVO;
 import com.siszo.sisproj.message.model.MessageService;
 import com.siszo.sisproj.message.model.MessageVO;
 import com.siszo.sisproj.organization.model.OrganizationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -89,7 +87,7 @@ public class MessageController {
         messageSearchVO.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
         messageSearchVO.setEmpNo(empNo);
 
-        logger.info("messageSearchVO 입력값 : messageSearchVO={}",messageSearchVO );
+        logger.info("messageSearchVO 입력값 : messageSearchVO={}", messageSearchVO);
 
         List<MessageVO> msgList = messageService.selectRecMsgByEmpNo(messageSearchVO);
         logger.info("{} msgList 조회결과 list.size={}", empNo, msgList.size());
@@ -110,19 +108,30 @@ public class MessageController {
         int empNo = empVo.getEmpNo();
         logger.info("상세보기 들어옴 messageDetail_get(), 입력값 recNo={}, empNo={}", recNo, empNo);
         int result = messageService.updateReadFlag(recNo);
-        if(result > 0) {
+        if (result > 0) {
             MessageVO messageVO = messageService.selectRecMsgByRecNo(recNo);
             model.addAttribute("messageVO", messageVO);
         }
         return "message/messageDetail";
     }
 
+    @RequestMapping(value = "/message/sendDetail")
+    public String sendDetail(HttpSession session, @RequestParam(defaultValue = "0") int msgNo, Model model) {
+        EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
+        int empNo = empVo.getEmpNo();
+        logger.info("보낸쪽지 상세보기 들어옴 messageDetail_get(), 입력값 msgNo={}, empNo={}", msgNo, empNo);
+        MessageVO messageVO = messageService.selectSendMsgByMsgNo(msgNo);
+        model.addAttribute("messageVO", messageVO);
+        return "message/messageSendDetail";
+    }
+
     @RequestMapping(value = "/message/importantUpdate")
-    public @ResponseBody String messageImportantUpdate(@RequestParam String recNoStr) {
+    public @ResponseBody
+    String messageImportantUpdate(@RequestParam String recNoStr) {
         logger.info("중요쪽지 설정  messageImportant() : recNoStr={}", recNoStr);
 
         String[] recNoArr = recNoStr.split(",");
-        for(int i = 0; i < recNoArr.length; i++) {
+        for (int i = 0; i < recNoArr.length; i++) {
             int recNo = Integer.parseInt(recNoArr[i]);
             logger.info("chkArr 값 :  recNo={}", recNo);
             int result = messageService.updateImpMsg(recNo);
@@ -131,12 +140,28 @@ public class MessageController {
         return "OK";
     }
 
+    @RequestMapping(value = "/message/delMsgUndo")
+    public @ResponseBody
+    String delMsgUndo(@RequestParam String recNoStr) {
+        logger.info("쪽지 되돌리기 delMsgUndo() : recNoStr={}", recNoStr);
+
+        String[] recNoArr = recNoStr.split(",");
+        for (int i = 0; i < recNoArr.length; i++) {
+            int recNo = Integer.parseInt(recNoArr[i]);
+            logger.info("chkArr 값 :  recNo={}", recNo);
+            int result = messageService.delMsgUndo(recNo);
+            logger.info("update 결과 :  result ={}", result);
+        }
+        return "OK";
+    }
+
     @RequestMapping(value = "/message/delete")
-    public @ResponseBody String messageDelete(@RequestParam String recNoStr) {
+    public @ResponseBody
+    String messageDelete(@RequestParam String recNoStr) {
         logger.info("선택 쪽지 휴지통으로 이동 messageDelete() : recNoStr={}", recNoStr);
 
         String[] recNoArr = recNoStr.split(",");
-        for(int i = 0; i < recNoArr.length; i++) {
+        for (int i = 0; i < recNoArr.length; i++) {
             int recNo = Integer.parseInt(recNoArr[i]);
             logger.info("chkArr 값 :  recNo={}", recNo);
             int result = messageService.updateDelMsg(recNo);
@@ -144,7 +169,6 @@ public class MessageController {
         }
         return "OK";
     }
-
 
 
     @RequestMapping(value = "/message/important")
@@ -164,7 +188,7 @@ public class MessageController {
         messageSearchVO.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
         messageSearchVO.setEmpNo(empNo);
 
-        logger.info("messageSearchVO 입력값 : messageSearchVO={}",messageSearchVO );
+        logger.info("messageSearchVO 입력값 : messageSearchVO={}", messageSearchVO);
 
         List<MessageVO> msgList = messageService.selectRecMsgByEmpNoImp(messageSearchVO);
         logger.info("{} msgList 조회결과 list.size={}", empNo, msgList.size());
@@ -196,7 +220,7 @@ public class MessageController {
         messageSearchVO.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
         messageSearchVO.setEmpNo(empNo);
 
-        logger.info("messageSearchVO 입력값 : messageSearchVO={}",messageSearchVO );
+        logger.info("messageSearchVO 입력값 : messageSearchVO={}", messageSearchVO);
 
         List<MessageVO> msgList = messageService.selectSendMsgByEmpNo(messageSearchVO);
         logger.info("{} msgList 조회결과 list.size={}", empNo, msgList.size());
@@ -228,7 +252,7 @@ public class MessageController {
         messageSearchVO.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
         messageSearchVO.setEmpNo(empNo);
 
-        logger.info("messageSearchVO 입력값 : messageSearchVO={}",messageSearchVO );
+        logger.info("messageSearchVO 입력값 : messageSearchVO={}", messageSearchVO);
 
         List<MessageVO> msgList = messageService.selectRecycleMsgByEmpNo(messageSearchVO);
         logger.info("{} msgList 조회결과 list.size={}", empNo, msgList.size());

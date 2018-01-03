@@ -70,6 +70,11 @@ public class MessageDAOMyBatis extends SqlSessionDaoSupport implements MessageDA
     }
 
     @Override
+    public int delMsgUndo(int recNo) {
+        return getSqlSession().update(namespace + ".delMsgUndo", recNo);
+    }
+
+    @Override
     public List<MessageVO> selectRecycleMsgByEmpNo(MessageSearchVO messageSearchVO) {
         return getSqlSession().selectList(namespace + ".selectRecycleMsgByEmpNo", messageSearchVO);
     }
@@ -77,5 +82,10 @@ public class MessageDAOMyBatis extends SqlSessionDaoSupport implements MessageDA
     @Override
     public int selectTotalMsgRecycleCount(MessageSearchVO messageSearchVO) {
         return getSqlSession().selectOne(namespace + ".selectTotalMsgRecycleCount", messageSearchVO);
+    }
+
+    @Override
+    public MessageVO selectSendMsgByMsgNo(int msgNo) {
+        return getSqlSession().selectOne(namespace + ".selectSendMsgByMsgNo", msgNo);
     }
 }

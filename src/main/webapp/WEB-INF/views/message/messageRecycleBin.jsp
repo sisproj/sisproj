@@ -19,6 +19,11 @@
     .unReadMessage {
         font-weight: bold;
     }
+    .hoverable:hover {
+        background-color: #DCDDE3;
+    }
+
+
 </style>
 <nav>
     <div style="width: 298px; text-align: center">
@@ -72,25 +77,25 @@
         <h5>
             <b class="w3-bar-item">받은 쪽지함</b>
         </h5>
-        <table class="w3-table-all w3-hoverable w3-border-0" style="width: 90%; margin-left: 5%">
+        <table class="w3-table w3-bordered" style="width: 90%; margin-left: 5%">
             <thead>
             <tr class=" w3-border-bottom">
-                <th>
+                <th style="max-width: 68px">
                     <div class="w3-button w3-light-grey">
                         <input type="checkbox" id="checkAllMessage">
                     </div>
                 </th>
                 <th class="w3-text-white">
-                    <button class="w3-button w3-small w3-light-grey" onclick="updateImpMsg()">
-                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                    <button class="w3-button w3-small w3-light-grey" onclick="undoMsg()">
+                        <i class="fa fa-undo" aria-hidden="true"></i>
                     </button>
-                    <button class="w3-button w3-small w3-light-grey" onclick="deleteMsg()">
-                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    <button class="w3-button w3-small w3-light-grey" onclick="realDeleteMsg()">
+                        <b><i class="fa fa-trash" aria-hidden="true"></i></b>
                     </button>
                 </th>
                 <th colspan="2">
                     <div class="w3-right">
-                        <form name="frmSearch" method="post" action="<c:url value='/message/receive.do'/>"
+                        <form name="frmSearch" method="post" action="<c:url value='/message/recycleBin.do'/>"
                               id="frmSearch">
                             <input class="w3-bar-item w3-border w3-left"
                                    style="width: 82%; height: 28px; padding: 10px;"
@@ -107,47 +112,46 @@
             </thead>
             <c:if test="${empty msgList}">
                 <tr>
-                    <td colspan="3">받은 쪽지가 없습니다.</td>
+                    <td colspan="3">휴지통에 쪽지가 없습니다.</td>
                 </tr>
 
             </c:if>
             <c:forEach items="${msgList}" var="msgVO">
-                <tr>
-                    <td style="width: 5%" class="w3-center"><input type="checkbox" name="chk" value="${msgVO.recNo}">
-                    </td>
-                    <td style="width: 20%">${msgVO.empName}</td>
-                    <td style="width: 65%">
-                        <div onclick="window.open('<c:url
-                                value="/message/detail.do?recNo=${msgVO.recNo}"/>', 'messageWindow', 'width=540,height=500,left=300,top=300,toolbar=no,scrollbars=no,resizable=no');">
-                            <c:if test="${msgVO.msgImpflag eq 'Y'}">
-                                <span class="w3-border w3-round w3-tiny">중요 쪽지</span>
-                            </c:if>
-                            <c:if test="${msgVO.msgReadflag eq 'N'}">
-                                <a href="#" onclick="messageDetailOpen('msg-${msgVO.recNo}')" class="unReadMessage"
-                                   id="msg-${msgVO.recNo}">${msgVO.msgTitle}</a>
-                            </c:if>
-                            <c:if test="${msgVO.msgReadflag eq 'Y'}">
-                                <a href="#">${msgVO.msgTitle}</a>
-                            </c:if>
-                        </div>
+                <c:if test="${msgVO.msgReadflag eq 'Y'}">
+                    <tr class="w3-light-gray hoverable readMessage" id="msg-${msgVO.recNo}">
+                </c:if>
+                <c:if test="${msgVO.msgReadflag eq 'N'}">
+                    <tr class="hoverable unReadMessage" id="msg-${msgVO.recNo}">
+                </c:if>
+                <td style="width: 5%; max-width: 68px" class="w3-center"><input type="checkbox" name="chk" value="${msgVO.recNo}">
+                </td>
+                <td style="width: 20%">${msgVO.empName}</td>
+                <td style="width: 65%">
+                    <div onclick="window.open('<c:url
+                            value="/message/detail.do?recNo=${msgVO.recNo}"/>', 'messageWindow', 'width=540,height=500,left=300,top=300,toolbar=no,scrollbars=no,resizable=no');">
+                        <c:if test="${msgVO.msgImpflag eq 'Y'}">
+                            <span class="w3-border w3-round w3-tiny w3-light-gray">중요 쪽지</span>
+                        </c:if>
+                        <a href="#" onclick="messageDetailOpen('msg-${msgVO.recNo}')">${msgVO.msgTitle}</a>
+                    </div>
 
-                    </td>
-                    <td class="w3-center" style="width: 10%; max-width: 125px; min-width: 125px">
-                        <c:set var="today"><fmt:formatDate value="${now}" type="date"/></c:set>
-                        <c:set var="msgRegDate"><fmt:formatDate value="${msgVO.msgRegdate}" type="date"/></c:set>
-                        <c:if test="${today eq msgRegDate}">
-                            <fmt:formatDate value="${msgVO.msgRegdate}" pattern="HH:mm"/>
-                        </c:if>
-                        <c:if test="${today ne msgRegDate}">
-                            ${msgRegDate}
-                        </c:if>
-                    </td>
+                </td>
+                <td class="w3-center" style="width: 10%; max-width: 125px; min-width: 125px">
+                    <c:set var="today"><fmt:formatDate value="${now}" type="date"/></c:set>
+                    <c:set var="msgRegDate"><fmt:formatDate value="${msgVO.msgRegdate}" type="date"/></c:set>
+                    <c:if test="${today eq msgRegDate}">
+                        <fmt:formatDate value="${msgVO.msgRegdate}" pattern="HH:mm"/>
+                    </c:if>
+                    <c:if test="${today ne msgRegDate}">
+                        ${msgRegDate}
+                    </c:if>
+                </td>
                 </tr>
             </c:forEach>
         </table>
 
         <%--페이징 처리--%>
-        <form name="frmPage" method="post" action="<c:url value='/message/receive.do'/>">
+        <form name="frmPage" method="post" action="<c:url value='/message/recycleBin.do'/>">
             <input type="hidden" name="searchKeyword"
                    value="${param.searchKeyword }">
             <input type="hidden" name="currentPage">
@@ -175,10 +179,10 @@
     }
 
     function messageDetailOpen(data) {
-        $('#' + data).css('font-weight', 'normal');
+        $('#' + data).attr("class", "w3-light-gray readMessage");
     }
 
-    function updateImpMsg() {
+    function undoMsg() {
         var recNoStr = "";
         var total = $("input[name=chk]:checked").length;
         $("input[name=chk]:checked").each(function (index) {
@@ -191,7 +195,7 @@
 
         $.ajax({
             type: "post",
-            url: "<c:url value='/message/importantUpdate.do'/>",
+            url: "<c:url value='/message/delMsgUndo.do'/>",
             data: {"recNoStr": recNoStr},
             success: function (response) {
                 if (response == "OK") {
@@ -204,7 +208,7 @@
         });
     }
 
-    function deleteMsg() {
+    function realDeleteMsg() {
         var recNoStr = "";
         var total = $("input[name=chk]:checked").length;
         $("input[name=chk]:checked").each(function (index) {
@@ -215,11 +219,11 @@
             }
         });
 
-        var choice = confirm("선택한 쪽지를 정말 삭제하시겠습니까?");
-        if(choice) {
+        var choice = confirm("삭제한 쪽지는 복구할 수 없습니다.\n정말 삭제하시겠습니까?");
+        if (choice) {
             $.ajax({
                 type: "post",
-                url: "<c:url value='/message/delete.do'/>",
+                url: "<c:url value='/message/deleteMsg.do'/>",
                 data: {"recNoStr": recNoStr},
                 success: function (response) {
                     if (response == "OK") {

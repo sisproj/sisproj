@@ -30,4 +30,8 @@ public interface MessageService {
     public List<MessageVO> selectRecycleMsgByEmpNo(MessageSearchVO messageSearchVO);
 
     public int selectTotalMsgRecycleCount(MessageSearchVO messageSearchVO);
+
+    public int delMsgUndo(int recNo);
+
+    public MessageVO selectSendMsgByMsgNo(int msgNo);
 }

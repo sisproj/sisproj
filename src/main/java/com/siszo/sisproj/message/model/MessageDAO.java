@@ -27,8 +27,12 @@ public interface MessageDAO {
 
     public int updateDelMsg(int recNo);
 
+    public int delMsgUndo(int recNo);
+
     public List<MessageVO> selectRecycleMsgByEmpNo(MessageSearchVO messageSearchVO);
 
     public int selectTotalMsgRecycleCount(MessageSearchVO messageSearchVO);
+
+    public MessageVO selectSendMsgByMsgNo(int msgNo);
 
 }
