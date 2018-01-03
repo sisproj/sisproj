@@ -27,9 +27,9 @@
 		
 		/* countPerPage 변경하기 */
 		$('#recordCountPerPage').change(function(){
-			if($('#groupNo').val()==''){
+			/* if($('#groupNo').val()==''){
 				$('#groupNo').val('0');
-			}
+			} */
 			$('#frmTrash').submit();			
 		});
 	});

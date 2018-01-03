@@ -157,6 +157,7 @@ action="<c:url value='/notice/noticeList.do'/>">
 						<thead>
 							<tr>
 								<th>번호</th>
+								<th>카테고리</th>
 								<th>제목</th>
 								<th>작성자</th>
 								<th>작성일</th>
@@ -173,7 +174,8 @@ action="<c:url value='/notice/noticeList.do'/>">
 								<!-- 공지사항 내용 반복분 시작 -->
 								<c:forEach var="vo" items="${list }">
 									<tr>
-										<td>${vo.notiNo}</td>									
+										<td>${vo.notiNo}</td>	
+										<td>${vo.notiCategory }</td>								
 										<td style="text-align:left">
 												<a href
 						="<c:url value='/notice/countUpdate.do?notiNo=${vo.notiNo}'/>">
