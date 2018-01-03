@@ -187,9 +187,6 @@
 	#allList tr{
 		transition:all 300ms linear;
 	}
-	#allList td b{
-		color: #306;	
-	}
 	#allList tbody tr:hover{
 		background-color: #e1e1e1;
 	}
