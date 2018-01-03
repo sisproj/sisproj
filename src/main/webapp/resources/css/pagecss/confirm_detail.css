@@ -181,7 +181,7 @@
 #writeFrm #insFile h3{
 	margin-bottom: 5px;
 }
-#writeFrm #cf_comment{
+#cf_comment{
 	box-sizing:border-box;
 	width: 95%;
 	margin: 0 auto;
@@ -191,11 +191,11 @@
 	background-color: #efefef;
 	box-shadow: 1px 1px 3px #999;
 }
-#writeFrm #cf_comment #comm_wr{
+#cf_comment #comm_wr{
 	padding: 10px;
 	height: 40px;
 }
-#writeFrm #cf_comment #comm_wr #con{
+#cf_comment #comm_wr #con{
 	box-sizing:border-box;
 	width: 80%;
 	height: 100%;
@@ -206,32 +206,32 @@
 	border: 2px solid #fff;
 	border-radius:10px ;
 }
-#writeFrm #cf_comment #comm_wr input[type=submit]{
+#cf_comment #comm_wr input[type=submit]{
 	width: 15%;
 	max-width: 150px;
 	height: 100%;
 	float:right;
 	margin-right: 10px;
 }
-#writeFrm #cf_comment .selcomm{
+#cf_comment .selcomm{
 	box-sizing:border-box;
 	min-height: 100px;
 	padding: 10px;
 	border-bottom: 2px solid #fff;
 }
-#writeFrm #cf_comment .selcomm .comm_info{
+#cf_comment .selcomm .comm_info{
 	position: relative;
 	margin-bottom: 20px;
 }
-#writeFrm #cf_comment .selcomm .comm_info span:last-child{
+#cf_comment .selcomm .comm_info span:last-child{
 	position: absolute;
 	right: 0;
 	font-size: 0.8em;
 }
-#writeFrm #cf_comment .selcomm .comm_content .comm_ed{
+#cf_comment .selcomm .comm_content .comm_ed{
 	display: none;
 }
-#writeFrm #cf_comment .selcomm .comm_content .comm_ed textarea{
+#cf_comment .selcomm .comm_content .comm_ed textarea{
 	box-sizing:border-box;
 	width: 80%;
 	height: 40px;
@@ -242,17 +242,17 @@
 	border: 2px solid #fff;
 	border-radius:10px ;
 }
-#writeFrm #cf_comment .selcomm .comm_content .comm_ed input[type=submit]{
+#cf_comment .selcomm .comm_content .comm_ed input[type=submit]{
 	width: 15%;
 	max-width: 150px;
 	height: 40px;
 	float:right;
 	margin-right: 10px;
 }
-#writeFrm #cf_comment .selcomm .comm_con{
+#cf_comment .selcomm .comm_con{
 	margin-top: 10x;
 }
-#writeFrm #cf_comment .selcomm:last-child{
+#cf_comment .selcomm:last-child{
 	border-bottom: 2px solid transparent;
 }
 /*하단 끝*/

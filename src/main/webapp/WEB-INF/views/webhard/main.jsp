@@ -6,7 +6,8 @@
             <ul>
                 <!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
                 <li class="active"><a href="<c:url value='/webhard/main.do'/>"><i class="fa fa-floppy-o"></i>&nbsp;<span>웹하드</span></a></li>
-                <li><a href="#"><i class="fa fa-floppy-o"></i>&nbsp;<span>요청사항</span></a></li>
+                <li><a href="<c:url value='/webhard/requireList.do'/>"><i class="fa fa-list-alt"></i>&nbsp;<span>요청 게시판</span></a></li>
+                <li><a href="<c:url value='/webhard/write.do'/>"><i class="fa fa-pencil-square-o"></i>&nbsp;<span>요청 글 쓰기</span></a></li>
             </ul>
             <!-- 1.왼쪽 사이드 메뉴 지정 끝-->
             <div id="listbtn"><p><i class="fa fa-chevron-circle-left" style="text-align: center;"></i></p></div>
@@ -20,12 +21,13 @@
     </article>
     <article id="bodysection">
         <!-- 3. 내용 -->
+        <p style="font-size: 0.8em; text-align:right;" class="red">- 파일을 드래그 해서 업로드 하세요 -</p>
         <div id="fileZone">
         	<div id=searchSec>
         		<label>파일 검색 </label><input type="text" id="searchFile">
         	</div>
         	<c:forEach var="file" items="${list }">
-	        	<a href="<c:url value='/webhard/${file.fileName }'/>"><div class="file" id="${file.fileNo }">
+	        	<a href="<c:url value='/webhard/download.do?fileName=${file.fileName }'/>"><div class="file" id="${file.fileNo }">
 	        		<i class="fa fa-floppy-o"></i> <span>${file.fileOriName } (업로드자  : ${file.empName })</span>
 	        	</div></a>
         	</c:forEach>
@@ -70,33 +72,27 @@
 	          });
 	          $('#message').fadeIn();
 	     });
-
-	     $('#fileZone').on('dragleave', function (e) {
+	     
+	     $('#fileZone').on('dragover', function (e) {
 	          e.stopPropagation();
 	          e.preventDefault();
+	     });
+	     
+	     $('#fileZone').mouseout(function (e) {
+	          e.stopPropagation();
+	          e.preventDefault();	          
 	          $(this).css({
 	        	  'border':'2px solid #fff',
 	      		  'background-color': '#efefef',
 	      		  'box-shadow': '2px 2px 5px #777'
 	          });
 	          $('#message').fadeOut();
-	     });
-	     
-	     $('#fileZone').on('dragover', function (e) {
-	          e.stopPropagation();
-	          e.preventDefault();
 	     });
 
 		$('#fileZone').on("drop", function(event){
 	        event.preventDefault();
 	        
 			var files = event.originalEvent.dataTransfer.files;
-	          $(this).css({
-	        	  'border':'2px solid #fff',
-	      		  'background-color': '#efefef',
-	      		  'box-shadow': '2px 2px 5px #777'
-	          });
-	          $('#message').fadeOut();
 			if(files.length<1){
 				return false;
 			} else {
@@ -144,7 +140,11 @@
 					 return false; 
 				}; 
 				var positionLeft = e.pageX - 290;
-				var pasitionTop = e.pageY - 150;
+				if(e.clientY>780){
+					var pasitionTop = e.pageY - 250;					
+				} else {
+					var pasitionTop = e.pageY - 150;
+				}
 				
 				$('#rightMenu').css({
 					'top':pasitionTop,

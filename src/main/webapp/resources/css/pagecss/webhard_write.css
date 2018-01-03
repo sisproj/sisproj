@@ -1,0 +1,41 @@
+@charset "UTF-8";
+#requireWrite {
+	width: 910px;
+	margin: 0 auto;
+}
+#requireWrite div{
+	margin-bottom: 15px;
+}
+#requireWrite #ir1{
+	width: 900px;
+	height : 500px;
+	margin: 0 auto;
+}
+#requireWrite #divTitle label {
+	display: inline-block;
+	width: 150px;
+	text-align: center;
+	height: 30px;
+	color: #036;
+	font-size: 1.17em;
+	font-weight: bold;
+}
+#requireWrite #divTitle input {
+	display: inline-block;
+	width: 750px;
+	height: 30px;
+	border: 1px solid #aaa;
+	box-sizing: border-box;
+	padding-left: 10px;
+}
+#requireWrite #btns{
+	text-align: right;
+}
+#requireWrite #btns input[type=submit],
+#requireWrite #btns a{
+	display:inline-block;
+	width: 70px;
+	height: 30px;
+	line-height: 30px;
+	margin-right: 10px;
+}

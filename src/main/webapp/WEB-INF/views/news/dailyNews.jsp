@@ -6,53 +6,68 @@
 <!-- 0. include부분 -->
 <script type="text/javascript">
 	$(function() {
-	/* 	$('#dnewsContentDiv').each(function(i, e) {
-			if ($('#newsImageChk').val()=='') {
-				$('#dnewsContentDiv').css('width', '500px');
+		$('.newsImageChk').each(function(idx, item) {
+			if ($(this).val() == '') {
+				$(this).siblings('.dnewsContentDiv').css('width', '95%');
 			} else {
-				$('#dnewsContentDiv').css('width', '350px');
+				$(this).siblings('.dnewsContentDiv').css('width', '73%');
 			}
-		}); */
+		});
 
 		$('.newsbtdiv').click(function() {
 			location.href = "newsWrite.do";
 		});
-		
+
 		$('header nav ul li:nth-child(9) a').addClass('active');
 
 	});
 </script>
 
 <style>
+.newsbigDiv{
+	width:1100px;
+	float:left;
+}
 
-.thirdnewsDiv{
-width:100%;
+.importdiv{
+	margin-left:25px;
+	width:400px;
+	float:left;
 }
-.newsmainDiv{
-width:33.3%;
-float:left;
-padding-left:0.8px; 
+
+.mainNews{
+	height: 400px;
 }
+
+.thirdnewsDiv {
+	width: 100%;
+}
+
+.newsmainDiv {
+	width: 33%;
+	height: 150px;
+	float: left;
+	box-shadow: 0 4px 4px #b8b8b8;
+	margin-left: 5px;
+}
+
 .newsbtdiv {
 	text-align: right;
 }
 
-#dnewstitle {
+.dnewstitle {
 	color: #069;
 	font-weight: bold;
 }
 
-
-#dnewsContentDiv {
-width:100%;
+.dnewsContentDiv {
 	float: right;
-	padding-left: 0.8;
 }
 
-#dnewsImageDiv {
+.dnewsImageDiv {
 	margin-top: 10px;
-	width: 30%;
-	height:100px;
+	width: 25%;
+	height: 100px;
 	float: left;
 }
 
@@ -60,110 +75,115 @@ width:100%;
 	line-height: 200%;
 }
 
-.comcount{
-
+.comcount {
 	float: right;
 }
 
-.nregdate{
-color: blue;
+.nregdate {
+	color: blue;
 	float: left;
 }
 
-
-
-
-img {vertical-align: middle;}
+img {
+	vertical-align: middle;
+}
 
 /* Slideshow container */
 .slideshow-container {
-  max-width: 1000px;
-  position: relative;
-  margin: auto;
+ 	position: relative;
 }
 
 /* Next & previous buttons */
 .prev, .next {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  width: auto;
-  padding: 16px;
-  margin-top: -22px;
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  transition: 0.6s ease;
-  border-radius: 0 3px 3px 0;
+	cursor: pointer;
+	position: absolute;
+	top: 50%;
+	width: auto;
+	padding: 16px;
+	margin-top: -22px;
+	color: white;
+	font-weight: bold;
+	font-size: 18px;
+	transition: 0.6s ease;
+	border-radius: 0 3px 3px 0;
 }
 
 /* Position the "next button" to the right */
 .next {
-  right: 0;
-  border-radius: 3px 0 0 3px;
+	right: 0;
+	border-radius: 3px 0 0 3px;
 }
 
 /* On hover, add a black background color with a little bit see-through */
 .prev:hover, .next:hover {
-  background-color: rgba(0,0,0,0.8);
+	background-color: rgba(0, 0, 0, 0.8);
 }
 
 /* Caption text */
 .text {
-  color: #f2f2f2;
-  font-size: 2em;
-  padding: 8px 12px;
-  position: absolute;
-  bottom: 8px;
-  width: 100%;
-  text-align: center;
-  background: black;
-  opacity: 0.8;
+	color: #f2f2f2;
+	font-size: 2em;
+	padding: 8px 12px;
+	position: absolute;
+	bottom: 8px;
+	width: 100%;
+	text-align: center;
+	background: black;
+	opacity: 0.8;
 }
 
 /* Number text (1/3 etc) */
 .numbertext {
-  color: #f2f2f2;
-  font-size: 12px;
-  padding: 8px 12px;
-  position: absolute;
-  top: 0;
+	color: #f2f2f2;
+	font-size: 12px;
+	padding: 8px 12px;
+	position: absolute;
+	top: 0;
 }
 
 /* The dots/bullets/indicators */
 .dot {
-  cursor: pointer;
-  height: 15px;
-  width: 15px;
-  margin: 0 2px;
-  background-color: #bbb;
-  border-radius: 50%;
-  display: inline-block;
-  transition: background-color 0.6s ease;
+	cursor: pointer;
+	height: 15px;
+	width: 15px;
+	margin: 0 2px;
+	background-color: #bbb;
+	border-radius: 50%;
+	display: inline-block;
+	transition: background-color 0.6s ease;
 }
 
 .activity, .dot:hover {
-  background-color: #717171;
+	background-color: #717171;
 }
 
 /* Fading animation */
 .fade {
-  -webkit-animation-name: fade;
-  -webkit-animation-duration: 1.5s;
-  animation-name: fade;
-  animation-duration: 1.5s;
+	-webkit-animation-name: fade;
+	-webkit-animation-duration: 1.5s;
+	animation-name: fade;
+	animation-duration: 1.5s;
 }
 
-@-webkit-keyframes fade {
-  from {opacity: .4} 
-  to {opacity: 1}
+@
+-webkit-keyframes fade {
+	from {opacity: .4
 }
 
-@keyframes fade {
-  from {opacity: .4} 
-  to {opacity: 1}
+to {
+	opacity: 1
 }
 
+}
+@
+keyframes fade {
+	from {opacity: .4
+}
+
+to {
+	opacity: 1
+}
+}
 </style>
 <nav>
 	<ul>
@@ -193,10 +213,9 @@ img {vertical-align: middle;}
 <article id="bodysection">
 	<!-- 3. 내용 -->
 
-
 	<div class="testText" style="visibility: hidden;"></div>
 	<div class="w3-light-grey w3-padding-32 w3-center">
-		<h1 class="w3-jumbo">SIS News</h1>
+		<h1 class="w3-jumbo" style="font-style: oblique;">SIS News</h1> 
 	</div>
 	<div class="newsbtdiv">
 		<input type="button" value="뉴스등록">
@@ -204,58 +223,61 @@ img {vertical-align: middle;}
 
 
 	<!-- Slideshow container -->
-	<div id="mainNews" style="width:900px;height:400px;">
-	<div class="slideshow-container">
-		<c:if test="${!empty list}">
-			<c:forEach var="vo" items="${list}">
-			<c:set var="i" ></c:set>
-				<c:if test="${vo.newsMain=='Y'}">
-					<!-- Full-width images with number and caption text -->
-					<div class="mySlides fade">
-					<div class="numbertext"> 
-						</div>
-						<img
-							src="<c:url value='/news_images/${vo.newsImage }'/>"
-							style="width: 100%; height: 300px;">
-							
-							<c:if test="${fn:length(vo.newsTitle)>30 }">
-						<div class="text">
-							<a
-								href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
-								${fn:substring(vo.newsTitle,0,30) }...</a>
-						</div>
-					</c:if>
-					<c:if test="${fn:length(vo.newsTitle)<=30}">
-							<div class="text">
-							<a
-								href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
-								${vo.newsTitle}</a>
-						</div>
-					</c:if>
-					</div>
-					
-				</c:if>
-			</c:forEach>
-		</c:if>
-
-
-
-		<!-- Next and previous buttons -->
-		<a class="prev" onclick="plusSlides(-1)">&#10094;</a> <a class="next"
-			onclick="plusSlides(1)">&#10095;</a>
-	</div>
-	<br>
-
-	<!-- The dots/circles -->
-	<div style="text-align: center">
-		<span class="dot activity" onclick="currentSlide(1)"></span>
-		<span class="dot" onclick="currentSlide(2)"></span> 
-		<span class="dot" onclick="currentSlide(3)"></span>
-		<span class="dot" onclick="currentSlide(5)"></span>
-		<span class="dot" onclick="currentSlide(4)"></span>
-	</div>
-</div>
+	<div class="newsbigDiv">
+		<div id="mainNews">
+			<div class="slideshow-container">
+				<c:if test="${!empty list}">
+					<c:forEach var="vo" items="${list}">
+						<c:set var="i"></c:set>
+						<c:if test="${vo.newsMain=='Y'}">
+							<!-- Full-width images with number and caption text -->
+							<div class="mySlides fade">
+								<div class="numbertext"></div>
+								<img src="<c:url value='/news_images/${vo.newsImage }'/>"
+									style="width: 100%; height: 500px;"> 
 	
+								<c:if test="${fn:length(vo.newsTitle)>30 }">
+									<div class="text">
+										<a
+											href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
+											${fn:substring(vo.newsTitle,0,30) }...</a>
+									</div>
+								</c:if>
+								<c:if test="${fn:length(vo.newsTitle)<=30}">
+									<div class="text">
+										<a
+											href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
+											${vo.newsTitle}</a>
+									</div>
+								</c:if>
+							</div>
+	
+						</c:if>
+					</c:forEach>
+				</c:if>
+	
+	
+	
+			<!-- Next and previous buttons -->
+			<a class="prev" onclick="plusSlides(-1)">&#10094;</a> <a class="next"
+				onclick="plusSlides(1)">&#10095;</a>
+		</div>
+		<br>
+
+		<!-- The dots/circles -->
+		<div style="text-align: center">
+			<span class="dot activity" onclick="currentSlide(1)"></span>
+			 <span	class="dot" onclick="currentSlide(2)"></span>
+			  <span class="dot"	onclick="currentSlide(3)"> </span>
+			  <span class="dot"onclick="currentSlide(4)"> </span> 
+			<span class="dot"onclick="currentSlide(5)"></span> 
+		</div>
+	</div>
+ </div>
+	<div class="importdiv">
+		<c:import url="/news/topDailynews.do"></c:import>
+	</div>
+	<div class="clr"></div>
 	<c:if test="${empty list }">
 		<img src="<c:url value='/resources/images/error.png'/>" alt="에러이미지"
 			id="errorimg">
@@ -267,45 +289,77 @@ img {vertical-align: middle;}
 			<c:forEach var="vo" items="${list}">
 				<c:if test="${vo.newsMain=='N'}">
 					<div class="newsmainDiv">
-						<input type="hidden" id="newsImageChk" value=${vo.newsImage }>
-					<%-- 	<c:if test="${!empty vo.newsImage }">
-							<div id="dnewsImageDiv">
+						<input type="hidden" class="newsImageChk" value=${vo.newsImage }>
+						<c:if test="${!empty vo.newsImage }">
+							<div class="dnewsImageDiv">
 								<img src="<c:url value='/news_images/${vo.newsImage }'/>"
-									style="width: 150px; height: 150px;">
+									style="width: 100%; height: 130px;">
 							</div>
 						</c:if>
 						<c:if test="${empty vo.newsImage }">
-						</c:if> --%>
-						<div id="dnewsContentDiv">
-							<c:if test="${fn:length(vo.newsTitle)>25 }">
-								<h4 id="dnewstitle">
-									<a
-										href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
-										${fn:substring(vo.newsTitle,0,25) }...</a>
-								</h4>
-							</c:if>
-							<c:if test="${fn:length(vo.newsTitle)<=25}">
-								<h4 id="dnewstitle">
-									<a
-										href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
-										${vo.newsTitle}</a>
-								</h4>
-							</c:if>
 
-							<c:if test="${fn:length(vo.newsContent)>100 }">
-								<div>${fn:substring(vo.newsContent,0,100) }...</div>
+						</c:if>
+						<div class="dnewsContentDiv">
+							<c:if test="${empty vo.newsImage }">
+								<c:if test="${fn:length(vo.newsTitle)>23 }">
+									<h4 class="dnewstitle">
+										<a
+											href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
+											${fn:substring(vo.newsTitle,0,25) }...</a>
+									</h4>
+								</c:if>
+								<c:if test="${fn:length(vo.newsTitle)<=25}">
+									<h4 class="dnewstitle">
+										<a
+											href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
+											${vo.newsTitle}</a>
+									</h4>
+								</c:if>
+
+								<c:if test="${fn:length(vo.newsContent)>90 }">
+									<div>${fn:substring(vo.newsContent,0,90) }...</div>
+								</c:if>
+								<c:if test="${fn:length(vo.newsContent)<=90}">
+									<div>${vo.newsContent}</div>
+								</c:if>
 							</c:if>
-							<c:if test="${fn:length(vo.newsContent)<=100}">
-								<div>${vo.newsContent}</div>
+							<c:if test="${!empty vo.newsImage }">
+								<c:if test="${fn:length(vo.newsTitle)>23 }">
+									<h4 class="dnewstitle">
+										<a
+											href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
+											${fn:substring(vo.newsTitle,0,23) }...</a>
+									</h4>
+								</c:if>
+								<c:if test="${fn:length(vo.newsTitle)<=23}">
+									<h4 class="dnewstitle">
+										<a
+											href="<c:url value='/news/newsDetail.do?newsNo=${vo.newsNo }'/>">
+											${vo.newsTitle}</a>
+									</h4>
+								</c:if>
+
+								<c:if test="${fn:length(vo.newsContent)>65 }">
+									<div>${fn:substring(vo.newsContent,0,65) }...</div>
+								</c:if>
+								<c:if test="${fn:length(vo.newsContent)<=65}">
+									<div>${vo.newsContent}</div>
+								</c:if>
+
 							</c:if>
+							<br>
 							<div class="newsReg">
-								<div class="nregdate">작성일 :<fmt:formatDate value="${vo.newsRegdate }"
-									pattern="yyyy-MM-dd hh:mm" /></div>
-									<div class="comcount">댓글갯수:${vo.comCount }</div>
+								<div class="nregdate">
+									작성일 :
+									<fmt:formatDate value="${vo.newsRegdate }"
+										pattern="yyyy-MM-dd hh:mm" />
+								</div>
+								<div class="comcount">
+									<i class="fa fa-commenting-o" aria-hidden="true">&nbsp;${vo.comCount }</i>
+									<i class="fa fa-thumbs-o-up" aria-hidden="true">&nbsp;${vo.newsLike }</i>
+								</div>
 							</div>
-
 						</div>
-						
 					</div>
 				</c:if>
 			</c:forEach>
@@ -316,7 +370,6 @@ img {vertical-align: middle;}
 </article>
 <!-- 4. 상단 네비 색먹이기 끝-->
 <script type="text/javascript">
-
 	var slideIndex = 1;
 	showSlides(slideIndex);
 
@@ -346,7 +399,6 @@ img {vertical-align: middle;}
 		}
 		slides[slideIndex - 1].style.display = "block";
 		dots[slideIndex - 1].className += " activity";
-		setTimeout(showSlides, 2000); // Change image every 2 seconds
 	}
 </script>
 <!-- 0. include부분 끝-->

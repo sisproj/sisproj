@@ -10,6 +10,7 @@
 	box-sizing: border-box;
 	padding: 20px;
 	overflow: auto;
+	margin-top: 10px;
 }
 
 #searchSec{
@@ -98,6 +99,7 @@
 	box-shadow: 1px 1px 3px #555;
 	padding : 5px;
 	box-sizing: border-box;
+	border:1px solid #aaa;
 	display:none;
 	z-index: 9999;
 }
