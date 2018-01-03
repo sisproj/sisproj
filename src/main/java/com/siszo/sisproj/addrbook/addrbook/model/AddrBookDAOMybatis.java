@@ -62,4 +62,5 @@ public class AddrBookDAOMybatis extends SqlSessionDaoSupport implements AddrBook
 	public int updateAddrBook(AddrBookVO vo) {
 		return getSqlSession().update(namespace+".updateAddrBook", vo);
 	}
+
 }

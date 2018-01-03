@@ -91,7 +91,20 @@ public class AddrBookController {
 		logger.info("연락처 등록 하기, 파라미터 vo={}, empNo={}",vo, empNo);
 		
 		vo.setEmpNo(empNo);
-		int cnt=addrBookService.insertAddrBook(vo);
+		
+		int cnt=0;
+		int count=groupService.countGroup(empNo);
+		if(count>0) {
+			cnt=addrBookService.insertAddrBook(vo);			
+		}else {
+			AddrGroupVO groupVo=new AddrGroupVO();
+			groupVo.setEmpNo(empNo);
+			int result=groupService.insertGroupDefault(groupVo);
+			if(result>0) {
+				vo.setGroupNo(groupVo.getGroupNo());
+				cnt=addrBookService.insertAddrBook(vo);
+			}
+		}		
 		
 		String msg="",url="/addrBook/addrBookWrite.do";
 		if(cnt>0) {

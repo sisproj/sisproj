@@ -13,4 +13,24 @@ public class AddrGroupDAOMybatis extends SqlSessionDaoSupport implements AddrGro
 	public List<AddrGroupVO> selectGroupName(int empNo) {
 		return getSqlSession().selectList(namespace+".selectGroupName", empNo);
 	}
+
+	@Override
+	public int insertGroup(AddrGroupVO groupVo) {
+		return getSqlSession().insert(namespace+".insertGroup", groupVo);
+	}
+
+	@Override
+	public int insertGroupDefault(AddrGroupVO groupVo) {
+		return getSqlSession().insert(namespace+".insertGroupDefault", groupVo);
+	}
+
+	@Override
+	public int deleteGroup(int groupNo) {
+		return getSqlSession().delete(namespace+".deleteGroup", groupNo);
+	}
+
+	@Override
+	public int countGroup(int empNo) {
+		return getSqlSession().selectOne(namespace+".countGroup", empNo);
+	}
 }
