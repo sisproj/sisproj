@@ -57,6 +57,11 @@
 				$('#notiContent').focus();
 				return false;
 			}
+			if($('#notiCategory').val()=='0'){
+				alert("카테고리를 선택하세요");
+				$('#notiCategory').focus();
+				return false;
+			}
 			return true;
 		});
 	});
@@ -101,7 +106,16 @@
 									style="height: 430px;"></textarea></td>
 						</tr>
 						<tr>
-							<td><input type="file" id="upfile" name="upfile" />
+							<td style="text-align: left;">
+							<select name="notiCategory" id="notiCategory">
+								<option value="0">선택하세요</option>
+								<option value="[공지]">[공지]</option>
+								<option value="[채용]">[채용]</option>
+								<option value="[행사]">[행사]</option>
+								<option value="[프로젝트]">[프로젝트]</option>
+							</select>
+							<input type="file" id="upfile" name="upfile" 
+								style="display:inline-block; float: right;" />
 						</tr>
 					</tbody>
 				</table>

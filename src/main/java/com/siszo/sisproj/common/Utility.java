@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.siszo.sisproj.bookmark.model.BookmarkService;
 
 public class Utility {
+	public static final int NEWSRECORD_COUNT_PER_PAGE = 9;
     public static final int RECORD_COUNT_PER_PAGE = 10;  //페이지당 보여질 레코드수
     public static final int BLOCK_SIZE = 10;                //블럭당 보여질 페이지 수
 
