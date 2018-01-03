@@ -54,7 +54,7 @@
             <div class="w3-rest">
                 <div class="w3-bar">
                     <%--<input class="w3-bar-item w3-border w3-left message-input" style="width: 80%" type="text">--%>
-                    <input type="text" id="tokenField" value="${messageVO.empName}(${messageVO.sendempNo})"
+                    <input type="text" id="tokenField" value="${messageVO.empName}"
                            readonly="readonly">
                 </div>
             </div>
@@ -76,8 +76,6 @@
         <div class="w3-row w3-section" style="height: 35px">
             <%--<input type="button" class="w3-button w3-blue w3-left w3-small" id="submitButton" value="보내기">--%>
             <div class="w3-right">
-                <button type="button" class="w3-button w3-blue w3-small" id="replyButton">답장</button>
-                &nbsp;
                 <button type="button" class="w3-button w3-blue w3-small" onclick="window.close()">닫기</button>
             </div>
         </div>

@@ -27,8 +27,8 @@
 </style>
 <nav>
     <div style="width: 298px; text-align: center">
-        <button class="message-button w3-btn" onclick="window.open('<c:url
-                value="/message/write.do"/>', 'me   ssageWindow', 'width=540,height=500,left=300,top=300,toolbar=no,scrollbars=no,resizable=no')">
+        <button class="message-button w3-btn"
+                onclick="window.open('<c:url value="/message/write.do"/>', 'messageWindow', 'width=540,height=500,left=300,top=300,toolbar=no,scrollbars=no,resizable=no')">
             쪽지 작성
         </button>
     </div>

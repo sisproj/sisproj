@@ -117,9 +117,6 @@
                     <td style="width: 65%">
                         <div onclick="window.open('<c:url
                                 value="/message/sendDetail.do?msgNo=${msgVO.msgNo}"/>', 'messageWindow', 'width=540,height=500,left=300,top=300,toolbar=no,scrollbars=no,resizable=no');">
-                            <c:if test="${msgVO.msgImpflag eq 'Y'}">
-                                <span class="w3-border w3-round w3-tiny w3-light-gray">중요 쪽지</span>
-                            </c:if>
                             <a href="#" onclick="messageDetailOpen('msg-${msgVO.recNo}')">${msgVO.msgTitle}</a>
                         </div>
 
