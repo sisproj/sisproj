@@ -175,7 +175,6 @@
 	}
 	#allList {
 		width: 90%;
-		max-width:1100px;
 		margin: 0 auto;
 		padding : 10px;
 		box-sizing:border-box;
