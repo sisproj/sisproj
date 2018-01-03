@@ -79,7 +79,7 @@
         <table class="w3-table w3-bordered" style="width: 90%; margin-left: 5%">
             <thead>
             <tr class=" w3-border-bottom">
-                <th>
+                <th style="width: 68px">
                     <div class="w3-button w3-light-grey">
                         <input type="checkbox" id="checkAllMessage">
                     </div>

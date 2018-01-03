@@ -135,7 +135,6 @@
         .tokenfield {
             width: 80%;
             float: left;
-            border: 1px solid #ccc !important;
             overflow-y: auto;
             max-height: 34px;
         }

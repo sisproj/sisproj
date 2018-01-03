@@ -155,7 +155,21 @@
 		delete from news_com where com_no=#{comNo} and news_no=#{newsNo}
 	</delete>	
 	
+	<select id="newsAllselect" parameterType="NewsSearchVO" resultType="NewsVO">
 	
+			select * from (
+		    select rownum as RNUM, blist.*
+		    from(
+		        select * from news
+		        order by news_regdate desc	        
+		   	 ) blist
+		) 
+		<![CDATA[
+		where RNUM > #{firstRecordIndex} 
+		and RNUM<=#{firstRecordIndex}+ #{recordCountPerPage} ]]>
+	
+	
+	</select>
 </mapper>
 
 

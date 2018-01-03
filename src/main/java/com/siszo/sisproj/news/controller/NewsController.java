@@ -27,6 +27,7 @@ import com.siszo.sisproj.message.model.MessageSearchVO;
 import com.siszo.sisproj.news.model.NewsComVO;
 import com.siszo.sisproj.news.model.NewsDAO;
 import com.siszo.sisproj.news.model.NewsLikeVO;
+import com.siszo.sisproj.news.model.NewsListVO;
 import com.siszo.sisproj.news.model.NewsSearchVO;
 import com.siszo.sisproj.news.model.NewsService;
 import com.siszo.sisproj.news.model.NewsVO;
@@ -346,8 +347,7 @@ public class NewsController {
 		newsSearchVO.setRecordCountPerPage(Utility.NEWSRECORD_COUNT_PER_PAGE);
 		newsSearchVO.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 
-		List<NewsVO> mainlist = newsService.dailyNewsMainList();
-		List<NewsVO> list1 = newsService.dailyNewsList(newsSearchVO);
+		List<NewsVO> list1 = newsService.newsAllselect(newsSearchVO);
 		List<NewsVO> list = new ArrayList<NewsVO>();
 
 		for (int i = 0; i < list1.size(); i++) {
@@ -359,15 +359,57 @@ public class NewsController {
 			vo.setComCount(comcount);
 
 			list.add(vo);
-			mainlist.add(vo);
 		}
 		int totalRecord=newsService.newstotalrecord();
 		pagingInfo.setTotalRecord(totalRecord);
 
 		logger.info("데일리뉴스화면 출력 listsize={}", list.size());
 		model.addAttribute("list", list);
-		model.addAttribute("mainlist", mainlist);
 		model.addAttribute("pagingInfo", pagingInfo);
 	}
-}
+	
+	
+	@RequestMapping("/deleteMulti.do")
+	public String deleteMulti(@ModelAttribute NewsListVO newsListVo,HttpServletRequest request, Model model) {
 
+		logger.info("일괄 삭제처리 파라미터newsListVo={}",newsListVo);
+
+		List<NewsVO> list = newsListVo.getNewsItem();
+
+		int cnt = newsService.deleteMulti(list);
+		logger.info("선택한 항목 삭제 결과, cnt={}",cnt);
+
+		//이미지 파일 삭제
+		String msg="",url="/news/dailyNews.do";
+		if(cnt>0) {
+			for(int i=0;i<list.size();i++) {
+				NewsVO vo=list.get(i);
+/*				logger.info("i={}, newsNo={}",i,vo.getnewsNo());
+				logger.info("imageURL={}",vo.getImageURL());
+*/		
+				int newsNo=vo.getNewsNo();
+				//체크한 항목만 파일 삭제
+				if(newsNo!=0) {
+					String pathname=FileUtil.getUploadPath(request, FileUploadUtil.NEWS_IMAGES);
+					File file = new File(pathname,vo.getNewsImage());
+					if(file.exists()) {
+						boolean bool=file.delete();
+						logger.info("파일 삭제 여부:{}",bool);
+					}
+				}
+				msg="삭제되었습니다.";	
+
+			}//for
+		}else {
+			msg="선택한 항목 삭제 실패";
+		}
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+			
+		return "common/message";
+
+	}
+	
+	
+}

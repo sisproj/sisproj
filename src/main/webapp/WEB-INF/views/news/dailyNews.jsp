@@ -288,6 +288,7 @@ to {
 	<br>
 
 	<!-- Slideshow container -->
+	<div style="min-width: 1600px;">   
 	<div class="newsbigDiv">
 		<div id="mainNews">
 			<div class="slideshow-container">
@@ -461,6 +462,7 @@ to {
 			</div>
 		</div>
 	</c:if>
+	</div>
 	<!-- 반복끝 -->
 	<!-- 3. 내용 끝 -->
 </article>

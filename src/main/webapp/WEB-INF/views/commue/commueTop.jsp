@@ -4,12 +4,44 @@
 <!-- 0. include부분 -->
 <link rel="stylesheet" href="<c:url value="/resources/css/commueStyle.css"/>">
 <script type="text/javascript">
-	$(function () {
-		$('#DeSe').click(function () {
-			window.open('<c:url value='/employee/employeeDetailSerach.do'/>','chk',
-				'left=0,top=0,width=500,height=250,locations=yes,resizable=yes');
-		});
+	$(function () {	
+		$.setToday();
+		
+		$.applyDatePicker('#startDay');
+		$.applyDatePicker('#endDay');
 	});
+	$.settingTerm=function(type,term){
+		
+		var today = new Date();
+		var month = today.split('-');	
+		if(type=="d"){
+			endDate.setDate(endDate.getDate()-term);
+		}else if(type=="m"){
+			endDate.setMonth(endDate.getMonth()-term);
+		}
+		
+		$('#startDay').val($.convertDate(endDate));
+	}
+	
+	$.setToday=function(){		
+			var today = new Date();
+			var str = $.convertDate(today); 
+			
+			$('#spDate').html(str);
+	}	
+	
+	$.convertDate=function(today){
+		return today.getFullYear()+" "+(today.getMonth()+1)+"월"
+	}
+	
+	$.applyDatePicker=function(id){
+		$(id).datepicker({			
+			dateFormat:'yy-mm-dd',
+			changeYear:true,
+			dayNamesMin:['일','월','화','수','목','금','토'],
+			monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
+		});
+	}
 </script>
         <nav>
             <ul>
@@ -32,22 +64,18 @@
     <article id="bodysection">
         <!-- 3. 내용 -->
 <div id="dimyPage">
-		 <form id="frmCom" name="frmCom" action="">
+		 <form id="frmCom" name="frmCom" method="post" action="<c:url value='/commue/commuePage.do' />">
 			<div id="diBtCa">
-				<div id="diCal">
-				<!-- 년/월 뒤로가기 앞으로가기 
-				년/월을 선택시 날짜나오게 하는 건 생각중...-->
-				<a href="#"><i class="fa fa-angle-left" aria-hidden="true" style="size:1.2em;"></i></a>&nbsp
-				<span>2017 1월</span>
-				&nbsp<a href="#"><i class="fa fa-angle-right" aria-hidden="true" style="size: 1.2em;"></i></a>
+				<div id="diCal">	
+					<span id="spDate"></span>
 				</div>
-				<div id="diSel">
-					<input type="button" id="DeSe" name="DeSe" value="상세검색">
-					<input type="button" id="btExel" name="btExel" value="엑셀다운로드">
-					<select style="float: right;">
-						<option value="10개">10개</option>
-						<option value="20개">20개</option>
-					</select>
+				<div id="diSearch" style="margin-left: 10px;">
+						<input type="text" name="startDay" id="startDay" 
+							value="${dateSearchVO.startDay }" placeholder="누르시면 달력이나옵니다."> 
+						~ 
+						<input type="text" name="endDay" id="endDay" 
+							value="${dateSearchVO.endDay }" placeholder="누르시면 달력이나옵니다.">
+						<input type="button" id="btSearch" value="검색">
 				</div>
 			</div>
 		</form>
