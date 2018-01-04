@@ -273,7 +273,7 @@
     		background: #fff;
     		padding: 5px;
     		width: 77%;
-    		margin: 20px, 0, 0, 0;
+    		margin: 0 auto;
     	}
     	#addressList .myAddress{
     		width:50px; 
@@ -299,9 +299,6 @@
     	}
     	#addrSearch{
     		color: rgb(195, 195, 195);
-    	}
-    	#bodysection div{
-    		margin: 0 auto;
     	}
     	.divAddrBody{
     		height: 570px;
@@ -362,12 +359,19 @@
 		left: 40%;
 		visibility: hidden;
 	}
+	#divWriteSection h3{
+		padding:15px;
+	}
+	
 	#divInsertGroup{
 		width: 440px;
 		border: 1px solid rgb(195, 195, 195);
 		position: fixed;
 		left: 40%;
 		visibility: hidden;
+	}
+	.divInsertGroupHeader h3 {
+		padding:15px;
 	}
 	.divWriteBody, .divUpdateBody{
 		width: 530px;
@@ -376,12 +380,12 @@
 	}
 	.divInsertGroupList{
 		width: 400px;
-		padding: 10px;
+		margin: 0 auto;
 	}
 	.divInsertNewGroup{
 		width: 400px;
-		height : 50px;
-		padding: 10px;
+		height:60px;
+		margin: 0 auto;
 	}
 	.divWriteBody label, .divUpdateBody label{
 		width: 20%;
@@ -424,6 +428,9 @@
 	.center{
 		text-align: center;
 		padding: 10px;
+	}
+	.divWriteBody form div{
+		margin-bottom: 10px;
 	}
     </style>
 <!-- 0. include부분 -->
