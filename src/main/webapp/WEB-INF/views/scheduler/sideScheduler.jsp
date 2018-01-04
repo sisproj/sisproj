@@ -148,7 +148,7 @@
 		<input type="hidden" id="pschText" name="pschText"><!-- 제목 -->
 	</form>
 	<div id="scheduler_here" class="dhx_cal_container"
-		style='width: 500px; height: 450px;'>
+		style='width: 100%; height: 500px;'>
 		<div class="dhx_cal_navline">
 			<div class="dhx_cal_date"></div>
 			<div class="dhx_cal_prev_button">&nbsp;</div>
