@@ -49,6 +49,25 @@
         ]]>
     </select>
 
+    <select id="selectRecencyRecMsg" parameterType="int" resultType="MessageVO">
+        SELECT *
+        FROM
+            (
+                SELECT
+                    rownum AS RNUM,
+                    mlist.*
+                FROM (
+                         SELECT m.*
+                         FROM MSGRECVIEW m
+                         WHERE EMP_NO = #{empNo} AND MSG_DELFLAG = 'N'
+                         ORDER BY MSG_REGDATE DESC
+                     ) mlist
+            )
+        <![CDATA[
+        WHERE RNUM <= 5
+        ]]>
+    </select>
+
     <select id="selectRecycleMsgByEmpNo" parameterType="MessageSearchVO" resultType="MessageVO">
         SELECT *
         FROM
@@ -70,7 +89,60 @@
         ]]>
     </select>
 
+    <select id="selectRecycleSendMsgByEmpNo" parameterType="MessageSearchVO" resultType="MessageVO">
+        SELECT *
+        FROM(
+            SELECT
+                ROWNUM AS RNUM,
+                mlist.*
+            FROM(
+                SELECT
+                    MSG_NO,
+                    LISTAGG(EMP_NAME, ',') WITHIN GROUP (ORDER BY EMP_NAME) AS EMP_NAME,
+                    MIN(MSG_TITLE)       AS MSG_TITLE,
+                    MIN(MSG_REGDATE)     AS MSG_REGDATE,
+                    MIN(SEND_DELFLAG)     AS SEND_DELFLAG,
+                    count(MSG_NO)        AS CNT
+                FROM MSGSENDVIEW
+                WHERE SENDEMP_NO = #{empNo} AND SEND_DELFLAG = 'R'
+                <include refid="messageSearchWhere"></include>
+                GROUP BY MSG_NO
+                ORDER BY MSG_NO DESC
+            ) mlist
+        )
+        <![CDATA[
+        WHERE RNUM > #{firstRecordIndex}
+              AND RNUM <= #{firstRecordIndex} + #{recordCountPerPage}
+        ]]>
+    </select>
 
+    <select id="selectRecencySendMsg" parameterType="int" resultType="MessageVO">
+
+        SELECT *
+        FROM (
+            SELECT
+                ROWNUM AS RNUM,
+                mlist.*
+            FROM (
+                     SELECT
+                         MSG_NO,
+                         LISTAGG(EMP_NAME, ',')
+                         WITHIN GROUP (
+                             ORDER BY EMP_NAME) AS EMP_NAME,
+                         MIN(MSG_TITLE)       AS MSG_TITLE,
+                         MIN(MSG_REGDATE)     AS MSG_REGDATE,
+                         MIN(SEND_DELFLAG)    AS SEND_DELFLAG,
+                         count(MSG_NO)        AS CNT
+                     FROM MSGSENDVIEW
+                     WHERE SENDEMP_NO = #{empNo} AND SEND_DELFLAG = 'N'
+                     GROUP BY MSG_NO
+                     ORDER BY MSG_NO DESC
+                 ) mlist
+        )
+        <![CDATA[
+        WHERE RNUM <= 5
+        ]]>
+    </select>
 
     <select id="selectSendMsgByEmpNo" parameterType="MessageSearchVO" resultType="MessageVO">
         SELECT *
@@ -145,6 +217,11 @@
         <include refid="messageSearchWhere"></include>
     </select>
 
+    <select id="selectUnreadCount" parameterType="MessageSearchVO" resultType="int">
+        SELECT COUNT(*) FROM MSGRECVIEW
+        WHERE EMP_NO = #{empNo} and MSG_DELFLAG = 'N' and MSG_READFLAG = 'N'
+    </select>
+
     <select id="selectTotalMsgRecImpCount" parameterType="MessageSearchVO" resultType="int">
         SELECT COUNT(*) FROM MSGRECVIEW
         WHERE EMP_NO = #{empNo} and MSG_IMPFLAG = 'Y'and MSG_DELFLAG = 'N'
@@ -167,6 +244,25 @@
         WHERE EMP_NO = #{empNo} and MSG_DELFLAG = 'N'
         <include refid="messageSearchWhere"></include>
     </select>
+
+    <select id="selectTotalMsgRecycleSendCount" parameterType="MessageSearchVO" resultType="int">
+        SELECT count(*)
+        FROM (
+            SELECT
+                MSG_NO,
+                MIN(SENDEMP_NO)  AS SENDEMP_NO,
+                MIN(EMP_NAME)    AS EMP_NAME,
+                MIN(EMP_NO)      AS EMP_NO,
+                MIN(SEND_DELFLAG) AS SEND_DELFLAG,
+                count(MSG_NO)    AS CNT
+            FROM MSGSENDVIEW
+            GROUP BY MSG_NO
+            ORDER BY MSG_NO DESC
+        )
+        WHERE SENDEMP_NO = #{empNo} AND SEND_DELFLAG = 'R'
+        <include refid="messageSearchWhere"></include>
+    </select>
+
     <select id="selectTotalMsgRecycleCount" parameterType="MessageSearchVO" resultType="int">
         SELECT COUNT(*) FROM MSGRECVIEW
         WHERE EMP_NO = #{empNo} and MSG_DELFLAG = 'R'
@@ -191,10 +287,23 @@
         SET MSG_DELFLAG = 'R'
         WHERE REC_NO = #{recNo}
     </update>
+
+    <update id="updateRealDelMsg" parameterType="int">
+        UPDATE MESSAGE_REC
+        SET MSG_DELFLAG = 'Y'
+        WHERE REC_NO = #{recNo}
+    </update>
+
+    <update id="updateRealDelSendMsg" parameterType="int">
+        UPDATE MESSAGE
+        SET SEND_DELFLAG = 'Y'
+        WHERE MSG_NO = #{msgNo}
+    </update>
+
     <update id="updateSendDelMsg" parameterType="int">
         UPDATE MESSAGE
         SET SEND_DELFLAG = 'R'
-        WHERE MSG_NO = #{MSG_NO}
+        WHERE MSG_NO = #{msgNo}
     </update>
 
     <update id="delMsgUndo" parameterType="int">
