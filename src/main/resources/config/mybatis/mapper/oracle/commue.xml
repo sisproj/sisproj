@@ -37,13 +37,11 @@
 	<select id="selectInChk" parameterType="int" resultType="int">
 		select count(*) from cmtView
 		where to_char(cmt_in,'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')
-		and to_char(cmt_in,'yyyy-mm-dd') is null 
 		and emp_no=#{empNo}
 	</select>
 	<select id="selectOutChk" parameterType="int" resultType="int">
 		select count(*) from cmtView
 		where to_char(cmt_out,'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')
-		and to_char(cmt_out,'yyyy-mm-dd') is null 
 		and emp_no=#{empNo}
 	</select>
 </mapper>
