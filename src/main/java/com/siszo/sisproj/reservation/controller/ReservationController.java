@@ -1,5 +1,7 @@
 package com.siszo.sisproj.reservation.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -10,28 +12,41 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.siszo.sisproj.common.SchedulerUtility;
 import com.siszo.sisproj.common.PaginationInfo;
 import com.siszo.sisproj.common.Utility;
 import com.siszo.sisproj.reservation.model.ReservationSearchVO;
+
 import com.siszo.sisproj.employee.model.EmployeeVO;
 import com.siszo.sisproj.reservation.model.ReservationService;
 import com.siszo.sisproj.reservation.model.ReservationVO;
+import com.siszo.sisproj.resource.model.ResourceService;
+import com.siszo.sisproj.resource.model.ResourceVO;
 
 @Controller
 @RequestMapping("/resource")
 public class ReservationController {
 	private static final Logger logger=LoggerFactory.getLogger(ReservationController.class);
-	
+	private SchedulerUtility schUtil = new SchedulerUtility();
 	@Autowired
 	private ReservationService resService;
+	@Autowired
+	private ResourceService resourceService;
+	
 	
 	@RequestMapping("/resourceWrite.do")
 	public String reservationInsert(@ModelAttribute ReservationVO resVo, HttpSession session, Model model) {
 		EmployeeVO empVo =(EmployeeVO)session.getAttribute("empVo");
 		int empNo=empVo.getEmpNo();
+		int deptNo=empVo.getDeptNo();
 		resVo.setEmpNo(empNo);
+		resVo.setDeptNo(deptNo);
+		
+		
 		
 		logger.info("자원관리 입력작업 resVo={}",resVo);
+		resVo.setRvStart(schUtil.ChangeDate(resVo.getRvStart()));
+		resVo.setRvEnd(schUtil.ChangeDate(resVo.getRvEnd()));
 		int cnt=resService.insertReservation(resVo);
 		String msg="", url="";
 		if(cnt>0)
@@ -71,5 +86,14 @@ public class ReservationController {
 		
 		pagingInfo.setTotalRecord(totalRecord);
 
+	}
+	
+	@RequestMapping("/resource.do")
+	public void resourceMainView(Model model) {
+		List<ResourceVO>resourcelist =resourceService.resourceAllselect();
+		List<ReservationVO>reslist = resService.reservationNselect();
+		
+		model.addAttribute("resourcelist",resourcelist);
+		model.addAttribute("reslist",reslist);
 	}
 }

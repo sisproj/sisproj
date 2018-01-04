@@ -17,9 +17,13 @@
 	<selectKey resultType="int" keyProperty="rvNo" order="BEFORE">
 	select reser_seq.nextval from dual
 	</selectKey>
-		insert into reservation(rv_no,res_No,rv_start,rv_end,emp_no,rv_content)
-		values(#{rvNo},#{resNo},#{rvStart},#{rvEnd},#{empNo},#{rvContent})
+		insert into reservation(rv_no,res_No,rv_start,rv_end,emp_no,rv_content,dept_No)
+		values(#{rvNo},#{resNo},#{rvStart},#{rvEnd},#{empNo},#{rvContent},#{deptNo})
 	</insert>
+	
+	<select id="reservationNselect" resultType="ReservationVO">
+	select * from reservation where rv_confirm='Y'
+	</select>
 	
 	
 </mapper>

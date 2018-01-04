@@ -86,7 +86,7 @@
                         <input type="checkbox" id="checkAllMessage">
                     </div>
                 </th>
-                <th class="w3-text-white">
+                <th class="w3-text-white" style="width:120px;">
                     <button class="w3-button w3-small w3-light-grey" onclick="undoMsg()">
                         <i class="fa fa-undo" aria-hidden="true"></i>
                     </button>
@@ -95,6 +95,14 @@
                     </button>
                 </th>
                 <th colspan="2">
+                    <button class="w3-button w3-small w3-light-grey"
+                            disabled="disabled">
+                        <b>받은 쪽지</b>
+                    </button>
+                    <button class="w3-button w3-small w3-light-grey"
+                            onclick="location.href='<c:url value="/message/recycleBinSend.do"/>'">
+                        <b>보낸 쪽지</b>
+                    </button>
                     <div class="w3-right">
                         <form name="frmSearch" method="post" action="<c:url value='/message/recycleBin.do'/>"
                               id="frmSearch">
@@ -123,10 +131,18 @@
                 <c:if test="${msgVO.msgReadflag eq 'N'}">
                     <tr class="hoverable unReadMessage" id="msg-${msgVO.recNo}">
                 </c:if>
-                <td style="width: 5%; max-width: 68px" class="w3-center"><input type="checkbox" name="chk" value="${msgVO.recNo}">
+                <td style="width: 5%; max-width: 68px" class="w3-center">
+                    <input type="checkbox" name="chk" value="${msgVO.recNo}">
                 </td>
-                <td style="width: 20%">${msgVO.empName}</td>
-                <td style="width: 65%">
+                <td style="width: 120px; min-width: 120px">
+                    <c:if test="${fn:length(msgVO.empName)>7 }">
+                        ${fn:substring(msgVO.empName,0,7) }...
+                    </c:if>
+                    <c:if test="${fn:length(msgVO.empName)<=7 }">
+                        ${msgVO.empName}
+                    </c:if>
+                </td>
+                <td style="width: 80%">
                     <div onclick="window.open('<c:url
                             value="/message/detail.do?recNo=${msgVO.recNo}"/>', 'messageWindow', 'width=540,height=500,left=300,top=300,toolbar=no,scrollbars=no,resizable=no');">
                         <c:if test="${msgVO.msgImpflag eq 'Y'}">
@@ -160,7 +176,7 @@
 		<div id="pagingbtn">
 			<!-- 이전 블럭으로 이동 ◀ -->
 			<c:if test="${pagingInfo.firstPage>1 }">
-				<a id="prevbtn" href="#" onclick="pageFunc(${pageInfo.firstPage-1})"><i class="fa fa-chevron-left"></i></a>	
+				<a id="prevbtn" href="#" onclick="pageFunc(${pagingInfo.firstPage-1})"><i class="fa fa-chevron-left"></i></a>
 			</c:if>
 		
 			<!-- [1][2][3][4][5][6][7][8][9][10] -->

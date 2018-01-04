@@ -13,7 +13,16 @@ public class ReservationVO {
 	private Timestamp rvRegdate;
 	private String resCateg;
 	private String resName;
+	private int deptNo;
 	
+	
+	
+	public int getDeptNo() {
+		return deptNo;
+	}
+	public void setDeptNo(int deptNo) {
+		this.deptNo = deptNo;
+	}
 	public int getRvNo() {
 		return rvNo;
 	}
@@ -78,7 +87,7 @@ public class ReservationVO {
 	public String toString() {
 		return "ReservationVO [rvNo=" + rvNo + ", resNo=" + resNo + ", rvStart=" + rvStart + ", rvEnd=" + rvEnd
 				+ ", empNo=" + empNo + ", rvContent=" + rvContent + ", rvConfirm=" + rvConfirm + ", rvRegdate="
-				+ rvRegdate + ", resCateg=" + resCateg + ", resName=" + resName + "]";
+				+ rvRegdate + ", resCateg=" + resCateg + ", resName=" + resName + ", deptNo=" + deptNo + "]";
 	}
 
 
