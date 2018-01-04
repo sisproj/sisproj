@@ -43,7 +43,8 @@
 		(
 		    select rownum as RNUM, blist.*
 		    from(
-		        select n.*, e.emp_name 
+		        select n.*, e.emp_name, 
+		        	(sysdate-noti_regdate)*24 as newImgTerm 
 		        from notice n join emp e
 				on n.emp_no = e.emp_no
 		        <include refid="searchWhere"></include>
