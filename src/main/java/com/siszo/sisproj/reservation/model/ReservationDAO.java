@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface ReservationDAO {
 	public List<ReservationVO> selectReservationAll();
-
+	public int insertReservation(ReservationVO resVo);
 }

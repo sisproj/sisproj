@@ -108,6 +108,7 @@
 			
 			  scheduler.attachEvent("onBeforeLightbox", function(id) { //라이트박스 열었을때
 					var ev = scheduler.getEvent(id);
+			  		console.log(ev);
 					var pschNo = ev.pschid;
 					$('#pschNo').val(pschNo);
 					console.log(scheduler.map);

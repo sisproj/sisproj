@@ -72,7 +72,6 @@
 		scheduler.init('scheduler_here', new Date(), "week");
 
 		scheduler.attachEvent("onEventSave",function(id,ev,is_new,original){ //세이브버튼 클릭 시(신규등록)
-			 
 		    if (!ev.text) {
 		        alert("내용을 입력하세요");
 		        return false;
@@ -82,17 +81,18 @@
 		        return false;
 		    }
 		    else {
+		    	
 				 var start_date = ev.start_date; //시작날짜
 				 var end_date = ev.end_date; //끝날짜
 				 var text = ev.text; //내용
 				 var selection = ev.subject; //카테고리
-				 var rvNo=ev.rvid; //아이디
-				$('#rvNo').val(id);
+				 var rvNo=ev.id; //아이디
+				$('#rvNo').val(rvNo);
 		        $('#rvStart').val(start_date);
 		        $('#rvEnd').val(end_date);
 		        $('#rvContent').val(text);
-		        $('#rvCateg').val(selection);
-		  	 	$('#rvfrm').submit();
+		        $('#resNo').val(selection);
+		  	  	 $('#rvfrm').submit();
 			    return true; 
 		    } 
 		    
@@ -264,11 +264,10 @@ float:right;
 	<!-- 3. 내용 -->
 	
 	<form name="rvfrm" id="rvfrm" method="post" action="<c:url value='/resource/resourceWrite.do'/>">
-		<input type="hidden" id="rvStart" name="rvStart"> 
-		<input type="hidden" id="rvEnd" name="rvEnd">
-		<input type="hidden" id="rvCateg" name="rvCateg">
-		<input type="hidden" id="rvNo" name="rvNo">
-		<input type="hidden" id="rvContent" name="rvContent"><!-- 제목 -->
+		<input type="text" id="rvStart" name="rvStart"> 
+		<input type="text" id="rvEnd" name="rvEnd">
+		<input type="text" id="resNo" name="resNo">
+		<input type="text" id="rvContent" name="rvContent"><!-- 제목 -->
 	</form>
 	<div id="scheduler_here" class="dhx_cal_container"
 		style='width: 700px; height: 800px;'>    
