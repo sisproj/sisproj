@@ -91,4 +91,9 @@ public class MessageServiceImpl implements MessageService {
         return messageDAO.selectSendMsgByMsgNo(msgNo);
     }
 
+    @Override
+    public int updateSendDelMsg(int msgNo) {
+        return messageDAO.updateSendDelMsg(msgNo);
+    }
+
 }

@@ -125,10 +125,12 @@
 					var dept=res.deptName+"팀 "+res.posName;
 					var info=res.empName+" ("+res.empNo+")";
 					$('#divEmpImg img').prop('alt', res.empName);
-					$('#divEmpImg img').prop('src', "<c:url value='/emp_images/"+res.empImg+"'/>");
 					if(res.empImg==null){
 						$('#divEmpImg img').hide();
 						$('#noneImg').show();
+					}else{
+						$('#divEmpImg img').show();
+						$('#divEmpImg img').prop('src', "<c:url value='/emp_images/"+res.empImg+"'/>");						
 					}
 					$('#div0').html(dept);
 					$('#div1').html(info);

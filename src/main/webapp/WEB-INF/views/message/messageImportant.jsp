@@ -125,7 +125,14 @@
                 </c:if>
                 <td style="width: 5%" class="w3-center"><input type="checkbox" name="chk" value="${msgVO.recNo}">
                 </td>
-                <td style="width: 20%">${msgVO.empName}</td>
+                <td style="width: 20%">
+                    <c:if test="${fn:length(vo.notiTitle)>7 }">
+                        ${fn:substring(msgVO.empName,0,7) }...
+                    </c:if>
+                    <c:if test="${fn:length(vo.notiTitle)<=7 }">
+                        ${msgVO.empName}
+                    </c:if>
+                </td>
                 <td style="width: 65%">
                     <div onclick="window.open('<c:url
                             value="/message/detail.do?recNo=${msgVO.recNo}"/>', 'messageWindow', 'width=540,height=500,left=300,top=300,toolbar=no,scrollbars=no,resizable=no');">
