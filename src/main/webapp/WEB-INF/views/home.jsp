@@ -2,9 +2,9 @@
 <%@include file="inc/top.jsp" %>
         <!-- 0. include부분 -->
         <nav>
-            <div id="mainCalendar">
-            	캘린더
-            </div>
+	        <div id="clockSection">
+	        	<c:import url="/clock.do"></c:import>
+	        </div>
             <!-- 1.왼쪽 사이드 메뉴 지정 끝-->
             <div id="listbtn"><p><i class="fa fa-chevron-circle-left" style="text-align: center;"></i></p></div>
         </nav>
@@ -14,8 +14,8 @@
         <div id="mainbanner">
         	<c:import url="/mainbanner.do"></c:import>
         </div>
-        <div id="clockSection">
-        	<c:import url="/clock.do"></c:import>
+        <div id="mainCalendar">
+        	캘린더
         </div>
         <div class="clr"></div>
         <div id="mainTable">
@@ -88,7 +88,7 @@
         $(function () {
             $('header nav ul li:nth-child(1) a').addClass('active');
             
-            $('#organ').css('height', '350px');
+            $('#organ').css('height', '420px');
 			$('#orgUp').hide();
 			$('#orgDown').hide();
 			$('#organbody').show();
@@ -98,12 +98,12 @@
     <!-- 0. include부분 끝-->
 <%@include file="inc/bottom.jsp" %>
 <style>
-	#mainCalendar{
+	#clockSection{
 		width: 280px;
-		height:	250px;
-		border : 2px solid #fff;
+		height:	150px;
 		margin: 0 auto;
 		color: #fff;
+		border : 5px solid #fff
 	}
 	section #homesection{
 		position: relative;
@@ -116,7 +116,7 @@
 		width:760px;
 		float:left;
 	}
-	#clockSection{
+	#mainCalendar{
 		float:left;
 		width:calc(100% - 760px);
 		min-height: 150px;

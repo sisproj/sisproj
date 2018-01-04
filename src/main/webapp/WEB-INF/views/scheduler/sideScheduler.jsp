@@ -59,12 +59,12 @@
 
 	</script>
 <style type="text/css">
-html, body {
+/* html, body {
 	margin: 0;
 	padding: 0;
 	height: 100%;
 	overflow: hidden;
-}
+} */
 
 .dhx_cal_event div.dhx_footer, .dhx_cal_event.past_event div.dhx_footer,
 	.dhx_cal_event.event_출장 div.dhx_footer, .dhx_cal_event.event_회의 div.dhx_footer,
