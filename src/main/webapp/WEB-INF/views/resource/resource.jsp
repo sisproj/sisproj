@@ -36,7 +36,7 @@
 		var subject = [ {
 			key : '',
 			label : '자원을 선택하세요'
-		<c:forEach var="vo" items="${list }">
+		<c:forEach var="vo" items="${resourcelist }">
 		}, {
 			key : "${vo.resNo}",
 			label : "${vo.resName}"
@@ -72,6 +72,8 @@
 		scheduler.init('scheduler_here', new Date(), "week");
 
 		scheduler.attachEvent("onEventSave",function(id,ev,is_new,original){ //세이브버튼 클릭 시(신규등록)
+		var ev = scheduler.getEvent(id);
+		console.log(ev.rvid);		
 		    if (!ev.text) {
 		        alert("내용을 입력하세요");
 		        return false;
@@ -92,25 +94,21 @@
 		        $('#rvEnd').val(end_date);
 		        $('#rvContent').val(text);
 		        $('#resNo').val(selection);
-		  	  	 $('#rvfrm').submit();
-			    return true; 
+		  	  	/*  $('#rvfrm').submit();
+			    return true;  */
 		    } 
 		    
 		}); 
-	/* 	scheduler.parse([//화면에 뿌려주기.
-			<c:if test="${empty list}">
-			</c:if>
-			<c:if test="${!empty list}">
-			<c:forEach var="i" begin="0" end="${list.size()-1}" step="1">
-				{ start_date: "${list[i].pschStart}", end_date: "${list[i].pschEnd}",
-					text:"${list[i].pschText}", event_location: "${list[i].pschEventLocation}",
-					content: '${list[i].pschContent}', subject: '${list[i].pschCateg}', 
-					pschid:"${list[i].pschNo}"},
+		scheduler.parse([//화면에 뿌려주기.
+			<c:if test="${!empty reslist}">
+			<c:forEach var="vo" items="${reslist }">
+				{start_date: "${vo.rvStart}", end_date: "${vo.rvEnd}",
+					text:"${vo.rvContent}",	subject: '${vo.resName}'},
 			</c:forEach>
 			</c:if>
 			], "json");
 		
-		} */
+		
 		}
 </script>
 <style type="text/css">
@@ -122,51 +120,91 @@ html, body {
 }
 
 .dhx_cal_event
+
  
+
 div
+
+
 .dhx_footer
 ,
 .dhx_cal_event
+
+
 .past_event
+
  
+
 div
+
+
 .dhx_footer
 ,
 .dhx_cal_event
+
+
 .event_회의
+
  
+
 div
+
+
 .dhx_footer
 ,
 .dhx_cal_event
+
+
 .event_회식
+
  
+
 div
+
+
 .dhx_footer
 ,
 .dhx_cal_event
+
+
 .event_세미나
+
  
+
 div
+
+
 .dhx_footer
 ,
 .dhx_cal_event
+
+
 .event_기타
+
  
+
 div
+
+
 .dhx_footer
 ,
 {
 background-color
+
+
 :
+
  
+
 transparent
+
  
+
 !
 important
+
+
 ;
-
-
 }
 .dhx_cal_event .dhx_body {
 	-webkit-transition: opacity 0.1s;
@@ -206,15 +244,17 @@ important
 	background-color: blue !important;
 	border-color: #839595 !important;
 }
+
 .dhx_cal_event_clear.event_회식 {
 	color: blue !important;
 }
-.dhx_cal_container{
-float: left;
+
+.dhx_cal_container {
+	float: left;
 }
 
-#resource_here{
-float:right;
+#resource_here {
+	float: right;
 }
 </style>
 <!-- 0. include부분 -->
@@ -249,15 +289,17 @@ float:right;
 
 <article id="bodysection">
 	<!-- 3. 내용 -->
-	
-	<form name="rvfrm" id="rvfrm" method="post" action="<c:url value='/resource/resourceWrite.do'/>">
-		<input type="text" id="rvStart" name="rvStart"> 
-		<input type="text" id="rvEnd" name="rvEnd">
-		<input type="text" id="resNo" name="resNo">
-		<input type="text" id="rvContent" name="rvContent"><!-- 제목 -->
+
+	<form name="rvfrm" id="rvfrm" method="post"
+		action="<c:url value='/resource/resourceWrite.do'/>">
+		<input type="hidden" id="rvStart" name="rvStart"> <input
+			type="hidden" id="rvEnd" name="rvEnd"> <input type="hidden"
+			id="resNo" name="resNo"> <input type="hidden" id="rvContent"
+			name="rvContent">
+		<!-- 제목 -->
 	</form>
 	<div id="scheduler_here" class="dhx_cal_container"
-		style='width: 700px; height: 800px;'>    
+		style='width: 700px; height: 800px;'>
 		<div class="dhx_cal_navline">
 			<div class="dhx_cal_prev_button">&nbsp;</div>
 			<div class="dhx_cal_next_button">&nbsp;</div>
@@ -273,9 +315,9 @@ float:right;
 	</div>
 	<div id="resource_here">
 		<input type="button" id="bttest" value="자원등록 신청하기">
-	
+
 	</div>
-	
+
 	<!-- 3. 내용 끝 -->
 </article>
 <!-- 4. 상단 네비 색먹이기 // li태그 순서(전자결재 : 6번째) 입력 -->

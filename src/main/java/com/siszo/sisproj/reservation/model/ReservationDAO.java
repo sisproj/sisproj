@@ -7,4 +7,5 @@ public interface ReservationDAO {
 	public List<ReservationVO> selectReservationAll(ReservationSearchVO searchVo);
 
 	public int insertReservation(ReservationVO resVo);
+	public List<ReservationVO> reservationNselect();
 }
