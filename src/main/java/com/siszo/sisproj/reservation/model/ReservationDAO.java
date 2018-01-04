@@ -1,5 +1,7 @@
 package com.siszo.sisproj.reservation.model;
 
-public interface ReservationDAO {
+import java.util.List;
 
+public interface ReservationDAO {
+	public List<ReservationVO> selectReservationAll();
 }

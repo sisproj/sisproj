@@ -11,6 +11,8 @@ public class ReservationVO {
 	private String rvContent;
 	private String rvConfirm;
 	private Timestamp rvRegdate;
+	private String resCateg;
+	private String resName;
 	
 	public int getRvNo() {
 		return rvNo;
@@ -60,11 +62,24 @@ public class ReservationVO {
 	public void setRvRegdate(Timestamp rvRegdate) {
 		this.rvRegdate = rvRegdate;
 	}
+	public String getResCateg() {
+		return resCateg;
+	}
+	public void setResCateg(String resCateg) {
+		this.resCateg = resCateg;
+	}
+	public String getResName() {
+		return resName;
+	}
+	public void setResName(String resName) {
+		this.resName = resName;
+	}
 	@Override
 	public String toString() {
 		return "ReservationVO [rvNo=" + rvNo + ", resNo=" + resNo + ", rvStart=" + rvStart + ", rvEnd=" + rvEnd
 				+ ", empNo=" + empNo + ", rvContent=" + rvContent + ", rvConfirm=" + rvConfirm + ", rvRegdate="
-				+ rvRegdate + "]";
+				+ rvRegdate + ", resCateg=" + resCateg + ", resName=" + resName + "]";
 	}
+
 
 }
