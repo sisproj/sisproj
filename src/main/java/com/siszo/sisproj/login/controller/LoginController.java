@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.siszo.sisproj.message.model.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ public class LoginController {
 	
 	@Autowired
 	private CommueService commueService;
+
+	@Autowired
+	private MessageService messageService;
 
 	@RequestMapping(value="/login.do",method=RequestMethod.GET)
 	public void login_get() {
@@ -115,6 +119,10 @@ public class LoginController {
 
 		model.addAttribute("resultOut",resultOut);
 		model.addAttribute("resultIn",resultIn);
+
+		int msgUnreadCnt = messageService.selectUnreadCount(empVo.getEmpNo());
+
+		model.addAttribute("msgUnreadCnt", msgUnreadCnt);
 		model.addAttribute("empVo",empVo);
 		
 		return "login/empInfo";

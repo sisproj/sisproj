@@ -125,15 +125,21 @@
 					var dept=res.deptName+"팀 "+res.posName;
 					var info=res.empName+" ("+res.empNo+")";
 					$('#divEmpImg img').prop('alt', res.empName);
-					$('#divEmpImg img').prop('src', "<c:url value='/emp_images/"+res.empImg+"'/>");
 					if(res.empImg==null){
 						$('#divEmpImg img').hide();
 						$('#noneImg').show();
+					}else{
+						$('#divEmpImg img').show();
+						$('#divEmpImg img').prop('src', "<c:url value='/emp_images/"+res.empImg+"'/>");						
 					}
 					$('#div0').html(dept);
 					$('#div1').html(info);
 					$('#div2 i').html(" "+res.empTel);
 					$('#div3 i').html(" "+res.empEmail);
+
+                    var writeUrl = "<c:url value='/message/reply.do?sendempNo='/>" + res.empNo;
+                    var openUrl = "window.open('"+ writeUrl +"', 'messageWindow', 'width=540,height=500,left=300,top=300,toolbar=no,scrollbars=no,resizable=no')";
+					$('#msgWrite').attr("onclick", openUrl);
 				},
 				error:function(xhr, status, error){
 					alert("에러 : "+status+"=>"+error);
@@ -255,7 +261,7 @@
 	     	<div id="div1"></div>
 	     	<div id="div2"><i class="fa fa-phone"></i></div>
 	     	<div id="div3"><a href="#" title="이메일 보내기"><i class="fa fa-envelope-o"></i></a></div>
-	     	<div><a href="#" title="쪽지보내기"><i class="fa fa-paper-plane"></i>  쪽지 보내기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <a href="#" title="대화하기"><i class="fa fa-comments-o"></i>  대화하기</a></div>
+	     	<div><a id="msgWrite" href="#" title="쪽지보내기"><i class="fa fa-paper-plane"></i>  쪽지 보내기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <a href="#" title="대화하기"><i class="fa fa-comments-o"></i>  대화하기</a></div>
      	</div>
      </div>
      <!-- 조직도 : 사원정보 끝 -->

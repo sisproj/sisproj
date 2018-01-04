@@ -1,13 +1,14 @@
 package com.siszo.sisproj;
 
-import java.util.Locale;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.siszo.sisproj.employee.model.EmployeeVO;
 
 /**
  * Handles requests for the application home page.
@@ -21,10 +22,12 @@ public class HomeController {
      * Simply selects the home view to render by returning its name.
      */
     @RequestMapping(value = "/home.do")
-    public String home(Locale locale, Model model) {
-        logger.info("Welcome home! The client locale is {}.", locale);
-
-        System.out.println("수정 테스트");
+    public String home(HttpSession session, Model model) {
+    	EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
+        logger.info("홈화면 보여주기");
+        
+        
+        
 
 
         return "home";
@@ -34,5 +37,15 @@ public class HomeController {
     public String login() {
     	logger.info("로그인 화면 보여주기");
     	return "login";
+    }
+    
+    @RequestMapping("/mainbanner.do")
+    public String mainbanner() {
+    	return "mainbanner/mainbanner";
+    }
+    
+    @RequestMapping("/clock.do")
+    public String clock() {
+    	return "mainbanner/clock1";
     }
 }

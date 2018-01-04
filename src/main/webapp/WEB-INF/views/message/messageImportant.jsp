@@ -125,7 +125,14 @@
                 </c:if>
                 <td style="width: 5%" class="w3-center"><input type="checkbox" name="chk" value="${msgVO.recNo}">
                 </td>
-                <td style="width: 20%">${msgVO.empName}</td>
+                <td style="width: 20%">
+                    <c:if test="${fn:length(msgVO.empName)>7 }">
+                        ${fn:substring(msgVO.empName,0,7) }...
+                    </c:if>
+                    <c:if test="${fn:length(msgVO.empName)<=7 }">
+                        ${msgVO.empName}
+                    </c:if>
+                </td>
                 <td style="width: 65%">
                     <div onclick="window.open('<c:url
                             value="/message/detail.do?recNo=${msgVO.recNo}"/>', 'messageWindow', 'width=540,height=500,left=300,top=300,toolbar=no,scrollbars=no,resizable=no');">
@@ -160,7 +167,7 @@
         <div id="pagingbtn">
 			<!-- 이전 블럭으로 이동 ◀ -->
 			<c:if test="${pagingInfo.firstPage>1 }">
-				<a id="prevbtn" href="#" onclick="pageFunc(${pageInfo.firstPage-1})"><i class="fa fa-chevron-left"></i></a>	
+				<a id="prevbtn" href="#" onclick="pageFunc(${pagingInfo.firstPage-1})"><i class="fa fa-chevron-left"></i></a>
 			</c:if>
 		
 			<!-- [1][2][3][4][5][6][7][8][9][10] -->

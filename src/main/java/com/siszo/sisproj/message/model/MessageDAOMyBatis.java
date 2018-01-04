@@ -88,4 +88,46 @@ public class MessageDAOMyBatis extends SqlSessionDaoSupport implements MessageDA
     public MessageVO selectSendMsgByMsgNo(int msgNo) {
         return getSqlSession().selectOne(namespace + ".selectSendMsgByMsgNo", msgNo);
     }
+
+    @Override
+    public int updateSendDelMsg(int msgNo) {
+        return getSqlSession().update(namespace + ".updateSendDelMsg", msgNo);
+    }
+
+    @Override
+    public List<MessageVO> selectRecycleSendMsgByEmpNo(MessageSearchVO messageSearchVO) {
+        return getSqlSession().selectList(namespace + ".selectRecycleSendMsgByEmpNo", messageSearchVO);
+    }
+
+    @Override
+    public int selectTotalMsgRecycleSendCount(MessageSearchVO messageSearchVO) {
+        return getSqlSession().selectOne(namespace + ".selectTotalMsgRecycleSendCount", messageSearchVO);
+    }
+
+    @Override
+    public int updateRealDelMsg(int recNo) {
+        return getSqlSession().update(namespace + ".updateRealDelMsg", recNo);
+    }
+
+    @Override
+    public int updateRealDelSendMsg(int recNo) {
+        return getSqlSession().update(namespace + ".updateRealDelSendMsg", recNo);
+    }
+
+    @Override
+    public int selectUnreadCount(int empNo) {
+        return getSqlSession().selectOne(namespace + ".selectUnreadCount", empNo);
+    }
+
+    @Override
+    public List<MessageVO> selectRecencyRecMsg(int empNo) {
+        return getSqlSession().selectList(namespace + ".selectRecencyRecMsg", empNo);
+    }
+
+    @Override
+    public List<MessageVO> selectRecencySendMsg(int empNo) {
+        return getSqlSession().selectList(namespace + ".selectRecencySendMsg", empNo);
+    }
+
+
 }

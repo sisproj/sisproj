@@ -80,9 +80,6 @@
                     </div>
                 </th>
                 <th class="w3-text-white">
-                    <button class="w3-button w3-small w3-light-grey" onclick="updateImpMsg()">
-                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                    </button>
                     <button class="w3-button w3-small w3-light-grey" onclick="deleteMsg()">
                         <i class="fa fa-trash-o" aria-hidden="true"></i>
                     </button>
@@ -111,13 +108,20 @@
             </c:if>
             <c:forEach items="${msgList}" var="msgVO">
                 <tr class="hoverable" id="msg-${msgVO.recNo}">
-                    <td style="width: 5%" class="w3-center"><input type="checkbox" name="chk" value="${msgVO.recNo}">
+                    <td style="width: 5%" class="w3-center"><input type="checkbox" name="chk" value="${msgVO.msgNo}">
                     </td>
-                    <td style="width: 20%">${msgVO.empName}</td>
-                    <td style="width: 65%">
+                    <td style="width: 120px; min-width: 120px">
+                        <c:if test="${fn:length(msgVO.empName)>7 }">
+                            ${fn:substring(msgVO.empName,0,7) }...
+                        </c:if>
+                        <c:if test="${fn:length(msgVO.empName)<=7 }">
+                            ${msgVO.empName}
+                        </c:if>
+                    </td>
+                    <td style="width: 80%">
                         <div onclick="window.open('<c:url
                                 value="/message/sendDetail.do?msgNo=${msgVO.msgNo}"/>', 'messageWindow', 'width=540,height=500,left=300,top=300,toolbar=no,scrollbars=no,resizable=no');">
-                            <a href="#" onclick="messageDetailOpen('msg-${msgVO.recNo}')">${msgVO.msgTitle}</a>
+                            <a href="#">${msgVO.msgTitle}</a>
                         </div>
 
                     </td>
@@ -172,49 +176,24 @@
         frmPage.submit();
     }
 
-    function updateImpMsg() {
-        var recNoStr = "";
-        var total = $("input[name=chk]:checked").length;
-        $("input[name=chk]:checked").each(function (index) {
-            if (index === total - 1) {
-                recNoStr += $(this).val();
-            } else {
-                recNoStr += $(this).val() + ","
-            }
-        });
-
-        $.ajax({
-            type: "post",
-            url: "<c:url value='/message/importantUpdate.do'/>",
-            data: {"recNoStr": recNoStr},
-            success: function (response) {
-                if (response == "OK") {
-                    location.reload();
-                }
-            },
-            error: function (e) {
-                console.log(e);
-            }
-        });
-    }
-
     function deleteMsg() {
-        var recNoStr = "";
+        var msgNoStr = "";
         var total = $("input[name=chk]:checked").length;
         $("input[name=chk]:checked").each(function (index) {
             if (index === total - 1) {
-                recNoStr += $(this).val();
+                msgNoStr  += $(this).val();
             } else {
-                recNoStr += $(this).val() + ","
+                msgNoStr  += $(this).val() + ","
             }
         });
 
         var choice = confirm("선택한 쪽지를 정말 삭제하시겠습니까?");
+        console.log(msgNoStr);
         if (choice) {
             $.ajax({
                 type: "post",
-                url: "<c:url value='/message/delete.do'/>",
-                data: {"recNoStr": recNoStr},
+                url: "<c:url value='/message/sendDelete.do'/>",
+                data: {"msgNoStr": msgNoStr },
                 success: function (response) {
                     if (response == "OK") {
                         location.reload();

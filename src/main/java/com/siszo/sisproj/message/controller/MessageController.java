@@ -35,7 +35,33 @@ public class MessageController {
     private EmployeeService employeeService;
 
     @RequestMapping("/message/message.do")
-    public String message_get() {
+    public String message_get(HttpSession session, Model model) {
+        EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
+        int empNo = empVo.getEmpNo();
+
+        MessageSearchVO messageSearchVO = new MessageSearchVO();
+        messageSearchVO.setEmpNo(empNo);
+
+        int recUnreadCnt = messageService.selectUnreadCount(empNo);
+        int recCnt = messageService.selectTotalMsgRecCount(messageSearchVO);
+        int sendCnt = messageService.selectTotalMsgSendCount(messageSearchVO);
+        int recImpCnt = messageService.selectTotalMsgRecImpCount(messageSearchVO);
+        int recRecycleCnt = messageService.selectTotalMsgRecycleCount(messageSearchVO);
+        int sendRecycleCnt = messageService.selectTotalMsgRecycleSendCount(messageSearchVO);
+
+        List<MessageVO> recMsgList = messageService.selectRecencyRecMsg(empNo);
+        List<MessageVO> sendMsgList = messageService.selectRecencySendMsg(empNo);
+
+
+        model.addAttribute("recCnt", recCnt);
+        model.addAttribute("recUnreadCnt", recUnreadCnt);
+        model.addAttribute("sendCnt", sendCnt);
+        model.addAttribute("recImpCnt", recImpCnt);
+        model.addAttribute("recycleCnt", recRecycleCnt + sendRecycleCnt);
+
+        model.addAttribute("recMsgList", recMsgList);
+        model.addAttribute("sendMsgList", sendMsgList);
+
         return "message/messageMain";
     }
 
@@ -169,7 +195,6 @@ public class MessageController {
     public @ResponseBody
     String messageDelete(@RequestParam String recNoStr) {
         logger.info("선택 쪽지 휴지통으로 이동 messageDelete() : recNoStr={}", recNoStr);
-
         String[] recNoArr = recNoStr.split(",");
         for (int i = 0; i < recNoArr.length; i++) {
             int recNo = Integer.parseInt(recNoArr[i]);
@@ -180,6 +205,47 @@ public class MessageController {
         return "OK";
     }
 
+    @RequestMapping(value = "/message/deleteMsg")
+    public @ResponseBody
+    String messageRealDelete(@RequestParam String recNoStr) {
+        logger.info("선택 쪽지 삭제 messageRealDelete() : recNoStr={}", recNoStr);
+
+        String[] recNoArr = recNoStr.split(",");
+        for (int i = 0; i < recNoArr.length; i++) {
+            int recNo = Integer.parseInt(recNoArr[i]);
+            logger.info("chkArr 값 :  recNo={}", recNo);
+            int result = messageService.updateRealDelMsg(recNo);
+            logger.info("update 결과 :  result ={}", result);
+        }
+        return "OK";
+    }
+
+    @RequestMapping(value = "/message/deleteSendMsg")
+    public @ResponseBody
+    String sendMessageRealDelete(@RequestParam String msgNoStr) {
+        logger.info("선택 쪽지 삭제 sendMessageRealDelete() : recNoStr={}", msgNoStr);
+        String[] msgNoArr = msgNoStr.split(",");
+        for (int i = 0; i < msgNoArr .length; i++) {
+            int msgNo = Integer.parseInt(msgNoArr [i]);
+            int result = messageService.updateRealDelSendMsg(msgNo);
+            logger.info("쪽지 휴지통으로 보내기 결과 result={}", result);
+        }
+        return "OK";
+    }
+
+    @RequestMapping(value = "/message/sendDelete")
+    public @ResponseBody
+    String messageSendDelete(@RequestParam String msgNoStr) {
+        logger.info("선택 쪽지 휴지통으로 이동 messageDelete() : msgNoStr={}", msgNoStr);
+
+        String[] msgNoArr = msgNoStr.split(",");
+        for (int i = 0; i < msgNoArr .length; i++) {
+            int msgNo = Integer.parseInt(msgNoArr [i]);
+            int result = messageService.updateSendDelMsg(msgNo);
+            logger.info("쪽지 휴지통으로 보내기 결과 result={}", result);
+        }
+        return "OK";
+    }
 
     @RequestMapping(value = "/message/important")
     public String messageImportant(HttpSession session, @ModelAttribute MessageSearchVO messageSearchVO, Model model) {
@@ -277,5 +343,35 @@ public class MessageController {
         return "message/messageRecycleBin";
     }
 
+    @RequestMapping(value = "/message/recycleBinSend.do")
+    public String messageRecycleBinSend(HttpSession session, @ModelAttribute MessageSearchVO messageSearchVO, Model model) {
+        EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
+        int empNo = empVo.getEmpNo();
+        logger.info("보낸 쪽지함 들어옴 messageReceive_get(), 접속 ID = {}", empNo);
 
+        //Paging 처리에 필요한 변수를 계산해주는 PaginationInfo 생성
+        PaginationInfo pagingInfo = new PaginationInfo();
+        pagingInfo.setBlockSize(Utility.BLOCK_SIZE);
+        pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);
+        pagingInfo.setCurrentPage(messageSearchVO.getCurrentPage());
+
+        //SearchVO에 값 셋팅
+        messageSearchVO.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);
+        messageSearchVO.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+        messageSearchVO.setEmpNo(empNo);
+
+        logger.info("messageSearchVO 입력값 : messageSearchVO={}", messageSearchVO);
+
+        List<MessageVO> msgList = messageService.selectRecycleSendMsgByEmpNo(messageSearchVO);
+        logger.info("{} msgList 조회결과 list.size={}", empNo, msgList.size());
+
+        int totalRecord = messageService.selectTotalMsgRecycleSendCount(messageSearchVO);
+        logger.info("selectTotalMsgRecycleSendCount = {}", totalRecord);
+        pagingInfo.setTotalRecord(totalRecord);
+
+        model.addAttribute("msgList", msgList);
+        model.addAttribute("pagingInfo", pagingInfo);
+
+        return "message/messageRecycleBinSend";
+    }
 }

@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@include file="addrBookTop.jsp"%>
-<!-- Bootstrap -->
-<script src="<c:url value='/resources/jquery/jquery-3.2.1.min.js'/>"></script>
-<link href="<c:url value='/resources/css/bootstrap/bootstrap.min.css'/>" rel="stylesheet">
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="<c:url value='/resources/js/bootstrap/bootstrap.min.js'/>"></script>
 <script type="text/javascript">
 	$(function(){		
 		if($('#groupNo').val()==''){
@@ -138,7 +133,6 @@
 			<form action="<c:url value='/addrBook/addrBookWrite.do'/>" method="post" id="frmWrite">
 				<input type="hidden" name="addrTel" id="addrTel"> 
 				<input type="hidden" name="addrEmail" id="addrEmail">
-				<input type="hidden" name="groupName" id="groupName" value="${addrGroupVo.groupName }">
 				<div>
 					<label for="addrName">이름</label> 
 					<input type="text" name="addrName" id="addrName" style="ime-mode: active">
@@ -259,7 +253,7 @@
     <!-- 그룹 추가 영역 -->
     <div id="divInsertGroup">
     	<div class="divInsertGroupHeader">
-			<h3>그룹 추가</h3>
+			<h3>그룹 추가 / 삭제</h3>
 		</div>
 		<div class="divInsertGroupList">
 			<table>
@@ -267,18 +261,19 @@
 					<col style="width: 70%">
 					<col style="width: 30%">
 				</colgroup>
-				<tr>
-					<td>가족</td>
-					<td><a href="#">삭제</a></td>
-				</tr>
+				<tbody>
+					
+				</tbody>
 	
 			</table>
 		</div>
     	<div class="divInsertNewGroup">
     	<hr><br>
-    		<input type="text" placeholder="그룹명 입력">
-    		<a href="#"><span id="btNewGroup"><i class="fa fa-check"></i> 그룹생성</span></a>
-    		<a href="#"><span id="btExit"><i class="fa fa-times"></i> 닫기</span></a>
+    		<form id="frmNewGroup" name="frmNewGroup" action="<c:url value='/addrBook/newGroup.do'/>" method="post">
+	    		<input type="text" name="groupName" id="groupName" placeholder="  그룹명 입력">
+	    		<a href="#"><span id="btNewGroup"><i class="fa fa-check"></i> 그룹생성</span></a>
+	    		<a href="#"><span id="btExit"><i class="fa fa-times"></i> 닫기</span></a>
+    		</form>
     	</div>
     </div>
     

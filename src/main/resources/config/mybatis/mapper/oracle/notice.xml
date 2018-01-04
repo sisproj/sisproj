@@ -85,6 +85,10 @@
 		update notice
 			set noti_title=#{notiTitle}, emp_no=#{empNo},
 			noti_content=#{notiContent}
+			<if test="notiFilename!=null and notiFilename!=''">
+				, noti_filename=#{notiFilename}, noti_ofilename=#{notiOfilename},
+				noti_filesize=#{notiFilesize}, noti_downcnt=0
+			</if>
 		where noti_no=#{notiNo}	
 	</update>
 	
