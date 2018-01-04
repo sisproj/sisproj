@@ -278,6 +278,7 @@ float:right;
 		<li class="active"><a
 			href="<c:url value='/resource/resource.do'/>"><i
 				class="fa fa-calendar-check-o" aria-hidden="true"></i>&nbsp;<span>자원관리</span></a></li>
+		<li class="active"><a href="<c:url value='/resource/requestList.do'/>"><i class="fa fa-hourglass-half" ></i>&nbsp;<span>승인 대기 목록</span></a></li>
 		<!-- <li><a href="#"><i class="fa fa-file-text"></i>&nbsp;<span>결재 완료함</span></a></li>
                 <li><a href="#"><i class="fa fa-history"></i>&nbsp;<span>결재 반려함</span></a></li>
                 <li><a href="#"><i class="fa fa-cog"></i>&nbsp;<span>결재 환경 설정</span></a></li> -->

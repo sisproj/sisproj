@@ -1,7 +1,7 @@
 <%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@include file="../inc/top.jsp"%>
 <!-- scheduler -->
 <script src="<c:url value="/resources/codebase/dhtmlxscheduler.js"/>"></script>
@@ -19,26 +19,140 @@
 				$("td input[type=checkbox]").prop("checked",false); 
 			}
 		});
+		
+		$('input[name="btOk"]').click(function(){
+			var rvNo=$(this).attr('id');
+			$('#rvNo').val(rvNo);
+			$('#frmList').prop('action',"<c:url value='/resource/confirmY.do'/>");
+			$('#frmList').submit();
+			$(this).hide();
+			$(this).next().hide();
+		});
+		$('input[name="btBack"]').click(function(){
+			var rvNo=$(this).prev().attr('id');
+			$('#rvNo').val(rvNo);
+			$('#frmList').prop('action',"<c:url value='/resource/confirmR.do'/>");
+			$('#frmList').submit();
+			$(this).hide();
+			$(this).prev().hide();
+		});
+		
+		
 	});
 </script>
 <style type="text/css">
-html, body {
-	margin: 0;
-	padding: 0;
-	height: 100%;
-	overflow: hidden;
-}
-
+	html, body {
+		margin: 0;
+		padding: 0;
+		height: 100%;
+		overflow: hidden;
+	}
+	.divRequestHeader div{
+   		float: left;
+   		border: 1px solid rgb(195, 195, 195);
+   		margin-right: 20px;
+   		padding: 5px;
+   		background-color: white;
+   	}
+   	.divRequestHeader div input{
+   		border: none;
+   		padding: 1px 0;
+   	}
+   	#reqSearch{
+   		color: rgb(195, 195, 195);
+   	}
+   	.divOkMulti i{
+   		color: #0f0;
+   	}
+   	.divBackMulti i{
+   		color: #f00;
+   	}
+	#addrTable{
+		width:100%;
+		margin: 0 auto;
+		padding : 10px;
+		box-sizing:border-box;
+		border:0;
+		border-collapse: collapse;	
+		margin-top: 10px;	
+		margin-bottom: 10px;
+	}
+	#addrTable tr{
+		transition:all 300ms linear;
+	}
+	#addrTable tbody tr:hover{
+		background-color: #e1e1e1;
+	}
+	#addrTable th{
+		box-sizing:border-box;
+		padding: 5px;
+		height: 30px;
+		color: #036;
+		font-size: 1.17em;
+		border:0;
+		border-top: 2px solid #e1e1e1;
+		border-bottom: 2px solid #e1e1e1;
+	}
+	#addrTable td {
+		box-sizing:border-box;
+		padding: 5px;
+		border:0;
+		text-align: center;
+		border-bottom: 2px solid #e1e1e1;
+	}
+	#pagingbtn{
+		width: 100%;
+		max-width:1100px;
+		margin: 0 auto;
+		height: 40px;
+		width: auto;
+		box-sizing:border-box;
+		padding-bottom: 10px;
+		text-align:center;
+	}
+	#pagingbtn span, #pagingbtn a{
+		display: inline-block;
+		width: 24px;
+		line-height: 24px;
+		border-radius:12px;
+		background-color: #369;
+		color: fff;
+		text-align: center;
+		font-weight: bold;
+		margin-left: 5px;
+		box-shadow:2px 2px 3px #333;
+		font-size: 0.8em;
+	}
+	#pagingbtn a:hover,
+	#pagingbtn span.thispage{
+		background-color:#09f;
+		box-shadow:2px 2px 3px transparent;	
+	}
+	#pagingbtn span:first-child{
+		margin-left: 0;	
+	}
+	#pagingbtn a i {
+		line-height: 24px;
+		color: fff;
+		text-align: center;
+		font-size: 0.8em;
+	}
+	#pagingbtn #firstbtn,
+	#pagingbtn #lastbtn{
+		background-color: #333;
+	}
+	#pagingbtn #prevbtn,
+	#pagingbtn #nextbtn{
+		background-color: #306;
+	}
 </style>
 <!-- 0. include부분 -->
 <nav>
 	<ul>
 		<!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
 		<li class="active"><a href="<c:url value='/resource/resource.do'/>"><i class="fa fa-calendar-check-o" aria-hidden="true"></i>&nbsp;<span>자원관리</span></a></li>
-		<c:if test="${sessionScope.empVo.empLev=='관리자' }">
-			<li class="active"><a href="<c:url value='/resource/requestList.do'/>"><i class="fa fa-hourglass-half" ></i>&nbsp;<span>승인대기</span></a></li>
-		</c:if>
-		<!-- <li><a href="#"><i class="fa fa-file-text"></i>&nbsp;<span>결재 완료함</span></a></li> -->
+		<li class="active"><a href="<c:url value='/resource/requestList.do'/>"><i class="fa fa-hourglass-half" ></i>&nbsp;<span>승인 대기 목록</span></a></li>
+		<!-- <li><a href="#"><i class="fa fa-file-text"></i>&nbsp;<span>승인 완료 목록</span></a></li> -->
                 
 	</ul>
 	<!-- 1.왼쪽 사이드 메뉴 지정 끝-->
@@ -64,13 +178,16 @@ html, body {
 
 		<form name="frmList" id="frmList" method="post" action="<c:url value='/resource/requestList.do'/>">
 	        <input type="hidden" id="currentPage" name="currentPage" value="1">			        
+	        <input type="hidden" id="rvNo" name="rvNo" value="${param.rvNo }">			        
 	        <div id="divBodysection">
 		        <div class="divRequestHeader">
-			        <a href="#"><div id="divOkMulti"><i class="fa fa-check"></i><span> 선택 승인</span></div></a>
-			        <a href="#"><div id="divBackMulti"><i class="fa fa-times"></i><span> 선택 반려</span></div></a>
+		        <c:if test="${sessionScope.empVo.empLev=='관리자' }">
+			        <a href="#"><div class="divOkMulti"><i class="fa fa-check"></i><span> 선택 승인</span></div></a>
+			        <a href="#"><div class="divBackMulti"><i class="fa fa-times"></i><span> 선택 반려</span></div></a>
+		        </c:if>
 			        <div>
 			        	<input type="text" placeholder="검색" id="searchKeyword" name="searchKeyword" value='${param.searchKeyword}'>
-			        	<a href="#"><i id="reqSearch" class="fa fa-search"></i></a>
+			        	<a href="<c:url value='/resource/requestList.do'/>"><i id="reqSearch" class="fa fa-search"></i></a>
 		        	</div>		        	
 			    </div>
 			    
@@ -79,8 +196,8 @@ html, body {
 	        			<col width="5%">
 	        			<col width="10%">
 	        			<col width="*">
-	        			<col width="10%">
-	        			<col width="10%">
+	        			<col width="13%">
+	        			<col width="13%">
 	        			<col width="10%">
 	        			<col width="10%">
 	        			<col width="10%">
@@ -100,20 +217,28 @@ html, body {
 	        		</tr>
 	        		</thead>
 	        		<tbody>
-	        		<c:forEach var="" items="" varStatus="status">
+	        		<c:forEach var="map" items="${list }" varStatus="status">
 		        		<tr>
-		        			<td><input type="checkbox" name="resItems[${status.index }].rvNo" value=""></td>
-		        			<td></td>
-		        			<td></td>
-		        			<td></td>
-		        			<td></td>
-		        			<td></td>
-		        			<td></td>
+		        			<td><input type="checkbox" name="resItems[${status.index }].rvNo" value="${map['RV_NO'] }"></td>
+		        			<td id="${map['RES_NO'] }">${map['RES_NAME']}</td>
+		        			<td>${map['RV_CONTENT']}</td>
+		        			<td>${map['RV_START'] }</td>
+		        			<td>${map['RV_END'] }</td>
+		        			<td>${map['EMP_NAME']}</td>
+		        			<td>${map['DEPT_NAME'] }</td>
+		        			<td><fmt:formatDate value="${map['RV_REGDATE']}" pattern="yyyy-MM-dd"/></td>		        			
 		        			<td>
-		        				<input type="button" name="btOk" id="btOk" value="승인">
-		        				<input type="button" name="btBack" id="btBack" value="반려">
-		        			</td>
-		        			
+			        			<c:if test="${sessionScope.empVo.empLev=='관리자' }">
+			        				<input type="button" name="btOk" id="${map['RV_NO'] }" value="승인">
+			        				<input type="button" name="btBack" value="반려">
+			        				<c:if test="${map['RV_CONFIRM']=='Y'}">승인</c:if>
+			        			</c:if>
+			        			<c:if test="${sessionScope.empVo.empLev!='관리자' }">
+			        				<c:if test="${map['RV_CONFIRM']=='Y'}">승인</c:if>
+			        				<c:if test="${map['RV_CONFIRM']=='N'}">승인 대기중</c:if>
+			        				<c:if test="${map['RV_CONFIRM']=='R'}">반려</c:if>			        				
+			        			</c:if>
+		        			</td>		        			
 		        		</tr>
 	        		</c:forEach>
 	        		</tbody>
