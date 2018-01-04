@@ -97,34 +97,21 @@
 		    } 
 		    
 		}); 
-		scheduler.parse([ {
-			start_date : "2017-04-18 09:00",
-			end_date : "2017-04-18 12:00",
-			text : "English lesson",
-			subject : 'english'
-		}, {
-			start_date : "2017-04-20 10:00",
-			end_date : "2017-04-21 16:00",
-			text : "Math exam",
-			subject : 'math'
-		}, {
-			start_date : "2017-04-21 10:00",
-			end_date : "2017-04-21 14:00",
-			text : "Science lesson",
-			subject : 'science'
-		}, {
-			start_date : "2017-04-23 16:00",
-			end_date : "2017-04-23 17:00",
-			text : "English lesson",
-			subject : 'english'
-		}, {
-			start_date : "2017-04-22 09:00",
-			end_date : "2017-04-22 17:00",
-			text : "Usual event"
-		} ], "json");
+	/* 	scheduler.parse([//화면에 뿌려주기.
+			<c:if test="${empty list}">
+			</c:if>
+			<c:if test="${!empty list}">
+			<c:forEach var="i" begin="0" end="${list.size()-1}" step="1">
+				{ start_date: "${list[i].pschStart}", end_date: "${list[i].pschEnd}",
+					text:"${list[i].pschText}", event_location: "${list[i].pschEventLocation}",
+					content: '${list[i].pschContent}', subject: '${list[i].pschCateg}', 
+					pschid:"${list[i].pschNo}"},
+			</c:forEach>
+			</c:if>
+			], "json");
 		
-	}
-
+		} */
+		}
 </script>
 <style type="text/css">
 html, body {
