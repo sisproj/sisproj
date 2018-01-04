@@ -36,9 +36,7 @@
 					<thead>
 						<tr>
 							<th>
-								<c:if test="${sessionScope.empVo.empLev == '관리자' }">
-									<input type="checkbox" id="allSelect">
-								</c:if>
+								번호
 							</th>
 							<th>제목</th>
 							<th>작성자</th>
