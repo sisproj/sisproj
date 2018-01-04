@@ -30,14 +30,17 @@ public class MessengerController {
     private EmployeeService employeeService;
 
 
-    @RequestMapping(value = "/messenger/messenger.do", method = RequestMethod.GET)
-    public String messenger_get() {
+    @RequestMapping(value = "/messenger/messenger.do")
+    public String messengerMain(@RequestParam(defaultValue = "0") String userKey, Model model) {
+        model.addAttribute("userKey", userKey);
+        logger.info("메신저 들어옴 messengerMain userKey={}", userKey);
         return "messenger/messengerMain";
     }
 
     @RequestMapping(value = "/messenger/messengerChat.do", method = RequestMethod.POST)
     public String messengerChat_post(@RequestParam String chatKey, Model model) {
         model.addAttribute("chatKey", chatKey);
+        logger.info("메신저 들어옴 messengerChat chatKey={}", chatKey);
         return "messenger/messengerChat";
     }
 
@@ -59,8 +62,12 @@ public class MessengerController {
 
     @RequestMapping(value = "/messenger/messengerUser.do", method = RequestMethod.POST)
     public @ResponseBody List<EmployeeVO> messengerUser_post() {
-        List<EmployeeVO> list = employeeService.selectAllEmployee(new SearchVO());
-        logger.info("사용자 정보 받아옴 messengerUser_post()");
+        SearchVO searchVO = new SearchVO();
+        searchVO.setFirstRecordIndex(0);
+        searchVO.setRecordCountPerPage(10000);
+
+        List<EmployeeVO> list = employeeService.selectAllEmployee(searchVO);
+        logger.info("사용자 정보 받아옴 messengerUser_post() listSize={}", list.size());
         return list;
     }
 }

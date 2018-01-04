@@ -12,10 +12,10 @@
     <!-- 왼쪽 사이드 메뉴 끝 -->
     <article id="homesection">
         <div id="mainbanner">
-        	<c:import url="/mainbanner.do"></c:import>
+        	<c:import url="/mainbanner.do" />
         </div>
         <div id="mainCalendar">
-        	캘린더
+        	<c:import url="/scheduler/sideScheduler.do" />
         </div>
         <div class="clr"></div>
         <div id="mainTable">
@@ -33,7 +33,7 @@
 	        			</tr>
 	       			</thead>
 	       			<tbody>
-	        			<c:import url="/mainNotice.do"></c:import>
+	        			<c:import url="/mainNotice.do" />
 	       			</tbody>
 	       		</table>
         	</div>
@@ -73,11 +73,7 @@
 	        			</tr>
         			</thead>
         			<tbody>
-	        			<tr>
-	        				<td>김연아</td>
-	        				<td>제목</td>
-	        				<td>18-01-04</td>
-	        			</tr>
+							<c:import url="/message/messageBanner.do"></c:import>
         			</tbody>
         		</table>
         	</div>
@@ -145,7 +141,7 @@
 	#mainTable #mainMessage{
 		width: calc(30%);
 	}
-	#homesection h4{
+	#mainTable h4{
 		width: 100%;
 		height: 40px;
 		box-sizing: border-box;
@@ -154,19 +150,19 @@
 		margin-bottom: 5px;
 		font-size: 1.2em;
 	}
-	#homesection table{
+	#mainTable table{
 		width: 100%;
 		box-sizing:border-box;
 		border:0;
 		border-collapse: collapse;		
 	}
-	#homesection tr{
+	#mainTable tr{
 		transition:all 300ms linear;
 	}
-	#homesection tbody tr:hover{
+	#mainTable tbody tr:hover{
 		background-color: #e1e1e1;
 	}
-	#homesection th{
+	#mainTable th{
 		box-sizing:border-box;
 		padding: 5px;
 		height: 20px;
@@ -176,7 +172,7 @@
 		border-top: 2px solid #e1e1e1;
 		border-bottom: 2px solid #e1e1e1;
 	}
-	#homesection td {
+	#mainTable td {
 		box-sizing:border-box;
 		padding: 5px;
 		font-size: 0.9em;

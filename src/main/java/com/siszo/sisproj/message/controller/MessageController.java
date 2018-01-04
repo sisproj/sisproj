@@ -65,6 +65,18 @@ public class MessageController {
         return "message/messageMain";
     }
 
+    @RequestMapping("/message/messageBanner.do")
+    public String messageBanner(HttpSession session, Model model) {
+
+        EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
+        int empNo = empVo.getEmpNo();
+        List<MessageVO> recMsgList = messageService.selectRecencyRecMsg(empNo);
+        model.addAttribute("recMsgList", recMsgList);
+
+        return "mainbanner/messageList";
+    }
+
+
     @RequestMapping(value = "/message/write.do", method = RequestMethod.GET)
     public String messageWrite_get(Model model) {
         logger.info("쪽지 보내기 화면보여주기 messageWrite_get");
