@@ -5,7 +5,7 @@
 <!-- 0. include부분 -->
 <script type="text/javascript">
 	$(function() {
-		var empNo='${sessionScope.empVo.empLev}';
+		var empNo='${sessionScope.empVo.empNo}';
 		$(".comContent").keydown(function (key) {
 	        if(key.keyCode == 13){//키가 13이면 실행 (엔터는 13)
 	           $('form[name=newsComfrm]').submit();
@@ -15,6 +15,9 @@
 		if(empNo!=$('.empNochk').val()){
 			$('.editdeletechk').css('visibility','hidden');
 		} 
+		if(empNo==$('.empNochk').val()){ 
+			$('.editdeletechk').css('visibility','visible');
+		}
 		
 		$('#clickLike').click(function() {
 			location.href="<c:url value='/news/newsLike.do?newsNo=${newsVo.newsNo}'/>";
@@ -183,7 +186,7 @@ float:right;
 		</c:if>
 		<!-- 댓글 반복시작 -->
 		<hr>
-		<c:forEach var="map" items="${list }">
+		<c:forEach var="map" items="${list }"> 
 		<input type="hidden" class="empNochk" value="${map['EMP_NO'] }">
 		<label class="newsempname">${map['EMP_NAME'] } ${map['EMP_LEV'] }</label><br>
 		${map['COM_CONTENT'] }<br>
