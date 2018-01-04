@@ -56,6 +56,11 @@ public class NoticeServiceImpl implements NoticeService{
 	public int updateDownCount(int notiNo) {
 		return noticeDao.updateDownCount(notiNo);
 	}
+
+	@Override
+	public List<NoticeVO> selectAllNotice() {
+		return noticeDao.selectAllNotice();
+	}
 	
 	
 	

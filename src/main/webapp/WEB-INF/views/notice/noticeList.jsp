@@ -172,16 +172,26 @@ action="<c:url value='/notice/noticeList.do'/>">
 										<td>${vo.notiNo}</td>	
 										<td>${vo.notiCategory }</td>								
 										<td style="text-align:left">
-												<a href
-						="<c:url value='/notice/countUpdate.do?notiNo=${vo.notiNo}'/>">
-													<!-- 제목이 긴 경우 일부만 보여주기 -->
-													<c:if test="${fn:length(vo.notiTitle)>30 }">
-														${fn:substring(vo.notiTitle,0,30) }...
-													</c:if>
-													<c:if test="${fn:length(vo.notiTitle)<=30 }">						
-														${vo.notiTitle}
-													</c:if>
-												</a>
+											<!-- 파일이 첨부된 경우 파일 이미지 보여주기 -->
+											<c:if test="${!empty vo.notiFilename}">
+												<img src="<c:url value='/noti_images/file.gif' />" 
+												alt="파일 이미지">
+											</c:if>
+											<a href
+					="<c:url value='/notice/countUpdate.do?notiNo=${vo.notiNo}'/>">
+												<!-- 제목이 긴 경우 일부만 보여주기 -->
+												<c:if test="${fn:length(vo.notiTitle)>30 }">
+													${fn:substring(vo.notiTitle,0,30) }...
+												</c:if>
+												<c:if test="${fn:length(vo.notiTitle)<=30 }">						
+													${vo.notiTitle}
+												</c:if>
+											</a>
+											<!-- 24시간 이내의 글인 경우 -->
+											<c:if test="${vo.newImgTerm<24 }">
+												<img src='<c:url value="/noti_images/new2.gif"/>' 
+												alt="new 이미지">
+											</c:if>
 										</td>									
 										<td>${vo.empName }</td>									
 										<td><fmt:formatDate value="${vo.notiRegdate}" 
