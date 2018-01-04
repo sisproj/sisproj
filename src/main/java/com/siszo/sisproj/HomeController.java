@@ -26,9 +26,6 @@ public class HomeController {
     	EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
         logger.info("홈화면 보여주기");
         
-        
-        
-
 
         return "home";
     }
