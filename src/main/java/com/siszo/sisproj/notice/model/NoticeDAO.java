@@ -16,5 +16,5 @@ public interface NoticeDAO {
 	
 /*	public int deleteNotice(NoticeVO vo);*/
 	
-
+	public List<NoticeVO> selectAllNotice();
 }

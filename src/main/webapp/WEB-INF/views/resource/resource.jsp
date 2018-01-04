@@ -11,6 +11,7 @@
 <script type="text/javascript" charset="utf-8">
 	window.onload = function() {
 		scheduler.config.readonly = true;
+		scheduler.config.readonly_form = true;
 		scheduler.config.xml_date = "%Y-%m-%d %H:%i";
 		scheduler.config.time_step = 60;
 		scheduler.config.multi_day = true;
@@ -36,7 +37,7 @@
 		var subject = [ {
 			key : '',
 			label : '자원을 선택하세요'
-		<c:forEach var="vo" items="${list }">
+		<c:forEach var="vo" items="${resourcelist }">
 		}, {
 			key : "${vo.resNo}",
 			label : "${vo.resName}"
@@ -70,8 +71,11 @@
 		});
 		
 		scheduler.init('scheduler_here', new Date(), "week");
+		
 
 		scheduler.attachEvent("onEventSave",function(id,ev,is_new,original){ //세이브버튼 클릭 시(신규등록)
+		var ev = scheduler.getEvent(id);
+		console.log(ev.rvid);		
 		    if (!ev.text) {
 		        alert("내용을 입력하세요");
 		        return false;
@@ -92,39 +96,22 @@
 		        $('#rvEnd').val(end_date);
 		        $('#rvContent').val(text);
 		        $('#resNo').val(selection);
-		  	  	 $('#rvfrm').submit();
-			    return true; 
+		  	  	/*  $('#rvfrm').submit();
+			    return true;  */
 		    } 
 		    
 		}); 
-		scheduler.parse([ {
-			start_date : "2017-04-18 09:00",
-			end_date : "2017-04-18 12:00",
-			text : "English lesson",
-			subject : 'english'
-		}, {
-			start_date : "2017-04-20 10:00",
-			end_date : "2017-04-21 16:00",
-			text : "Math exam",
-			subject : 'math'
-		}, {
-			start_date : "2017-04-21 10:00",
-			end_date : "2017-04-21 14:00",
-			text : "Science lesson",
-			subject : 'science'
-		}, {
-			start_date : "2017-04-23 16:00",
-			end_date : "2017-04-23 17:00",
-			text : "English lesson",
-			subject : 'english'
-		}, {
-			start_date : "2017-04-22 09:00",
-			end_date : "2017-04-22 17:00",
-			text : "Usual event"
-		} ], "json");
+		scheduler.parse([//화면에 뿌려주기.
+			<c:if test="${!empty reslist}">
+			<c:forEach var="vo" items="${reslist }">
+				{start_date: "${vo.rvStart}", end_date: "${vo.rvEnd}",
+					text:"${vo.rvContent}",	subject: '${vo.resName}'},
+			</c:forEach>
+			</c:if>
+			], "json");
 		
-	}
-
+		
+		}
 </script>
 <style type="text/css">
 html, body {
@@ -135,51 +122,91 @@ html, body {
 }
 
 .dhx_cal_event
+
  
+
 div
+
+
 .dhx_footer
 ,
 .dhx_cal_event
+
+
 .past_event
+
  
+
 div
+
+
 .dhx_footer
 ,
 .dhx_cal_event
+
+
 .event_회의
+
  
+
 div
+
+
 .dhx_footer
 ,
 .dhx_cal_event
+
+
 .event_회식
+
  
+
 div
+
+
 .dhx_footer
 ,
 .dhx_cal_event
+
+
 .event_세미나
+
  
+
 div
+
+
 .dhx_footer
 ,
 .dhx_cal_event
+
+
 .event_기타
+
  
+
 div
+
+
 .dhx_footer
 ,
 {
 background-color
+
+
 :
+
  
+
 transparent
+
  
+
 !
 important
+
+
 ;
-
-
 }
 .dhx_cal_event .dhx_body {
 	-webkit-transition: opacity 0.1s;
@@ -197,37 +224,51 @@ important
 	opacity: 1;
 }
 
-.dhx_cal_event.event_회의 div, .dhx_cal_event_line.event_회의 {
+.dhx_cal_event.event_1 div, .dhx_cal_event_line.event_1 .dhx_cal_event.event_2 div, .dhx_cal_event_line.event_2{
 	background-color: #36BD14 !important;
 	border-color: #698490 !important;
 }
 
-.dhx_cal_event_clear.event_회의 {
+.dhx_cal_event_clear.event_1, .dhx_cal_event_clear.event_2 {
 	color: #36BD14 !important;
 }
 
-.dhx_cal_event.event_세미나 div, .dhx_cal_event_line.event_세미나 {
+.dhx_cal_event.event_3 div, .dhx_cal_event_line.event_3 .dhx_cal_event.event_4 div, .dhx_cal_event_line.event_4{
 	background-color: #FC5BD5 !important;
 	border-color: #839595 !important;
 }
 
-.dhx_cal_event_clear.event_세미나 {
+.dhx_cal_event_clear.event_3 .dhx_cal_event_clear.event_4 {
 	color: #B82594 !important;
 }
 
-.dhx_cal_event.event_회식 div, .dhx_cal_event_line.event_회식 {
+.dhx_cal_event.event_5 div, .dhx_cal_event_line.event_5 {
 	background-color: blue !important;
 	border-color: #839595 !important;
 }
-.dhx_cal_event_clear.event_회식 {
+
+.dhx_cal_event_clear.event_5 {
 	color: blue !important;
 }
-.dhx_cal_container{
-float: left;
+
+.dhx_cal_event.event_6 div, .dhx_cal_event_line.event_6 {
+	background-color: olive !important;
+	border-color: #839595 !important;
 }
 
-#resource_here{
-float:right;
+.dhx_cal_event_clear.event_6 {
+	color: blue !important;
+}
+
+.dhx_cal_container {
+	float: left;
+}
+#bttest{
+	float: right; 
+
+}
+#resource_here {
+float:right; 
 }
 </style>
 <!-- 0. include부분 -->
@@ -263,15 +304,17 @@ float:right;
 
 <article id="bodysection">
 	<!-- 3. 내용 -->
-	
-	<form name="rvfrm" id="rvfrm" method="post" action="<c:url value='/resource/resourceWrite.do'/>">
-		<input type="text" id="rvStart" name="rvStart"> 
-		<input type="text" id="rvEnd" name="rvEnd">
-		<input type="text" id="resNo" name="resNo">
-		<input type="text" id="rvContent" name="rvContent"><!-- 제목 -->
+<div style="min-width: 1500px">
+	<form name="rvfrm" id="rvfrm" method="post"
+		action="<c:url value='/resource/resourceWrite.do'/>">
+		<input type="hidden" id="rvStart" name="rvStart"> <input
+			type="hidden" id="rvEnd" name="rvEnd"> <input type="hidden"
+			id="resNo" name="resNo"> <input type="hidden" id="rvContent"
+			name="rvContent">
+		<!-- 제목 -->
 	</form>
 	<div id="scheduler_here" class="dhx_cal_container"
-		style='width: 700px; height: 800px;'>    
+		style='width: 800px; height: 800px;'>
 		<div class="dhx_cal_navline">
 			<div class="dhx_cal_prev_button">&nbsp;</div>
 			<div class="dhx_cal_next_button">&nbsp;</div>
@@ -285,11 +328,19 @@ float:right;
 		<div class="dhx_cal_data"></div>
 
 	</div>
-	<div id="resource_here">
+	<div id="resource_here" style="width:800px; height:800px;">
 		<input type="button" id="bttest" value="자원등록 신청하기">
-	
+		<hr>
+		<h4>나의 자원신청 승인 현황</h4>
+		
+		
+		<hr>
+		
+		
+		
+
 	</div>
-	
+</div>
 	<!-- 3. 내용 끝 -->
 </article>
 <!-- 4. 상단 네비 색먹이기 // li태그 순서(전자결재 : 6번째) 입력 -->

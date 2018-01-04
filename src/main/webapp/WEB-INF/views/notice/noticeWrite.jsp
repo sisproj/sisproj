@@ -5,6 +5,7 @@
 	href="<c:url value='/resources/css/bootstrap/bootstrap.min.css'/>">
 <script type="text/javascript"
 	src="<c:url value='/resources/js/bootstrap/bootstrap.min.js'/>"></script>
+
 <!-- 0. include부분 -->
 <nav>
 	<ul>
@@ -33,23 +34,41 @@
 	<script type="text/javascript">
 	
 	$(function(){
+		/**
+		 * write부분 js파일
+		 */
+		function submitContents() {
+			 oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
+		}
+
+		var oEditors = [];
+		nhn.husky.EZCreator.createInIFrame({
+			oAppRef: oEditors,
+			elPlaceHolder: "ir1",
+			sSkinURI: "/sisproj/resources/se2/SmartEditor2Skin.html",
+			fCreator: "createSEditor2"
+		});
+		
 		$('#btWrite').click(function(){
 			if($('#notiTitle').val()==''){
 				alert("제목을 입력하세요");
 				$('#notiTitle').focus();
 				return false;
 			}
-			if($('#notiContent').val()==''){
+			/* if($('#notiContent').val()==''){
 				alert("내용을 입력하세요");
 				$('#notiContent').focus();
 				return false;
-			}
+			} */
 			if($('#notiCategory').val()=='0'){
 				alert("카테고리를 선택하세요");
 				$('#notiCategory').focus();
 				return false;
 			}
 			return true;
+		});
+		$('form[name=formWrite]').submit(function(){
+			submitContents();		
 		});
 	});
 	
@@ -89,7 +108,7 @@
 						</tr>
 						<tr class="active">
 							<td><textarea class="form-control" placeholder="글 내용"
-									id="notiContent" name="notiContent" maxlength="2048"
+									id="ir1" name="notiContent" maxlength="2048"
 									style="height: 430px;"></textarea></td>
 						</tr>
 						<tr>

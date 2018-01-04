@@ -30,4 +30,8 @@ public class ReservationServiceImpl implements ReservationService{
 	public int updateConfirmR(int rvNo) {
 		return resDao.updateConfirmR(rvNo);
 	}
+	public List<ReservationVO> reservationNselect(){
+		return resDao.reservationNselect();
+	}
+
 }

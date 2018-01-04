@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.siszo.sisproj.message.model.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ public class LoginController {
 	
 	@Autowired
 	private CommueService commueService;
+
+	@Autowired
+	private MessageService messageService;
 
 	@RequestMapping(value="/login.do",method=RequestMethod.GET)
 	public void login_get() {
@@ -104,13 +108,21 @@ public class LoginController {
 	}
 	@RequestMapping("/empInfo.do")
 	public String detailEmployee(HttpSession session,Model model) {
-		logger.info("사원  간략정보 화면 보여주기");
-		
-		String empName = (String)session.getAttribute("empName");
-		String empLev = (String)session.getAttribute("empLev");
-		
 		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
-	
+		logger.info("사원 간략정보 화면 보여주기 empVo={}",empVo);
+				
+		int resultIn=commueService.selectInChk(empVo.getEmpNo());
+		logger.info("사원 출근을 하였었는지 체크하기 resultIn={}",resultIn);
+		
+		int resultOut=commueService.selectOutChk(empVo.getEmpNo());
+		logger.info("사원 출근을 하였었는지 체크하기 resultOut={}",resultOut);
+
+		model.addAttribute("resultOut",resultOut);
+		model.addAttribute("resultIn",resultIn);
+
+		int msgUnreadCnt = messageService.selectUnreadCount(empVo.getEmpNo());
+
+		model.addAttribute("msgUnreadCnt", msgUnreadCnt);
 		model.addAttribute("empVo",empVo);
 		
 		return "login/empInfo";

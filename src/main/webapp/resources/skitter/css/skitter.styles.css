@@ -15,8 +15,8 @@
 
     /* =Navigation
 -------------------------------------------------------------- */
-    .box_skitter .prev_button { position: absolute; top: 50%; left: 35px; z-index: 100; width: 42px; height: 42px; overflow: hidden; text-indent: -9999em; margin-top: -25px; background: url(../images/prev.png) no-repeat left top; }
-    .box_skitter .next_button { position: absolute; top: 50%; right: 35px; z-index: 100; width: 42px; height: 42px; overflow: hidden; text-indent: -9999em; margin-top: -25px; background: url(../images/next.png) no-repeat left top; }
+    .box_skitter .prev_button { position: absolute; bottom: 0; left: 0; z-index: 100; width: 42px; height: 42px; overflow: hidden; text-indent: -9999em; margin-top: -25px; background: url(../images/prev.png) no-repeat left top; display:none; }
+    .box_skitter .next_button { position: absolute; bottom: 0; right: 0; z-index: 100; width: 42px; height: 42px; overflow: hidden; text-indent: -9999em; margin-top: -25px; background: url(../images/next.png) no-repeat left top; display:none; }
 
     /* =Numbers
 -------------------------------------------------------------- */
@@ -69,5 +69,5 @@
 
 /* =Example for dimenions
 -------------------------------------------------------------- */
-.box_skitter_large { width: 750px; height: 400px; }
+.box_skitter_large { width: 750px; height: 500px; }
 .box_skitter_small { width: 200px; height: 100px; }

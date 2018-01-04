@@ -60,33 +60,33 @@ public class NoticeController {
 		noticeVo.setEmpNo(empNo);
 		
 		//파일 업로드 처리
-				List<Map<String, Object>> list=null;
-				String fileName="", originalFileName="";
-				long fileSize=0;
-				try {
-					list=fileUtil.fileupload(request, FileUploadUtil.PDS_UPLOAD_NOTI);
-					
-					logger.info("공지사항 글쓰기 list={}", list);
-					//파일 업로드 한 경우
-					if(list!=null && !list.isEmpty()) {
-						for(Map<String, Object> map : list) {
-							originalFileName=(String) map.get("originalFileName");
-							fileName=(String) map.get("fileName");
-							fileSize=(Long) map.get("fileSize");
-						}//for
-						
-						logger.info("공지사항 글쓰기 fileName={}", fileName);
-					}
-				} catch (IllegalStateException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+		List<Map<String, Object>> list=null;
+		String fileName="", originalFileName="";
+		long fileSize=0;
+		try {
+			list=fileUtil.fileupload(request, FileUploadUtil.PDS_UPLOAD_NOTI);
+			
+			logger.info("공지사항 글쓰기 list={}", list);
+			//파일 업로드 한 경우
+			if(list!=null && !list.isEmpty()) {
+				for(Map<String, Object> map : list) {
+					originalFileName=(String) map.get("originalFileName");
+					fileName=(String) map.get("fileName");
+					fileSize=(Long) map.get("fileSize");
+				}//for
 				
-				//db작업
-				noticeVo.setNotiFilename(fileName);
-				noticeVo.setNotiOfilename(originalFileName);
-				noticeVo.setNotiFilesize(fileSize);
+				logger.info("공지사항 글쓰기 fileName={}", fileName);
+			}
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		//db작업
+		noticeVo.setNotiFilename(fileName);
+		noticeVo.setNotiOfilename(originalFileName);
+		noticeVo.setNotiFilesize(fileSize);
 		
 		int cnt = noticeService.insertNotice(noticeVo);
 		logger.info("공지사항 글쓰기 결과, cnt={}", cnt);
@@ -197,7 +197,6 @@ public class NoticeController {
 			ModelMap model) {
 		logger.info("수정화면 조회 파라미터 no={}", notiNo);
 		
-		String msg="", url="";
 		if(notiNo==0) {
 			model.addAttribute("msg", "잘못된 url입니다.");
 			model.addAttribute("url", "/notice/noticeList.do");
@@ -213,31 +212,51 @@ public class NoticeController {
 			vo.setNotiContent(content);
 		}
 		
-		/*String fileInfo="";
+		String fileInfo="";
 		if(vo.getNotiFilename()!=null && !vo.getNotiFilename().isEmpty()) {
 			fileInfo=Utility.getFileInfo(vo.getNotiOfilename(), 
 						vo.getNotiFilesize(),request);
 		}
 		
-		model.addAttribute("fileInfo", fileInfo);*/
+		model.addAttribute("fileInfo", fileInfo);
 		model.addAttribute("vo", vo);
 		
 		return "notice/noticeUpdate";
 	}
 	
 	@RequestMapping(value="/noticeUpdate.do", method=RequestMethod.POST)
-	public String noticeUpdate_post(@ModelAttribute NoticeVO vo,			
+	public String noticeUpdate_post(@ModelAttribute NoticeVO vo,
+			@RequestParam String oldFileName,
 			HttpServletRequest request,	Model model) {
-		logger.info("글수정 처리-파라미터, vo={}", vo);
+		logger.info("글수정 처리-파라미터, vo={}, oldFileName={}", 
+				vo, oldFileName);
 		
-		/*//파일 업로드 처리
+		//파일 업로드 처리
 		List<Map<String, Object>> fileList=null;
 		String fileName="", originalFileName="";
-		long fileSize=0;*/
+		long fileSize=0;
 				
 		//db작업
 		String msg="";
 		String url="/notice/noticeUpdate.do?notiNo="+vo.getNotiNo();	
+		
+		try {
+			fileList=fileUtil.fileupload(request, FileUploadUtil.PDS_UPLOAD_NOTI);
+			for(Map<String, Object> map : fileList) {
+				originalFileName=(String) map.get("originalFileName");
+				fileName=(String) map.get("fileName");
+				fileSize=(Long) map.get("fileSize");
+				
+				vo.setNotiOfilename(originalFileName);
+				vo.setNotiFilename(fileName);
+				vo.setNotiFilesize(fileSize);
+			}
+			
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}			
 		
 		int cnt =noticeService.updateNotice(vo);
 		logger.info("글수정 결과, cnt={}", cnt);
@@ -245,9 +264,22 @@ public class NoticeController {
 		if(cnt>0) {
 			msg="글수정되었습니다.";
 			url="/notice/noticeDetail.do?notiNo="+vo.getNotiNo();
+			
+			//파일을 새로 첨부한 경우, 기존파일이 존재한다면 삭제
+			if(fileName!=null && !fileName.isEmpty()) {
+				if(oldFileName!=null && !oldFileName.isEmpty()) {
+					String path=fileUtil.getUploadPath(request, FileUploadUtil.PDS_UPLOAD_NOTI);
+					File delFile = new File(path, oldFileName);
+					if(delFile.exists()) {
+						boolean bool=delFile.delete();
+						logger.info("기존 파일 삭제여부 bool={}", bool);
+					}
+				}
+			}//if				
 		}else {
 			msg="글수정 실패";							
 		}
+		
 			
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
@@ -256,20 +288,24 @@ public class NoticeController {
 	}
 	
 	@RequestMapping("/noticeDelete.do")
-	/*public ModelAndView noticeDelete(
-		@RequestParam(value="notiNo", defaultValue="0") int notiNo) {*/
-	public String noticeDelete(
-		@RequestParam int notiNo) {
+	public String noticeDelete(@RequestParam int notiNo, @ModelAttribute NoticeVO vo,
+			HttpServletRequest request,	Model model) {
 		
+		logger.info("Delete VO : NoticeVO ={}", vo);
 		logger.info("삭제 화면 파라미터, notiNo=", notiNo);
 		
 		int cnt = noticeService.deleteNotice(notiNo);
 		logger.info("삭제 처리 파라미터, cnt=", cnt);
 		
-		/*ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:/notice/noticeList.do");
-		
-		return mav;*/
+		//기존 파일이 첨부된 경우 파일 삭제
+		if(vo.getNotiFilename()!=null && !vo.getNotiFilename().isEmpty()) {
+			String path=fileUtil.getUploadPath(request, FileUploadUtil.PDS_UPLOAD_NOTI);
+			File file = new File(path, vo.getNotiFilename());
+			if(file.exists()) {
+				boolean bool =file.delete();
+				logger.info("기존파일 삭제여부:{}", bool);
+			}
+		}//if
 		
 		return "redirect:/notice/noticeList.do";
 		

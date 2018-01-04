@@ -34,4 +34,8 @@ public class ReservationDAOMybatis extends SqlSessionDaoSupport implements Reser
 		return getSqlSession().update(namespace+".updateConfirmR",rvNo);
 	}
 
+	public List<ReservationVO> reservationNselect(){
+		return getSqlSession().selectList(namespace+".reservationNselect");
+	}
+
 }

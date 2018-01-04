@@ -9,4 +9,5 @@ public interface ReservationDAO {
 	public int selectTotalRecord();
 	public int updateConfirmY(int rvNo);
 	public int updateConfirmR(int rvNo);
+	public List<ReservationVO> reservationNselect();
 }
