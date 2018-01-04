@@ -30,15 +30,17 @@ public class MessengerController {
     private EmployeeService employeeService;
 
 
-    @RequestMapping(value = "/messenger/messenger.do", method = RequestMethod.GET)
-    public String messenger_get(@RequestParam(defaultValue = "0") String chatKey, Model model) {
-        model.addAttribute("chatKey", chatKey);
+    @RequestMapping(value = "/messenger/messenger.do")
+    public String messengerMain(@RequestParam(defaultValue = "0") String userKey, Model model) {
+        model.addAttribute("userKey", userKey);
+        logger.info("메신저 들어옴 messengerMain userKey={}", userKey);
         return "messenger/messengerMain";
     }
 
     @RequestMapping(value = "/messenger/messengerChat.do", method = RequestMethod.POST)
     public String messengerChat_post(@RequestParam String chatKey, Model model) {
         model.addAttribute("chatKey", chatKey);
+        logger.info("메신저 들어옴 messengerChat chatKey={}", chatKey);
         return "messenger/messengerChat";
     }
 

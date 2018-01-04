@@ -20,10 +20,10 @@
 <!-- 오른쪽 SideMenu -->
 <div id="messengerSideNav" class="sidenav">
     <%--TODO 클릭한 회원 정보 카드--%>
-    <div class="w3-white w3-margin">
+    <%--<div class="w3-white w3-margin">
         <div class="w3-light-grey">
             <div class="w3-bar" id="memberList" style="overflow-x: hidden; overflow-y: scroll; height: 105px">
-                <%--채팅방 Member 프로필 이미지 출력--%>
+                &lt;%&ndash;채팅방 Member 프로필 이미지 출력&ndash;%&gt;
             </div>
         </div>
         <div class="w3-container w3-center">
@@ -35,8 +35,7 @@
                 <button class="w3-button w3-red">Decline</button>
             </div>
         </div>
-
-    </div>
+    </div>--%>
 </div>
 
 <!-- Main -->
