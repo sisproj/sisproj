@@ -28,7 +28,7 @@
     <style>
         .box_skitter_large img {
             width: 750px;
-            height: 400px;
+            height: 500px;
         }
     </style>
 </head>

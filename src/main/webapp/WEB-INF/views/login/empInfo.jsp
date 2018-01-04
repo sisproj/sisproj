@@ -38,7 +38,7 @@
 	    </ul>
 	</div>
 		<div id="asidebtn">
-		    <ul>	    	
+		    <ul>
 		        <li><a href="<c:url value='/commue/commueIn.do' />">출근</a></li>	
 		        	<!-- 잠시 보류 -->
 		        <%-- <li><a href="<c:url value='/commue/commueOut.do' />">퇴근</a></li>  --%>
