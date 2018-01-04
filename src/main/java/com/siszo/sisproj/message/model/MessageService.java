@@ -35,4 +35,5 @@ public interface MessageService {
 
     public MessageVO selectSendMsgByMsgNo(int msgNo);
 
+    public int updateSendDelMsg(int msgNo);
 }

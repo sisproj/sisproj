@@ -180,6 +180,19 @@ public class MessageController {
         return "OK";
     }
 
+    @RequestMapping(value = "/message/sendDelete")
+    public @ResponseBody
+    String messageSendDelete(@RequestParam String msgNoStr) {
+        logger.info("선택 쪽지 휴지통으로 이동 messageDelete() : msgNoStr={}", msgNoStr);
+
+        String[] msgNoArr = msgNoStr.split(",");
+        for (int i = 0; i < msgNoArr .length; i++) {
+            int msgNo = Integer.parseInt(msgNoArr [i]);
+            int result = messageService.updateSendDelMsg(msgNo);
+            logger.info("쪽지 휴지통으로 보내기 결과 result={}", result);
+        }
+        return "OK";
+    }
 
     @RequestMapping(value = "/message/important")
     public String messageImportant(HttpSession session, @ModelAttribute MessageSearchVO messageSearchVO, Model model) {
