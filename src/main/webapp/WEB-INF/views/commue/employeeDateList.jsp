@@ -10,7 +10,9 @@
 <!-- 0. include부분 -->
 <script type="text/javascript">
 	$(function () {	
-		$.setToday();
+		if($('#startDay').val()==''){
+			$.setToday();
+		}
 		$.applyDatePicker('#startDay');
 	});
 	
@@ -101,19 +103,12 @@
 					<th>퇴근</th>		
 					<th>상태</th>
 				</tr>	
-	 
-				<!-- <tr>
-					<td colspan=></td>
-				</tr> -->
-
 		<c:if test="${!empty list }">
 			<c:forEach var="map" items="${list }">
 				<tr>
 					<td><a href="<c:url value='' />">${map['EMP_NAME'] }</a></td>
 					<td>${map['DEPT_NAME'] }</td>
 					<td>${map['POS_NAME'] }</td>
-					<%-- <td><fmt:formatDate value="${map['CMTIN'] }" pattern="HH:mm"/></td>
-					<td><fmt:formatDate value="${map['CMTOUT'] }" pattern="HH:mm"/></td> --%>
 					<td id="cmtT">${map['CMTIN'] }</td>
 					<td id="cmtT">${map['CMTOUT'] }</td>
 					<c:if test="${map['CMT_STATUS'] eq ('Y') }">

@@ -43,7 +43,7 @@
 		$('#pwSe').click(function() {			
 			 	window.open("<c:url value='/login/searchPwd.do' />",
 				'chk',
-				'left=0,top=0,width=500,height=200,locations=yes,resizable=yes');
+				'left=0,top=0,width=480,height=200,locations=yes,resizable=yes');
 		});
 	});
 	
