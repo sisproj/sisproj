@@ -63,26 +63,23 @@ html, body {
 	<!-- 3. 내용 -->
 
 		<form name="frmList" id="frmList" method="post" action="<c:url value='/resource/requestList.do'/>">
+	        <input type="hidden" id="currentPage" name="currentPage" value="1">			        
 	        <div id="divBodysection">
 		        <div class="divRequestHeader">
-			        <!-- <a href="#"><div id="divDeleteMulti"><i class="fa fa-trash"></i><span> 삭제</span></div></a>
-			        <a href="#"><div><i class="fa fa-envelope-o"></i><span> 메일 보내기</span></div></a>
-			        <a href="#"><div><i class="fa fa-file-excel-o"></i><span> 주소록 내보내기</span></div></a> -->
-			        <input type="hidden" id="currentPage" name="currentPage" value="1">			        
-			       
-			        <div id="selectMenu">
-			        	<select id="recordCountPerPage" name="recordCountPerPage">
-					        <option value="10"<c:if test="${param.recordCountPerPage==10 }">selected</c:if>>10개씩 보기</option>
-					        <option value="30"<c:if test="${param.recordCountPerPage==30 }">selected</c:if>>30개씩 보기</option>
-					        <option value="50"<c:if test="${param.recordCountPerPage==50 }">selected</c:if>>50개씩 보기</option>
-				        </select>
-			        </div>
+			        <a href="#"><div id="divOkMulti"><i class="fa fa-check"></i><span> 선택 승인</span></div></a>
+			        <a href="#"><div id="divBackMulti"><i class="fa fa-times"></i><span> 선택 반려</span></div></a>
+			        <div>
+			        	<input type="text" placeholder="검색" id="searchKeyword" name="searchKeyword" value='${param.searchKeyword}'>
+			        	<a href="#"><i id="reqSearch" class="fa fa-search"></i></a>
+		        	</div>		        	
 			    </div>
+			    
 	        	<table id="addrTable">
 	        		<colgroup>
 	        			<col width="5%">
 	        			<col width="10%">
 	        			<col width="*">
+	        			<col width="10%">
 	        			<col width="10%">
 	        			<col width="10%">
 	        			<col width="10%">
@@ -97,6 +94,7 @@ html, body {
 	        			<th>시작일</th>
 	        			<th>종료일</th>
 	        			<th>예약자</th>
+	        			<th>부서</th>
 	        			<th>등록일</th>
 	        			<th>승인여부</th>
 	        		</tr>
@@ -104,10 +102,10 @@ html, body {
 	        		<tbody>
 	        		<c:forEach var="" items="" varStatus="status">
 		        		<tr>
-		        			<td><input type="checkbox" name="reqItems[${status.index }].rvNo" value=""></td>
-		        			<td id=""><a href="#"></a></td>
+		        			<td><input type="checkbox" name="resItems[${status.index }].rvNo" value=""></td>
 		        			<td></td>
-		        			<td><a href="#"></a></td>
+		        			<td></td>
+		        			<td></td>
 		        			<td></td>
 		        			<td></td>
 		        			<td></td>
