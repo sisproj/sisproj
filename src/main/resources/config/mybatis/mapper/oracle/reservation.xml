@@ -10,7 +10,7 @@
 	</sql>	
 	<select id="selectReservationAll" parameterType="ReservationSearchVO" resultType="ReservationVO">
 		select * from reservation 
-		
+		<include refid="searchWhere"></include>
 		order by rv_regdate desc;
 	</select>
 </mapper>
