@@ -23,6 +23,10 @@
 		$('#btnewsEdit').click(function () {
 			location.href="<c:url value='/news/newsEdit.do?newsNo=${newsVo.newsNo}'/>";
 		}); 
+		$('#newshomego').click(function () {
+			location.href="<c:url value='/news/dailyNews.do'/>";
+		}); 
+		
 		$('#btnewsDelete').click(function () {
 			var result = confirm("정말 ${newsVo.newsNo}번 뉴스를 삭제하시겠습니까?"); 
 			if(result) { 
@@ -43,7 +47,6 @@
 	width: 60%;
 	margin: 0 auto;
 } 
-
 .newsDtitle{
 text-align:center;
 }
@@ -171,7 +174,7 @@ float:right;
 		<form id="newsComfrm" method="post" action="<c:url value='/news/comWrite.do'/>">
 		<input type="hidden" id="newsNo" name="newsNo" value="${newsVo.newsNo }">
 		
-		<span id="reclabel">댓글   ${list.size() }개</span>
+		<span id="reclabel">댓글   ${list.size() }개</span>&nbsp;&nbsp;&nbsp;<input type="button" id="newshomego" value="목록으로">
 		<div id="rectext"><input type="text" id="comContent" name="comContent" style="width: 90%; height:45px;"><input class="comsubmit" type="submit" value="댓글등록"></div>
 		
 		<c:if test="${empty list }">

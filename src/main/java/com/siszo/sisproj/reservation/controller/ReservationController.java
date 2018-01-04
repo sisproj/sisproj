@@ -140,7 +140,8 @@ public class ReservationController {
 	public void resourceMainView(Model model) {
 		List<ResourceVO>resourcelist =resourceService.resourceAllselect();
 		List<ReservationVO>reslist = resService.reservationNselect();
-		
+		List<Map<String, Object>>myreslist=resService.reservationNotYselect();
+		model.addAttribute("myreslist",myreslist);
 		model.addAttribute("resourcelist",resourcelist);
 		model.addAttribute("reslist",reslist);
 	}

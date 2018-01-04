@@ -42,6 +42,10 @@
 	<select id="reservationNselect" resultType="ReservationVO">
 		select * from reservation where rv_confirm='Y'
 	</select>
+	
+	<select id="reservationNotYselect" resultType="map">
+		select * from myres_view
+	</select>
 </mapper>
 
 
