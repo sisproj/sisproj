@@ -35,39 +35,80 @@
 
 		var subject = [ {
 			key : '',
-			label : 'Appointment'
+			label : '자원을 선택하세요'
 		}, {
-			key : 'english',
-			label : 'English'
+			key : '1',
+			label : '101호 회의실'
 		}, {
-			key : 'math',
-			label : 'Math'
+			key : '2',
+			label : '201호 회의실'
 		}, {
-			key : 'science',
-			label : 'Science'
+			key : '3',
+			label : '스타렉스 회사차'
+		}, {
+			key : '4',
+			label : '포터 회사차'
+		}, {
+			key : '5',
+			label : '축구장'
+		}, {
+			key : '6',
+			label : '법인카드'
+		}, {
+			key : 'orders',
+			label : '기타'
 		} ];
 
 		scheduler.config.lightbox.sections = [ {
-			name : "description",
+			name : "내용",
 			height : 43,
 			map_to : "text",
 			type : "textarea",
 			focus : true
 		}, {
-			name : "subject",
+			name : "자원",
 			height : 20,
 			type : "select",
 			options : subject,
 			map_to : "subject"
 		}, {
-			name : "time",
+			name : "시간",
 			height : 72,
 			type : "time",
 			map_to : "auto"
 		} ];
 
-		scheduler.init('scheduler_here', new Date(2017, 3, 20), "week");
+		scheduler.init('scheduler_here', new Date(), "week");
+		$('#bttest').click(function(){
+			scheduler.showLightbox(subject);
+		});
 
+		scheduler.attachEvent("onEventSave",function(id,ev,is_new,original){ //세이브버튼 클릭 시(신규등록)
+			 
+		    if (!ev.text) {
+		        alert("내용을 입력하세요");
+		        return false;
+		    }
+		    else if (ev.subject=='') {
+		        alert("자원을 선택하세요");
+		        return false;
+		    }
+		    else {
+				 var start_date = ev.start_date; //시작날짜
+				 var end_date = ev.end_date; //끝날짜
+				 var text = ev.text; //내용
+				 var selection = ev.subject; //카테고리
+				 var rvNo=ev.rvid; //아이디
+				$('#rvNo').val(id);
+		        $('#rvStart').val(start_date);
+		        $('#rvEnd').val(end_date);
+		        $('#rvContent').val(text);
+		        $('#rvCateg').val(selection);
+		  	 	$('#rvfrm').submit();
+			    return true; 
+		    } 
+		    
+		}); 
 		scheduler.parse([ {
 			start_date : "2017-04-18 09:00",
 			end_date : "2017-04-18 12:00",
@@ -193,6 +234,13 @@ important
 .dhx_cal_event_clear.event_회식 {
 	color: blue !important;
 }
+.dhx_cal_container{
+float: left;
+}
+
+#resource_here{
+float:right;
+}
 </style>
 <!-- 0. include부분 -->
 <nav>
@@ -226,6 +274,14 @@ important
 
 <article id="bodysection">
 	<!-- 3. 내용 -->
+	
+	<form name="rvfrm" id="schfrm" method="post" action="<c:url value='/resource/resourceWrite.do'/>">
+		<input type="hidden" id="rvStart" name="rvStart"> 
+		<input type="hidden" id="rvEnd" name="rvEnd">
+		<input type="hidden" id="rvCateg" name="rvCateg">
+		<input type="hidden" id="rvNo" name="rvNo">
+		<input type="hidden" id="rvContent" name="rvContent"><!-- 제목 -->
+	</form>
 	<div id="scheduler_here" class="dhx_cal_container"
 		style='width: 700px; height: 800px;'>    
 		<div class="dhx_cal_navline">
@@ -241,6 +297,11 @@ important
 		<div class="dhx_cal_data"></div>
 
 	</div>
+	<div id="resource_here">
+		<input type="button" id="bttest" value="자원등록 신청하기">
+	
+	</div>
+	
 	<!-- 3. 내용 끝 -->
 </article>
 <!-- 4. 상단 네비 색먹이기 // li태그 순서(전자결재 : 6번째) 입력 -->
