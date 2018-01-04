@@ -38,7 +38,6 @@ public class HomeController {
     @RequestMapping(value = "/home.do")
     public String home(HttpSession session, Model model) {
         logger.info("홈화면 보여주기");
-        
         return "home";
     }
     

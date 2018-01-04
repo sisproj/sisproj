@@ -40,7 +40,6 @@
 </div>
 
 <!-- Main -->
-<input type="hidden" id="chatKey" name="chatKey" value="${key}">
 <div class="w3-main" id="messenger-main" style="margin-left:400px">
     <!-- 채팅창 -->
     <div class="messenger-container" id="messengerContainer">

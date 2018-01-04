@@ -31,7 +31,9 @@
 			</c:if>
 	        <li><i class="fa fa-envelope"></i>&nbsp;<span><a href="<c:url value='/message/message.do'/>">쪽지</a></span>&nbsp;<span
 	                class="red">${msgUnreadCnt}</span></li>
-	        <li><i class="fa fa-comments"></i>&nbsp;<span><a href="#">대화</a></span>&nbsp;<span
+	        <li><i class="fa fa-comments"></i>&nbsp;<span>
+				<a href="#" onclick="window.open('<c:url value="/messenger/messenger.do"/>', 'messengerWindow', 'width=1100,height=640,toolbar=no,scrollbars=yes')">대화</a>
+			</span>&nbsp;<span
 	                class="red">0</span></li>
 	        <li><i class="fa fa-pencil-square-o"></i>&nbsp;<span><a href="#">결재할 문서</a></span>&nbsp;<span
 	                class="red">0</span></li>
