@@ -13,6 +13,9 @@
         <div id="mainbanner">
         	<c:import url="/mainbanner.do"></c:import>
         </div>
+        <div id="clock">
+        	
+        </div>
     </article>
     <!-- 4. 상단 네비 색먹이기 // li태그 순서(전자결재 : 6번째) 입력 -->
     <script type="text/javascript">
