@@ -38,7 +38,6 @@
 	    </ul>
 	</div>
 		<div id="asidebtn">
-<<<<<<< HEAD
 		    <ul>	    	
 		    	<c:if test="${resultIn==1}">
 		        	<li><a href="<c:url value='/commue/commueIn.do' />">출근</a></li>	
@@ -49,12 +48,6 @@
 		        <c:if test="${resultIn==2 && resultOut==4 }">
 		           <li><a href="#">HOME</a></li>  		        
 		        </c:if>
-=======
-		    <ul>
-		        <li><a href="<c:url value='/commue/commueIn.do' />">출근</a></li>	
-		        	<!-- 잠시 보류 -->
-		        <%-- <li><a href="<c:url value='/commue/commueOut.do' />">퇴근</a></li>  --%>
->>>>>>> d48cc96dcaa4aa4f8cd06fbc84f94636e0df92df
 		        <li><a href="#" onclick="window.open('<c:url value="/messenger/messenger.do"/>', 'messengerWindow', 'width=1100,height=640,toolbar=no,scrollbars=yes')">메신저</a></li>
 		        <li><a href="<c:url value='/login/logout.do'/>">로그 아웃</a></li>
 		    </ul>
