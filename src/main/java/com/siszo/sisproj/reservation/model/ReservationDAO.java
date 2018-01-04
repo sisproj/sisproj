@@ -10,5 +10,5 @@ public interface ReservationDAO {
 	public int updateConfirmY(int rvNo);
 	public int updateConfirmR(int rvNo);
 	public List<ReservationVO> reservationNselect();
-	public List<Map<String, Object>> reservationNotYselect();
+	public List<Map<String, Object>> reservationNotYselect(int empNo);
 }

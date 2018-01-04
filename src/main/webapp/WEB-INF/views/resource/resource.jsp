@@ -395,7 +395,7 @@ important
 		<li class="active"><a
 			href="<c:url value='/resource/resource.do'/>"><i
 				class="fa fa-calendar-check-o" aria-hidden="true"></i>&nbsp;<span>자원관리</span></a></li>
-		<li class="active"><a
+		<li><a
 			href="<c:url value='/resource/requestList.do'/>"><i
 				class="fa fa-hourglass-half"></i>&nbsp;<span>승인 대기 목록</span></a></li>
 		<!-- <li><a href="#"><i class="fa fa-file-text"></i>&nbsp;<span>결재 완료함</span></a></li>
@@ -507,6 +507,12 @@ important
 	        		</tr>
 	        		</thead>
 	        		<tbody>
+	        		<c:if test="${empty myreslist }">
+	        		<tr>
+	        			<td colspan="6">자원 승인 대기현황이 없습니다.</td> 
+	        		</tr>
+	        		</c:if>
+	        		<c:if test="${!empty myreslist }">
 	        		<c:forEach var="map" items="${myreslist }">
 		        		<tr>
 		        			<td>${map['RES_NAME']}</td>
@@ -520,6 +526,7 @@ important
 		        			</td>		        			
 		        		</tr>
 	        		</c:forEach>
+	        		</c:if>
 	        		</tbody>
 	        	</table>
 		        

@@ -43,8 +43,8 @@
 		select * from reservation where rv_confirm='Y'
 	</select>
 	
-	<select id="reservationNotYselect" resultType="map">
-		select * from myres_view
+	<select id="reservationNotYselect" parameterType="int" resultType="map">
+		select * from myres_view where emp_no=#{empNo}
 	</select>
 </mapper>
 

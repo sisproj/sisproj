@@ -37,8 +37,8 @@ public class ReservationDAOMybatis extends SqlSessionDaoSupport implements Reser
 	public List<ReservationVO> reservationNselect(){
 		return getSqlSession().selectList(namespace+".reservationNselect");
 	}
-	public List<Map<String, Object>> reservationNotYselect(){
-		return getSqlSession().selectList(namespace+".reservationNotYselect");
+	public List<Map<String, Object>> reservationNotYselect(int empNo){
+		return getSqlSession().selectList(namespace+".reservationNotYselect",empNo);
 	}
 
 }
