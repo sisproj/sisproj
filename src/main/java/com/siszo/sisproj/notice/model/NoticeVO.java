@@ -17,7 +17,16 @@ public class NoticeVO {
 	
 	private String empName;
 	
+	//24시간 이내의 글을 처리하기 위한 프로퍼티
+    private int newImgTerm;
 	
+	
+	public int getNewImgTerm() {
+		return newImgTerm;
+	}
+	public void setNewImgTerm(int newImgTerm) {
+		this.newImgTerm = newImgTerm;
+	}
 	
 	public String getEmpName() {
 		return empName;
@@ -100,7 +109,8 @@ public class NoticeVO {
 		return "NoticeVO [notiNo=" + notiNo + ", notiTitle=" + notiTitle + ", empNo=" + empNo + ", notiContent="
 				+ notiContent + ", notiRegdate=" + notiRegdate + ", notiFilename=" + notiFilename + ", notiFilesize="
 				+ notiFilesize + ", notiOfilename=" + notiOfilename + ", notiDowncnt=" + notiDowncnt + ", notiReadcnt="
-				+ notiReadcnt + ", notiCategory=" + notiCategory + ", empName=" + empName + "]";
+				+ notiReadcnt + ", notiCategory=" + notiCategory + ", empName=" + empName + ", newImgTerm=" + newImgTerm
+				+ "]";
 	}
 	
 		
