@@ -23,9 +23,10 @@
         var userId = "";
         var userName = "";
         var userImg = "";
-        var chatKey = "${chatKey}";
+        var chatKey = "";
+        var userKey = "";
         $(document).ready(function () {
-
+            userKey = $('#userKey').val();
             userId = $('#sessionId').val();
             userName = $('#sessionName').val();
             userImg = $('#sessionImg').val();
@@ -33,7 +34,7 @@
             firebaseSetUser();
             if (initFlag) {
                 loadKeyListByUserId(userId);
-                loadOrganization(chatKey);
+                loadOrganization(userKey);
                 initFlag = false;
             }
 
@@ -62,10 +63,12 @@
             });
         }
 
-        function loadOrganization(chatKey) {
-            console.log(chatKey);
-            if (chatKey != "0") {
-                changeContent(chatKey);
+        function loadOrganization(userKey) {
+            if (userKey != "0") {
+                setTimeout(function () {
+                    changeContent(userKey);
+                },1500);
+
             } else {
                 $('#messenger-main-container').html("").load('messengerStart.do');
             }
@@ -103,7 +106,8 @@
                         title: empNameArr.toString(),
                         timestamp: timestamp
                     }).then(function () {
-                        changeContent(chat)
+                        $('#userKey').val(chat);
+                        $('#frmMessenger').submit();
                     });
                 });
             }
@@ -122,6 +126,7 @@
         }
 
         function changeContent(chatKey) {
+            console.log("changeContent" + chatKey)
             loadMemberListByChatKey(chatKey);
             var chatsRef = firebase.database().ref('chats/' + chatKey);
             chatsRef.once('value', function (snapshot) {
@@ -314,16 +319,14 @@
         }
 
         <%-- firebase 채팅처리 script--%>
-
         function loadMessages(chatKey) {
-            console.log("loadMessages chatKey: " + chatKey );
             var messeagesRef = firebase.database().ref('messages/' + chatKey);
             messeagesRef.once('value', function (snapshot) {
                 snapshot.forEach(function (data) {
                     showMessage(data)
                 });
             }).then(function () {
-                $('#messenger-main').scrollTop(9999);
+                $('#messenger-main').scrollTop(10000);
             });
         }
 
@@ -369,7 +372,6 @@
             var messeagesRef = firebase.database().ref('messages/' + chatKey);
             //Messages Child가 추가될때 마다 실행
             messeagesRef.on('child_added', function (data) {
-                var timestamp = data.val().timestamp;
                 showMessage(data);
             });
         }
@@ -500,6 +502,10 @@
         </ul>
     </div>
 </nav>
+
+<form id="frmMessenger" name="frmMessenger" method="post" action="<c:url value='/messenger/messenger.do'/>">
+    <input type="text" value="${userKey}" id="userKey" name="userKey">
+</form>
 
 <!-- Header -->
 <div class="messenger-header w3-card">
