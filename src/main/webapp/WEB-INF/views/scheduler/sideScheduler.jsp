@@ -11,9 +11,10 @@
 	<!-- scheduler -->
     <script src="<c:url value="/resources/codebase/dhtmlxscheduler.js"/>"></script>
     <link rel="stylesheet" href="<c:url value="/resources/codebase/dhtmlxscheduler.css"/>">
+    <script src="<c:url value="/resources/codebase/ext/dhtmlxscheduler_quick_info.js"/>"></script>
     
 <script type="text/javascript" charset="utf-8">
-		window.onload=function() {
+		window.onload=function() { 
 			scheduler.config.readonly = true;
 			scheduler.config.xml_date = "%Y-%m-%d %h:%i";
 			scheduler.config.prevent_cache = true;  
@@ -22,8 +23,9 @@
 			scheduler.locale.labels.section_subject = "Subject";
 			scheduler.config.first_hour = 8;
 			scheduler.config.limit_time_select = true;
-			scheduler.config.details_on_dblclick = true;
-			scheduler.config.details_on_create = true;
+			scheduler.config.details_on_dblclick = false;
+			scheduler.config.details_on_create = false;
+			scheduler.config.quick_info_detached = true;
 			
 
 			scheduler.templates.event_class = function(start, end, event){
@@ -37,10 +39,12 @@
 				return css; // default return
 				
 			};
-			
 
 			scheduler.init('scheduler_here', new Date(), "month");
 			
+			scheduler.templates.quick_info_content = function(start, end, ev){ 
+			       return ev.content;
+			};
 			scheduler.parse([//화면에 뿌려주기.
 				<c:if test="${empty list}">
 				 
@@ -48,7 +52,7 @@
 				<c:if test="${!empty list}">
 				<c:forEach var="i" begin="0" end="${list.size()-1}" step="1">
 					{ start_date: "${list[i].pschStart}", end_date: "${list[i].pschEnd}",
-					 	text:" ", event_location: "${list[i].pschEventLocation}",
+					 	text:"", event_location: "${list[i].pschEventLocation}",
 						content: '${list[i].pschContent}', subject: '${list[i].pschCateg}', 
 						pschid:"${list[i].pschNo}"},
 				</c:forEach> 
@@ -59,12 +63,10 @@
 
 	</script>
 <style type="text/css">
-html, body {
-	margin: 0;
-	padding: 0;
-	height: 100%;
-	overflow: hidden;
+.dhx_qi_big_icon icon_details{
+	display: none;
 }
+
 
 .dhx_cal_event div.dhx_footer, .dhx_cal_event.past_event div.dhx_footer,
 	.dhx_cal_event.event_출장 div.dhx_footer, .dhx_cal_event.event_회의 div.dhx_footer,
@@ -163,4 +165,11 @@ html, body {
 	</body>
 	</html>
 	
+	
+<style>
+	.dhx_qi_big_icon{
+		display: none;
+	}
+	
+</style>
 
