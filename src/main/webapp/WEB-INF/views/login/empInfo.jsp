@@ -35,8 +35,8 @@
 				<a href="#" onclick="window.open('<c:url value="/messenger/messenger.do"/>', 'messengerWindow', 'width=1100,height=640,toolbar=no,scrollbars=yes')">대화</a>
 			</span>&nbsp;<span
 	                class="red">0</span></li>
-	        <li><i class="fa fa-pencil-square-o"></i>&nbsp;<span><a href="#">결재할 문서</a></span>&nbsp;<span
-	                class="red">0</span></li>
+	        <li><i class="fa fa-pencil-square-o"></i>&nbsp;<span><a href="<c:url value='/confirm/await.do'/>">결재대기문서</a></span>&nbsp;<span
+	                class="red">${awaitCnt }</span></li>
 	    </ul>
 	</div>
 		<div id="asidebtn">
