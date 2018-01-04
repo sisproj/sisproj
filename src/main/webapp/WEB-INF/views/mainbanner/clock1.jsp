@@ -9,21 +9,23 @@
 #divClock{
 	
 }
+
 #clock {
     height: 100px;
     line-height : 100px;
-    width: 500px;
+    width: 280px;
     position: relative;
     font-family: courier, monospace;
     text-align: center;
     color: white;
-    font-size: 60px;
+    font-size: 40px;
     margin: 0 auto;
+    font-weight: 600;
 }
 
 #clockSection ul {
     height: 50px;
-    width: 500px;
+    width: auto;
     position: relative;
     text-align: center;
     margin: 0 auto;
@@ -37,7 +39,7 @@
     background: none;
     font-family: helvetica;
     text-transform: uppercase;
-    font-size: 14px;
+    font-size: 13px;
     padding-bottom: 3px;
     cursor: auto;
 }
@@ -49,6 +51,7 @@
 
 #clockSection .active {
     border-bottom: solid white 1px;
+    box-shadow: 1px 1px 5px transparent;
 }
 </style>
 </head>

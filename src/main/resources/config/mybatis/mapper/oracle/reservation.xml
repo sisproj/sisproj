@@ -21,6 +21,10 @@
 		values(#{rvNo},#{resNo},#{rvStart},#{rvEnd},#{empNo},#{rvContent},#{deptNo})
 	</insert>
 	
+	<select id="reservationNselect" resultType="ReservationVO">
+	select * from reservation where rv_confirm='Y'
+	</select>
+	
 	
 </mapper>
 

@@ -1,6 +1,7 @@
 package com.siszo.sisproj.commue.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -33,6 +34,19 @@ public class CommueDAOMybatis extends SqlSessionDaoSupport implements CommueDAO{
 	@Override
 	public List<CommueVO> selectAll() {
 		return getSqlSession().selectList(namespace+".selectAll");
+	}
+	
+	@Override
+	public List<Map<String, Object>> searchDate(DateSearchVO vo) {
+		return getSqlSession().selectList(namespace+".searchDate",vo);
+	}
+	@Override
+	public int selectInChk(int empNo) {
+		return getSqlSession().selectOne(namespace+".selectInChk",empNo);
+	}
+	@Override
+	public int selectOutChk(int empNo) {
+		return getSqlSession().selectOne(namespace+".selectOutChk",empNo);
 	}
 	
 

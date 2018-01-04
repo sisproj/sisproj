@@ -48,7 +48,10 @@
 							</tr>
 							<tr>
 								<td>내용</td>
-								<td colspan="2" style="max-height: 400px; height: 330px; text-align: left;">${vo.notiContent}</td>
+								<td colspan="2" style="max-height: 400px; height: 330px; text-align: left;">${vo.notiContent}
+								<br>
+								<img src="<c:url value='/pds_upload_noti/${vo.notiFilename}'/>" alt="${vo.notiOfilename}">
+								</td>
 							</tr>
 							<tr>
 								<td>첨부파일</td>
@@ -62,11 +65,13 @@
 						<a href="noticeList.do" class="btn btn-primary">목록</a>
 					<c:if test="${sessionScope.empVo.empLev=='관리자'}">
 						<a href="noticeUpdate.do?notiNo=${param.notiNo}" class="btn btn-primary">수정</a>
-						<%-- <a href="noticeDelete.do?notiNo=${param.notiNo}" class="btn btn-primary">삭제</a> --%>
-						<!-- <a href="#" class="btn btn-primary" id="deleteNotice">삭제</a> -->
 						<a href="#" class="btn btn-primary" onclick="del(${param.notiNo })">삭제</a>
 						<a href="noticeWrite.do" class="btn btn-primary pull-right">글쓰기</a>
 					</c:if>
+					<form id="frmDelete" name="frmDelete" method="post" action="<c:url value='/notice/noticeDelete.do'/>">
+						<input type="hidden" name="notiNo" value="${param.notiNo }">
+						<input type="hidden" name="notiFilename" value="${vo.notiFilename}">
+					</form>
 				</div>
 			</div>
 				<!-- 3. 내용 끝 -->
@@ -75,23 +80,11 @@
 		<script type="text/javascript">
 			$(function(){
 				$('header nav ul li:nth-child(8) a').addClass('active');
-				
-				/* $('#deleteNotice').click(function() {
-					var result = confirm("삭제하시겠습니까?","");
-					console.log(result);
-					if(result) {
-						location.href 
-					= "noticeDelete.do?notiNo=${param.notiNo}";						
-					}
-				
-				}) */
-								
 			});
 			
 			function del(notiNo){
 				if(confirm("삭제하시겠습니까?")){
-					location.href
-					="<c:url value='/notice/noticeDelete.do?notiNo="+notiNo +"'/>";
+					$('#frmDelete').submit();
 				}
 			}
 			

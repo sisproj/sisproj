@@ -1,5 +1,7 @@
 package com.siszo.sisproj.reservation.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -18,6 +20,8 @@ import com.siszo.sisproj.reservation.model.ReservationSearchVO;
 import com.siszo.sisproj.employee.model.EmployeeVO;
 import com.siszo.sisproj.reservation.model.ReservationService;
 import com.siszo.sisproj.reservation.model.ReservationVO;
+import com.siszo.sisproj.resource.model.ResourceService;
+import com.siszo.sisproj.resource.model.ResourceVO;
 
 @Controller
 @RequestMapping("/resource")
@@ -26,6 +30,9 @@ public class ReservationController {
 	private SchedulerUtility schUtil = new SchedulerUtility();
 	@Autowired
 	private ReservationService resService;
+	@Autowired
+	private ResourceService resourceService;
+	
 	
 	@RequestMapping("/resourceWrite.do")
 	public String reservationInsert(@ModelAttribute ReservationVO resVo, HttpSession session, Model model) {
@@ -79,5 +86,14 @@ public class ReservationController {
 		
 		pagingInfo.setTotalRecord(totalRecord);
 
+	}
+	
+	@RequestMapping("/resource.do")
+	public void resourceMainView(Model model) {
+		List<ResourceVO>resourcelist =resourceService.resourceAllselect();
+		List<ReservationVO>reslist = resService.reservationNselect();
+		
+		model.addAttribute("resourcelist",resourcelist);
+		model.addAttribute("reslist",reslist);
 	}
 }

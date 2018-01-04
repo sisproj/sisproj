@@ -248,6 +248,18 @@ public class SchdeulerController {
 
 	}
 	
+	
+	@RequestMapping("/sideScheduler.do")
+	public void sideScheduler(@RequestParam (defaultValue="0")int empNo, HttpSession session, Model model) {
+		EmployeeVO empVo =(EmployeeVO)session.getAttribute("empVo");
+		empNo=empVo.getEmpNo();
+
+		List<SchedulerVO> list = schedulerService.schedulerSelectAll(empNo);
+		logger.info("스케줄화면 출력 listsize={}",list.size());
+		model.addAttribute("list",list);
+	}
+	
+	
 }
 
 
