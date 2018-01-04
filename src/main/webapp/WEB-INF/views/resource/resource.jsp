@@ -11,6 +11,7 @@
 <script type="text/javascript" charset="utf-8">
 	window.onload = function() {
 		scheduler.config.readonly = true;
+		scheduler.config.readonly_form = true;
 		scheduler.config.xml_date = "%Y-%m-%d %H:%i";
 		scheduler.config.time_step = 60;
 		scheduler.config.multi_day = true;
@@ -70,6 +71,7 @@
 		});
 		
 		scheduler.init('scheduler_here', new Date(), "week");
+		
 
 		scheduler.attachEvent("onEventSave",function(id,ev,is_new,original){ //세이브버튼 클릭 시(신규등록)
 		var ev = scheduler.getEvent(id);
@@ -222,39 +224,51 @@ important
 	opacity: 1;
 }
 
-.dhx_cal_event.event_회의 div, .dhx_cal_event_line.event_회의 {
+.dhx_cal_event.event_1 div, .dhx_cal_event_line.event_1 .dhx_cal_event.event_2 div, .dhx_cal_event_line.event_2{
 	background-color: #36BD14 !important;
 	border-color: #698490 !important;
 }
 
-.dhx_cal_event_clear.event_회의 {
+.dhx_cal_event_clear.event_1, .dhx_cal_event_clear.event_2 {
 	color: #36BD14 !important;
 }
 
-.dhx_cal_event.event_세미나 div, .dhx_cal_event_line.event_세미나 {
+.dhx_cal_event.event_3 div, .dhx_cal_event_line.event_3 .dhx_cal_event.event_4 div, .dhx_cal_event_line.event_4{
 	background-color: #FC5BD5 !important;
 	border-color: #839595 !important;
 }
 
-.dhx_cal_event_clear.event_세미나 {
+.dhx_cal_event_clear.event_3 .dhx_cal_event_clear.event_4 {
 	color: #B82594 !important;
 }
 
-.dhx_cal_event.event_회식 div, .dhx_cal_event_line.event_회식 {
+.dhx_cal_event.event_5 div, .dhx_cal_event_line.event_5 {
 	background-color: blue !important;
 	border-color: #839595 !important;
 }
 
-.dhx_cal_event_clear.event_회식 {
+.dhx_cal_event_clear.event_5 {
+	color: blue !important;
+}
+
+.dhx_cal_event.event_6 div, .dhx_cal_event_line.event_6 {
+	background-color: olive !important;
+	border-color: #839595 !important;
+}
+
+.dhx_cal_event_clear.event_6 {
 	color: blue !important;
 }
 
 .dhx_cal_container {
 	float: left;
 }
+#bttest{
+	float: right; 
 
+}
 #resource_here {
-	float: right;
+float:right; 
 }
 </style>
 <!-- 0. include부분 -->
@@ -289,7 +303,7 @@ important
 
 <article id="bodysection">
 	<!-- 3. 내용 -->
-
+<div style="min-width: 1500px">
 	<form name="rvfrm" id="rvfrm" method="post"
 		action="<c:url value='/resource/resourceWrite.do'/>">
 		<input type="hidden" id="rvStart" name="rvStart"> <input
@@ -299,7 +313,7 @@ important
 		<!-- 제목 -->
 	</form>
 	<div id="scheduler_here" class="dhx_cal_container"
-		style='width: 700px; height: 800px;'>
+		style='width: 800px; height: 800px;'>
 		<div class="dhx_cal_navline">
 			<div class="dhx_cal_prev_button">&nbsp;</div>
 			<div class="dhx_cal_next_button">&nbsp;</div>
@@ -313,11 +327,19 @@ important
 		<div class="dhx_cal_data"></div>
 
 	</div>
-	<div id="resource_here">
+	<div id="resource_here" style="width:800px; height:800px;">
 		<input type="button" id="bttest" value="자원등록 신청하기">
+		<hr>
+		<h4>나의 자원신청 승인 현황</h4>
+		
+		
+		<hr>
+		
+		
+		
 
 	</div>
-
+</div>
 	<!-- 3. 내용 끝 -->
 </article>
 <!-- 4. 상단 네비 색먹이기 // li태그 순서(전자결재 : 6번째) 입력 -->

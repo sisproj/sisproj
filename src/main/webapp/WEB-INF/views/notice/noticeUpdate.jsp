@@ -23,42 +23,54 @@
 	<script type="text/javascript">
 	
 	$(function(){
+		/**
+		 * write부분 js파일
+		 */
+		function submitContents() {
+			 oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
+		}
+
+		var oEditors = [];
+		nhn.husky.EZCreator.createInIFrame({
+			oAppRef: oEditors,
+			elPlaceHolder: "ir1",
+			sSkinURI: "/sisproj/resources/se2/SmartEditor2Skin.html",
+			fCreator: "createSEditor2"
+		});
+		
 		$('#btUpdate').click(function(){
 			if($('#notiTitle').val()==''){
 				alert("제목을 입력하세요");
 				$('#notiTitle').focus();
 				return false;
 			}
-			if($('#notiContent').val()==''){
+			/* if($('#notiContent').val()==''){
 				alert("내용을 입력하세요");
 				$('#notiContent').focus();
+				return false;
+			} */
+			if($('#notiCategory').val()=='0'){
+				alert("카테고리를 선택하세요");
+				$('#notiCategory').focus();
 				return false;
 			}
 			return true;
 		});
+		$('form[name=formUpdate]').submit(function(){
+			submitContents();		
+		});
 	});
 	
-	/* 	function send(form){
-			if(form.notiTitle.value=""){
-				alert("제목을 입력하세요");
-				form.notiTitle.focus();
-				return false;
-			}else if(form.notiContent.value=""){
-				alert("내용을 입력하세요");
-				form.notiContent.focus();
-				return false;
-			}
-		
-		return true; 
-		}*/
+	
 	</script>
 	<div class="container" style="max-width: 1045px;">
 		<div class="row">
 			<form name="formUpdate" method="post"
 				action="<c:url value='/notice/noticeUpdate.do'/>"
-				onsubmit="return send(this)">
+				enctype="multipart/form-data" onsubmit="return send(this)">
 				<input type="hidden" name="notiNo" value="${vo.notiNo }">
 				<input type="hidden" name="empNo" value="${vo.empNo }">
+				<input type="hidden" name="oldFileName" value="${vo.notiFilename }">
 				<table class="table table-striped"
 					style="text-align: center; border: 1px solid #c5bdbd;">
 					<thead>
@@ -74,12 +86,30 @@
 						</tr>
 						<tr>
 							<td class="active"><textarea class="form-control" placeholder="글 내용"
-								name="notiContent" id="notiContent" maxlength="2048" style="height: 480px;">${vo.notiContent }
+								name="notiContent" id="ir1" maxlength="2048" style="height: 480px;">${vo.notiContent }
 							</textarea></td>
+						</tr>
+						<tr>
+							<td style="text-align: left;">
+							<select name="notiCategory" id="notiCategory">
+								<option value="0">선택하세요</option>
+								<option value="[공지]">[공지]</option>
+								<option value="[채용]">[채용]</option>
+								<option value="[행사]">[행사]</option>
+								<option value="[프로젝트]">[프로젝트]</option>
+							</select>
+							<input type="file" id="upfile" name="upfile" 
+								style="display:inline-block; float: right;" />
+							<c:if test="${!empty vo.notiFilename }">
+					            <br>
+					            <span class="sp1">&nbsp</span>
+					            <span style="color:darkgreen; display:inline-block; float: right;">            
+				            		※첨부파일을 새로 지정할 경우 기존파일 ${fileInfo }는 삭제됩니다.</span>
+				            </c:if>	
 						</tr>
 					</tbody>
 				</table>
-				<input type="submit" class="btn btn-primary pull-right" value="글수정">
+				<input type="submit" class="btn btn-primary pull-right" id="btUpdate" value="글수정">
 			</form>
 		</div>
 	</div>
