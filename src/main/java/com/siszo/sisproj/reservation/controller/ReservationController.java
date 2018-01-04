@@ -137,10 +137,14 @@ public class ReservationController {
 	}
 
 	@RequestMapping("/resource.do")
-	public void resourceMainView(Model model) {
+	public void resourceMainView(@RequestParam(defaultValue="0") int empNo, HttpSession session,Model model) {
+		EmployeeVO empVo =(EmployeeVO)session.getAttribute("empVo");
+		empNo=empVo.getEmpNo();
+		
 		List<ResourceVO>resourcelist =resourceService.resourceAllselect();
 		List<ReservationVO>reslist = resService.reservationNselect();
-		
+		List<Map<String, Object>>myreslist=resService.reservationNotYselect(empNo);
+		model.addAttribute("myreslist",myreslist);
 		model.addAttribute("resourcelist",resourcelist);
 		model.addAttribute("reslist",reslist);
 	}

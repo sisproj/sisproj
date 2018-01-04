@@ -33,5 +33,7 @@ public class ReservationServiceImpl implements ReservationService{
 	public List<ReservationVO> reservationNselect(){
 		return resDao.reservationNselect();
 	}
-
+	public List<Map<String, Object>> reservationNotYselect(int empNo){
+		return resDao.reservationNotYselect(empNo);
+	}
 }
