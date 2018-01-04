@@ -40,6 +40,11 @@
 				$('#notiContent').focus();
 				return false;
 			}
+			if($('#notiCategory').val()=='0'){
+				alert("카테고리를 선택하세요");
+				$('#notiCategory').focus();
+				return false;
+			}
 			return true;
 		});
 	});
@@ -82,6 +87,24 @@
 							<td class="active"><textarea class="form-control" placeholder="글 내용"
 								name="notiContent" id="notiContent" maxlength="2048" style="height: 480px;">${vo.notiContent }
 							</textarea></td>
+						</tr>
+						<tr>
+							<td style="text-align: left;">
+							<select name="notiCategory" id="notiCategory">
+								<option value="0">선택하세요</option>
+								<option value="[공지]">[공지]</option>
+								<option value="[채용]">[채용]</option>
+								<option value="[행사]">[행사]</option>
+								<option value="[프로젝트]">[프로젝트]</option>
+							</select>
+							<input type="file" id="upfile" name="upfile" 
+								style="display:inline-block; float: right;" />
+							<c:if test="${!empty vo.notiFilename }">
+					            <br>
+					            <span class="sp1">&nbsp</span>
+					            <span style="color:darkgreen; display:inline-block; float: right;">            
+				            		※첨부파일을 새로 지정할 경우 기존파일 ${fileInfo }는 삭제됩니다.</span>
+				            </c:if>	
 						</tr>
 					</tbody>
 				</table>

@@ -213,13 +213,13 @@ public class NoticeController {
 			vo.setNotiContent(content);
 		}
 		
-		/*String fileInfo="";
+		String fileInfo="";
 		if(vo.getNotiFilename()!=null && !vo.getNotiFilename().isEmpty()) {
 			fileInfo=Utility.getFileInfo(vo.getNotiOfilename(), 
 						vo.getNotiFilesize(),request);
 		}
 		
-		model.addAttribute("fileInfo", fileInfo);*/
+		model.addAttribute("fileInfo", fileInfo);
 		model.addAttribute("vo", vo);
 		
 		return "notice/noticeUpdate";
