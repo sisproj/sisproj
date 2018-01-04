@@ -63,10 +63,6 @@
 
 	</script>
 <style type="text/css">
-.dhx_qi_big_icon icon_details{
-	display: none;
-}
-
 
 .dhx_cal_event div.dhx_footer, .dhx_cal_event.past_event div.dhx_footer,
 	.dhx_cal_event.event_출장 div.dhx_footer, .dhx_cal_event.event_회의 div.dhx_footer,
