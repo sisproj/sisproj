@@ -14,7 +14,7 @@ public interface BookmarkService {
 	//북마크 플래그 str
 	public static final String STR_ADDR_BOOK = "주소록";
 	public static final String STR_SCHEDULER = "스케쥴";
-	public static final String STR_RESOURCES = "자원관리";
+	public static final String STR_RESOURCES = "자원 관리";
 	public static final String STR_CONFIRM = "전자 결재";
 	public static final String STR_COMMUE = "근태 현황";
 	public static final String STR_WEBHARD = "웹하드";
@@ -24,7 +24,7 @@ public interface BookmarkService {
 	//북마크 플래그당 해당 아이콘
 	public static final String ICON_ADDR_BOOK = "<i class='fa fa-phone'></i>";
 	public static final String ICON_SCHEDULER = "<i class='fa fa-calendar-check-o'></i>";
-	public static final String ICON_RESOURCES = "자원관리 fa아이콘";
+	public static final String ICON_RESOURCES = "<i class='fa fa-calendar'></i>";
 	public static final String ICON_CONFIRM = "<i class='fa fa-book'></i>";
 	public static final String ICON_COMMUE = "<i class='fa fa-clock-o'></i>";
 	public static final String ICON_WEBHARD = "<i class='fa fa-floppy-o'></i>";
@@ -38,7 +38,7 @@ public interface BookmarkService {
 	//북마크에 해당하는 주소
 	public static final String URL_ADDR_BOOK = "/addrBook/addrBookList.do";
 	public static final String URL_SCHEDULER = "/scheduler/scheduler.do";
-	public static final String URL_RESOURCES = "자원관리";
+	public static final String URL_RESOURCES = "/resource/resource.do";
 	public static final String URL_CONFIRM = "/confirm/main.do";
 	public static final String URL_COMMUE = "/commue/commueMonthList.do";
 	public static final String URL_WEBHARD = "/webhard/main.do";
