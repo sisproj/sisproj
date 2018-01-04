@@ -73,11 +73,7 @@
 	        			</tr>
         			</thead>
         			<tbody>
-	        			<tr>
-	        				<td>김연아</td>
-	        				<td>제목</td>
-	        				<td>18-01-04</td>
-	        			</tr>
+							<c:import url="/message/messageBanner.do"></c:import>
         			</tbody>
         		</table>
         	</div>
