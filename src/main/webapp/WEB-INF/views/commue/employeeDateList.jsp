@@ -8,26 +8,47 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div id="dimyPage">
-	<table id="DList" border="1" >
-			<tr>
-				<th>사원</th>
-				<th>부서명</th>
-				<th>직급</th>
-				<th>출근</th>
-				<th>근무시간</th>			
-				<th>상태</th>
-			</tr>	
-			<tr>
-				<td><a href="#">김길동</a></td>
-				<td>인사팀</td>
-				<td>과장</td>
-				<td>09:59</td>
-				<td>9시간</td>
-				<td>퇴근</td>
-			</tr>
-		</table>
-</div>
+<form method="get" action="<c:url value='/commue/commueDateList.do' />">
+	<div id="dimyPage">
+		<table id="DList" border="1" >
+		
+		<colgroup>
+			<col width="15%">
+			<col width="15%">
+			<col width="15%">
+			<col width="20%">
+			<col width="20%">
+			<col width="15%">
+		</colgroup>
+				<tr>
+					<th>사원이름</th>
+					<th>부서명</th>
+					<th>직급</th>
+					<th>출근</th>
+					<th>퇴근</th>		
+					<th>상태</th>
+				</tr>	
+			<c:forEach var="vo" items="${list }">
+				<tr>
+					<td><a href="<c:url value='/' />">${vo.empName }</a></td>
+					<td>${vo.deptName }</td>
+					<td>${vo.posName }</td>
+					<td>${vo.cmtIn }</td>
+					<td>${vo.cmtOut }</td>
+					<c:if test="${vo.cmtStatus eq ('Y') }">
+						<td>출근</td>
+					</c:if>
+					<c:if test="${vo.cmtStatus eq ('N') }">
+						<td>퇴근</td>
+					</c:if>
+					<c:if test="${empty vo.cmtStatus }">
+						<td>기록이 없습니다</td>
+					</c:if>
+				</tr>
+			</c:forEach>
+			</table>
+	</div>
+</form>
 </body>
 </html>
 <%@include file="commueBottom.jsp" %>

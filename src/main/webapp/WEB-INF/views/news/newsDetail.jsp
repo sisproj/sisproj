@@ -5,20 +5,14 @@
 <!-- 0. include부분 -->
 <script type="text/javascript">
 	$(function() {
-		if($('.newsDetailempLv').val() !="관리자"){
-			$('#btnewsEdit').hide();
-			$('#btnewsDelete').hide(); 
-		}
-		 
-		
+		var empNo='${sessionScope.empVo.empLev}';
 		$(".comContent").keydown(function (key) {
 	        if(key.keyCode == 13){//키가 13이면 실행 (엔터는 13)
 	           $('form[name=newsComfrm]').submit();
 	        }
 	 
 	    });
-		
-		if(empno!=$('.empNochk').val()){
+		if(empNo!=$('.empNochk').val()){
 			$('.editdeletechk').css('visibility','hidden');
 		} 
 		
@@ -49,6 +43,17 @@
 	width: 60%;
 	margin: 0 auto;
 } 
+
+.newsDtitle{
+text-align:center;
+}
+
+.newsregdate{
+	color:blue; 
+}
+.readcnt{
+	color: gray;
+}
 
 .nocommantd{
 	color: gray;
@@ -99,10 +104,15 @@ float:right;
 	<ul>
 		<!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
 		
-		<li class="active"><a href="<c:url value='/news/dailyNews.do'/>"><i
-				class="fa fa-floppy-o"></i>&nbsp;<span>SIS 뉴스홈</span></a></li>
-		<li><a href="<c:url value='/news/photoNews.do'/>"><i
-				class="fa fa-floppy-o"></i>&nbsp;<span>SIS 포토뉴스</span></a></li>
+		<li class="active"><a href="<c:url value='/news/dailyNews.do'/>"><i class='fa fa-newspaper-o'></i>&nbsp;<span>SIS 뉴스홈</span></a></li>
+			<c:if test="${sessionScope.empVo.empLev eq '관리자'}">
+		<li><a href="<c:url value='/news/newsWrite.do'/>"><i
+				class="fa fa-floppy-o"></i>&nbsp;<span>SIS 뉴스등록</span></a></li>
+		
+		<li><a href="<c:url value='/news/newsRegdit.do'/>"><i
+				class="fa fa-floppy-o"></i>&nbsp;<span>SIS 뉴스관리</span></a></li>
+				</c:if>
+
 
 
 	</ul>
@@ -130,15 +140,16 @@ float:right;
 	<div id="newsDmain">
 		<hr>
 		<div id="newsDTitle">
-			<h3>${newsVo.newsTitle }</h3>
+			<h3 class="newsDtitle">${newsVo.newsTitle }</h3>
 			<div>
-				<span>기사입력 : <fmt:formatDate value="${newsVo.newsRegdate }"
+				<span class="newsregdate">기사입력 : <fmt:formatDate value="${newsVo.newsRegdate }"
 						pattern="yyyy-MM-dd hh:MM" />
+			</span>
 					<div id="newsbtgroup">
+						<span class="readcnt">조회수 : ${newsVo.newsReadCnt }</span>
 						<input type="button" id="btnewsEdit" value="수정" > 
 						<input type="button" id="btnewsDelete" value="삭제">
 					</div>
-			</span>
 			</div>
 		</div>
 		<hr>

@@ -40,7 +40,7 @@
         .tokenfield .token-input {
             display: none;
         }
-        
+
         .close {
             display: none !important;
         }
@@ -74,9 +74,11 @@
                       readonly="readonly">${messageVO.msgContent}</textarea>
         </div>
         <div class="w3-row w3-section" style="height: 35px">
-            <%--<input type="button" class="w3-button w3-blue w3-left w3-small" id="submitButton" value="보내기">--%>
             <div class="w3-right">
-                <button type="button" class="w3-button w3-blue w3-small" id="replyButton">답장</button>
+                <button type="button" class="w3-button w3-blue w3-small" id="replyButton"
+                        onclick="window.open('<c:url value="/message/reply.do?sendempNo=${messageVO.sendempNo}"/>', 'messageWindow', 'width=540,height=500,left=300,top=300,toolbar=no,scrollbars=no,resizable=no')">
+                    답장
+                </button>
                 &nbsp;
                 <button type="button" class="w3-button w3-blue w3-small" onclick="window.close()">닫기</button>
             </div>

@@ -35,4 +35,7 @@ public interface MessageDAO {
 
     public MessageVO selectSendMsgByMsgNo(int msgNo);
 
+    public int updateSendDelMsg(int msgNo);
+
+
 }

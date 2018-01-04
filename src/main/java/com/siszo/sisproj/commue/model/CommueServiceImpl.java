@@ -12,18 +12,31 @@ public class CommueServiceImpl implements CommueService{
 	private CommueDAO commueDao;
 	
 	@Override
-	public List<CommueVO> selectAllCom() {
-		return commueDao.selectAllCom(); 
+	public List<CommueVO> selectAll() {
+		return commueDao.selectAll(); 
 	}
 
 	@Override
-	public int insertIn(int empNo) {
-		return commueDao.insertIn(empNo);
+	public int insertIn(CommueVO comVo) {	
+		return commueDao.insertIn(comVo);
 	}
 
 	@Override
 	public int updateOut(int cmtNo) {
 		return commueDao.updateOut(cmtNo);
-	}
+	}	
+	/*if(cmtVo.getCmtStatus().equals("Y")) {
+				result=CHECK_IN_OK;			
+			}else if(!cmtVo.getCmtStatus().equals("Y")) {
+				result=CHECK_IN;
+			}else if(cmtVo.getCmtStatus().equals("N")) {
+				result=CHECK_OUT_OK;			
+			}else if(!cmtVo.getCmtStatus().equals("N")) {
+				result=CHECK_OUT;		
+			}*/
 
+	@Override
+	public CommueVO selectByEmpNo(int empNo) {
+		return commueDao.selectByEmpNo(empNo);
+	}
 }

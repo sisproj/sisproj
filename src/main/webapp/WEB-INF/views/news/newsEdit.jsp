@@ -128,11 +128,14 @@
 <nav>
 	<ul>
 		<!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
-		<li class="active"><a href="<c:url value='/news/dailyNews.do'/>"><i
-				class="fa fa-floppy-o"></i>&nbsp;<span>SIS 뉴스홈</span></a></li>
-		<li><a href="<c:url value='/news/photoNews.do'/>"><i
-				class="fa fa-floppy-o"></i>&nbsp;<span>SIS 포토뉴스</span></a></li>
-
+		<li><a href="<c:url value='/news/dailyNews.do'/>"><i class='fa fa-newspaper-o'></i>&nbsp;<span>SIS 뉴스홈</span></a></li>
+	<c:if test="${sessionScope.empVo.empLev eq '관리자'}">
+		<li><a href="<c:url value='/news/newsWrite.do'/>"><i
+				class="fa fa-floppy-o"></i>&nbsp;<span>SIS 뉴스등록</span></a></li>
+		
+		<li class="active"><a href="<c:url value='/news/newsRegdit.do'/>"><i
+				class="fa fa-floppy-o"></i>&nbsp;<span>SIS 뉴스관리</span></a></li>
+				</c:if>
 
 	</ul>
 	<!-- 1.왼쪽 사이드 메뉴 지정 끝-->

@@ -10,7 +10,9 @@
     </aside>
     <!-- 왼쪽 사이드 메뉴 끝 -->
     <article id="homesection">
-        
+        <div id="mainbanner">
+        	<c:import url="/mainbanner.do"></c:import>
+        </div>
     </article>
     <!-- 4. 상단 네비 색먹이기 // li태그 순서(전자결재 : 6번째) 입력 -->
     <script type="text/javascript">
@@ -26,3 +28,9 @@
     <!-- 4. 상단 네비 색먹이기 끝-->
     <!-- 0. include부분 끝-->
 <%@include file="inc/bottom.jsp" %>
+<style>
+	#mainbanner{
+		margin-left: 300px;
+		margin-top:94px;
+	}
+</style>

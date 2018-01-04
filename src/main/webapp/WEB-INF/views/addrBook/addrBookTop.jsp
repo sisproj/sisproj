@@ -5,6 +5,9 @@
 
 <script type="text/javascript">
 	$(function(){
+		$('#groupList').mouseleave(function(){
+			$(this).css('visibility', 'hidden');
+		});
 		$('.myAddress').mouseenter(function(){
 			$('#groupList').css('visibility', 'visible');
 			var empNo="empNo="+${sessionScope.empVo.empNo};
@@ -62,6 +65,8 @@
 		
 		$('#addressWrite').click(function(){
 			$('#divWriteSection').css('visibility', 'visible');
+			$('#divUpdateSection').css('visibility', 'hidden');
+			$('#divInsertGroup').css('visibility', 'hidden');
 		});
 		
 		/* 연락처 입력 */
@@ -106,8 +111,10 @@
 		});	
 		
 		/* 리스트의 이름 클릭시 수정창 띄우며 정보 보여주기 */
-		$('.divAddrBody table tbody tr td:nth-child(2) ').click(function(){
+		$('#addrTable tbody tr td:nth-child(2) ').click(function(){
 			$('#divUpdateSection').css('visibility', 'visible');
+			$('#divWriteSection').css('visibility', 'hidden');
+			$('#divInsertGroup').css('visibility', 'hidden');
 			
 			$('#addrNameUpdate').val('');
 			$('#hp1Update').val('010');
@@ -215,8 +222,40 @@
 		/* 그룹추가 영역 */
 		$('#insertGroup').click(function(){
 			$('#divInsertGroup').css('visibility','visible');
+			$('#divWriteSection').css('visibility', 'hidden');
+			$('#divUpdateSection').css('visibility', 'hidden');
+			$('#groupName').val('');
+			
+			var empNo="empNo="+${sessionScope.empVo.empNo};
+			$.ajax({
+				url:"<c:url value='/addrBook/groupList.do'/>",
+				data:empNo,
+				type:"get",
+				dataType:"json",
+				success:function(res){
+					$('.divInsertGroupList table tr').html("");
+					if(res.length>0 ){
+						$.each(res, function(idx, item){
+							var groupName="<tr><td>"+item.groupName+"</td><td><a href='<c:url value='/addrBook/deleteGroup.do?groupNo="+item.groupNo+"'/>'>삭제</a></td></tr>";
+							$('.divInsertGroupList table tbody').append(groupName);							
+						});
+					}	
+				},
+				error:function(xhr, status, error){
+					alert("에러 : "+status+"=>"+error);
+				}
+			});
 		});
 		
+		$('#btNewGroup').click(function(){
+			if($('#groupName').val()==''){
+				alert("그룹명을 입력하세요");
+				$('#groupName').focus();
+				return false;
+			}
+			$('#frmNewGroup').submit();
+		});
+				
 		$('#btExit').click(function(){
 			$('#divInsertGroup').css('visibility','hidden');
 		});
@@ -262,7 +301,7 @@
     		color: rgb(195, 195, 195);
     	}
     	#bodysection div{
-    		margin: 10px;
+    		margin: 0 auto;
     	}
     	.divAddrBody{
     		height: 570px;
@@ -297,7 +336,6 @@
 		#groupList{
 			position : fixed;
 			width: 100px;
-			height: 120px;
 			border: 1px solid #333;
 			top:310px;
 			left:298px;			
@@ -397,7 +435,7 @@
                 	<i id="myAddressRight" class="myAddress fa fa-chevron-right"></i></a>
                 </li>
                 <li id="addressWrite"><a href="#"><i class="fa fa-user-plus"></i>&nbsp;<span>연락처 추가</span></a></li>
-                <li id="insertGroup"><a href="#"><i class="fa fa-users"></i>&nbsp;<span>그룹 추가</span></a></li>
+                <li id="insertGroup"><a href="#"><i class="fa fa-users"></i>&nbsp;<span>그룹 추가 / 삭제</span></a></li>
                 <li><a href="<c:url value='/addrBook/addrBookTrash.do'/>"><i class="fa fa-trash"></i>&nbsp;<span>휴지통</span></a></li>
             </ul>
             <!-- 1.왼쪽 사이드 메뉴 지정 끝-->

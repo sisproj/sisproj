@@ -76,7 +76,7 @@
                     type: "post",
                     url: form.attr('action'),
                     data: form.serialize(),
-                    success: function (response) {
+                    success: function () {
                         window.close();
                     },
                     error: function (e) {
@@ -188,14 +188,14 @@
 
 
 <div class="w3-container" id="writeContainer">
-    <form id="writefrm" name="writefrm" action="messageWrite.do" method="POST">
+    <form id="writefrm" name="writefrm" action="<c:url value='/message/write.do'/>" method="POST">
         <div class="w3-row w3-section" style="height: 34px">
             <div class="w3-col message-label">받는 사람</div>
             <div class="w3-rest">
                 <div class="w3-bar">
                     <%--<input class="w3-bar-item w3-border w3-left message-input" style="width: 80%" type="text">--%>
                     <input type="hidden" id="sendempNo" name="sendempNo" value="${sessionScope.empVo.empNo}">
-                    <input type="hidden" id="choiceEmpId" name="empNo" value="">
+                    <input type="hidden" id="choiceEmpId" name="choiceEmpId" value="">
                     <input type="text" id="tokenField" value="">
                     <button type="button" id="openRightButton" class="w3-bar-item w3-button w3-blue w3-small"
                             style="width: 20%; height: 34px"

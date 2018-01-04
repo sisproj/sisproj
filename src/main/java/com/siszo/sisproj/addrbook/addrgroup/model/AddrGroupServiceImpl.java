@@ -14,4 +14,24 @@ public class AddrGroupServiceImpl implements AddrGroupService{
 	public List<AddrGroupVO> selectGroupName(int empNo) {
 		return addrGroupDao.selectGroupName(empNo);
 	}
+
+	@Override
+	public int insertGroup(AddrGroupVO groupVo) {
+		return addrGroupDao.insertGroup(groupVo);
+	}
+
+	@Override
+	public int insertGroupDefault(AddrGroupVO groupVo) {
+		return addrGroupDao.insertGroupDefault(groupVo);
+	}
+
+	@Override
+	public int deleteGroup(int groupNo) {
+		return addrGroupDao.deleteGroup(groupNo);
+	}
+
+	@Override
+	public int countGroup(int empNo) {
+		return addrGroupDao.countGroup(empNo);
+	}
 }

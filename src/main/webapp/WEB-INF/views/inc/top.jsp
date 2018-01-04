@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="<c:url value="/resources/jquery-ui/jquery-ui.min.css"/>">
 
     <!-- jquery -->
-    <script src="<c:url value="/resources/jquery/jquery-3.2.1.min.js"/>"></script>
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
     <script src="<c:url value="/resources/jquery/jquery.easing.1.3.js"/>"></script>
     <!-- jquery-ui -->
     <script src="<c:url value="/resources/jquery-ui/jquery-ui.min.js"/>"></script>
@@ -40,7 +40,7 @@
             <li><a href="<c:url value='/home.do'/>">HOME</a></li>
             <li><a href="<c:url value='/addrBook/addrBookList.do'/>">주소록</a></li>
             <li><a href="<c:url value='/scheduler/scheduler.do'/>">스케줄</a></li>
-            <li><a href="<c:url value=''/>">자원관리</a></li>
+            <li><a href="<c:url value='/resource/resource.do'/>">자원관리</a></li>
             <li><a href="<c:url value='/confirm/main.do'/>">전자결재</a></li>
             <li><a href="<c:url value='/commue/commueMonthList.do'/>">근태관리</a></li>
             <li><a href="<c:url value='/webhard/main.do'/>">웹하드</a></li>

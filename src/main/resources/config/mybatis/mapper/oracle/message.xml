@@ -16,8 +16,8 @@
             select message_seq.nextval from dual
         </selectKey>
 
-        INSERT INTO MESSAGE (MSG_NO, MSG_TITLE, MSG_CONTENT, MSG_IMPFLAG, MSG_REGDATE, SENDEMP_NO)
-        VALUES (#{msgNo}, #{msgTitle}, #{msgContent}, 'N', DEFAULT, #{sendempNo})
+        INSERT INTO MESSAGE (MSG_NO, MSG_TITLE, MSG_CONTENT, MSG_REGDATE, SENDEMP_NO)
+        VALUES (#{msgNo}, #{msgTitle}, #{msgContent}, DEFAULT, #{sendempNo})
     </insert>
 
     <insert id="insertMessageRec">
@@ -59,7 +59,7 @@
                 FROM (
                     SELECT m.*
                     FROM MSGRECVIEW m
-                    WHERE EMP_NO = #{empNo} AND MSG_DELFLAG = 'Y'
+                    WHERE EMP_NO = #{empNo} AND MSG_DELFLAG = 'R'
                     <include refid="messageSearchWhere"></include>
                     ORDER BY MSG_REGDATE DESC
                 ) mlist
@@ -84,9 +84,10 @@
                         LISTAGG(EMP_NAME, ',') WITHIN GROUP (ORDER BY EMP_NAME) AS EMP_NAME,
                         MIN(MSG_TITLE)       AS MSG_TITLE,
                         MIN(MSG_REGDATE)     AS MSG_REGDATE,
+                        MIN(SEND_DELFLAG)     AS SEND_DELFLAG,
                         count(MSG_NO)        AS CNT
                     FROM MSGSENDVIEW
-                    WHERE SENDEMP_NO = #{empNo}
+                    WHERE SENDEMP_NO = #{empNo} AND SEND_DELFLAG = 'N'
                     <include refid="messageSearchWhere"></include>
                     GROUP BY MSG_NO
                     ORDER BY MSG_NO DESC
@@ -128,9 +129,14 @@
     </select>
 
     <select id="selectSendMsgByMsgNo" parameterType="int" resultType="MessageVO">
-        SELECT *
-        FROM MSGRECVIEW
+        SELECT
+            SENDEMP_NO,
+            LISTAGG(EMP_NAME||'('||EMP_NO||')', ',') WITHIN GROUP (ORDER BY EMP_NAME) AS EMP_NAME,
+            MIN(MSG_TITLE) AS MSG_TITLE,
+            MIN(TO_CHAR(MSG_CONTENT)) AS MSG_CONTENT
+        FROM MSGSENDVIEW
         WHERE MSG_NO = #{msgNo}
+        GROUP BY SENDEMP_NO
     </select>
 
     <select id="selectTotalMsgRecCount" parameterType="MessageSearchVO" resultType="int">
@@ -152,8 +158,6 @@
                 MSG_NO,
                 MIN(EMP_NAME)    AS EMP_NAME,
                 MIN(EMP_NO)      AS EMP_NO,
-                MIN(MSG_TITLE)   AS MSG_TITLE,
-                MIN(MSG_REGDATE) AS MSG_REGDATE,
                 MIN(SEND_DELFLAG) AS MSG_DELFLAG,
                 count(MSG_NO)    AS CNT
             FROM MSGSENDVIEW
@@ -165,7 +169,7 @@
     </select>
     <select id="selectTotalMsgRecycleCount" parameterType="MessageSearchVO" resultType="int">
         SELECT COUNT(*) FROM MSGRECVIEW
-        WHERE EMP_NO = #{empNo} and MSG_DELFLAG = 'Y'
+        WHERE EMP_NO = #{empNo} and MSG_DELFLAG = 'R'
         <include refid="messageSearchWhere"></include>
     </select>
 
@@ -184,13 +188,18 @@
 
     <update id="updateDelMsg" parameterType="int">
         UPDATE MESSAGE_REC
-        SET MSG_DELFLAG = 'Y'
+        SET MSG_DELFLAG = 'R'
         WHERE REC_NO = #{recNo}
+    </update>
+    <update id="updateSendDelMsg" parameterType="int">
+        UPDATE MESSAGE
+        SET SEND_DELFLAG = 'R'
+        WHERE MSG_NO = #{MSG_NO}
     </update>
 
     <update id="delMsgUndo" parameterType="int">
         UPDATE MESSAGE_REC
-        SET MSG_DELFLAG = 'N'
+        SET MSG_DELFLAG = 'R'
         WHERE REC_NO = #{recNo}
     </update>
 

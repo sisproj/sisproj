@@ -88,4 +88,9 @@ public class MessageDAOMyBatis extends SqlSessionDaoSupport implements MessageDA
     public MessageVO selectSendMsgByMsgNo(int msgNo) {
         return getSqlSession().selectOne(namespace + ".selectSendMsgByMsgNo", msgNo);
     }
+
+    @Override
+    public int updateSendDelMsg(int msgNo) {
+        return getSqlSession().update(namespace + ".updateSendDelMsg", msgNo);
+    }
 }

@@ -27,6 +27,7 @@ import com.siszo.sisproj.message.model.MessageSearchVO;
 import com.siszo.sisproj.news.model.NewsComVO;
 import com.siszo.sisproj.news.model.NewsDAO;
 import com.siszo.sisproj.news.model.NewsLikeVO;
+import com.siszo.sisproj.news.model.NewsListVO;
 import com.siszo.sisproj.news.model.NewsSearchVO;
 import com.siszo.sisproj.news.model.NewsService;
 import com.siszo.sisproj.news.model.NewsVO;
@@ -87,17 +88,17 @@ public class NewsController {
 	@RequestMapping("/dailyNews.do")
 	public void DailyNewsView(Model model, @ModelAttribute NewsSearchVO newsSearchVO) {
 		PaginationInfo pagingInfo = new PaginationInfo();
-        pagingInfo.setBlockSize(Utility.BLOCK_SIZE);
-        pagingInfo.setRecordCountPerPage(Utility.NEWSRECORD_COUNT_PER_PAGE);
-        pagingInfo.setCurrentPage(newsSearchVO.getCurrentPage());
-        
-        newsSearchVO.setRecordCountPerPage(Utility.NEWSRECORD_COUNT_PER_PAGE);
-        newsSearchVO.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
-		
-        List<NewsVO> mainlist = newsService.dailyNewsMainList();
+		pagingInfo.setBlockSize(Utility.BLOCK_SIZE);
+		pagingInfo.setRecordCountPerPage(Utility.NEWSRECORD_COUNT_PER_PAGE);
+		pagingInfo.setCurrentPage(newsSearchVO.getCurrentPage());
+
+		newsSearchVO.setRecordCountPerPage(Utility.NEWSRECORD_COUNT_PER_PAGE);
+		newsSearchVO.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+
+		List<NewsVO> mainlist = newsService.dailyNewsMainList();
 		List<NewsVO> list1 = newsService.dailyNewsList(newsSearchVO);
 		List<NewsVO> list = new ArrayList<NewsVO>();
-		
+
 		for (int i = 0; i < list1.size(); i++) {
 			NewsVO vo = list1.get(i);
 			String cont = vo.getNewsContent().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
@@ -111,7 +112,7 @@ public class NewsController {
 		}
 		int totalRecord=newsService.newstotalrecord();
 		pagingInfo.setTotalRecord(totalRecord);
-		
+
 
 		logger.info("데일리뉴스화면 출력 listsize={}", list.size());
 		model.addAttribute("list", list);
@@ -127,7 +128,7 @@ public class NewsController {
 	@RequestMapping("/bottomNews.do")
 	public void bottomNews(Model model) {
 		List<NewsVO> mainlist = newsService.dailyNewsMainList();
-		logger.info("뉴스화면 출력 listsize={}", mainlist.size());
+		logger.info("뉴스화면 출력 mainlistsize={}", mainlist.size());
 		model.addAttribute("mainlist", mainlist);
 
 	}
@@ -136,7 +137,6 @@ public class NewsController {
 	public String newsDetail(@RequestParam(defaultValue = "0") int newsNo, Model model) {
 		NewsVO newsVo = newsService.newsSearchByNo(newsNo);
 
-		int cnt = newsService.readcountup(newsNo);
 		List<Map<String, Object>> list = newsService.searchNewsCommand(newsNo);
 		logger.info("뉴스 디테일 화면 출력,newsVo ={}", newsVo);
 
@@ -145,6 +145,27 @@ public class NewsController {
 
 		return "news/newsDetail";
 	}
+
+
+	@RequestMapping("/newsDetailcnt.do")
+	public String countUpdate(@RequestParam(defaultValue="0") int newsNo,
+			Model model) {
+		logger.info("조회수 증가, 파라미터 newsNo={}", newsNo);
+
+		if(newsNo==0) {
+			model.addAttribute("msg", "잘못된 url입니다.");
+			model.addAttribute("url", "/notice/noticeList.do");
+			return "common/message";
+		}
+
+		int cnt = newsService.readcountup(newsNo);
+		logger.info("조회수 증가 결과, cnt={}", cnt);
+
+		return "redirect:/news/newsDetail.do?newsNo="+newsNo;
+	}
+
+
+
 
 	@RequestMapping(value = "/newsEdit.do", method = RequestMethod.GET)
 	public String newsEdit_get(@RequestParam(defaultValue = "0") int newsNo, Model model) {
@@ -227,7 +248,7 @@ public class NewsController {
 			url = "/news/dailyNews.do";
 		} else {
 			msg = "뉴스 삭제 실패";
-			url = "/news/newsDetail.do";
+			url = "/news/newsDetailcnt.do?newsNo="+newsNo;
 		}
 		model.addAttribute("url", url);
 		model.addAttribute("msg", msg);
@@ -246,7 +267,7 @@ public class NewsController {
 		String msg = "", url = "";
 		if (cnt > 0) {
 			msg = "등록 성공";
-			url = "/news/newsDetail.do?newsNo=" + newsNo;
+			url = "/news/newsDetailcnt.do?newsNo=" + newsNo;
 		} else {
 			msg = "등록 실패";
 			url = "/news/dailyNews.do";
@@ -271,13 +292,13 @@ public class NewsController {
 		if (result > 0) {
 
 			msg = "추천은 한번만 가능합니다.";
-			url = "/news/newsDetail.do?newsNo=" + newsNo;
+			url = "/news/newsDetailcnt.do?newsNo=" + newsNo;
 
 		} else {
 			int likecnt = newsService.insertlike(likevo);
 			int cnt = newsService.updatelikecnt(vo);
 			msg = "추천 성공";
-			url = "/news/newsDetail.do?newsNo=" + newsNo;
+			url = "/news/newsDetailcnt.do?newsNo=" + newsNo;
 		}
 
 		model.addAttribute("url", url);
@@ -296,15 +317,15 @@ public class NewsController {
 		model.addAttribute("comlist", comlist);
 		model.addAttribute("readlist", readlist);
 	}
-	
+
 	@RequestMapping("/newsComDelete")
-		public String deleteNewsCom(@ModelAttribute NewsComVO comVo, Model model) {
-		
+	public String deleteNewsCom(@ModelAttribute NewsComVO comVo, Model model) {
+
 		int cnt=newsService.deleteNewsCom(comVo);
 		logger.info("댓글삭제 파라미터 conVo={}",comVo);
 		logger.info("댓글삭제 파라미터 cnt={}",cnt);
-		
-		String msg = "", url = "/news/newsDetail.do?newsNo="+ comVo.getNewsNo();
+
+		String msg = "", url = "/news/newsDetailcnt.do?newsNo="+ comVo.getNewsNo();
 		if (cnt > 0) {
 			msg = "댓글 삭제 성공";
 		} else {
@@ -314,7 +335,81 @@ public class NewsController {
 		model.addAttribute("msg", msg);
 
 		return "common/message";
-		
-	}
 
+	}
+	@RequestMapping("/newsRegdit.do")
+	public void registerView(Model model, @ModelAttribute NewsSearchVO newsSearchVO) {
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(Utility.BLOCK_SIZE);
+		pagingInfo.setRecordCountPerPage(Utility.NEWSRECORD_COUNT_PER_PAGE);
+		pagingInfo.setCurrentPage(newsSearchVO.getCurrentPage());
+
+		newsSearchVO.setRecordCountPerPage(Utility.NEWSRECORD_COUNT_PER_PAGE);
+		newsSearchVO.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+
+		List<NewsVO> list1 = newsService.newsAllselect(newsSearchVO);
+		List<NewsVO> list = new ArrayList<NewsVO>();
+
+		for (int i = 0; i < list1.size(); i++) {
+			NewsVO vo = list1.get(i);
+			String cont = vo.getNewsContent().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
+			vo.setNewsContent(cont);
+
+			int comcount = newsService.countNewsCommand(vo.getNewsNo());
+			vo.setComCount(comcount);
+
+			list.add(vo);
+		}
+		int totalRecord=newsService.newstotalrecord();
+		pagingInfo.setTotalRecord(totalRecord);
+
+		logger.info("데일리뉴스화면 출력 listsize={}", list.size());
+		model.addAttribute("list", list);
+		model.addAttribute("pagingInfo", pagingInfo);
+	}
+	
+	
+	@RequestMapping("/deleteMulti.do")
+	public String deleteMulti(@ModelAttribute NewsListVO newsListVo,HttpServletRequest request, Model model) {
+
+		logger.info("일괄 삭제처리 파라미터newsListVo={}",newsListVo);
+
+		List<NewsVO> list = newsListVo.getNewsItem();
+
+		int cnt = newsService.deleteMulti(list);
+		logger.info("선택한 항목 삭제 결과, cnt={}",cnt);
+
+		//이미지 파일 삭제
+		String msg="",url="/news/dailyNews.do";
+		if(cnt>0) {
+			for(int i=0;i<list.size();i++) {
+				NewsVO vo=list.get(i);
+/*				logger.info("i={}, newsNo={}",i,vo.getnewsNo());
+				logger.info("imageURL={}",vo.getImageURL());
+*/		
+				int newsNo=vo.getNewsNo();
+				//체크한 항목만 파일 삭제
+				if(newsNo!=0) {
+					String pathname=FileUtil.getUploadPath(request, FileUploadUtil.NEWS_IMAGES);
+					File file = new File(pathname,vo.getNewsImage());
+					if(file.exists()) {
+						boolean bool=file.delete();
+						logger.info("파일 삭제 여부:{}",bool);
+					}
+				}
+				msg="삭제되었습니다.";	
+
+			}//for
+		}else {
+			msg="선택한 항목 삭제 실패";
+		}
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+			
+		return "common/message";
+
+	}
+	
+	
 }

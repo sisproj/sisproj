@@ -46,6 +46,7 @@
 				'left=0,top=0,width=500,height=200,locations=yes,resizable=yes');
 		});
 	});
+	
 </script>
 </head>
 <body>
