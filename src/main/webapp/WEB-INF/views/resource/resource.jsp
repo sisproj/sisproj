@@ -11,6 +11,7 @@
 <script type="text/javascript" charset="utf-8">
 	window.onload = function() {
 		scheduler.config.readonly = true;
+		scheduler.config.readonly_form = true;
 		scheduler.config.xml_date = "%Y-%m-%d %H:%i";
 		scheduler.config.time_step = 60;
 		scheduler.config.multi_day = true;
@@ -70,6 +71,7 @@
 		});
 		
 		scheduler.init('scheduler_here', new Date(), "week");
+		
 
 		scheduler.attachEvent("onEventSave",function(id,ev,is_new,original){ //세이브버튼 클릭 시(신규등록)
 		var ev = scheduler.getEvent(id);
