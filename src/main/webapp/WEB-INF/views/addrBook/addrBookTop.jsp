@@ -370,6 +370,9 @@
 		left: 40%;
 		visibility: hidden;
 	}
+	.divInsertGroupHeader h3 {
+		padding:15px;
+	}
 	.divWriteBody, .divUpdateBody{
 		width: 530px;
 		height:230px;
@@ -377,12 +380,12 @@
 	}
 	.divInsertGroupList{
 		width: 400px;
-		padding: 10px;
+		margin: 0 auto;
 	}
 	.divInsertNewGroup{
 		width: 400px;
-		height : 50px;
-		padding: 10px;
+		height:60px;
+		margin: 0 auto;
 	}
 	.divWriteBody label, .divUpdateBody label{
 		width: 20%;
