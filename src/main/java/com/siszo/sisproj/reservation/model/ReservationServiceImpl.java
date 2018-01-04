@@ -14,4 +14,7 @@ public class ReservationServiceImpl implements ReservationService{
 	public List<ReservationVO> selectReservationAll(ReservationSearchVO searchVo) {
 		return resDao.selectReservationAll(searchVo);
 	}
+	public int insertReservation(ReservationVO resVo) {
+		return resDao.insertReservation(resVo);
+	}
 }

@@ -36,24 +36,11 @@
 		var subject = [ {
 			key : '',
 			label : '자원을 선택하세요'
+		<c:forEach var="vo" items="${list }">
 		}, {
-			key : '1',
-			label : '101호 회의실'
-		}, {
-			key : '2',
-			label : '201호 회의실'
-		}, {
-			key : '3',
-			label : '스타렉스 회사차'
-		}, {
-			key : '4',
-			label : '포터 회사차'
-		}, {
-			key : '5',
-			label : '축구장'
-		}, {
-			key : '6',
-			label : '법인카드'
+			key : "${vo.resNo}",
+			label : "${vo.resName}"
+		</c:forEach>
 		}, {
 			key : 'orders',
 			label : '기타'
@@ -78,13 +65,13 @@
 			map_to : "auto"
 		} ];
 
-		scheduler.init('scheduler_here', new Date(), "week");
 		$('#bttest').click(function(){
 			scheduler.showLightbox(subject);
 		});
+		
+		scheduler.init('scheduler_here', new Date(), "week");
 
 		scheduler.attachEvent("onEventSave",function(id,ev,is_new,original){ //세이브버튼 클릭 시(신규등록)
-			 
 		    if (!ev.text) {
 		        alert("내용을 입력하세요");
 		        return false;
@@ -94,17 +81,18 @@
 		        return false;
 		    }
 		    else {
+		    	
 				 var start_date = ev.start_date; //시작날짜
 				 var end_date = ev.end_date; //끝날짜
 				 var text = ev.text; //내용
 				 var selection = ev.subject; //카테고리
-				 var rvNo=ev.rvid; //아이디
-				$('#rvNo').val(id);
+				 var rvNo=ev.id; //아이디
+				$('#rvNo').val(rvNo);
 		        $('#rvStart').val(start_date);
 		        $('#rvEnd').val(end_date);
 		        $('#rvContent').val(text);
-		        $('#rvCateg').val(selection);
-		  	 	$('#rvfrm').submit();
+		        $('#resNo').val(selection);
+		  	  	 $('#rvfrm').submit();
 			    return true; 
 		    } 
 		    
@@ -134,8 +122,9 @@
 			end_date : "2017-04-22 17:00",
 			text : "Usual event"
 		} ], "json");
-
+		
 	}
+
 </script>
 <style type="text/css">
 html, body {
@@ -230,7 +219,6 @@ important
 	background-color: blue !important;
 	border-color: #839595 !important;
 }
-
 .dhx_cal_event_clear.event_회식 {
 	color: blue !important;
 }
@@ -275,12 +263,11 @@ float:right;
 <article id="bodysection">
 	<!-- 3. 내용 -->
 	
-	<form name="rvfrm" id="schfrm" method="post" action="<c:url value='/resource/resourceWrite.do'/>">
-		<input type="hidden" id="rvStart" name="rvStart"> 
-		<input type="hidden" id="rvEnd" name="rvEnd">
-		<input type="hidden" id="rvCateg" name="rvCateg">
-		<input type="hidden" id="rvNo" name="rvNo">
-		<input type="hidden" id="rvContent" name="rvContent"><!-- 제목 -->
+	<form name="rvfrm" id="rvfrm" method="post" action="<c:url value='/resource/resourceWrite.do'/>">
+		<input type="text" id="rvStart" name="rvStart"> 
+		<input type="text" id="rvEnd" name="rvEnd">
+		<input type="text" id="resNo" name="resNo">
+		<input type="text" id="rvContent" name="rvContent"><!-- 제목 -->
 	</form>
 	<div id="scheduler_here" class="dhx_cal_container"
 		style='width: 700px; height: 800px;'>    
