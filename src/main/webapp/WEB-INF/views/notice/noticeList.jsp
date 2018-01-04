@@ -189,7 +189,7 @@ action="<c:url value='/notice/noticeList.do'/>">
 											</a>
 											<!-- 24시간 이내의 글인 경우 -->
 											<c:if test="${vo.newImgTerm<24 }">
-												<img src='<c:url value="/noti_images/new.gif"/>' 
+												<img src='<c:url value="/noti_images/new2.gif"/>' 
 												alt="new 이미지">
 											</c:if>
 										</td>									

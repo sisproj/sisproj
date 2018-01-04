@@ -29,7 +29,7 @@
 		});
 		
 		$('#seFrm').submit(function() {
-			self.close();
+
 		});
 		
 		$('#ceBt').click(function() {
