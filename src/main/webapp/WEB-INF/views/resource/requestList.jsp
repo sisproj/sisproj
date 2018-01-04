@@ -9,7 +9,17 @@
 	href="<c:url value="/resources/codebase/dhtmlxscheduler.css"/>">
 
 <script type="text/javascript" charset="utf-8">
-	
+	$(function(){
+		$('#checkAll').click(function() {
+			if($("#checkAll").prop("checked")) {
+				//전체 checkbox들을 체크해준다 
+				$("td input[type=checkbox]").prop("checked",true); 
+			} else { 
+				//모든 checkbox들의 체크해제
+				$("td input[type=checkbox]").prop("checked",false); 
+			}
+		});
+	});
 </script>
 <style type="text/css">
 html, body {

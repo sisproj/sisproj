@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-<mapper namespace="config.mybatis.mapper.oracle.reservation">	
-	
-	
+<mapper namespace="config.mybatis.mapper.oracle.reservation">
+	<sql id="searchWhere">
+		<if test="searchKeyword !=null and searchKeyword!=''">
+			where ${resCateg} like '%' || #{searchKeyword} || '%'
+		</if>
+	</sql>	
+	<select id="selectReservationAll" parameterType="ReservationSearchVO" resultType="ReservationVO">
+		select * from reservation 
+		<include refid="searchWhere"></include>
+		order by rv_regdate desc;
+	</select>
 </mapper>
 
 
