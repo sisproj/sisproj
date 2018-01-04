@@ -37,5 +37,17 @@ public interface MessageDAO {
 
     public int updateSendDelMsg(int msgNo);
 
+    public List<MessageVO> selectRecycleSendMsgByEmpNo(MessageSearchVO messageSearchVO);
 
+    public int selectTotalMsgRecycleSendCount(MessageSearchVO messageSearchVO);
+
+    public int updateRealDelMsg(int recNo);
+
+    public int updateRealDelSendMsg(int recNo);
+
+    public int selectUnreadCount(int empNo);
+
+    public List<MessageVO> selectRecencyRecMsg(int empNo);
+
+    public List<MessageVO> selectRecencySendMsg(int empNo);
 }

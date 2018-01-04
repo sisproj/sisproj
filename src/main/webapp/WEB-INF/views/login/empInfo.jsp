@@ -30,7 +30,7 @@
 	           </c:if> 
 			</c:if>
 	        <li><i class="fa fa-envelope"></i>&nbsp;<span><a href="<c:url value='/message/message.do'/>">쪽지</a></span>&nbsp;<span
-	                class="red">0</span></li>
+	                class="red">${msgUnreadCnt}</span></li>
 	        <li><i class="fa fa-comments"></i>&nbsp;<span><a href="#">대화</a></span>&nbsp;<span
 	                class="red">0</span></li>
 	        <li><i class="fa fa-pencil-square-o"></i>&nbsp;<span><a href="#">결재할 문서</a></span>&nbsp;<span
@@ -38,7 +38,7 @@
 	    </ul>
 	</div>
 		<div id="asidebtn">
-		    <ul>	    	
+		    <ul>
 		        <li><a href="<c:url value='/commue/commueIn.do' />">출근</a></li>	
 		        	<!-- 잠시 보류 -->
 		        <%-- <li><a href="<c:url value='/commue/commueOut.do' />">퇴근</a></li>  --%>

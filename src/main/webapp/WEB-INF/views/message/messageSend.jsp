@@ -110,7 +110,7 @@
                 <tr class="hoverable" id="msg-${msgVO.recNo}">
                     <td style="width: 5%" class="w3-center"><input type="checkbox" name="chk" value="${msgVO.msgNo}">
                     </td>
-                    <td style="width: 20%">
+                    <td style="width: 120px; min-width: 120px">
                         <c:if test="${fn:length(msgVO.empName)>7 }">
                             ${fn:substring(msgVO.empName,0,7) }...
                         </c:if>
@@ -118,7 +118,7 @@
                             ${msgVO.empName}
                         </c:if>
                     </td>
-                    <td style="width: 65%">
+                    <td style="width: 80%">
                         <div onclick="window.open('<c:url
                                 value="/message/sendDetail.do?msgNo=${msgVO.msgNo}"/>', 'messageWindow', 'width=540,height=500,left=300,top=300,toolbar=no,scrollbars=no,resizable=no');">
                             <a href="#">${msgVO.msgTitle}</a>

@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@include file="addrBookTop.jsp"%>
-<!-- Bootstrap -->
-<script src="<c:url value='/resources/jquery/jquery-3.2.1.min.js'/>"></script>
-<link href="<c:url value='/resources/css/bootstrap/bootstrap.min.css'/>" rel="stylesheet">
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="<c:url value='/resources/js/bootstrap/bootstrap.min.js'/>"></script>
 <script type="text/javascript">
 	$(function(){		
 		if($('#groupNo').val()==''){

@@ -27,7 +27,7 @@
     </script>
     <style>
         .box_skitter_large img {
-            width: 1000px;
+            width: 750px;
             height: 500px;
         }
     </style>
