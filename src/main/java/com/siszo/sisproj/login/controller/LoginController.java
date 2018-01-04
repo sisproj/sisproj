@@ -104,13 +104,17 @@ public class LoginController {
 	}
 	@RequestMapping("/empInfo.do")
 	public String detailEmployee(HttpSession session,Model model) {
-		logger.info("사원  간략정보 화면 보여주기");
-		
-		String empName = (String)session.getAttribute("empName");
-		String empLev = (String)session.getAttribute("empLev");
-		
 		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
-	
+		logger.info("사원 간략정보 화면 보여주기 empVo={}",empVo);
+				
+		int resultIn=commueService.selectInChk(empVo.getEmpNo());
+		logger.info("사원 출근을 하였었는지 체크하기 resultIn={}",resultIn);
+		
+		int resultOut=commueService.selectOutChk(empVo.getEmpNo());
+		logger.info("사원 출근을 하였었는지 체크하기 resultOut={}",resultOut);
+
+		model.addAttribute("resultOut",resultOut);
+		model.addAttribute("resultIn",resultIn);
 		model.addAttribute("empVo",empVo);
 		
 		return "login/empInfo";

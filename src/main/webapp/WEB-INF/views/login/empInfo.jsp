@@ -39,9 +39,15 @@
 	</div>
 		<div id="asidebtn">
 		    <ul>	    	
-		        <li><a href="<c:url value='/commue/commueIn.do' />">출근</a></li>	
-		        	<!-- 잠시 보류 -->
-		        <%-- <li><a href="<c:url value='/commue/commueOut.do' />">퇴근</a></li>  --%>
+		    	<c:if test="${resultIn==1}">
+		        	<li><a href="<c:url value='/commue/commueIn.do' />">출근</a></li>	
+		        </c:if>
+		        <c:if test="${resultIn==2 && resultOut==3}">
+		           <li><a href="<c:url value='/commue/commueOut.do' />">퇴근</a></li>  
+		        </c:if>
+		        <c:if test="${resultIn==2 && resultOut==4 }">
+		           <li><a href="#">HOME</a></li>  		        
+		        </c:if>
 		        <li><a href="#" onclick="window.open('<c:url value="/messenger/messenger.do"/>', 'messengerWindow', 'width=1100,height=640,toolbar=no,scrollbars=yes')">메신저</a></li>
 		        <li><a href="<c:url value='/login/logout.do'/>">로그 아웃</a></li>
 		    </ul>
