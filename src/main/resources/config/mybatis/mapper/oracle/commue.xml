@@ -18,20 +18,31 @@
 		where cmt_no=#{cmtNo}
 	</update>
 	
-	
-	<select id="checkCmt" parameterType="int" resultType="CommueVO">
-		select * from commute
-		where emp_no=#{empNo} and cmt_no=#{cmtNo}
-	</select>
-	
 	<select id="selectByEmpNo" parameterType="int" resultType="CommueVO">
 		select cmt.*
 		from (select * from commute where emp_no=#{empNo} order by cmt_no desc) cmt
 		<![CDATA[where rownum<2 ]]>
 	</select>
 	
-	<select id="selectAll" resultType="CommueVO">
-		select * from cmtView
+	<select id="searchDate" parameterType="DateSearchVO" resultType="map">
+		select emp_name,dept_name,pos_name,to_char(cmt_in,'HH:mm') as "CMTIN",
+        to_char(cmt_out,'HH:mm') as "CMTOUT",cmt_status    
+		from cmtView
+		<if test="startDay!=null">
+		where to_char(cmt_in, 'yyyy-mm-dd')=#{startDay}
+		order by to_char(cmt_in, 'HH:mm')
+		</if>
+	</select>
+	
+	<select id="selectInChk" parameterType="int" resultType="int">
+		select count(*) from cmtView
+		where to_char(cmt_in,'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')
+		and emp_no=#{empNo}
+	</select>
+	<select id="selectOutChk" parameterType="int" resultType="int">
+		select count(*) from cmtView
+		where to_char(cmt_out,'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')
+		and emp_no=#{empNo}
 	</select>
 </mapper>
 

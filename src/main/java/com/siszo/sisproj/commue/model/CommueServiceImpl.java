@@ -1,6 +1,7 @@
 package com.siszo.sisproj.commue.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,18 +26,40 @@ public class CommueServiceImpl implements CommueService{
 	public int updateOut(int cmtNo) {
 		return commueDao.updateOut(cmtNo);
 	}	
-	/*if(cmtVo.getCmtStatus().equals("Y")) {
-				result=CHECK_IN_OK;			
-			}else if(!cmtVo.getCmtStatus().equals("Y")) {
-				result=CHECK_IN;
-			}else if(cmtVo.getCmtStatus().equals("N")) {
-				result=CHECK_OUT_OK;			
-			}else if(!cmtVo.getCmtStatus().equals("N")) {
-				result=CHECK_OUT;		
-			}*/
 
 	@Override
 	public CommueVO selectByEmpNo(int empNo) {
 		return commueDao.selectByEmpNo(empNo);
 	}
+
+	@Override
+	public List<Map<String, Object>> searchDate(DateSearchVO vo) {
+		return commueDao.searchDate(vo);
+	}
+
+	@Override
+	public int selectInChk(int empNo) {
+		int cnt = commueDao.selectInChk(empNo);
+		int result=0;
+		if(cnt==0) {
+			result=CHECK_IN;	
+		}else {
+			result=CHECK_IN_OK;
+		}
+		return result;
+	}
+
+	@Override
+	public int selectOutChk(int empNo) {
+		int cnt = commueDao.selectOutChk(empNo);
+		int result=0;
+		if(cnt==0) {
+			result=CHECK_OUT;
+		}else {
+			result=CHECK_OUT_OK;
+		}
+		return result;
+	}
+	
+	
 }

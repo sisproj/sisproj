@@ -10,18 +10,6 @@
 		$.applyDatePicker('#startDay');
 		$.applyDatePicker('#endDay');
 	});
-	$.settingTerm=function(type,term){
-		
-		var today = new Date();
-		var month = today.split('-');	
-		if(type=="d"){
-			endDate.setDate(endDate.getDate()-term);
-		}else if(type=="m"){
-			endDate.setMonth(endDate.getMonth()-term);
-		}
-		
-		$('#startDay').val($.convertDate(endDate));
-	}
 	
 	$.setToday=function(){		
 			var today = new Date();
@@ -31,7 +19,7 @@
 	}	
 	
 	$.convertDate=function(today){
-		return today.getFullYear()+" "+(today.getMonth()+1)+"월"
+		return today.getFullYear()+" "+(today.getMonth()+1)+"월 "+today.getDate()+"일";
 	}
 	
 	$.applyDatePicker=function(id){
@@ -63,8 +51,7 @@
     </article>
     <article id="bodysection">
         <!-- 3. 내용 -->
-<div id="dimyPage">
-		 <form id="frmCom" name="frmCom" method="post" action="<c:url value='/commue/commuePage.do' />">
+	<div id="dimyPage">	
 			<div id="diBtCa">
 				<div id="diCal">	
 					<span id="spDate"></span>
@@ -72,10 +59,6 @@
 				<div id="diSearch" style="margin-left: 10px;">
 						<input type="text" name="startDay" id="startDay" 
 							value="${dateSearchVO.startDay }" placeholder="누르시면 달력이나옵니다."> 
-						~ 
-						<input type="text" name="endDay" id="endDay" 
-							value="${dateSearchVO.endDay }" placeholder="누르시면 달력이나옵니다.">
 						<input type="button" id="btSearch" value="검색">
 				</div>
 			</div>
-		</form>
