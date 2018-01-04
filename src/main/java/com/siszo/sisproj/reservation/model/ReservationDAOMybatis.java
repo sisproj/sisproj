@@ -10,7 +10,7 @@ public class ReservationDAOMybatis extends SqlSessionDaoSupport implements Reser
 	private String namespace="config.mybatis.mapper.oracle.reservation";
 
 	@Override
-	public List<ReservationVO> selectReservationAll() {
-		return getSqlSession().selectList(namespace+".selectReservationAll");
+	public List<ReservationVO> selectReservationAll(ReservationSearchVO searchVo) {
+		return getSqlSession().selectList(namespace+".selectReservationAll",searchVo);
 	}
 }

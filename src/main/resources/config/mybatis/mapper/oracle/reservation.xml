@@ -9,7 +9,7 @@
 		</if>
 	</sql>	
 	<select id="selectReservationAll" parameterType="ReservationSearchVO" resultType="ReservationVO">
-		select * from reservation 
+		select * from reservationView 
 		<include refid="searchWhere"></include>
 		order by rv_regdate desc;
 	</select>

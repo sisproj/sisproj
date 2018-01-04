@@ -11,7 +11,7 @@ public class ReservationServiceImpl implements ReservationService{
 	private ReservationDAO resDao;
 
 	@Override
-	public List<ReservationVO> selectReservationAll() {
-		return resDao.selectReservationAll();
+	public List<ReservationVO> selectReservationAll(ReservationSearchVO searchVo) {
+		return resDao.selectReservationAll(searchVo);
 	}
 }
