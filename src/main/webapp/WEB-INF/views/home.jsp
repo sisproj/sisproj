@@ -17,25 +17,46 @@
         <div id="clockSection">
         	<c:import url="/clock.do"></c:import>
         </div>
-        <div class="clr"></div>
-        <div id="mainTable">
-        	<div id="mainNoti">
-        		<h4><i class="fa fa-bullhorn"></i> 공지 사항</h4>
+        <div id="mainNoti">
+        	<h4><i class="fa fa-bullhorn"></i> 공지사항ㄴㅁㅇ</h4>
         		<table>
        				<colgroup>
-       					<col width="70%">
-       					<col width="30%">
+       					<col width="75%">
+       					<col width="25%">
        				</colgroup>
         			<thead>
 	        			<tr>
 	        				<th>제목</th>
-	        				<th>작성일</th>
+	        				<th>작성자</th>
 	        			</tr>
         			</thead>
         			<tbody>
 	        			<tr>
-	        				<td>제목</td>
-	        				<td>18-01-04</td>
+	        				<td>공지사항 제목</td>
+	        				<td>김연아</td>
+	        			</tr>
+        			</tbody>
+        		</table>
+        </div>
+        <div class="clr"></div>
+        <div id="mainTable">
+        	<div id="mainNews">
+        		<h4><i class="fa fa-newspaper-o"></i> 사내뉴스</h4>
+        		<table>
+       				<colgroup>
+       					<col width="10%">
+       					<col width="90%">
+       				</colgroup>
+        			<thead>
+	        			<tr>
+	        				<th></th>
+	        				<th>기사제목</th>
+	        			</tr>
+        			</thead>
+        			<tbody>
+	        			<tr>
+	        				<td>1</td>
+	        				<td>사내뉴스 제목</td>
 	        			</tr>
         			</tbody>
         		</table>
@@ -129,6 +150,15 @@
 		min-height: 150px;
 		box-sizing: border-box;
 	}
+	#mainNoti{
+		box-sizing: border-box;
+		float:left;
+		width:calc(100% - 760px);	
+		height: 340px;
+		margin-top: 10px;
+		border : 1px solid #069;
+		padding: 5px;
+	}
 	#mainTable{
 		display: -webkit-box;
 		box-sizing: border-box;
@@ -137,12 +167,11 @@
 	}
 	#mainTable div{
 		box-sizing: border-box;
-		min-height: 300px;	
-/*		border : 1px solid #aaa;
- 		border-radius: 10px;
-		padding:5px; */
+		height: 300px;	
+		border : 1px solid #069;
+		padding: 5px;
 	}
-	#mainTable #mainNoti{
+	#mainTable #mainNews{
 		width: calc(40% - 10px);
 		margin-right: 10px;
 	}
@@ -151,9 +180,9 @@
 		margin-right: 10px;
 	}
 	#mainTable #mainMessage{
-		width: calc(30% - 10px);
+		width: calc(30%);
 	}
-	#mainTable h4{
+	#homesection h4{
 		width: 100%;
 		height: 40px;
 		box-sizing: border-box;
@@ -162,19 +191,19 @@
 		margin-bottom: 5px;
 		font-size: 1.2em;
 	}
-	#mainTable table{
+	#homesection table{
 		width: 100%;
 		box-sizing:border-box;
 		border:0;
 		border-collapse: collapse;		
 	}
-	#mainTable tr{
+	#homesection tr{
 		transition:all 300ms linear;
 	}
-	#mainTable tbody tr:hover{
+	#homesection tbody tr:hover{
 		background-color: #e1e1e1;
 	}
-	#mainTable th{
+	#homesection th{
 		box-sizing:border-box;
 		padding: 5px;
 		height: 20px;
@@ -184,7 +213,7 @@
 		border-top: 2px solid #e1e1e1;
 		border-bottom: 2px solid #e1e1e1;
 	}
-	#mainTable td {
+	#homesection td {
 		box-sizing:border-box;
 		padding: 5px;
 		font-size: 0.9em;
@@ -199,6 +228,15 @@
 		box-shadow: 1px 1px 3px #aaa;
 	}
 	#mainNoti h4 i{
+		color: #fff;		
+	}
+	/*사내뉴스*/
+	#mainNews h4 {
+		background-color: #007bff;
+		color: #fff;
+		box-shadow: 1px 1px 3px #aaa;
+	}
+	#mainNews h4 i{
 		color: #fff;		
 	}
 	/*전자결재*/
