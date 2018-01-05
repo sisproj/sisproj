@@ -212,13 +212,7 @@ function ChangeDate(Date) {
 		
 		}
 </script>
-<style type="text/css">
-html, body {
-	margin: 0;
-	padding: 0;
-	height: 100%;
-	overflow: hidden;
-}
+<style type="text/css"> 
 
 .dhx_cal_event
 div
@@ -331,7 +325,8 @@ important
 }
 
 #resource_here {
-	float: right;
+	width:50%;
+	float: left;
 }
 
 	.filters_wrapper {
@@ -444,7 +439,11 @@ important
 	#pagingbtn #nextbtn{
 		background-color: #306;
 	}
-
+	#bodysection
+	{
+min-width: 1500px;
+clear: both;
+	}
  </style>
 <!-- 0. include부분 -->
 <nav>
@@ -483,7 +482,7 @@ important
 
 <article id="bodysection">
 	<!-- 3. 내용 -->
-	<div style="min-width: 1500px">
+	<div class="resbigdiv">
 		<form name="rvfrm" id="rvfrm" method="post"
 			action="<c:url value='/resource/resourceWrite.do'/>"> 	
 			<input type="hidden" id="rvStart" name="rvStart"> <input
@@ -528,7 +527,7 @@ important
 </div>
 
 		<div id="scheduler_here" class="dhx_cal_container"
-			style='width: 800px; height: 800px;'>
+			style='width: 50%; height: 800px;'>
 			<div class="dhx_cal_navline">
 				<div class="dhx_cal_prev_button">&nbsp;</div>
 				<div class="dhx_cal_next_button">&nbsp;</div>
@@ -542,8 +541,8 @@ important
 			<div class="dhx_cal_data"></div>
 
 		</div>
-		<div id="resource_here" style="width: 800px; height: 800px;">
-			<input type="button" id="bttest" value="자원등록 신청하기">
+		<div id="resource_here">
+			<input type="button" id="bttest" value="자원등록 신청하기"> 
 			<hr>
 			<h4 style="text-align: center;">나의 자원신청 승인 현황</h4>
 			<hr>
@@ -590,7 +589,6 @@ important
 	        		</tbody>
 	        	</table>
 		        
-			<hr>
 			
 
 		</div>

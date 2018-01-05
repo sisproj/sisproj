@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@include file="../inc/top.jsp"%>
+<%@ include file="../inc/admTop.jsp" %>
 <link rel="stylesheet" href="<c:url value='/resources/css/w3/w3.css'/>">
 <script>
 	$(function() {
