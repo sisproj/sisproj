@@ -174,9 +174,12 @@
 	<ul>
 		<!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
 		<li><a href="<c:url value='/resource/resource.do'/>"><i class="fa fa-calendar-check-o" aria-hidden="true"></i>&nbsp;<span>자원관리</span></a></li>
-		<li class="active"><a href="<c:url value='/resource/requestList.do'/>"><i class="fa fa-hourglass-half" ></i>&nbsp;<span>승인 대기 목록</span></a>
+		<c:if test="${sessionScope.empVo.empLev!='사원' }">
+			<li class="active">
+				<a href="<c:url value='/resource/requestList.do'/>">
+				<i class="fa fa-hourglass-half" ></i>&nbsp;<span>승인 대기 목록</span></a>
 			</li>
-
+		</c:if>
 		<!-- <li><a href="#"><i class="fa fa-file-text"></i>&nbsp;<span>승인 완료 목록</span></a></li> -->
                 
 	</ul>
