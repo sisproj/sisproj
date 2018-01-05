@@ -4,7 +4,8 @@
 <mapper namespace="config.mybatis.mapper.oracle.reservation">
 	<sql id="searchWhere">
 		<if test="searchKeyword !=null and searchKeyword!=''">
-			and s.res_name like '%' || #{searchKeyword} || '%'
+			or s.res_name like '%' || #{searchKeyword} || '%'
+			or s.res_categ like '%' || #{searchKeyword} || '%'
 		</if>
 	</sql>	
 	<select id="selectReservationAll" parameterType="ReservationSearchVO" resultType="map">
