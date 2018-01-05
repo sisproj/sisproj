@@ -44,6 +44,8 @@
     		<mapping path="/news/*"/>
     		<mapping path="/notice/*"/>  
     		<mapping path="/confirm/*"/>  
+    		<mapping path="/confirm/adm/*"/>
+    		<mapping path="/resource/*"/>
     		<mapping path="/webhard/*"/>  
     		<mapping path="/bookmark/*"/>  		    		  		    		
     		<mapping path="/home.do"/>

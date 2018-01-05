@@ -1,0 +1,275 @@
+
+html, body{
+	width: 100%;
+	height: 100%;
+	background-color: #fff;
+}
+header{
+	position: fixed;
+	box-sizing: border-box;
+	width: 100%;
+	min-width: 1100px;
+	height: 94px;
+	padding-left: 10px;
+	padding-top: 10px;
+	background-color: #008c94;
+	z-index:9000;
+}
+header h1 img {
+	height: 70px;
+}
+header h1 {
+	float:left;		
+}
+
+/* aside */
+aside{
+	position: fixed;
+	width: 298px;
+	height: calc(100vh - 94px);
+	margin-top: 94px;
+	background-color: #008c94;
+	float:left;
+	margin-right: 30px;
+	z-index:9000;
+}
+aside #loginfo{
+	box-sizing: border-box;
+	width: 90%;
+	height:190px;
+	border: 2px solid #fff;
+	border-radius: 10px;
+	margin: 0 auto;
+	padding: 10px;
+}
+aside #loginfo #photo{
+	width: 90px;
+	height: 120px;
+	border: 2px solid #fff;
+	float:left;
+}
+aside #loginfo #photo img{
+	width: 100%;
+	height: 100%;
+}
+aside #loginfo #info{
+	margin-left: 110px;
+}
+aside #loginfo #info ul li{
+	line-height: 25px;
+}
+aside #loginfo #info .name, 
+aside #loginfo #info a,
+aside #loginfo #info i{
+	color: #fff;
+	font-size: 0.9em;
+}
+.red{
+	color: #f60;
+	font-weight: 600;
+	font-size: 0.8em;
+}
+.t-a-center{
+	text-align: center;
+}
+aside #loginfo #asidebtn ul {
+	display:-webkit-box;
+}
+aside #loginfo #asidebtn ul li{
+	display: block;
+	box-sizing:border-box;
+	width: 32%;
+	height: 40px;
+	margin-right: 5px;
+}
+aside #loginfo #asidebtn ul li a{
+	display: block;
+	color: #fff;
+	font-weight: 600;
+	text-align: center;
+	width: 100%;
+	height: 100%;
+	line-height: 40px;
+	background: #00464a;
+	box-shadow:2px 2px 5px #000;
+	border-radius: 10px;
+}
+aside #loginfo #asidebtn ul li a:hover{
+	box-shadow:2px 2px 5px transparent;	
+}
+aside #listbtn p {
+	display:none;
+	text-align: center;
+	line-height: 50px;
+	font-size: 25px;
+	cursor: pointer;
+}
+aside #listbtn p i{
+	color: #fff;
+}
+aside nav{
+	margin-top: 15px;
+}
+aside nav li a{
+	display: inline-block;
+	z-index:50;
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+	padding-left: 25%;
+	box-sizing:border-box;
+	font-size: 16px;
+}
+
+aside nav li:hover{
+	background-color: #00464a;
+	box-shadow:1px 2px 5px #000;
+}
+aside nav li.active{
+	background-color: #00464a;
+	box-shadow:1px 2px 5px #000;
+}
+/*조직도 버튼*/
+aside #organ{
+	position: fixed;
+	bottom: 0;
+	box-sizing:border-box;
+	width: 298px;
+	height: 40px;
+	cursor:pointer;
+	background: rgb(82,82,82);
+}
+aside #organ #organtitle > i{
+	text-align: right;
+	color: #fff;
+}
+aside #organ #organtitle > span{
+	display: inline-block;
+	width: 80%;
+	color: #fff;
+}
+/* 조직도 버튼 끝 */
+aside nav li span,
+aside nav li i{
+	color: #fff;
+	font-weight: 200;
+}
+
+/* section */
+section{
+	width: 100%;
+	min-width: 1100px;
+	margin-bottom: 50px;
+}
+/* section bookmark */
+section #bookmark{
+	box-sizing:border-box;
+	position: fixed;
+	top:40%;
+	right:10px;
+	border: 2px solid #777;
+	border-radius: 10px;
+	width: 40px;
+	min-height: 40px;
+	padding:0;
+	background-color: #fff;
+	cursor:pointer;
+	text-align: center;
+	z-index: 9000;
+}
+section #bookmark ul li{
+	line-height:30px;
+}
+section #bookmark ul li i{
+	text-align: center;	
+	line-height:40px;
+}
+section #bookmark ul li span{
+	display: inline-block;
+	width: 65%;
+}
+section #bookmarkbtn{
+	line-height:40px;
+}
+section #bookmarkbtn i{
+	line-height: 40px;
+	font-size: 20px;
+	color:#069;
+}
+section article{
+	box-sizing:border-box;
+	padding:10px;
+	overflow-x: hidden;
+	overflow-y:auto;
+}
+section #headsection{
+	position: fixed;
+	width: 100%;
+	margin:94px 40px 0 300px;	
+	background-color: #fff;
+	z-index:9000;
+}
+section #bodysection{
+	position: relative;
+	top: 163px;
+	width: calc(100% - 300px);
+	margin:0 40px 50px 300px;	
+}
+section article h1{
+	box-sizing: border-box;
+	margin-top: 20px;
+	font-size: 25px;
+	padding-left: 30px;
+}
+section article h1 a i.nobook{
+	margin-left: 50px;
+	color: #fff;
+	font-size: 20px;
+	text-shadow: 0 0 5px #555;
+}
+section article h1 a i.bookmark{
+	margin-left: 50px;
+	color: #069;
+	font-size: 20px;
+	text-shadow: 0 0 5px transparent;
+}
+/* footer */
+footer{
+	position: fixed;
+	background-color: #fff;
+	bottom: 0;
+	right:0;
+	box-sizing: border-box;
+	width: calc(100% - 298px);
+	height: 40px;
+	line-height: 40px;
+	border-top: 1px solid #ccc;
+	z-index: 800;
+	font-size: 1em;
+	overflow: hidden;
+}
+footer div{
+	position: absolute;
+	width: 100%;
+}
+footer div div{
+	position: relative;
+	top: 0px;
+	text-align: center;
+	height: 40px;
+	width: 100%;
+}
+
+/* 	 */
+@keyframes newsrolling{
+	0%{top: 0px;}
+	15%{top: 0px;}
+	20%{top: -40px;}
+	35%{top: -40px;}
+	40%{top: -80px;}
+	55%{top: -80px;}
+	60%{top: -120px;}
+	75%{top: -120px;}
+	80%{top: -160px;}
+	100%{top: -160px;}
+}
