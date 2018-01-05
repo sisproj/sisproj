@@ -19,21 +19,26 @@
     <%-- messenger JS--%>
     <script type="text/javascript">
         var initFlag = true;
+
+        var userId = "";
+        var userName = "";
+        var userImg = "";
+        var chatKey = "";
+        var userKey = "";
         $(document).ready(function () {
+            userKey = $('#userKey').val();
             userId = $('#sessionId').val();
             userName = $('#sessionName').val();
+            userImg = $('#sessionImg').val();
+
+            firebaseSetUser();
             if (initFlag) {
-                firebaseSetUser();
                 loadKeyListByUserId(userId);
-                loadOrganization();
+                loadOrganization(userKey);
                 initFlag = false;
             }
 
         });
-
-        var userId = "";
-        var userName = "";
-        var chatKey = null;
 
         function firebaseSetUser() {
             $.ajax({
@@ -58,8 +63,15 @@
             });
         }
 
-        function loadOrganization() {
-            $('#messenger-main-container').html("").load('messengerStart.do');
+        function loadOrganization(userKey) {
+            if (userKey != "0") {
+                setTimeout(function () {
+                    changeContent(userKey);
+                },1500);
+
+            } else {
+                $('#messenger-main-container').html("").load('messengerStart.do');
+            }
         }
 
         function chatStart() {
@@ -81,23 +93,6 @@
             var empNameArr;
             empNameArr = [];
 
-            /* var userRef = firebase.database().ref('users/');
-             userRef.once('value', function (snapshot) {
-                 var i = 0;
-                 snapshot.forEach(function (childSnapshot) {
-                     var childKey = childSnapshot.key;
-                     console.log("i : " + i);
-                     if (empIdArr[i] == childKey) {
-                         console.log(childSnapshot.val().emp_name);
-                         empNameArr.push(childSnapshot.val().emp_name);
-                     }
-                     i++;
-                 })
-             }).then(function () { //불러오기 끝난후 실행
-                 console.log(empNameArr);
-             });
- */
-
             for (var i = 0; i < empIdArr.length; i++) {
                 var userRef = firebase.database().ref('users/' + empIdArr[i]);
                 userRef.once('value', function (snapshot) {
@@ -110,6 +105,9 @@
                     chatsRef.update({
                         title: empNameArr.toString(),
                         timestamp: timestamp
+                    }).then(function () {
+                        $('#userKey').val(chat);
+                        $('#frmMessenger').submit();
                     });
                 });
             }
@@ -123,19 +121,29 @@
                 });
             }
 
-            loadChats(keyList);
-            changeContent(chat);
+            /*loadChats(keyList);
+            changeContent(chat);*/
         }
 
         function changeContent(chatKey) {
+            console.log("changeContent" + chatKey)
             loadMemberListByChatKey(chatKey);
             var chatsRef = firebase.database().ref('chats/' + chatKey);
             chatsRef.once('value', function (snapshot) {
                 var title = snapshot.val().title;
-                var titleArr = title.split(",");
-                titleArr.splice(titleArr.indexOf('${sessionScope.empVo.empName}'), 1);
-                $('#chatTitle').html(titleArr.toString());
-            });
+                var titleArr = title;
+                if (title.indexOf(",") > 0) {
+                    titleArr = title.split(",");
+                }
+
+                var memberCnt = titleArr.length
+                var titleStr = titleArr.toString();
+                if(titleStr.length > 20) {
+                    titleStr = titleStr.substring(0, 20) + "..."
+                }
+                titleStr += "(" + memberCnt + ")";
+
+                $('#chatTitle').html(titleStr);            });
 
             $('#messenger-main-container').html("").load('messengerChat.do', {chatKey: chatKey});
             $('#sidebar-button').show().attr('name', 'hide-nav');
@@ -199,7 +207,7 @@
                 snapshot.forEach(function (childSnapshot) {
                     memberList.push(childSnapshot.key);
                     var onclickStr = 'onclick="changeNameCard(\'' + childSnapshot.key + '\')"';
-                    var userImg = "<c:url value='/resources/images/avatar.png'/>";
+                    var userImg = "<c:url value='/emp_images/'/>";
                     $('#memberList').append(
                         '<div class="w3-bar-item w3-button">' +
                         '<img src="' + userImg + '" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">' +
@@ -266,16 +274,35 @@
 
                     var resultDate = formatDate(timestamp);
 
-                    var titleArr = title.split(",");
+                    var titleArr = title;
+                    if (title.indexOf(",") > 0) {
+                        titleArr = title.split(",");
+                    }
+
+                    var memberCnt = titleArr.length
                     titleArr.splice(titleArr.indexOf('${sessionScope.empVo.empName}'), 1);
 
+                    var titleStr = "";
+                    for(var i  = 0; i < titleArr.length; i++) {
+                        if(i == titleArr.length - 1) {
+                            titleStr += titleArr[i];
+                        } else {
+                            titleStr += titleArr[i] + ",";
+                        }
+                    }
+
+                    if(titleStr.length > 10) {
+                        titleStr = titleStr.substring(0, 10) + "..." + "(" + memberCnt + ")";
+                    }
+
+
                     var onclickStr = 'onclick="changeContent(\'' + snapshot.key + '\')"';
-                    var userImg = "<c:url value='/resources/images/avatar.png'/>";
+                    var userImg = "<c:url value='/emp_images/defaultImg.png'/>";
                     $('#chatsList').append(
                         '<a class="w3-button w3-block w3-white w3-left-align" id="' + snapshot.key + '" style="padding: 5px"' + onclickStr + '>' +
                         '<img src="' + userImg + '" class="w3-bar-item w3-circle" style="width:85px; float: left;">' +
                         '<div class="w3-bar-item">' +
-                        '<div class="w3-large w3-left">' + titleArr + '</div>' +
+                        '<div class="w3-large w3-left">' + titleStr + '</div>' +
                         '<div class="w3-right w3-small">' + resultDate + '</div>' +
                         '<br>' +
                         '<div class="w3-left w3-small">' + lastMessage + '</div>' +
@@ -313,7 +340,6 @@
         }
 
         <%-- firebase 채팅처리 script--%>
-
         function loadMessages(chatKey) {
             var messeagesRef = firebase.database().ref('messages/' + chatKey);
             messeagesRef.once('value', function (snapshot) {
@@ -321,7 +347,7 @@
                     showMessage(data)
                 });
             }).then(function () {
-                $('#messenger-main').scrollTop(9999);
+                $('#messenger-main').scrollTop(10000);
             });
         }
 
@@ -330,21 +356,27 @@
             var resultDate = formatDate(timestamp);
 
             //TODO : userImg DB에서 가져온 사용자 이미지로 변경
-            var userImg = "<c:url value='/resources/images/avatar.png'/>";
+
+            var img;
+            if (data.val().img == "") {
+                img = "<c:url value='/emp_images/defaultImg.png'/>";
+            } else {
+                img = "<c:url value='/emp_images/" + data.val().img +"'/>";
+            }
             var message = data.val().message;
             var name = data.val().name;
+
 
             if (userName == data.val().name) {
                 $('#messengerContainer').append(
                     '<div class="message-wrap darker">' +
-                    '<img src="' + userImg + '" alt="Avatar" class="right" style="width:100%;">' +
                     '<p>' + message + '</p>' +
                     '<span class="time-left w3-small">' + resultDate + '</span>'
                 )
             } else {
                 $('#messengerContainer').append(
                     '<div class="message-wrap">' +
-                    '<img src="' + userImg + '" alt="Avatar" style="width:100%;">' +
+                    '<img src="' + img + '" alt="Avatar" style="width:100%;">' +
                     '<div><b>' + name + '</b></div>' +
                     '<p>' + message + '</p>' +
                     '<span class="time-right w3-small">' + resultDate + '</span>' +
@@ -353,7 +385,7 @@
             }
 
             //채팅 입력시 스크롤 맨 아래로
-            $('#messenger-main').scrollTop($(this).height());
+            $('#messenger-main').scrollTop(9999);
         }
 
         function appendMessages(chatKey) {
@@ -361,7 +393,6 @@
             var messeagesRef = firebase.database().ref('messages/' + chatKey);
             //Messages Child가 추가될때 마다 실행
             messeagesRef.on('child_added', function (data) {
-                var timestamp = data.val().timestamp;
                 showMessage(data);
             });
         }
@@ -372,8 +403,29 @@
             var date = new Date();
             var timestamp = date.getTime();
             var lastMessage = $('#chatMsg').val();
-            var userImg = "<c:url value='/resources/images/avatar.png'/>";
+            var userImg = "<c:url value='/emp_images/defaultImg.png'/>";
             var title = $('#chatTitle').html();
+
+            var titleArr = title;
+            if (title.indexOf(",") > 0) {
+                titleArr = title.split(",");
+            }
+
+            var memberCnt = titleArr.length
+            titleArr.splice(titleArr.indexOf('${sessionScope.empVo.empName}'), 1);
+
+            var titleStr = "";
+            for(var i  = 0; i < titleArr.length; i++) {
+                if(i == titleArr.length - 1) {
+                    titleStr += titleArr[i];
+                } else {
+                    titleStr += titleArr[i] + ",";
+                }
+            }
+
+            if(titleStr.length > 10) {
+                titleStr = titleStr.substring(0, 15) + "..." + "(" + memberCnt + ")";
+            }
 
             firebase.database().ref('chats/' + chatKey).update({
                 lastMessage: lastMessage,
@@ -385,7 +437,7 @@
             $('#' + chatKey).html(
                 '<img src="' + userImg + '" class="w3-bar-item w3-circle" style="width:85px; float: left;">' +
                 '<div class="w3-bar-item">' +
-                '<div class="w3-large w3-left">' + title + '</div>' +
+                '<div class="w3-large w3-left">' + titleStr + '</div>' +
                 '<div class="w3-right w3-small">' + resultDate + '</div>' +
                 '<br>' +
                 '<div class="w3-left w3-small">' + lastMessage + '</div>' +
@@ -406,7 +458,8 @@
             firebase.database().ref('messages/' + chatKey).push({
                 name: userName,
                 message: message,
-                timestamp: timestamp
+                timestamp: timestamp,
+                img: userImg
             });
 
             changeLastChats();
@@ -484,7 +537,7 @@
         </h3>
     </div>
     <div class="w3-large w3-text-grey" style="font-weight:bold">
-        <button id="startChatButton" class="w3-button w3-indigo w3-hover-black" onclick="loadOrganization()">대화 추가
+        <button id="startChatButton" class="w3-button w3-indigo w3-hover-black" onclick="loadOrganization('0')">대화 추가
         </button>
         <ul class="w3-hoverable" id="chatsList">
             <%--로그인한 user의 채팅방 목록을 여기다 뿌려줌--%>
@@ -492,11 +545,16 @@
     </div>
 </nav>
 
+<form id="frmMessenger" name="frmMessenger" method="post" action="<c:url value='/messenger/messenger.do'/>">
+    <input type="text" value="${userKey}" id="userKey" name="userKey">
+</form>
+
 <!-- Header -->
 <div class="messenger-header w3-card">
     <header class="w3-container w3-xlarge">
         <input type="hidden" value="${sessionScope.empVo.empNo}" id="sessionId">
         <input type="hidden" value="${sessionScope.empVo.empName}" id="sessionName">
+        <input type="hidden" value="${sessionScope.empVo.empImg}" id="sessionImg">
         <p class="w3-left w3-bar-item w3-padding-24" id="chatTitle">대화 하기</p>
         <p class="w3-right">
             <a href="#" class="w3-bar-item w3-button w3-padding-24 w3-right" name="hide-nav" id="sidebar-button">

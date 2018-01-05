@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.siszo.sisproj.common.EmailSender;
 import com.siszo.sisproj.commue.model.CommueService;
+import com.siszo.sisproj.confirm.model.DocumentService;
+import com.siszo.sisproj.confirm.model.DocumentVO;
 import com.siszo.sisproj.employee.model.EmployeeService;
 import com.siszo.sisproj.employee.model.EmployeeVO;
 import com.siszo.sisproj.login.model.LoginService;
@@ -42,6 +44,9 @@ public class LoginController {
 
 	@Autowired
 	private MessageService messageService;
+	
+	@Autowired
+	private DocumentService docuService;
 
 	@RequestMapping(value="/login.do",method=RequestMethod.GET)
 	public void login_get() {
@@ -116,14 +121,21 @@ public class LoginController {
 		
 		int resultOut=commueService.selectOutChk(empVo.getEmpNo());
 		logger.info("사원 출근을 하였었는지 체크하기 resultOut={}",resultOut);
-
+		
+		DocumentVO dVo = new DocumentVO();
+		dVo.setEmpNo(empVo.getEmpNo());
+		dVo.setCfStatus(DocumentService.CONFIRM_AWAIT);
+		int awaitCnt = docuService.selectSaveWaitAllCntThirdType(dVo);
+		logger.info("결재대기함 문서 개수 조회 결과 awaitCnt={}",awaitCnt);
+		
 		model.addAttribute("resultOut",resultOut);
 		model.addAttribute("resultIn",resultIn);
-
+		
 		int msgUnreadCnt = messageService.selectUnreadCount(empVo.getEmpNo());
 
 		model.addAttribute("msgUnreadCnt", msgUnreadCnt);
 		model.addAttribute("empVo",empVo);
+		model.addAttribute("awaitCnt",awaitCnt);
 		
 		return "login/empInfo";
 	}

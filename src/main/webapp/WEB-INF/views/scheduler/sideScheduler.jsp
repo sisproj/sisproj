@@ -43,16 +43,22 @@
 			scheduler.init('scheduler_here', new Date(), "month");
 			
 			scheduler.templates.quick_info_content = function(start, end, ev){ 
-			       return ev.content;
+			       return "카테고리 : " + ev.subject + "  // 내용 : " + ev.content ;
 			};
 			scheduler.parse([//화면에 뿌려주기.
-				<c:if test="${empty list}">
-				 
-				</c:if>
 				<c:if test="${!empty list}">
 				<c:forEach var="i" begin="0" end="${list.size()-1}" step="1">
 					{ start_date: "${list[i].pschStart}", end_date: "${list[i].pschEnd}",
-					 	text:"", event_location: "${list[i].pschEventLocation}",
+					 	text:
+					 		<c:if test="${fn:length(list[i].pschText)<=6 }">
+					 		"${list[i].pschText}"
+					 		</c:if>
+					 		
+					 		<c:if test="${fn:length(list[i].pschText)>6 }">
+					 		"${fn:substring(list[i].pschText,0,6) }..."
+					 		</c:if>
+					 		
+					 		, event_location: "${list[i].pschEventLocation}",
 						content: '${list[i].pschContent}', subject: '${list[i].pschCateg}', 
 						pschid:"${list[i].pschNo}"},
 				</c:forEach> 
@@ -148,7 +154,7 @@
 		<input type="hidden" id="pschText" name="pschText"><!-- 제목 -->
 	</form>
 	<div id="scheduler_here" class="dhx_cal_container"
-		style='width: 500px; height: 450px;'>
+		style='width: 100%; height: 500px;'>
 		<div class="dhx_cal_navline">
 			<div class="dhx_cal_date"></div>
 			<div class="dhx_cal_prev_button">&nbsp;</div>
@@ -160,7 +166,6 @@
 	</div>
 	</body>
 	</html>
-	
 	
 <style>
 	.dhx_qi_big_icon{

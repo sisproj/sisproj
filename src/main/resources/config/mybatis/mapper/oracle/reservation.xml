@@ -4,15 +4,21 @@
 <mapper namespace="config.mybatis.mapper.oracle.reservation">
 	<sql id="searchWhere">
 		<if test="searchKeyword !=null and searchKeyword!=''">
-			where ${resCateg} like '%' || #{searchKeyword} || '%'
+			and s.res_name like '%' || #{searchKeyword} || '%'
 		</if>
 	</sql>	
-	<select id="selectReservationAll" parameterType="ReservationSearchVO" resultType="ReservationVO">
-		select * from reservationView 
+	<select id="selectReservationAll" parameterType="ReservationSearchVO" resultType="map">
+		select v.*, s.res_categ, s.res_name, e.emp_name, d.dept_name
+		from reservation v join resourcereg s
+		on v.res_no=s.res_no
+		join emp e
+		on e.emp_no=v.EMP_NO
+		join dept d
+		on e.dept_no=d.dept_no
+		where v.rv_confirm='N'
 		<include refid="searchWhere"></include>
-		order by rv_regdate desc
-	</select>
-	
+		order by v.rv_regdate desc
+	</select>	
 	<insert id="insertReservation" parameterType="ReservationVO">
 	<selectKey resultType="int" keyProperty="rvNo" order="BEFORE">
 	select reser_seq.nextval from dual
@@ -20,12 +26,41 @@
 		insert into reservation(rv_no,res_No,rv_start,rv_end,emp_no,rv_content,dept_No)
 		values(#{rvNo},#{resNo},#{rvStart},#{rvEnd},#{empNo},#{rvContent},#{deptNo})
 	</insert>
-	
+	<select id="selectTotalRecord" resultType="int">
+		select count(*) from reservation where rv_confirm='N'
+	</select>
+	<update id="updateConfirmY" parameterType="int">
+		update reservation
+		set rv_confirm='Y'
+		where rv_no=#{rvNo}
+	</update>
+	<update id="updateConfirmR" parameterType="int">
+		update reservation
+		set rv_confirm='R'
+		where rv_no=#{rvNo}
+	</update>
 	<select id="reservationNselect" resultType="ReservationVO">
-	select * from reservation where rv_confirm='Y'
+		select * from reservation where rv_confirm='Y'
 	</select>
 	
+	<select id="reservationNotYselect" parameterType="int" resultType="map">
+		select * from myres_view where emp_no=#{empNo}
+	</select>
 	
+	<select id="chkDupRes" parameterType="ReservationVO" resultType="int">
+	select count(*) from reservation
+	<![CDATA[
+		where (to_date(rv_start,'yyyy-MM-dd hh:mi')<=to_date(#{rvStart},'yyyy-MM-dd hh:mi')
+		 or to_date(#{rvEnd},'yyyy-MM-dd hh:mi')<=sysdate)
+		and rv_confirm='Y' and res_no=#{resNo}]]>
+	</select>
+	
+	<delete id="deleteTimeOver">
+		delete from reservation
+		<![CDATA[
+		where to_date(rv_End,'yyyy-MM-dd hh:mi')<=sysdate
+		]]>
+	</delete>	
 </mapper>
 
 

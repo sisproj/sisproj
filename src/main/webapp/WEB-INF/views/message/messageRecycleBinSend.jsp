@@ -69,7 +69,7 @@
     <!-- 3. 내용 -->
     <div class="w3-container w3-margin">
         <h5>
-            <b class="w3-bar-item">보낸 쪽지함</b>
+            <b class="w3-bar-item">보낸 쪽지 휴지통</b>
         </h5>
         <table class="w3-table w3-bordered" style="width: 90%; margin-left: 5%">
             <thead>

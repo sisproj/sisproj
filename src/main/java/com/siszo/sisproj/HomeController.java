@@ -38,7 +38,6 @@ public class HomeController {
     @RequestMapping(value = "/home.do")
     public String home(HttpSession session, Model model) {
         logger.info("홈화면 보여주기");
-        
         return "home";
     }
     
@@ -102,7 +101,15 @@ public class HomeController {
     	//리스트 개수 9개이상이라면 9개로 바꾸기
     	if(list.size()>7) {
         	for(int i=0; i<7; i++) {
-        		noticeList.add(list.get(i));
+        		NoticeVO nVo =  list.get(i);
+        		
+				String str = nVo.getNotiTitle();
+				String title = ConfirmUtility.titleLength(str, 38);
+				//스크립트 보안 : 꺽쇠 변환
+				title = ConfirmUtility.changeTag(title);			
+				nVo.setNotiTitle(title);
+				
+				noticeList.add(nVo);     
         	}
     	} else {
     		noticeList = list;

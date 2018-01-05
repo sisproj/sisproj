@@ -67,7 +67,7 @@
             <input type="text" id="tokenField" value="">
             <input type="text" class="w3-left" id="userSearch" placeholder="Search for names.."
                    title="Type in a name" onkeyup="findUser()">
-            <button class="w3-button w3-indigo start-button" id="chatStartButton" onclick="chatStart()">대화 시작</button>
+            <button type="button" class="w3-button w3-indigo start-button" id="chatStartButton" onclick="chatStart()">대화 시작</button>
         </div>
 
         <div id="userProfile">
@@ -84,12 +84,12 @@
                                            name="empCheck"
                                            id="check-${empVo.empNo}">
                                     <c:if test="${!empty empVo.empImg}">
-                                        <img src="<c:url value='/resources/images/${empVo.empImg}'/>"
+                                        <img src="<c:url value='/emp_images/${empVo.empImg}'/>"
                                              class="w3-bar-item w3-circle w3-hide-small"
                                              style="width:85px">
                                     </c:if>
                                     <c:if test="${empty empVo.empImg}">
-                                        <img src="<c:url value='/resources/images/avatar.png'/>"
+                                        <img src="<c:url value='/emp_images/defaultImg.png'/>"
                                              class="w3-bar-item w3-circle w3-hide-small"
                                              style="width:85px">
                                     </c:if>

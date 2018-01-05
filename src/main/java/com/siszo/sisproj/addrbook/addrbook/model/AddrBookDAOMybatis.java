@@ -13,7 +13,6 @@ public class AddrBookDAOMybatis extends SqlSessionDaoSupport implements AddrBook
 	private String namespace="config.mybatis.mapper.oracle.addrBook";
 
 	@Override
-//	public List<AddrBookVO> selectAddrBookAll(int groupNo) {
 	public List<AddrBookVO> selectAddrBookAll(AddrSearchVO searchVo) {
 		return getSqlSession().selectList(namespace+".selectAddrBookAll",searchVo);
 	}
