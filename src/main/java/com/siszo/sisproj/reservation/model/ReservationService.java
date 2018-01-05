@@ -13,4 +13,6 @@ public interface ReservationService {
 	public List<Map<String, Object>> reservationNotYselect(int empNo);
 	public int chkDupRes(ReservationVO resVo);
 	public int deleteTimeOver();
+	public int updateConfirmYMulti(List<ReservationVO> list);
+	public int updateConfirmRMulti(List<ReservationVO> list);
 }

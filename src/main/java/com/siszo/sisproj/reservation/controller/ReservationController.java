@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.siszo.sisproj.common.SchedulerUtility;
 import com.siszo.sisproj.common.PaginationInfo;
 import com.siszo.sisproj.common.Utility;
+import com.siszo.sisproj.reservation.model.ReservationListVO;
 import com.siszo.sisproj.reservation.model.ReservationSearchVO;
 
 import com.siszo.sisproj.employee.model.EmployeeVO;
@@ -153,4 +154,45 @@ public class ReservationController {
 		model.addAttribute("reslist",reslist);
 	}
 
+	@RequestMapping("/updateYMulti.do")
+	public String updateYMulti(@ModelAttribute ReservationListVO resListVo, Model model) {
+		logger.info("자원관리 - 선택 승인, 파라미터 resListVo={}",resListVo);
+		
+		List<ReservationVO> list=resListVo.getResItems();
+		
+		int cnt=resService.updateConfirmYMulti(list);
+		logger.info("자원관리 - 선택값 승인 결과, cnt={}", cnt);
+		
+		String msg="",url="/resource/requestList.do";
+		if(cnt>0) {
+			msg="멀티 승인 성공";
+		}else {
+			msg="멀티 승인 실패";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "common/message";
+	}
+	
+	@RequestMapping("/updateRMulti.do")
+	public String updateRMulti(@ModelAttribute ReservationListVO resListVo, Model model) {
+		logger.info("자원관리 - 선택 반려, 파라미터 resListVo={}",resListVo);
+		
+		List<ReservationVO> list=resListVo.getResItems();
+		
+		int cnt=resService.updateConfirmRMulti(list);
+		logger.info("자원관리 - 선택값 반려 결과, cnt={}", cnt);
+		
+		String msg="",url="/resource/requestList.do";
+		if(cnt>0) {
+			msg="멀티 반려 성공";
+		}else {
+			msg="멀티 반려 실패";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "common/message";
+	}
 }
