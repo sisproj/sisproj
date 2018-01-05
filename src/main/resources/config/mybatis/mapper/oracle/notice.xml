@@ -43,7 +43,7 @@
 		(
 		    select rownum as RNUM, blist.*
 		    from(
-		        select n.*, e.emp_name, 
+		        select n.*, e.emp_lev, 
 		        	(sysdate-noti_regdate)*24 as newImgTerm 
 		        from notice n join emp e
 				on n.emp_no = e.emp_no
@@ -76,7 +76,7 @@
 	
 	<select id="selectByNo" parameterType="int" resultType="NoticeVO">
 		select * from 
-			(select n.*, e.emp_name 
+			(select n.*, e.emp_lev 
 	        from notice n join emp e
 			on n.emp_no = e.emp_no)
 		where noti_no=#{notiNo}
@@ -98,7 +98,7 @@
 	</delete>
  
 	<select id="selectAllNotice" resultType="NoticeVO">
-		select n.*, e.emp_name 
+		select n.*, e.emp_lev 
 		from notice n join emp e
 		on n.emp_no = e.emp_no
 		order by noti_no desc

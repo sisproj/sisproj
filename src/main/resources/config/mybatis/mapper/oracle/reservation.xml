@@ -4,7 +4,8 @@
 <mapper namespace="config.mybatis.mapper.oracle.reservation">
 	<sql id="searchWhere">
 		<if test="searchKeyword !=null and searchKeyword!=''">
-			and s.res_name like '%' || #{searchKeyword} || '%'
+			or s.res_name like '%' || #{searchKeyword} || '%'
+			or s.res_categ like '%' || #{searchKeyword} || '%'
 		</if>
 	</sql>	
 	<select id="selectReservationAll" parameterType="ReservationSearchVO" resultType="map">
@@ -46,6 +47,21 @@
 	<select id="reservationNotYselect" parameterType="int" resultType="map">
 		select * from myres_view where emp_no=#{empNo}
 	</select>
+	
+	<select id="chkDupRes" parameterType="ReservationVO" resultType="int">
+	select count(*) from reservation
+	<![CDATA[
+		where (to_date(rv_start,'yyyy-MM-dd hh:mi')<=to_date(#{rvStart},'yyyy-MM-dd hh:mi')
+		 or to_date(#{rvEnd},'yyyy-MM-dd hh:mi')<=sysdate)
+		and rv_confirm='Y' and res_no=#{resNo}]]>
+	</select>
+	
+	<delete id="deleteTimeOver">
+		delete from reservation
+		<![CDATA[
+		where to_date(rv_End,'yyyy-MM-dd hh:mi')<=sysdate
+		]]>
+	</delete>	
 </mapper>
 
 

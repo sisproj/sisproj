@@ -136,9 +136,14 @@
                     titleArr = title.split(",");
                 }
 
-                titleArr.splice(titleArr.indexOf('${sessionScope.empVo.empName}'), 1);
-                $('#chatTitle').html(titleArr.toString());
-            });
+                var memberCnt = titleArr.length
+                var titleStr = titleArr.toString();
+                if(titleStr.length > 20) {
+                    titleStr = titleStr.substring(0, 20) + "..."
+                }
+                titleStr += "(" + memberCnt + ")";
+
+                $('#chatTitle').html(titleStr);            });
 
             $('#messenger-main-container').html("").load('messengerChat.do', {chatKey: chatKey});
             $('#sidebar-button').show().attr('name', 'hide-nav');
@@ -273,7 +278,23 @@
                     if (title.indexOf(",") > 0) {
                         titleArr = title.split(",");
                     }
+
+                    var memberCnt = titleArr.length
                     titleArr.splice(titleArr.indexOf('${sessionScope.empVo.empName}'), 1);
+
+                    var titleStr = "";
+                    for(var i  = 0; i < titleArr.length; i++) {
+                        if(i == titleArr.length - 1) {
+                            titleStr += titleArr[i];
+                        } else {
+                            titleStr += titleArr[i] + ",";
+                        }
+                    }
+
+                    if(titleStr.length > 10) {
+                        titleStr = titleStr.substring(0, 10) + "..." + "(" + memberCnt + ")";
+                    }
+
 
                     var onclickStr = 'onclick="changeContent(\'' + snapshot.key + '\')"';
                     var userImg = "<c:url value='/emp_images/defaultImg.png'/>";
@@ -281,7 +302,7 @@
                         '<a class="w3-button w3-block w3-white w3-left-align" id="' + snapshot.key + '" style="padding: 5px"' + onclickStr + '>' +
                         '<img src="' + userImg + '" class="w3-bar-item w3-circle" style="width:85px; float: left;">' +
                         '<div class="w3-bar-item">' +
-                        '<div class="w3-large w3-left">' + titleArr + '</div>' +
+                        '<div class="w3-large w3-left">' + titleStr + '</div>' +
                         '<div class="w3-right w3-small">' + resultDate + '</div>' +
                         '<br>' +
                         '<div class="w3-left w3-small">' + lastMessage + '</div>' +
@@ -385,6 +406,27 @@
             var userImg = "<c:url value='/emp_images/defaultImg.png'/>";
             var title = $('#chatTitle').html();
 
+            var titleArr = title;
+            if (title.indexOf(",") > 0) {
+                titleArr = title.split(",");
+            }
+
+            var memberCnt = titleArr.length
+            titleArr.splice(titleArr.indexOf('${sessionScope.empVo.empName}'), 1);
+
+            var titleStr = "";
+            for(var i  = 0; i < titleArr.length; i++) {
+                if(i == titleArr.length - 1) {
+                    titleStr += titleArr[i];
+                } else {
+                    titleStr += titleArr[i] + ",";
+                }
+            }
+
+            if(titleStr.length > 10) {
+                titleStr = titleStr.substring(0, 15) + "..." + "(" + memberCnt + ")";
+            }
+
             firebase.database().ref('chats/' + chatKey).update({
                 lastMessage: lastMessage,
                 timestamp: timestamp
@@ -395,7 +437,7 @@
             $('#' + chatKey).html(
                 '<img src="' + userImg + '" class="w3-bar-item w3-circle" style="width:85px; float: left;">' +
                 '<div class="w3-bar-item">' +
-                '<div class="w3-large w3-left">' + title + '</div>' +
+                '<div class="w3-large w3-left">' + titleStr + '</div>' +
                 '<div class="w3-right w3-small">' + resultDate + '</div>' +
                 '<br>' +
                 '<div class="w3-left w3-small">' + lastMessage + '</div>' +

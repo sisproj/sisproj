@@ -193,7 +193,7 @@ action="<c:url value='/notice/noticeList.do'/>">
 												alt="new 이미지">
 											</c:if>
 										</td>									
-										<td>${vo.empName }</td>									
+										<td>${vo.empLev }</td>									
 										<td><fmt:formatDate value="${vo.notiRegdate}" 
 											pattern="yyyy-MM-dd" /></td>								
 										<td>${vo.notiReadcnt}</td>								

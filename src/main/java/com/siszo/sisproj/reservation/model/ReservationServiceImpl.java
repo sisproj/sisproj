@@ -5,6 +5,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.siszo.sisproj.addrbook.addrbook.model.AddrBookVO;
 
 @Service
 public class ReservationServiceImpl implements ReservationService{
@@ -15,6 +18,7 @@ public class ReservationServiceImpl implements ReservationService{
 	public List<Map<String, Object>> selectReservationAll(ReservationSearchVO searchVo) {
 		return resDao.selectReservationAll(searchVo);
 	}
+	
 	public int insertReservation(ReservationVO resVo) {
 		return resDao.insertReservation(resVo);
 	}
@@ -35,5 +39,48 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 	public List<Map<String, Object>> reservationNotYselect(int empNo){
 		return resDao.reservationNotYselect(empNo);
+	}
+	public int chkDupRes(ReservationVO resVo) {
+		return resDao.chkDupRes(resVo);
+	}
+	public int deleteTimeOver() {
+		return resDao.deleteTimeOver();
+	}
+	
+	@Override
+	@Transactional
+	public int updateConfirmYMulti(List<ReservationVO> list) {
+		int cnt=0;
+		try {
+			for (ReservationVO vo : list) {
+				int rvNo=vo.getRvNo();
+				if(rvNo!=0) {
+					cnt=resDao.updateConfirmY(rvNo);
+				}
+			}
+		}catch (RuntimeException e) {
+			cnt=0;
+			e.printStackTrace();
+		}
+		
+		return cnt;
+	}
+	@Override
+	@Transactional
+	public int updateConfirmRMulti(List<ReservationVO> list) {
+		int cnt=0;
+		try {
+			for (ReservationVO vo : list) {
+				int rvNo=vo.getRvNo();
+				if(rvNo!=0) {
+					cnt=resDao.updateConfirmR(rvNo);
+				}
+			}
+		}catch (RuntimeException e) {
+			cnt=0;
+			e.printStackTrace();
+		}
+		
+		return cnt;
 	}
 }

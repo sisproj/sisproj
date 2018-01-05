@@ -11,4 +11,6 @@ public interface ReservationDAO {
 	public int updateConfirmR(int rvNo);
 	public List<ReservationVO> reservationNselect();
 	public List<Map<String, Object>> reservationNotYselect(int empNo);
+	public int chkDupRes(ReservationVO resVo);
+	public int deleteTimeOver();
 }

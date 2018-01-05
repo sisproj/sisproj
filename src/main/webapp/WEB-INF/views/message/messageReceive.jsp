@@ -147,7 +147,7 @@
 
                 </td>
                 <td class="w3-center" style="width: 10%; max-width: 125px; min-width: 125px">
-                    <c:set var="today"><fmt:formatDate value="${now}" type="date"/></c:>
+                    <c:set var="today"><fmt:formatDate value="${now}" type="date"/></c:set>
                     <c:set var="msgRegDate"><fmt:formatDate value="${msgVO.msgRegdate}" type="date"/></c:set>
                     <c:if test="${today eq msgRegDate}">
                         <fmt:formatDate value="${msgVO.msgRegdate}" pattern="HH:mm"/>

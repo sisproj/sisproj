@@ -359,7 +359,7 @@
 		left: 40%;
 		visibility: hidden;
 	}
-	#divWriteSection h3{
+	#divWriteSection h3, #divUpdateSection h3{
 		padding:15px;
 	}
 	
@@ -429,7 +429,7 @@
 		text-align: center;
 		padding: 10px;
 	}
-	.divWriteBody form div{
+	.divWriteBody form div, .divUpdateBody form div{
 		margin-bottom: 10px;
 	}
     </style>
