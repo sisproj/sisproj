@@ -8,17 +8,28 @@
 			or s.res_categ like '%' || #{searchKeyword} || '%'
 		</if>
 	</sql>	
+
 	<select id="selectReservationAll" parameterType="ReservationSearchVO" resultType="map">
-		select v.*, s.res_categ, s.res_name, e.emp_name, d.dept_name
-		from reservation v join resourcereg s
-		on v.res_no=s.res_no
-		join emp e
-		on e.emp_no=v.EMP_NO
-		join dept d
-		on e.dept_no=d.dept_no
-		where v.rv_confirm='N'
-		<include refid="searchWhere"></include>
-		order by v.rv_regdate desc
+		select *
+			from
+			(
+			    select rownum as RNUM, alist.*
+			    from(
+					select v.*, s.res_categ, s.res_name, e.emp_name, d.dept_name
+					from reservation v join resourcereg s
+					on v.res_no=s.res_no
+					join emp e
+					on e.emp_no=v.EMP_NO
+					join dept d
+					on e.dept_no=d.dept_no
+					where v.rv_confirm='N'
+					<include refid="searchWhere"></include>
+					order by v.rv_regdate desc
+				) alist
+			) 
+			<![CDATA[
+			where RNUM > #{firstRecordIndex} 
+			and RNUM<=#{firstRecordIndex}+ #{recordCountPerPage} ]]>
 	</select>	
 	<insert id="insertReservation" parameterType="ReservationVO">
 	<selectKey resultType="int" keyProperty="rvNo" order="BEFORE">

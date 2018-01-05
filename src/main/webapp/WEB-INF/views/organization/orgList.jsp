@@ -284,7 +284,7 @@
 	     	<div id="div2"><i class="fa fa-phone"></i></div>
 	     	<div id="div3"><a href="#" title="이메일 보내기"><i class="fa fa-envelope-o"></i></a></div>
 	     	<div><a id="msgWrite" href="#" title="쪽지보내기"><i class="fa fa-paper-plane"></i>  쪽지 보내기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<a id="messengerOpen" href="#" title="대화하기"><i class="fa fa-comments-o"></i>  대화하기</a></div>
+				<a id="messengerOpen" href="#" title="대화하기"><i class="fa fa-comments-o"></i>  1:1 대화하기</a></div>
 
 			<%--1:1 대화하기 form--%>
 			<form id="frmMessenger" name="frmMessenger" method="post" action="<c:url value='/messenger/messenger.do'/>" target="messengerWindow">
