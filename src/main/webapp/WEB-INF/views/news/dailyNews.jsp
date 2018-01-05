@@ -7,10 +7,6 @@
 <script type="text/javascript">
 	$(function() {
 
-		if($('.sessionLv').val()!="관리자"){
-			$('.newsregbt').hide();
-		}
-		
 		$('.newsImageChk').each(function(idx, item) {
 			if ($(this).val() == '') {
 				$(this).siblings('.dnewsContentDiv').css('width', '95%');
@@ -247,13 +243,6 @@ to {
 	<ul>
 		<!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
 		<li class="active"><a href="<c:url value='/news/dailyNews.do'/>"><i class='fa fa-newspaper-o'></i>&nbsp;<span>SIS 뉴스홈</span></a></li>
-	<c:if test="${sessionScope.empVo.empLev eq '관리자'}">
-		<li><a href="<c:url value='/news/newsWrite.do'/>"><i
-				class="fa fa-floppy-o"></i>&nbsp;<span>SIS 뉴스등록</span></a></li>
-		
-		<li><a href="<c:url value='/news/newsRegdit.do'/>"><i
-				class="fa fa-floppy-o"></i>&nbsp;<span>SIS 뉴스관리</span></a></li>
-				</c:if>
 	</ul>
 	<!-- 1.왼쪽 사이드 메뉴 지정 끝-->
 	<div id="listbtn">
@@ -275,14 +264,9 @@ to {
 <article id="bodysection">
 	<!-- 3. 내용 -->
 
-	<input type="hidden" class="sessionLv"
-		value="${sessionScope.empVo.empLev}">
 	<div class="testText" style="visibility: hidden;"></div>
 	<div class="w3-light-grey w3-padding-32 w3-center">
 		<h1 class="w3-jumbo" style="font-style: oblique;">SIS News</h1>
-	</div>
-	<div class="newsbtdiv">
-		<input type="button" class="newsregbt" value="뉴스등록">
 	</div>
 	<br>
 	<br>
