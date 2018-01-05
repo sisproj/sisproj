@@ -211,14 +211,13 @@ function ChangeDate(Date) {
 		
 		
 		}
+	
+	function pageFunc(curPage){
+		document.frmTrash.currentPage.value=curPage;
+		frmTrash.submit();
+	}
 </script>
-<style type="text/css">
-html, body {
-	margin: 0;
-	padding: 0;
-	height: 100%;
-	overflow: hidden;
-}
+<style type="text/css"> 
 
 .dhx_cal_event
 div
@@ -331,7 +330,8 @@ important
 }
 
 #resource_here {
-	float: right;
+	width:50%;
+	float: left;
 }
 
 	.filters_wrapper {
@@ -444,7 +444,11 @@ important
 	#pagingbtn #nextbtn{
 		background-color: #306;
 	}
-
+	#bodysection
+	{
+min-width: 1500px;
+clear: both;
+	}
  </style>
 <!-- 0. include부분 -->
 <nav>
@@ -483,13 +487,15 @@ important
 
 <article id="bodysection">
 	<!-- 3. 내용 -->
-	<div style="min-width: 1500px">
-		<form name="rvfrm" id="rvfrm" method="post"
-			action="<c:url value='/resource/resourceWrite.do'/>"> 	
-			<input type="hidden" id="rvStart" name="rvStart"> <input
-				type="hidden" id="rvEnd" name="rvEnd"> <input type="hidden"
-				id="resNo" name="resNo"> <input type="hidden" id="rvContent"
-				name="rvContent">
+
+	<div class="resbigdiv">
+		<form name="rvfrm" id="rvfrm" method="post"	action="<c:url value='/resource/resourceWrite.do'/>"> 	
+			<input type="hidden" id="rvStart" name="rvStart"> 
+			<input type="hidden" id="rvEnd" name="rvEnd"> 
+			<input type="hidden" id="resNo" name="resNo"> 
+			<input type="hidden" id="rvContent" 	name="rvContent">
+			<input type="hidden" id="currentPage" name="currentPage" value="1">
+
 			<!-- 제목 -->
 		</form>
 		
@@ -528,7 +534,7 @@ important
 </div>
 
 		<div id="scheduler_here" class="dhx_cal_container"
-			style='width: 800px; height: 800px;'>
+			style='width: 50%; height: 800px;'>
 			<div class="dhx_cal_navline">
 				<div class="dhx_cal_prev_button">&nbsp;</div>
 				<div class="dhx_cal_next_button">&nbsp;</div>
@@ -542,8 +548,8 @@ important
 			<div class="dhx_cal_data"></div>
 
 		</div>
-		<div id="resource_here" style="width: 800px; height: 800px;">
-			<input type="button" id="bttest" value="자원등록 신청하기">
+		<div id="resource_here">
+			<input type="button" id="bttest" value="자원등록 신청하기"> 
 			<hr>
 			<h4 style="text-align: center;">나의 자원신청 승인 현황</h4>
 			<hr>
@@ -591,7 +597,32 @@ important
 	        	</table>
 		        
 			<hr>
-			
+			 <!-- 페이징처리 -->
+		    	<div id="pagingbtn">
+					<ul>
+						<!-- 이전 블럭으로 이동 ◀ -->
+						<c:if test="${pagingInfo.firstPage>1 }">
+							<a id="prevbtn" href="#" onclick="pageFunc(${pagingInfo.firstPage-1})"><i class="fa fa-chevron-left"></i></a>		
+						</c:if>	
+					
+						<!-- [1][2][3][4][5][6][7][8][9][10] -->
+						<c:forEach var="i" begin="${pagingInfo.firstPage}" end="${pagingInfo.lastPage}">
+							<c:if test="${i==pagingInfo.currentPage}">
+								<span class="thispage">${i }</span>	
+							</c:if>
+							<c:if test="${i!=pagingInfo.currentPage}">
+								<a href="#" onclick="pageFunc(${i })" class="active">${i }</a>
+					 		</c:if>				
+						</c:forEach>
+					
+						<!-- 다음 블럭으로 이동 ▶ -->
+						<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage}">
+							<a id=nextbtn href="#" onclick="pageFunc(${pagingInfo.lastPage+1})"><i class="fa fa-chevron-right"></i></a>
+						</c:if>
+					</ul>
+		        </div>
+		        <!-- 페이징 처리 끝 -->
+
 
 		</div>
 	</div>

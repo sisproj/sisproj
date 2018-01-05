@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
-<%@include file="employeeTop.jsp" %>
+<%@include file="../inc/admTop.jsp" %>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="<c:url value='/resources/js/zipcode.js'/>"></script>
+     <!-- 0. include부분 -->
+        <link rel="stylesheet" href="<c:url value="/resources/css/mypage.css"/>">
+    <!-- 왼쪽 사이드 메뉴 끝 -->
 <script type="text/javascript">
 	$(function() {
 		$('#btCen').click(function() {

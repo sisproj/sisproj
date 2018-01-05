@@ -2,17 +2,20 @@
 <%@include file="employeeTop.jsp" %>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="<c:url value='/resources/js/zipcode.js'/>"></script>
+<%@include file="../inc/admTop.jsp" %>
+     <!-- 0. include부분 -->
+        <link rel="stylesheet" href="<c:url value="/resources/css/mypage.css"/>">
 <script type="text/javascript">
 	$(function() {
 		$('#btC').click(function() {		
 			if(!confirm("취소하시겠습니까?")){
 				return false;
 			}else{
-				location.href="<c:url value='/employee/employeeList.do' />"
+				location.href="<c:url value='/employee/adm/employeeList.do' />"
 			}			
 		});
 		$('#btL').click(function() {
-			location.href="<c:url value='/employee/employeeList.do' />"
+			location.href="<c:url value='/employee/adm/employeeList.do' />"
 		});
 		$('#email2').change(function(){
 			if($('#email2').val()=='etc'){
@@ -148,7 +151,7 @@
     <div id="dimyPage">
     	<div id="diInput">
       	<form id="frmEmp" name="frmEnp"    	
-  		action="<c:url value='/employee/employeeEdit.do?empNo=${vo.empNo }'/>" method="post" enctype="multipart/form-data">
+  		action="<c:url value='/employee/adm/employeeEdit.do?empNo=${vo.empNo }'/>" method="post" enctype="multipart/form-data">
       	<input type="hidden" name="empTel" id="empTel" value="${vo.empTel }">
       	<input type="hidden" name="empSsn" id="empSsn" value="${vo.empSsn }">
       	<input type="hidden" name="empEmail" id="empEmail" value="${vo.empEmail }">
@@ -156,7 +159,7 @@
       	  <fieldset>
   		    <div id="diId">
       	 		<label for="name">사원번호</label>
-      	 		<input type="text" id="empNo" name="empNo" value="${vo.empNo }">   
+      	 		<input type="text" id="empNo" name="empNo" value="${vo.empNo }" readonly="readonly">   
        		</div>
        		<div id="diPwd">
       	 		<label for="name">비밀번호</label>
@@ -166,7 +169,6 @@
       	 		<label for="name">이름</label>
       	 		<input type="text" id=" empName" name=" empName" value="${vo.empName }">   
        		</div>
-	       	  <!--  <input type="image" src="" alt="이미지 등록" id="empImg">       		     -->
        		<div id="diEnName">
        		<label for="enName">영어이름</label> 
        		<input type="text" id="empEName" name="empEName" value="${vo.empEName }"> 

@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
-<%@include file="employeeTop.jsp" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@include file="../inc/admTop.jsp" %>
+     <!-- 0. include부분 -->
+        <link rel="stylesheet" href="<c:url value="/resources/css/mypage.css"/>">
+    <!-- 왼쪽 사이드 메뉴 끝 -->
+    
+        <!-- 2. 페이지 이름 지정 끝 -->
 <script type="text/javascript">
 	$(function () {	
 		$('#btDeSe').click(function(){
@@ -54,7 +58,7 @@
     </article>
 <article id="bodysection">
 <div id="dimyPage">
-	<form id="searchEmp" name="searchEmp" method="post" action="<c:url value='/employee/employeeList.do'/>">	
+	<form id="searchEmp" name="searchEmp" method="post" action="<c:url value='/employee/adm/employeeList.do'/>">	
 	<input type="hidden" id="currentPage" name="currentPage" value="1">
 	
 	        <div id="dimyP">
@@ -116,7 +120,7 @@
 						<td><input type="checkbox" name="empItems[${status.index}].empNo" value="${vo.empNo}"></td>	
 						<td>${vo.empNo }</td>
 						<!-- 사원번호로 사원 디테일 이동 -->
-						<td><a href="<c:url value='/employee/employeeDetail.do?empNo=${vo.empNo }'/>">${vo.empName}</a></td>
+						<td><a href="<c:url value='/employee/adm/employeeDetail.do?empNo=${vo.empNo }'/>">${vo.empName}</a></td>
 						<td>${vo.deptName }</td>
 						<td>${vo.posName }</td>
 						<td>${vo.empTel }</td>
