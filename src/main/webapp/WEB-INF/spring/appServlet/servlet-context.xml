@@ -38,6 +38,7 @@
     		<mapping path="/commue/*"/>
     		<mapping path="/employee/*"/>
     		<mapping path="/messenger/*"/>
+            <mapping path="/message/*"/>
     		<mapping path="/organization/*"/>
     		<mapping path="/scheduler/*"/>
     		<mapping path="/news/*"/>
