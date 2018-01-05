@@ -98,8 +98,19 @@ public class EmployeeController {
 
 		logger.info("사원 상세 화면 보여주기 결과 vo={}",vo);
 		model.addAttribute("vo",vo);
-
+		
 		return "employee/employeeDetail";
+	}
+	@RequestMapping("/employeeDetail2.do")
+	public String employeeDetail2(@RequestParam(defaultValue="0") int empNo,Model model) {
+		logger.info("사원상세보기 화면 보여주기,파라미터 empNo={}",empNo);
+
+		EmployeeVO vo = employeeService.selectEmployeeByNo(empNo);
+
+		logger.info("사원 상세 화면 보여주기 결과 vo={}",vo);
+		model.addAttribute("vo",vo);
+		
+		return "employee/employeeDetail2";
 	}
 	@RequestMapping(value="/employeeEdit.do",method=RequestMethod.GET)
 	public String employeeEdit_get(@RequestParam(defaultValue="0") int empNo,Model model) {

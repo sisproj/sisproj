@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@include file="../inc/top.jsp" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -15,6 +16,7 @@
 		}else{
 			$.setChDate();	
 		}
+		
 		$.applyDatePicker('#startDay');
 	});
 	
@@ -26,13 +28,13 @@
 	}	
 	
 	$.setChDate=function(){
-		var chD = $.applyDatePicker('#startDay').val();
-		
+		var chD=$('#startDay').attr('value');
+		alert(chD);
 		$('#spDate').html(chD);
 	}
 	
 	$.convertDate=function(today){
-		return today.getFullYear()+" "+(today.getMonth()+1)+"월 "+today.getDate()+"일";
+		return today.getFullYear()+"년 "+(today.getMonth()+1)+"월 "+today.getDate()+"일";
 	}
 	
 	$.convertMonth=function(today){
@@ -44,7 +46,7 @@
 	}
 	$.applyDatePicker=function(id){
 		$(id).datepicker({			
-			dateFormat:'yy-mm-dd',
+			dateFormat:'yyyy-mm-dd',
 			changeYear:true,
 			dayNamesMin:['일','월','화','수','목','금','토'],
 			monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
@@ -60,15 +62,22 @@
 </script>
 </head>
 <body>
+          <!-- 0. include부분 -->
         <nav>
             <ul>
                 <!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
-                <li><a href="<c:url value='/commue/commueDateList.do'/>"><i class="fa fa-address-card-o" aria-hidden="true"></i>&nbsp;<span>일별 근태현황</span></a></li>
-                <li><a href="<c:url value='/commue/commueMonthList.do'/>"><i class="fa fa-list-alt" aria-hidden="true"></i>&nbsp;<span>월별 근태현황</span></a></li>        
+               <li><a href="<c:url value='/employee/employeeRegister.do'/>"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;<span>사원 등록</span></a></li>
+                <li><a href="<c:url value='/employee/employeeList.do'/>"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;<span>사원 리스트 </span></a></li>         
+                <li><a href="<c:url value='/confirm/adm/typeform.do'/>"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;<span>결재양식관리 </span></a></li>                          
+                <li><a href="<c:url value='/commue/commueDateList.do'/>"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;<span>일별 근태현황 </span></a></li>                          
+                <li><a href="<c:url value='/commue/commueMonthList.do'/>"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;<span>월별 근태현황 </span></a></li>                          
+                <li><a href="<c:url value='/notice/noticeWrite.do'/>"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;<span>공지사항 등록 </span></a></li>                          
+                <li><a href="<c:url value='/news/newsWrite.do'/>"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;<span>SIS 뉴스등록 </span></a></li>                          
+                <li><a href="<c:url value='/news/newsRegdit.do'/>"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;<span>SIS 뉴스관리 </span></a></li>               
             </ul>
             <!-- 1.왼쪽 사이드 메뉴 지정 끝-->
             <div id="listbtn"><p><i class="fa fa-chevron-circle-left" style="text-align: center;"></i></p></div>
-        </nav>
+        </nav>     
     </aside>
     <!-- 왼쪽 사이드 메뉴 끝 -->
     <article id="headsection">

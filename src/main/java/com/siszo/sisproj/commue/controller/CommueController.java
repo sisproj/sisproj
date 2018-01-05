@@ -47,6 +47,20 @@ public class CommueController {
 			
 		return "commue/employeeDateList";
 	}
+	@RequestMapping("/commueDateList2.do")
+	public String commueDateList2(@ModelAttribute DateSearchVO dateSearchVo,Model model) {
+		logger.info("출퇴근 일별 통계 보여주기 파라미터 dateSearchVo={}",dateSearchVo);
+				
+		List<Map<String, Object>> list=null;
+		if(dateSearchVo.getStartDay()!=null && !dateSearchVo.getStartDay().isEmpty()) {
+			list=commueService.searchDate(dateSearchVo);
+			logger.info("출퇴근 일별 조회 결과, list.size()={}", list.size());		
+		}
+		
+		model.addAttribute("list", list);	
+			
+		return "commue/employeeDateList2";
+	}
 	@RequestMapping("/commueIn.do")
 	public String commueIn(@ModelAttribute CommueVO cmtVo,HttpSession session,Model model) {
 		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
