@@ -73,6 +73,7 @@
    		float: left;
    		border: 1px solid rgb(195, 195, 195);
    		margin-right: 20px;
+   		margin-bottom:10px;
    		padding: 5px;
    		background-color: white;
    	}
@@ -173,7 +174,9 @@
 	<ul>
 		<!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
 		<li><a href="<c:url value='/resource/resource.do'/>"><i class="fa fa-calendar-check-o" aria-hidden="true"></i>&nbsp;<span>자원관리</span></a></li>
-		<li class="active"><a href="<c:url value='/resource/requestList.do'/>"><i class="fa fa-hourglass-half" ></i>&nbsp;<span>승인 대기 목록</span></a></li>
+		<li class="active"><a href="<c:url value='/resource/requestList.do'/>"><i class="fa fa-hourglass-half" ></i>&nbsp;<span>승인 대기 목록</span></a>
+			</li>
+
 		<!-- <li><a href="#"><i class="fa fa-file-text"></i>&nbsp;<span>승인 완료 목록</span></a></li> -->
                 
 	</ul>
@@ -202,11 +205,9 @@
 	        <input type="hidden" id="currentPage" name="currentPage" value="1">			        
 	        <input type="hidden" id="rvNo" name="rvNo" value="${param.rvNo }">			        
 	        <div id="divBodysection">
-		        <div class="divRequestHeader">
-		        <c:if test="${sessionScope.empVo.empLev=='관리자' }">
+		        <div class="divRequestHeader">		        
 			        <a href="#"><div class="divOkMulti"><i class="fa fa-check"></i><span> 선택 승인</span></div></a>
-			        <a href="#"><div class="divBackMulti"><i class="fa fa-times"></i><span> 선택 반려</span></div></a>
-		        </c:if>
+			        <a href="#"><div class="divBackMulti"><i class="fa fa-times"></i><span> 선택 반려</span></div></a>		        
 			        <div>
 			        	<input type="text" placeholder="검색" id="searchKeyword" name="searchKeyword" value='${param.searchKeyword}'>
 			        	<a href="<c:url value='/resource/requestList.do'/>"><i id="reqSearch" class="fa fa-search"></i></a>
@@ -250,16 +251,15 @@
 		        			<td>${map['DEPT_NAME'] }</td>
 		        			<td><fmt:formatDate value="${map['RV_REGDATE']}" pattern="yyyy-MM-dd"/></td>		        			
 		        			<td>
-			        			<c:if test="${sessionScope.empVo.empLev=='관리자' }">
+			        			<c:if test="${sessionScope.empVo.empLev!='사원' }">
 			        				<input type="button" name="btOk" id="${map['RV_NO'] }" value="승인">
-			        				<input type="button" name="btBack" value="반려">
-			        				<c:if test="${map['RV_CONFIRM']=='Y'}">승인</c:if>
+			        				<input type="button" name="btBack" value="반려">			        				
 			        			</c:if>
-			        			<c:if test="${sessionScope.empVo.empLev!='관리자' }">
+			        			<%-- <c:if test="${sessionScope.empVo.empLev!='관리자' }">
 			        				<c:if test="${map['RV_CONFIRM']=='Y'}">승인</c:if>
 			        				<c:if test="${map['RV_CONFIRM']=='N'}">승인 대기중</c:if>
 			        				<c:if test="${map['RV_CONFIRM']=='R'}">반려</c:if>			        				
-			        			</c:if>
+			        			</c:if> --%>
 		        			</td>		        			
 		        		</tr>
 	        		</c:forEach>
