@@ -42,13 +42,13 @@ public class EmployeeController {
 	@Autowired
 	private DeptService deptService;
 
-	@RequestMapping(value="/employeeRegister.do",method=RequestMethod.GET)
+	@RequestMapping(value="/adm/employeeRegister.do",method=RequestMethod.GET)
 	public String employeeRegister_get() {
 		logger.info("사원등록 화면 보여주기");	
 
 		return "employee/employeeRegister";
 	}	
-	@RequestMapping(value="/employeeRegister.do",method=RequestMethod.POST)
+	@RequestMapping(value="/adm/employeeRegister.do",method=RequestMethod.POST)
 	public String employeeRegister_post(@ModelAttribute EmployeeVO vo,
 			@RequestParam String empHiredate1,HttpServletRequest request,Model model) {
 		logger.info("사원 등록 , 파라미터 vo={}, empHiredate1={}",vo, empHiredate1);
@@ -78,7 +78,7 @@ public class EmployeeController {
 
 		int cnt=employeeService.insertEmployee(vo);
 
-		String msg="",url="/employee/employeeRegister.do";
+		String msg="",url="/adm/employee/employeeRegister.do";
 		if(cnt>0){
 			msg="사원 등록 완료!";
 			url="/home.do";
@@ -90,7 +90,7 @@ public class EmployeeController {
 
 		return "common/message";
 	}
-	@RequestMapping("/employeeDetail.do")
+	@RequestMapping("/adm/employeeDetail.do")
 	public String employeeDetail(@RequestParam(defaultValue="0") int empNo,Model model) {
 		logger.info("사원상세보기 화면 보여주기,파라미터 empNo={}",empNo);
 
@@ -112,7 +112,7 @@ public class EmployeeController {
 		
 		return "employee/employeeDetail2";
 	}
-	@RequestMapping(value="/employeeEdit.do",method=RequestMethod.GET)
+	@RequestMapping(value="/adm/employeeEdit.do",method=RequestMethod.GET)
 	public String employeeEdit_get(@RequestParam(defaultValue="0") int empNo,Model model) {
 		logger.info("사원수정 화면 보여주기, 파라미터 값 empNo={}",empNo);			
 		
@@ -128,7 +128,7 @@ public class EmployeeController {
 		return "employee/employeeEdit";
 	}
 
-	@RequestMapping(value="/employeeEdit.do",method=RequestMethod.POST)
+	@RequestMapping(value="/adm/employeeEdit.do",method=RequestMethod.POST)
 	public String employeeEdit_post(@ModelAttribute EmployeeVO vo
 			,@RequestParam String empHiredate1,@RequestParam String oldFileName 
 			,HttpServletRequest request,Model model) {
@@ -166,7 +166,7 @@ public class EmployeeController {
 
 		if(cnt>0) {
 			msg="사원 수정 성공!";
-			url="/employee/employeeDetail.do?empNo="+vo.getEmpNo();
+			url="/employee/adm/employeeDetail.do?empNo="+vo.getEmpNo();
 
 			if(empImg!=null && !empImg.isEmpty()) {
 				if(oldFileName!=null && !oldFileName.isEmpty()) {
@@ -240,7 +240,7 @@ public class EmployeeController {
 	}
 	//완료
 
-	@RequestMapping("/employeeList.do")
+	@RequestMapping("/adm/employeeList.do")
 	public String employeeList(@ModelAttribute SearchVO seVo,Model model) {
 		logger.info("사원 리스트 화면 보여주기 seVo={}",seVo );	
 		

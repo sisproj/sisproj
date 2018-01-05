@@ -4,9 +4,32 @@
 <script type="text/javascript">
 	$(function () {
 		 $('#asidebtn ul li:nth-child(1)').click(function () {
-			
-		}); 
+
+		});
+
+
 	});
+    setInterval(function () {
+		msgCheck();
+    }, 10000);
+
+    function msgCheck() {
+        $.ajax({
+            url:"<c:url value='/message/unReadCount.do'/>",
+            contentType: "application/json; charset=UTF-8",
+            type:"get",
+            success:function(res){
+                if(res > 0) {
+                    res += '  <img src=\"<c:url value='/resources/images/new_icon.png'/>\">';
+				}
+                $("#unreadMsg").html(res);
+            },
+            error:function(xhr, status, error){
+                alert("에러 : "+status+"=>"+error);
+            }
+        });
+    }
+
 </script>
 	<div id="photo">
          <c:if test="${empty sessionScope.empVo.empImg }">
@@ -22,7 +45,7 @@
 	   	    <c:if test="${!empty sessionScope.empVo.empNo }">         	
 		       <c:if test="${sessionScope.empVo.empLev eq ('관리자') }">
 		      	    <li><i class="fa fa-id-card"></i>&nbsp;<span class="name bold">관리자 ${sessionScope.empVo.empName }님</span></li>
-		  	        <li><i class="fa fa-cog"></i>&nbsp;<span><a href="<c:url value='/employee/employeeList.do'/>">관리자페이지</a></span></li>
+		  	        <li><i class="fa fa-cog"></i>&nbsp;<span><a href="<c:url value='/employee/adm/employeeList.do'/>">관리자페이지</a></span></li>
 		       </c:if>
 		       <c:if test="${sessionScope.empVo.empLev eq ('사원') }">
 			       <li><i class="fa fa-id-card"></i>&nbsp;<span class="name bold">${sessionScope.empVo.empName }</span></li>
@@ -30,7 +53,7 @@
 	           </c:if> 	
 			</c:if>
 	        <li><i class="fa fa-envelope"></i>&nbsp;<span><a href="<c:url value='/message/message.do'/>">쪽지</a></span>&nbsp;<span
-	                class="red">${msgUnreadCnt}</span></li>
+	                class="red" id="unreadMsg">${msgUnreadCnt}</span></li>
 	        <li><i class="fa fa-comments"></i>&nbsp;<span>
 				<a href="#" onclick="window.open('<c:url value="/messenger/messenger.do"/>', 'messengerWindow', 'width=1100,height=640,toolbar=no,scrollbars=yes')">대화</a>
 			</span>&nbsp;<span
