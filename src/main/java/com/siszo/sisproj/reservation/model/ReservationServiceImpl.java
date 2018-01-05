@@ -18,6 +18,7 @@ public class ReservationServiceImpl implements ReservationService{
 	public List<Map<String, Object>> selectReservationAll(ReservationSearchVO searchVo) {
 		return resDao.selectReservationAll(searchVo);
 	}
+	
 	public int insertReservation(ReservationVO resVo) {
 		return resDao.insertReservation(resVo);
 	}
@@ -39,6 +40,13 @@ public class ReservationServiceImpl implements ReservationService{
 	public List<Map<String, Object>> reservationNotYselect(int empNo){
 		return resDao.reservationNotYselect(empNo);
 	}
+	public int chkDupRes(ReservationVO resVo) {
+		return resDao.chkDupRes(resVo);
+	}
+	public int deleteTimeOver() {
+		return resDao.deleteTimeOver();
+	}
+	
 	@Override
 	@Transactional
 	public int updateConfirmYMulti(List<ReservationVO> list) {

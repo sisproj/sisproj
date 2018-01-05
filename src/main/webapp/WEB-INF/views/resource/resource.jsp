@@ -1,14 +1,43 @@
+<%@page import="com.siszo.sisproj.common.SchedulerUtility"%>
 <%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-
+	<%SchedulerUtility schedulerUtil = new SchedulerUtility();%>
 <%@include file="../inc/top.jsp"%>
 <!-- scheduler -->
  <script src="<c:url value="/resources/codebase/dhtmlxscheduler.js"/>"></script>
     <link rel="stylesheet" href="<c:url value="/resources/codebase/dhtmlxscheduler.css"/>">
+      <script src="<c:url value="/resources/codebase/ext/dhtmlxscheduler_quick_info.js"/>"></script>
 
 <script type="text/javascript" charset="utf-8">
+var EMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul",
+		"Aug","Sep","Oct","Nov","Dec"];
+var KMonths = ["01","02","03","04","05","06","07",
+		"08","09","10","11","12"];
+
+function ChangeDate(Date) {
+	var vDate=""+Date;
+	console.log(vDate);
+	console.log(typeof vDate);
+	var day = vDate.substring(8,10); //몇일인지
+	var qMonth = vDate.substring(4,7);//영어 월
+	var years = vDate.substring(11,15);//년도
+	var times = vDate.substring(16,21);//시간
+	var Month = "";
+
+	for(var i=0;i<EMonths.length;i++) {
+		if(qMonth==(EMonths[i])) {
+			Month+=KMonths[i];
+			break;
+		}
+	}
+
+	return years+"-"+Month+"-"+day+" "+times;
+	}
+
 	window.onload = function() {
+
+		
 		scheduler.config.readonly = true;
 		scheduler.config.readonly_form = true;
 		scheduler.config.xml_date = "%Y-%m-%d %H:%i";
@@ -19,6 +48,7 @@
 		scheduler.config.limit_time_select = true;
 		scheduler.config.details_on_dblclick = true;
 		scheduler.config.details_on_create = true;
+		scheduler.config.quick_info_detached = true;
 
 		scheduler.locale.labels.section_type = "Type";  
 
@@ -53,6 +83,7 @@
 			// display event only if its type is set to true in filters obj
 			// or it was not defined yet - for newly created event
 			if (filters[event.subject] || event.subject==scheduler.undefined) {
+				console.log(event);
 				return true;
 			}
 
@@ -75,6 +106,7 @@
 		};
 		
 
+		
 		var subject = [ {
 			key : '',
 			label : '자원을 선택하세요'
@@ -107,6 +139,33 @@
 			map_to : "auto"
 		} ];
 		
+		
+		 scheduler.templates.quick_info_content = function(start, end, ev){ 
+		     var items=ev.subject; 
+		     if(items==1){
+			 return "카테고리 : 101호 회의실 " ;
+		     }
+		     if(items==2){
+			 return "카테고리 : 102호 회의실 " ;
+		     }
+		     if(items==3){
+			 return "카테고리 : 스타렉스 자동차 " ;
+		     }
+		     if(items==4){
+			 return "카테고리 : 포터 자동차 " ;
+		     }
+		     if(items==5){
+			 return "카테고리 : 축구장 " ;
+		     }
+		     if(items==6){
+			 return "카테고리 : 법인카드 " ;
+		     }	
+		     if(items=='orders'){
+			 return "카테고리 : 기타 " ;
+		     }
+		}; 
+		
+		
 		$('#bttest').click(function(){
 			scheduler.showLightbox(subject);
 		});
@@ -129,23 +188,23 @@
 				 var selection = ev.subject; //카테고리
 				 var rvNo=ev.id; //아이디
 				$('#rvNo').val(rvNo);
-		        $('#rvStart').val(start_date);
-		        $('#rvEnd').val(end_date);
+		        $('#rvStart').val(ChangeDate(start_date));
+		        $('#rvEnd').val(ChangeDate(end_date)); 
 		        $('#rvContent').val(text);
 		        $('#resNo').val(selection);
-		  	  	$('#rvfrm').submit();
-			    return true;
+		  	   	$('#rvfrm').submit();
+			    return true; 
 		    } 
 		    
 		}); 
-		
+		 
 		
 		scheduler.parse([//화면에 뿌려주기.
 			<c:if test="${!empty reslist}">
-			
 			<c:forEach var="vo" items="${reslist }">
 				{start_date: "${vo.rvStart}", end_date: "${vo.rvEnd}",
 					text:"${vo.rvContent}",	subject: '${vo.resNo}'},
+					
 			</c:forEach>
 			</c:if>
 			], "json");
@@ -424,7 +483,7 @@ important
 	<!-- 3. 내용 -->
 	<div style="min-width: 1500px">
 		<form name="rvfrm" id="rvfrm" method="post"
-			action="<c:url value='/resource/resourceWrite.do'/>">
+			action="<c:url value='/resource/resourceWrite.do'/>"> 	
 			<input type="hidden" id="rvStart" name="rvStart"> <input
 				type="hidden" id="rvEnd" name="rvEnd"> <input type="hidden"
 				id="resNo" name="resNo"> <input type="hidden" id="rvContent"
@@ -541,7 +600,13 @@ important
 	$(function() {
 		$('header nav ul li:nth-child(4) a').addClass('active');
 	});
+	
 </script>
+<style>
+.dhx_qi_big_icon{
+		display: none;
+	}
+</style>
 <!-- 4. 상단 네비 색먹이기 끝-->
 <!-- 0. include부분 끝-->
 <%@include file="../inc/bottom.jsp"%>

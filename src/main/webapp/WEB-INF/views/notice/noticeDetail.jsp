@@ -36,7 +36,7 @@
 							</tr>
 							<tr>
 								<td>작성자</td>
-								<td colspan="2">${vo.empName}</td>
+								<td colspan="2">${vo.empLev}</td>
 							</tr>
 							<tr>
 								<td>작성일자</td>

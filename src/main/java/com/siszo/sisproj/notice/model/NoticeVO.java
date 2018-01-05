@@ -14,9 +14,27 @@ public class NoticeVO {
 	private int notiDowncnt;	//다운수
 	private int notiReadcnt;	//조회수
 	private String notiCategory;	//카테고리
+	private String empLev;	//사원 구분(사원, 관리자)
 	
-	private String empName;
+	//사원번호를 이름으로 받아오기 위한
+	private String empName;	//사원이름 getter setter 지워놓음
 	
+	public String getEmpLev() {
+		return empLev;
+	}
+	public void setEmpLev(String empLev) {
+		this.empLev = empLev;
+	}
+
+
+	public String getEmpName() {
+		return empName;
+	}
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
+
+
 	//24시간 이내의 글을 처리하기 위한 프로퍼티
     private int newImgTerm;
 	
@@ -27,10 +45,7 @@ public class NoticeVO {
 	public void setNewImgTerm(int newImgTerm) {
 		this.newImgTerm = newImgTerm;
 	}
-	
-	public String getEmpName() {
-		return empName;
-	}
+		
 	public String getNotiCategory() {
 		return notiCategory;
 	}
@@ -38,10 +53,7 @@ public class NoticeVO {
 	public void setNotiCategory(String notiCategory) {
 		this.notiCategory = notiCategory;
 	}
-	public void setEmpName(String empName) {
-		this.empName = empName;
-	}
-	
+		
 	public int getNotiNo() {
 		return notiNo;
 	}
@@ -102,16 +114,15 @@ public class NoticeVO {
 	public void setNotiReadcnt(int notiReadcnt) {
 		this.notiReadcnt = notiReadcnt;
 	}
-	
-	
 	@Override
 	public String toString() {
 		return "NoticeVO [notiNo=" + notiNo + ", notiTitle=" + notiTitle + ", empNo=" + empNo + ", notiContent="
 				+ notiContent + ", notiRegdate=" + notiRegdate + ", notiFilename=" + notiFilename + ", notiFilesize="
 				+ notiFilesize + ", notiOfilename=" + notiOfilename + ", notiDowncnt=" + notiDowncnt + ", notiReadcnt="
-				+ notiReadcnt + ", notiCategory=" + notiCategory + ", empName=" + empName + ", newImgTerm=" + newImgTerm
-				+ "]";
+				+ notiReadcnt + ", notiCategory=" + notiCategory + ", empLev=" + empLev + ", empName=" + empName
+				+ ", newImgTerm=" + newImgTerm + "]";
 	}
+	
 	
 		
 }
