@@ -35,19 +35,6 @@
 <!-- 상단부분 -->
 <header>
     <h1><a href="<c:url value='/home.do'/>"><img src="${pageContext.request.contextPath }/resources/images/logo_admin.png" alt=""></a></h1>
-    <%-- <nav>
-        <ul>
-            <li><a href="<c:url value='/home.do'/>">HOME</a></li>
-            <li><a href="<c:url value='/addrBook/addrBookList.do'/>">주소록</a></li>
-            <li><a href="<c:url value='/scheduler/scheduler.do'/>">스케줄</a></li>
-            <li><a href="<c:url value='/resource/resource.do'/>">자원관리</a></li>
-            <li><a href="<c:url value='/confirm/main.do'/>">전자결재</a></li>
-            <li><a href="<c:url value='/commue/commueMonthList.do'/>">근태관리</a></li>
-            <li><a href="<c:url value='/webhard/main.do'/>">웹하드</a></li>
-            <li><a href="<c:url value='/notice/noticeList.do'/>">공지사항</a></li>
-            <li><a href="<c:url value='/news/dailyNews.do'/>">사내뉴스</a></li>
-        </ul>
-    </nav> --%>
 </header>
 <section>
     <div id="bookmark" class="hidden">
@@ -62,3 +49,19 @@
         <div id="organ">
             <c:import url="/organization/orgList.do"/>
         </div>
+      	<nav>
+			<ul>
+				<!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
+                <li><a href="<c:url value='/employee/adm/employeeRegister.do'/>"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;<span>사원 등록</span></a></li>
+                <li><a href="<c:url value='/employee/adm/employeeList.do'/>"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;<span>사원 리스트 </span></a></li>         
+                <li><a href="<c:url value='/confirm/adm/typeform.do'/>"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;<span>결재양식관리 </span></a></li>                          
+                <li><a href="<c:url value='/commue/adm/commueDateList.do'/>"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;<span>일별 근태현황 </span></a></li>                          
+                <li><a href="<c:url value='/commue/adm/commueMonthList.do'/>"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;<span>월별 근태현황 </span></a></li>                          
+                <li><a href="<c:url value='/notice/adm/noticeWrite.do'/>"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;<span>공지사항 등록 </span></a></li>                          
+                <li><a href="<c:url value='/news/adm/newsWrite.do'/>"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;<span>SIS 뉴스등록 </span></a></li>                          
+                <li><a href="<c:url value='/news/adm/newsRegdit.do'/>"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;<span>SIS 뉴스관리 </span></a></li> 
+			</ul>	
+			<!-- 1.왼쪽 사이드 메뉴 지정 끝-->
+			<div id="listbtn"><p><i class="fa fa-chevron-circle-left" style="text-align: center;"></i></p></div>
+		</nav>
+	</aside>

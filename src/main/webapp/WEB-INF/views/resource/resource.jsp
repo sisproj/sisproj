@@ -2,12 +2,14 @@
 <%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-	<%SchedulerUtility schedulerUtil = new SchedulerUtility();%>
+<%SchedulerUtility schedulerUtil = new SchedulerUtility();%>
 <%@include file="../inc/top.jsp"%>
 <!-- scheduler -->
- <script src="<c:url value="/resources/codebase/dhtmlxscheduler.js"/>"></script>
-    <link rel="stylesheet" href="<c:url value="/resources/codebase/dhtmlxscheduler.css"/>">
-      <script src="<c:url value="/resources/codebase/ext/dhtmlxscheduler_quick_info.js"/>"></script>
+<script src="<c:url value="/resources/codebase/dhtmlxscheduler.js"/>"></script>
+<link rel="stylesheet"
+	href="<c:url value="/resources/codebase/dhtmlxscheduler.css"/>">
+<script
+	src="<c:url value="/resources/codebase/ext/dhtmlxscheduler_quick_info.js"/>"></script>
 
 <script type="text/javascript" charset="utf-8">
 var EMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul",
@@ -213,58 +215,112 @@ function ChangeDate(Date) {
 		}
 	
 	function pageFunc(curPage){
-		document.frmTrash.currentPage.value=curPage;
-		frmTrash.submit();
+		document.rvfrm.currentPage.value=curPage;
+		rvfrm.submit();
 	}
+	
+	
 </script>
-<style type="text/css"> 
-
+<style type="text/css">
 .dhx_cal_event
+
+
 div
+
+
 .dhx_footer
 ,
 .dhx_cal_event
+
+
 .past_event
-div
-.dhx_footer
-,
-.dhx_cal_event
-.event_1
-div
-.dhx_footer
-,
-.dhx_cal_event
-.event_2
-div
-.dhx_footer
-,
-.dhx_cal_event
-.event_3
-div
-.dhx_footer
-,
-.dhx_cal_event
-.event_4
-div
-.dhx_footer
-,
-.dhx_cal_event
-.event_5
-div
-.dhx_footer
-,
-.dhx_cal_event
-.event_6
-div
-.dhx_footer
-,
 
+
+div
+
+
+.dhx_footer
+,
+.dhx_cal_event
+
+
+.event_1
+
+
+div
+
+
+.dhx_footer
+,
+.dhx_cal_event
+
+
+.event_2
+
+
+div
+
+
+.dhx_footer
+,
+.dhx_cal_event
+
+
+.event_3
+
+
+div
+
+
+.dhx_footer
+,
+.dhx_cal_event
+
+
+.event_4
+
+
+div
+
+
+.dhx_footer
+,
+.dhx_cal_event
+
+
+.event_5
+
+
+div
+
+
+.dhx_footer
+,
+.dhx_cal_event
+
+
+.event_6
+
+
+div
+
+
+.dhx_footer
+,
 {
 background-color
+
+
 :
+
+
 transparent
+
+
 !
 important
+
+
 ;
 }
 .dhx_cal_event .dhx_body {
@@ -330,126 +386,143 @@ important
 }
 
 #resource_here {
-	width:50%;
+	width: 50%;
+	height: 500px;
 	float: left;
 }
 
-	.filters_wrapper {
-			line-height: 12px;
-			font-size: 12px;
-		}
-		.filters_wrapper span {
-			font-weight: bold;
-			padding-right: 5px;
-		}
-		.filters_wrapper label {
-			padding-right: 3px;
-		}
-	.divRequestHeader div{
-   		float: left;
-   		border: 1px solid rgb(195, 195, 195);
-   		margin-right: 20px;
-   		padding: 5px;
-   		background-color: white;
-   	}
-   	.divRequestHeader div input{
-   		border: none;
-   		padding: 1px 0;
-   	}
-   	#reqSearch{
-   		color: rgb(195, 195, 195);
-   	}
-   	.divOkMulti i{
-   		color: #0f0;
-   	}
-   	.divBackMulti i{
-   		color: #f00;
-   	}
-	#addrTable{
-	font-size:14px;
-		width:800px;
-		margin: 0 auto;
-		padding : 10px;
-		box-sizing:border-box;
-		border:0;
-		border-collapse: collapse;	
-		margin-top: 10px;	
-		margin-bottom: 10px;
-	}
-	#addrTable tr{
-		transition:all 300ms linear;
-	}
-	#addrTable tbody tr:hover{
-		background-color: #e1e1e1;
-	}
-	#addrTable th{
-		box-sizing:border-box;
-		padding: 5px;
-		height: 30px;
-		color: #036;
-		font-size: 1.17em;
-		border:0;
-		border-top: 2px solid #e1e1e1;
-		border-bottom: 2px solid #e1e1e1;
-	}
-	#addrTable td {
-		box-sizing:border-box;
-		padding: 5px;
-		border:0;
-		text-align: center;
-		border-bottom: 2px solid #e1e1e1;
-	}
-	#pagingbtn{
-		width: 100%;
-		max-width:1100px;
-		margin: 0 auto;
-		height: 40px;
-		width: auto;
-		box-sizing:border-box;
-		padding-bottom: 10px;
-		text-align:center;
-	}
-	#pagingbtn span, #pagingbtn a{
-		display: inline-block;
-		width: 24px;
-		line-height: 24px;
-		border-radius:12px;
-		background-color: #369;
-		color: fff;
-		text-align: center;
-		font-weight: bold;
-		margin-left: 5px;
-		box-shadow:2px 2px 3px #333;
-		font-size: 0.8em;
-	}
-	#pagingbtn a:hover,
-	#pagingbtn span.thispage{
-		background-color:#09f;
-		box-shadow:2px 2px 3px transparent;	
-	}
-	#pagingbtn span:first-child{
-		margin-left: 0;	
-	}
-	#pagingbtn a i {
-		line-height: 24px;
-		color: fff;
-		text-align: center;
-		font-size: 0.8em;
-	}
-	#pagingbtn #firstbtn,
-	#pagingbtn #lastbtn{
-		background-color: #333;
-	}
-	#pagingbtn #prevbtn,
-	#pagingbtn #nextbtn{
-		background-color: #306;
-	}
-	#bodysection
-	{
-min-width: 1500px;
-clear: both;
-	}
- </style>
+.filters_wrapper {
+	line-height: 12px;
+	font-size: 12px;
+}
+
+.filters_wrapper span {
+	font-weight: bold;
+	padding-right: 5px;
+}
+
+.filters_wrapper label {
+	padding-right: 3px;
+}
+
+.divRequestHeader div {
+	float: left;
+	border: 1px solid rgb(195, 195, 195);
+	margin-right: 20px;
+	padding: 5px;
+	background-color: white;
+}
+
+.divRequestHeader div input {
+	border: none;
+	padding: 1px 0;
+}
+
+#reqSearch {
+	color: rgb(195, 195, 195);
+}
+
+.divOkMulti i {
+	color: #0f0;
+}
+
+.divBackMulti i {
+	color: #f00;
+}
+
+#addrTable {
+	font-size: 14px;
+	width: 800px;
+	margin: 0 auto;
+	padding: 10px;
+	box-sizing: border-box;
+	border: 0;
+	border-collapse: collapse;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#addrTable tr {
+	transition: all 300ms linear;
+}
+
+#addrTable tbody tr:hover {
+	background-color: #e1e1e1;
+}
+
+#addrTable th {
+	box-sizing: border-box;
+	padding: 5px;
+	height: 30px;
+	color: #036;
+	font-size: 1.17em;
+	border: 0;
+	border-top: 2px solid #e1e1e1;
+	border-bottom: 2px solid #e1e1e1;
+}
+
+#addrTable td {
+	box-sizing: border-box;
+	padding: 5px;
+	border: 0;
+	text-align: center;
+	border-bottom: 2px solid #e1e1e1;
+}
+
+#pagingbtn {
+	width: 100%;
+	max-width: 1100px;
+	margin: 0 auto;
+	height: 40px;
+	width: auto;
+	box-sizing: border-box;
+	padding-bottom: 10px;
+	text-align: center;
+}
+
+#pagingbtn span, #pagingbtn a {
+	display: inline-block;
+	width: 24px;
+	line-height: 24px;
+	border-radius: 12px;
+	background-color: #369;
+	color: fff;
+	text-align: center;
+	font-weight: bold;
+	margin-left: 5px;
+	box-shadow: 2px 2px 3px #333;
+	font-size: 0.8em;
+}
+
+#pagingbtn a:hover, #pagingbtn span.thispage {
+	background-color: #09f;
+	box-shadow: 2px 2px 3px transparent;
+}
+
+#pagingbtn span:first-child {
+	margin-left: 0;
+}
+
+#pagingbtn a i {
+	line-height: 24px;
+	color: fff;
+	text-align: center;
+	font-size: 0.8em;
+}
+
+#pagingbtn #firstbtn, #pagingbtn #lastbtn {
+	background-color: #333;
+}
+
+#pagingbtn #prevbtn, #pagingbtn #nextbtn {
+	background-color: #306;
+}
+
+#bodysection {
+	min-width: 1500px;
+	clear: both;
+}
+</style>
 <!-- 0. include부분 -->
 <nav>
 	<ul>
@@ -458,10 +531,9 @@ clear: both;
 			href="<c:url value='/resource/resource.do'/>"><i
 				class="fa fa-calendar-check-o" aria-hidden="true"></i>&nbsp;<span>자원관리</span></a></li>
 		<c:if test="${sessionScope.empVo.empLev!='사원' }">
-		<li><a
-			href="<c:url value='/resource/requestList.do'/>"><i
-				class="fa fa-hourglass-half"></i>&nbsp;<span>승인 대기 목록</span></a></li>
-		</c:if>				
+			<li><a href="<c:url value='/resource/requestList.do'/>"><i
+					class="fa fa-hourglass-half"></i>&nbsp;<span>승인 대기 목록</span></a></li>
+		</c:if>
 		<!-- <li><a href="#"><i class="fa fa-file-text"></i>&nbsp;<span>결재 완료함</span></a></li>
                 <li><a href="#"><i class="fa fa-history"></i>&nbsp;<span>결재 반려함</span></a></li>
                 <li><a href="#"><i class="fa fa-cog"></i>&nbsp;<span>결재 환경 설정</span></a></li> -->
@@ -489,49 +561,33 @@ clear: both;
 	<!-- 3. 내용 -->
 
 	<div class="resbigdiv">
-		<form name="rvfrm" id="rvfrm" method="post"	action="<c:url value='/resource/resourceWrite.do'/>"> 	
-			<input type="hidden" id="rvStart" name="rvStart"> 
-			<input type="hidden" id="rvEnd" name="rvEnd"> 
-			<input type="hidden" id="resNo" name="resNo"> 
-			<input type="hidden" id="rvContent" 	name="rvContent">
-			<input type="hidden" id="currentPage" name="currentPage" value="1">
-
+		<form name="rvfrm1" id="rvfrm1" method="post"
+			action="<c:url value='/resource/resourceWrite.do'/>">
+			<input type="hidden" id="rvStart" name="rvStart"> <input
+				type="hidden" id="rvEnd" name="rvEnd"> <input type="hidden"
+				id="resNo" name="resNo">	
+				 <input type="hidden" id="rvContent"
+				name="rvContent"> 
 			<!-- 제목 -->
 		</form>
-		
-		<div style='height:20px; padding:5px;'>
-	<div class="filters_wrapper" id="filters_wrapper">
-		<span>카테고리 별 검색:</span>
-		<label>
-			<input type="checkbox" name="1" />
-			101호 회의실
-		</label>
-		<label>
-			<input type="checkbox" name="2" />
-			102호 회의실
-		</label>
-		<label>
-			<input type="checkbox" name="3" />
-			스타렉스 자동차
-		</label>
-		<label>
-			<input type="checkbox" name="4" />
-			포터 자동차
-		</label>
-		<label>
-			<input type="checkbox" name="5" />
-			축구장
-		</label>
-		<label>
-			<input type="checkbox" name="6" />
-			법인카드
-		</label>
-		<label>
-			<input type="checkbox" name="orders" />
-			기타
-		</label>
-	</div>
-</div>
+		<form name="rvfrm" id="rvfrm" method="post"
+			action="<c:url value='/resource/resource.do'/>">
+		<input type="hidden" id="currentPage"
+						name="currentPage" value="1">
+		</form>
+		<div style='height: 20px; padding: 5px;'>
+			<div class="filters_wrapper" id="filters_wrapper">
+				<span>카테고리 별 검색:</span> <label> <input type="checkbox"
+					name="1" /> 101호 회의실
+				</label> <label> <input type="checkbox" name="2" /> 102호 회의실
+				</label> <label> <input type="checkbox" name="3" /> 스타렉스 자동차
+				</label> <label> <input type="checkbox" name="4" /> 포터 자동차
+				</label> <label> <input type="checkbox" name="5" /> 축구장
+				</label> <label> <input type="checkbox" name="6" /> 법인카드
+				</label> <label> <input type="checkbox" name="orders" /> 기타
+				</label>
+			</div>
+		</div>
 
 		<div id="scheduler_here" class="dhx_cal_container"
 			style='width: 50%; height: 800px;'>
@@ -549,79 +605,82 @@ clear: both;
 
 		</div>
 		<div id="resource_here">
-			<input type="button" id="bttest" value="자원등록 신청하기"> 
+			<input type="button" id="bttest" value="자원등록 신청하기">
 			<hr>
 			<h4 style="text-align: center;">나의 자원신청 승인 현황</h4>
 			<hr>
 			<table id="addrTable">
-	        		<colgroup>
-	        			<col width="15%">
-	        			<col width="*">
-	        			<col width="17%">
-	        			<col width="17%">
-	        			<col width="13%">
-	        			<col width="15%"> 
-	        		</colgroup>
-	        		<thead>
-	        		<tr>
-	        			<th>자원이름</th>
-	        			<th>예약 내용</th>
-	        			<th>시작일</th>
-	        			<th>종료일</th>
-	        			<th>등록일</th>
-	        			<th>승인여부</th>
-	        		</tr>
-	        		</thead>
-	        		<tbody>
-	        		<c:if test="${empty myreslist }">
-	        		<tr>
-	        			<td colspan="6">자원 승인 대기현황이 없습니다.</td> 
-	        		</tr>
-	        		</c:if>
-	        		<c:if test="${!empty myreslist }">
-	        		<c:forEach var="map" items="${myreslist }">
-		        		<tr>
-		        			<td>${map['RES_NAME']}</td>
-		        			<td>${map['RV_CONTENT']}</td>
-		        			<td>${map['RV_START'] }</td>
-		        			<td>${map['RV_END'] }</td>
-		        			<td><fmt:formatDate value="${map['RV_REGDATE']}" pattern="yyyy-MM-dd"/></td>		        			
-		        			<td>
-			        				<c:if test="${map['RV_CONFIRM']=='N'}">승인 대기중</c:if>
-			        				<c:if test="${map['RV_CONFIRM']=='R'}">반려</c:if>			        				
-		        			</td>		        			
-		        		</tr>
-	        		</c:forEach>
-	        		</c:if>
-	        		</tbody>
-	        	</table>
-		        
-			<hr>
-			 <!-- 페이징처리 -->
-		    	<div id="pagingbtn">
-					<ul>
-						<!-- 이전 블럭으로 이동 ◀ -->
-						<c:if test="${pagingInfo.firstPage>1 }">
-							<a id="prevbtn" href="#" onclick="pageFunc(${pagingInfo.firstPage-1})"><i class="fa fa-chevron-left"></i></a>		
-						</c:if>	
-					
-						<!-- [1][2][3][4][5][6][7][8][9][10] -->
-						<c:forEach var="i" begin="${pagingInfo.firstPage}" end="${pagingInfo.lastPage}">
-							<c:if test="${i==pagingInfo.currentPage}">
-								<span class="thispage">${i }</span>	
-							</c:if>
-							<c:if test="${i!=pagingInfo.currentPage}">
-								<a href="#" onclick="pageFunc(${i })" class="active">${i }</a>
-					 		</c:if>				
+				<colgroup>
+					<col width="15%">
+					<col width="*">
+					<col width="17%">
+					<col width="17%">
+					<col width="13%">
+					<col width="15%">
+				</colgroup>
+				<thead>
+					<tr>
+						<th>자원이름</th>
+						<th>예약 내용</th>
+						<th>시작일</th>
+						<th>종료일</th>
+						<th>등록일</th>
+						<th>승인여부</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:if test="${empty myreslist }">
+						<tr>
+							<td colspan="6">자원 승인 대기현황이 없습니다.</td>
+						</tr>
+					</c:if>
+					<c:if test="${!empty myreslist }">
+						<c:forEach var="map" items="${myreslist }">
+							<tr>
+								<td>${map['RES_NAME']}</td>
+								<td>${map['RV_CONTENT']}</td>
+								<td>${map['RV_START'] }</td>
+								<td>${map['RV_END'] }</td>
+								<td><fmt:formatDate value="${map['RV_REGDATE']}"
+										pattern="yyyy-MM-dd" /></td>
+								<td><c:if test="${map['RV_CONFIRM']=='N'}">승인 대기중</c:if> <c:if
+										test="${map['RV_CONFIRM']=='R'}">반려</c:if></td>
+							</tr>
 						</c:forEach>
-					
-						<!-- 다음 블럭으로 이동 ▶ -->
-						<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage}">
-							<a id=nextbtn href="#" onclick="pageFunc(${pagingInfo.lastPage+1})"><i class="fa fa-chevron-right"></i></a>
+					</c:if>
+				</tbody>
+			</table>
+
+			<!-- 페이징처리 -->
+			<div id="pagingbtn">
+				<ul>
+					<!-- 이전 블럭으로 이동 ◀ -->
+					<c:if test="${pagingInfo.firstPage>1 }">
+						<a id="prevbtn" href="#"
+							onclick="pageFunc(${pagingInfo.firstPage-1})"><i
+							class="fa fa-chevron-left"></i></a>
+					</c:if>
+
+					<!-- [1][2][3][4][5][6][7][8][9][10] -->
+					<c:forEach var="i" begin="${pagingInfo.firstPage}"
+						end="${pagingInfo.lastPage}">
+						<c:if test="${i==pagingInfo.currentPage}">
+							<span class="thispage">${i }</span> 
 						</c:if>
-					</ul>
-		        </div>
-		        <!-- 페이징 처리 끝 -->
+						<c:if test="${i!=pagingInfo.currentPage}">
+							<a href="#" onclick="pageFunc(${i })" class="active">${i }</a>
+						</c:if>
+					</c:forEach>
+
+					<!-- 다음 블럭으로 이동 ▶ -->
+					<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage}">
+						<a id=nextbtn href="#"
+							onclick="pageFunc(${pagingInfo.lastPage+1})"><i
+							class="fa fa-chevron-right"></i></a>
+					</c:if>
+				</ul>
+			</div>
+			<!-- 페이징 처리 끝 -->
 
 
 		</div>
@@ -630,15 +689,18 @@ clear: both;
 </article>
 <!-- 4. 상단 네비 색먹이기 // li태그 순서(전자결재 : 6번째) 입력 -->
 <script type="text/javascript">
+
+
+
 	$(function() {
 		$('header nav ul li:nth-child(4) a').addClass('active');
 	});
 	
 </script>
 <style>
-.dhx_qi_big_icon{
-		display: none;
-	}
+.dhx_qi_big_icon {
+	display: none;
+}
 </style>
 <!-- 4. 상단 네비 색먹이기 끝-->
 <!-- 0. include부분 끝-->

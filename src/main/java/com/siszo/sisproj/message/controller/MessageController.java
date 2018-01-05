@@ -65,6 +65,14 @@ public class MessageController {
         return "message/messageMain";
     }
 
+    @RequestMapping(value = "/message/unReadCount.do", method = RequestMethod.GET)
+    public @ResponseBody int messageWrite_post(HttpSession session) {
+        EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
+        int msgUnreadCnt = messageService.selectUnreadCount(empVo.getEmpNo());
+
+        return msgUnreadCnt;
+    }
+
     @RequestMapping("/message/messageBanner.do")
     public String messageBanner(HttpSession session, Model model) {
 

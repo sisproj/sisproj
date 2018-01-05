@@ -3,14 +3,19 @@
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/bootstrap/bootstrap.min.css'/>">
 <script type="text/javascript" src="<c:url value='/resources/js/bootstrap/bootstrap.min.js'/>"></script>
 <!-- 0. include부분 -->
-			<nav>
-				<ul>
-					<!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
-					<li class="active"><a href="<c:url value='/notice/noticeList.do'/>"><i class="fa fa-pencil-square-o"></i>&nbsp;<span>공지사항 홈</span></a></li>
-				</ul>	
-				<!-- 1.왼쪽 사이드 메뉴 지정 끝-->
-				<div id="listbtn"><p><i class="fa fa-chevron-circle-left" style="text-align: center;"></i></p></div>
-			</nav>
+		<link rel="stylesheet" href="<c:url value="/resources/css/mypage.css"/>">
+		        <nav>
+					<ul>
+						<!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
+						<li class="active"><a href="<c:url value='/notice/noticeList.do'/>"><i class="fa fa-pencil-square-o"></i>&nbsp;<span>공지사항 홈</span></a></li>
+					</ul>
+					<!-- 1.왼쪽 사이드 메뉴 지정 끝-->
+					<div id="listbtn">
+						<p>
+							<i class="fa fa-chevron-circle-left" style="text-align: center;"></i>
+						</p>
+					</div>
+				</nav>
 		</aside>
 		<!-- 왼쪽 사이드 메뉴 끝 -->
 		<article id="headsection">
@@ -64,9 +69,9 @@
 					</table>
 						<a href="noticeList.do" class="btn btn-primary">목록</a>
 					<c:if test="${sessionScope.empVo.empLev=='관리자'}">
-						<a href="noticeUpdate.do?notiNo=${param.notiNo}" class="btn btn-primary">수정</a>
+						<a href="<c:url value='/notice/adm/noticeUpdate.do?notiNo=${param.notiNo}'/>" class="btn btn-primary">수정</a>
 						<a href="#" class="btn btn-primary" onclick="del(${param.notiNo })">삭제</a>
-						<a href="noticeWrite.do" class="btn btn-primary pull-right">글쓰기</a>
+						<a href="<c:url value='/notice/adm/noticeWrite.do'/>" class="btn btn-primary pull-right">글쓰기</a>
 					</c:if>
 					<form id="frmDelete" name="frmDelete" method="post" action="<c:url value='/notice/noticeDelete.do'/>">
 						<input type="hidden" name="notiNo" value="${param.notiNo }">

@@ -1,6 +1,5 @@
 package com.siszo.sisproj.commue.controller;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -28,12 +27,12 @@ public class CommueController {
 	@Autowired
 	private CommueService commueService;
 	
-	@RequestMapping(value="/commueMonthList.do",method=RequestMethod.GET)
+	@RequestMapping(value="/adm/commueMonthList.do",method=RequestMethod.GET)
 	public void commueMonthList_get() {
 		logger.info("출퇴근 월별 통계 보여주기");
 	}
 	
-	@RequestMapping("/commueDateList.do")
+	@RequestMapping("/adm/commueDateList.do")
 	public String commueDateList(@ModelAttribute DateSearchVO dateSearchVo,Model model) {
 		logger.info("출퇴근 일별 통계 보여주기 파라미터 dateSearchVo={}",dateSearchVo);
 				

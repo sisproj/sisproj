@@ -41,7 +41,7 @@ public class NoticeController {
 	@Autowired
 	private FileUploadUtil fileUtil;
 	
-	@RequestMapping(value="/noticeWrite.do", method=RequestMethod.GET)
+	@RequestMapping(value="/adm/noticeWrite.do", method=RequestMethod.GET)
 	public String noticeWrite_get() {
 		logger.info("공지사항 글쓰기 보여주기");
 		
@@ -191,7 +191,7 @@ public class NoticeController {
 	}
 	
 	
-	@RequestMapping(value="/noticeUpdate.do", method=RequestMethod.GET)
+	@RequestMapping(value="/adm/noticeUpdate.do", method=RequestMethod.GET)
 	public String noticeUpdate_get(@RequestParam(defaultValue="0") int notiNo,
 			HttpServletRequest request,
 			ModelMap model) {
