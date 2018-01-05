@@ -13,6 +13,9 @@
 		if($('#startDay').val()==''){
 			$.setToday();
 		}
+		$('#btSearch').submit(function () {
+			$.setChDate();	
+		});
 		$.applyDatePicker('#startDay');
 	});
 	
@@ -22,7 +25,11 @@
 
 			$('#spDate').html(str);
 	}	
-	
+	$.setChDate=function(){
+		var chD = $.applyDatePicker('#startDay').val();
+		
+		$('#spDate').html(chD);
+	}
 	$.convertDate=function(today){
 		return today.getFullYear()+" "+(today.getMonth()+1)+"월 "+today.getDate()+"일";
 	}
