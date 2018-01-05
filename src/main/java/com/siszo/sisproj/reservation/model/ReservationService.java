@@ -11,4 +11,6 @@ public interface ReservationService {
 	public int updateConfirmR(int rvNo);	
 	public List<ReservationVO> reservationNselect();
 	public List<Map<String, Object>> reservationNotYselect(int empNo);
+	public int updateConfirmYMulti(List<ReservationVO> list);
+	public int updateConfirmRMulti(List<ReservationVO> list);
 }

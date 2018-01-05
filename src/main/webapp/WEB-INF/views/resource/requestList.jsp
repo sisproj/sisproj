@@ -19,6 +19,24 @@
 				$("td input[type=checkbox]").prop("checked",false); 
 			}
 		});
+		$('.divOkMulti').click(function(){
+			var len=$('td input[type=checkbox]:checked').length;
+			if(len==0){
+				alert('승인할 정보를 체크하세요');
+				return;
+			}
+			$('#frmList').prop('action','<c:url value="/resource/updateYMulti.do"/>');
+			$('#frmList').submit();
+		});
+		$('.divBackMulti').click(function(){
+			var len=$('td input[type=checkbox]:checked').length;
+			if(len==0){
+				alert('반려할 정보를 체크하세요');
+				return;
+			}
+			$('#frmList').prop('action','<c:url value="/resource/updateRMulti.do"/>');
+			$('#frmList').submit();
+		});
 		
 		$('input[name="btOk"]').click(function(){
 			var rvNo=$(this).attr('id');
@@ -39,6 +57,10 @@
 		
 		
 	});
+	function pageFunc(curPage){
+		document.frmList.currentPage.value=curPage;
+		frmList.submit();
+	}
 </script>
 <style type="text/css">
 	html, body {
