@@ -110,9 +110,11 @@
 						</tr>
 					</tbody>
 				</table>
-				<input type="submit" class="btn btn-primary pull-right" id="btWrite" value="글쓰기">
-				<input type="Button" class="btn btn-primary pull-right" value="목록으로"
-					onclick="location.href='<c:url value="/notice/noticeList.do"/>'" />
+				<%-- <input type="Button" class="btn btn-primary pull-right" value="목록으로"
+					onclick="location.href='<c:url value="/notice/noticeList.do"/>'" /> --%>
+				<a href="<c:url value='/notice/noticeList.do'/>" class="btn btn-primary">목록</a>
+				<!-- <input type="submit" class="btn btn-primary pull-right" id="btWrite" value="글쓰기"> -->
+				<button type="submit" class="btn btn-primary pull-right" id="btWrite">글쓰기</button>
 			</form>
 		</div>
 	</div>

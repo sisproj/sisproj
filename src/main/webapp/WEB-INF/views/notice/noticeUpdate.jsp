@@ -77,7 +77,7 @@
 						</tr>
 						<tr>
 							<td class="active"><textarea class="form-control" placeholder="글 내용"
-								name="notiContent" id="ir1" maxlength="2048" style="height: 480px;">${vo.notiContent }
+								name="notiContent" id="ir1" maxlength="2048" style="height: 380px;">${vo.notiContent }
 							</textarea></td>
 						</tr>
 						<tr>
@@ -101,7 +101,7 @@
 					</tbody>
 				</table>
 				<!-- <input type="submit" class="btn btn-primary" id="btUpdate" value="글수정"> -->
-				<a href="noticeList.do" class="btn btn-primary">목록</a>
+				<a href="<c:url value='/notice/noticeList.do'/>" class="btn btn-primary">목록</a>
 				<button type="submit" class="btn btn-primary pull-right" id="btUpdate">글수정</button>
 			</form>
 		</div>

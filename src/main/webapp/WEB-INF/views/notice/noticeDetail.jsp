@@ -71,7 +71,7 @@
 					<c:if test="${sessionScope.empVo.empLev=='관리자'}">
 						<a href="<c:url value='/notice/adm/noticeUpdate.do?notiNo=${param.notiNo}'/>" class="btn btn-primary">수정</a>
 						<a href="#" class="btn btn-primary" onclick="del(${param.notiNo })">삭제</a>
-						<a href="noticeWrite.do" class="btn btn-primary pull-right">글쓰기</a>
+						<a href="<c:url value='/notice/adm/noticeWrite.do'/>" class="btn btn-primary pull-right">글쓰기</a>
 					</c:if>
 					<form id="frmDelete" name="frmDelete" method="post" action="<c:url value='/notice/noticeDelete.do'/>">
 						<input type="hidden" name="notiNo" value="${param.notiNo }">

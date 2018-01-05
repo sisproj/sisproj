@@ -252,9 +252,9 @@ action="<c:url value='/notice/noticeList.do'/>">
 							value="${param.searchKeyword }"> <input type="submit" class="btn btn-primary"
 							value="검색">
 					</form>
-					<c:if test="${sessionScope.empVo.empLev=='관리자'}">
+					<%-- <c:if test="${sessionScope.empVo.empLev=='관리자'}">
 						<div id="wrbtn"><a href="noticeWrite.do" class="btn btn-primary pull-right">글쓰기</a></div>
-					</c:if>
+					</c:if> --%>
 				</div>
 			</div>
 		</div>
