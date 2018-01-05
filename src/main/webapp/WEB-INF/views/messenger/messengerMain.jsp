@@ -136,9 +136,14 @@
                     titleArr = title.split(",");
                 }
 
-                titleArr.splice(titleArr.indexOf('${sessionScope.empVo.empName}'), 1);
-                $('#chatTitle').html(titleArr.toString());
-            });
+                var memberCnt = titleArr.length
+                var titleStr = titleArr.toString();
+                if(titleStr.length > 20) {
+                    titleStr = titleStr.substring(0, 20) + "..."
+                }
+                titleStr += "(" + memberCnt + ")";
+
+                $('#chatTitle').html(titleStr);            });
 
             $('#messenger-main-container').html("").load('messengerChat.do', {chatKey: chatKey});
             $('#sidebar-button').show().attr('name', 'hide-nav');

@@ -140,11 +140,33 @@
                     var writeUrl = "<c:url value='/message/reply.do?sendempNo='/>" + res.empNo;
                     var openUrl = "window.open('"+ writeUrl +"', 'messageWindow', 'width=540,height=500,left=300,top=300,toolbar=no,scrollbars=no,resizable=no')";
 					$('#msgWrite').attr("onclick", openUrl);
+                    $('#messengerOpen').attr("onclick", "messengerOpen(" + ${sessionScope.empVo.empNo} +","+  empNo + ")");
 				},
 				error:function(xhr, status, error){
 					alert("에러 : "+status+"=>"+error);
 				}
 			});
+		}
+
+        function messengerOpen(sendEmpNo, recEmpNo) {
+		    console.log(sendEmpNo);
+		    console.log(recEmpNo);
+		    var empNoArr = [];
+		    empNoArr.push(sendEmpNo);
+            empNoArr.push(recEmpNo);
+            empNoArr.sort();
+
+            var chatKey = "chat";
+            for(var i = 0; i < empNoArr.length; i++) {
+                var empNo = empNoArr[i] + "";
+                empNo = empNo.substring(4, 8);
+                chatKey += empNo;
+			}
+
+            $('#userKey').val(chatKey);
+            window.open("", 'messengerWindow', 'width=1100,height=640,toolbar=no,scrollbars=yes');
+
+            $('#frmMessenger').submit();
 		}
 	</script>
 	<style>
@@ -261,8 +283,15 @@
 	     	<div id="div1"></div>
 	     	<div id="div2"><i class="fa fa-phone"></i></div>
 	     	<div id="div3"><a href="#" title="이메일 보내기"><i class="fa fa-envelope-o"></i></a></div>
-	     	<div><a id="msgWrite" href="#" title="쪽지보내기"><i class="fa fa-paper-plane"></i>  쪽지 보내기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <a href="#" title="대화하기"><i class="fa fa-comments-o"></i>  대화하기</a></div>
+	     	<div><a id="msgWrite" href="#" title="쪽지보내기"><i class="fa fa-paper-plane"></i>  쪽지 보내기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a id="messengerOpen" href="#" title="대화하기"><i class="fa fa-comments-o"></i>  대화하기</a></div>
+
+			<%--1:1 대화하기 form--%>
+			<form id="frmMessenger" name="frmMessenger" method="post" action="<c:url value='/messenger/messenger.do'/>" target="messengerWindow">
+				<input type="text" value="${userKey}" id="userKey" name="userKey">
+			</form>
      	</div>
+
      </div>
      <!-- 조직도 : 사원정보 끝 -->
      
