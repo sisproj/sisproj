@@ -10,7 +10,7 @@ public interface ReservationDAO {
 	public int updateConfirmY(int rvNo);
 	public int updateConfirmR(int rvNo);
 	public List<ReservationVO> reservationNselect();
-	public List<Map<String, Object>> reservationNotYselect(int empNo);
+	public List<Map<String, Object>> reservationNotYselect(ReservationSearchVO searchVo);
 	public int chkDupRes(ReservationVO resVo);
-	public int deleteTimeOver();
+	
 }

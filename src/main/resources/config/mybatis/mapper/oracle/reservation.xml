@@ -44,24 +44,37 @@
 		select * from reservation where rv_confirm='Y'
 	</select>
 	
-	<select id="reservationNotYselect" parameterType="int" resultType="map">
-		select * from myres_view where emp_no=#{empNo}
+	<select id="reservationNotYselect" parameterType="ReservationSearchVO" resultType="map">
+		select * from (
+		    select rownum as RNUM, blist.*
+		    from(
+		      select * from myres_view where emp_no=#{empNo} order by rv_regdate desc  
+		   	 ) blist
+		) 
+		<![CDATA[
+		where RNUM > #{firstRecordIndex} 
+		and RNUM<=#{firstRecordIndex}+ #{recordCountPerPage} ]]>
+	
+		
 	</select>
 	
 	<select id="chkDupRes" parameterType="ReservationVO" resultType="int">
 	select count(*) from reservation
 	<![CDATA[
-		where (to_date(rv_start,'yyyy-MM-dd hh:mi')<=to_date(#{rvStart},'yyyy-MM-dd hh:mi')
-		 or to_date(#{rvEnd},'yyyy-MM-dd hh:mi')<=sysdate)
-		and rv_confirm='Y' and res_no=#{resNo}]]>
+		where 
+		(to_date(rv_end,'yyyy-MM-dd hh24:mi')>to_date(#{rvStart},'yyyy-MM-dd hh24:mi') and 
+		to_date(rv_start,'yyyy-MM-dd hh24:mi')<=to_date(#{rvEnd},'yyyy-MM-dd hh24:mi')) and
+		rv_confirm='Y'
+		and 
+		res_no=#{resNo}]]>
 	</select>
 	
-	<delete id="deleteTimeOver">
+	<!-- <delete id="deleteTimeOver">
 		delete from reservation
 		<![CDATA[
-		where to_date(rv_End,'yyyy-MM-dd hh:mi')<=sysdate
+		where to_date(rv_End,'yyyy-MM-dd hh:mi')<sysdate
 		]]>
-	</delete>	
+	</delete>	 -->
 </mapper>
 
 
