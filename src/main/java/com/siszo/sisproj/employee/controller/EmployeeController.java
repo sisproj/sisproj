@@ -98,7 +98,7 @@ public class EmployeeController {
 
 		logger.info("사원 상세 화면 보여주기 결과 vo={}",vo);
 		model.addAttribute("vo",vo);
-
+		
 		return "employee/employeeDetail";
 	}
 	@RequestMapping(value="/employeeEdit.do",method=RequestMethod.GET)

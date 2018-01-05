@@ -1,36 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
-<%@include file="../inc/top.jsp" %>
+<%@include file="employeeTop.jsp" %>
      <!-- 0. include부분 -->
-        <link rel="stylesheet" href="<c:url value="/resources/css/mypage.css"/>">
-        <nav>
-            <ul>
-                <!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
-                <li><a href="<c:url value='/employee/employeeRegister.do'/>"><i class="fa fa-address-card-o" aria-hidden="true"></i>&nbsp;<span>사원 등록</span></a></li>
-                <li><a href="<c:url value='/employee/employeeList.do'/>"><i class="fa fa-list-alt" aria-hidden="true"></i>&nbsp;<span>사원 리스트 </span></a></li>         
-                <li><a href="<c:url value='/confirm/adm/typeform.do'/>"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;<span>결재양식관리 </span></a></li>                          
-                <li><a href="<c:url value='/commue/commueDateList.do'/>"><i class="fa fa-address-card-o" aria-hidden="true"></i>&nbsp;<span>일별 근태현황 </span></a></li>                          
-                <li><a href="<c:url value='/commue/commueMonthList.do'/>"><i class="fa fa-list-alt" aria-hidden="true"></i>&nbsp;<span>월별 근태현황 </span></a></li>                          
-                <li><a href="<c:url value='/notice/noticeWrite.do'/>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;<span>공지사항 등록 </span></a></li>                          
-                <li><a href="<c:url value='/news/newsWrite.do'/>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;<span>SIS 뉴스등록 </span></a></li>                          
-                <li><a href="<c:url value='/news/newsRegdit.do'/>"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;<span>SIS 뉴스관리 </span></a></li>                          
-            </ul>
-            <!-- 1.왼쪽 사이드 메뉴 지정 끝-->
-            <div id="listbtn"><p><i class="fa fa-chevron-circle-left" style="text-align: center;"></i></p></div>
-        </nav>     
-    </aside>
-    <!-- 왼쪽 사이드 메뉴 끝 -->
-    
-        <!-- 2. 페이지 이름 지정 끝 -->
+<link rel="stylesheet" href="<c:url value="/resources/css/mypage.css"/>">
 <script type="text/javascript">
-	$(function () {	
-		$('#btCen').click(function () {
-			location.href="<c:url value='/employee/employeeList.do'/>";
-		});	
-		
-		$('#btEdit').click(function () {
-			location.href="<c:url value='/employee/employeeEdit.do?empNo="+${vo.empNo}+"'/>";
-		}); 
-		
+	$(function () {			
 		$('#dimypage input[type=text]').attr("disabled",true);
 	});
 </script>
@@ -44,15 +17,14 @@
         <!-- 3. 내용 -->
     <div id="dimyPage">
     	<div id="diInput">
-   		<form id="frmEmp" name="frmEMP" method="post" 
-   		action="<c:url value='/employee/employeeEdit.do?empNo=${vo.empNo }'/>">
+   		<form id="frmEmp" name="frmEMP" method="post">
 	      	  <fieldset>
 	      	    <div id="diId">
 	      	 		<label for="name">사원번호</label><input type="text" id="empNo" name="empNo" value="${vo.empNo }">   
 	       		</div>
 	       		<div id="diName">
 	      	 		<label for="name">이름</label><input type="text" id="empName" name="empName" maxlength="6" value="${vo.empName }">  
-	      	 	</div> 
+	      	 	</div>
 	       		<div id="diEnName">
 	       			<label for="enName">영어이름</label> <input type="text" id="empEName" name="empEName" value="${vo.empEName }">
 	       		</div>		
@@ -65,7 +37,7 @@
 					<input type="text" id="posName" name="posName" value="${vo.posName }">
 				</div>
 				<div id="diHobby">
-					<label for="hobby">취미</label>   	
+					<label for="hobby">취미</label>  	
 					<input type="text" name="empHobby" id="empHobby" value="${vo.empHobby }">
 				</div>
 		        <div>
@@ -105,12 +77,8 @@
 	    		</div>
 				<div id="diEmail">   
 			        <label for="email1">이메일 주소</label>
-			        <input type="text" name="empEmail"  id="empEmail"value="${vo.empEmail }">		        
+			        <input type="text" name="empEmail" id="empEmail"value="${vo.empEmail }">		        
 	           	</div>
-	       		<div id="diReg">
-		           		<input type="button" id="btEdit" value="수정">
-						<input type="button" id="btCen" value="목록">
-				</div>
 		  </fieldset>	
 	   </form> 
 	   </div>
