@@ -211,6 +211,11 @@ function ChangeDate(Date) {
 		
 		
 		}
+	
+	function pageFunc(curPage){
+		document.frmTrash.currentPage.value=curPage;
+		frmTrash.submit();
+	}
 </script>
 <style type="text/css">
 html, body {
@@ -484,12 +489,12 @@ important
 <article id="bodysection">
 	<!-- 3. 내용 -->
 	<div style="min-width: 1500px">
-		<form name="rvfrm" id="rvfrm" method="post"
-			action="<c:url value='/resource/resourceWrite.do'/>"> 	
-			<input type="hidden" id="rvStart" name="rvStart"> <input
-				type="hidden" id="rvEnd" name="rvEnd"> <input type="hidden"
-				id="resNo" name="resNo"> <input type="hidden" id="rvContent"
-				name="rvContent">
+		<form name="rvfrm" id="rvfrm" method="post"	action="<c:url value='/resource/resourceWrite.do'/>"> 	
+			<input type="hidden" id="rvStart" name="rvStart"> 
+			<input type="hidden" id="rvEnd" name="rvEnd"> 
+			<input type="hidden" id="resNo" name="resNo"> 
+			<input type="hidden" id="rvContent" 	name="rvContent">
+			<input type="hidden" id="currentPage" name="currentPage" value="1">
 			<!-- 제목 -->
 		</form>
 		
@@ -591,7 +596,31 @@ important
 	        	</table>
 		        
 			<hr>
-			
+			 <!-- 페이징처리 -->
+		    	<div id="pagingbtn">
+					<ul>
+						<!-- 이전 블럭으로 이동 ◀ -->
+						<c:if test="${pagingInfo.firstPage>1 }">
+							<a id="prevbtn" href="#" onclick="pageFunc(${pagingInfo.firstPage-1})"><i class="fa fa-chevron-left"></i></a>		
+						</c:if>	
+					
+						<!-- [1][2][3][4][5][6][7][8][9][10] -->
+						<c:forEach var="i" begin="${pagingInfo.firstPage}" end="${pagingInfo.lastPage}">
+							<c:if test="${i==pagingInfo.currentPage}">
+								<span class="thispage">${i }</span>	
+							</c:if>
+							<c:if test="${i!=pagingInfo.currentPage}">
+								<a href="#" onclick="pageFunc(${i })" class="active">${i }</a>
+					 		</c:if>				
+						</c:forEach>
+					
+						<!-- 다음 블럭으로 이동 ▶ -->
+						<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage}">
+							<a id=nextbtn href="#" onclick="pageFunc(${pagingInfo.lastPage+1})"><i class="fa fa-chevron-right"></i></a>
+						</c:if>
+					</ul>
+		        </div>
+		        <!-- 페이징 처리 끝 -->
 
 		</div>
 	</div>
