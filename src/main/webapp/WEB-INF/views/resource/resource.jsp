@@ -215,8 +215,8 @@ function ChangeDate(Date) {
 		}
 	
 	function pageFunc(curPage){
-		document.rvfrm.currentPage.value=curPage;
-		rvfrm.submit();
+		document.pagefrm.currentPage.value=curPage;
+		pagefrm.submit();
 	}
 	
 	
@@ -561,7 +561,7 @@ important
 	<!-- 3. 내용 -->
 
 	<div class="resbigdiv">
-		<form name="rvfrm1" id="rvfrm1" method="post"
+		<form name="rvfrm" id="rvfrm" method="post"
 			action="<c:url value='/resource/resourceWrite.do'/>">
 			<input type="hidden" id="rvStart" name="rvStart"> <input
 				type="hidden" id="rvEnd" name="rvEnd"> <input type="hidden"
@@ -570,7 +570,7 @@ important
 				name="rvContent"> 
 			<!-- 제목 -->
 		</form>
-		<form name="rvfrm" id="rvfrm" method="post"
+		<form name="pagefrm" id="pagefrm" method="post"
 			action="<c:url value='/resource/resource.do'/>">
 		<input type="hidden" id="currentPage"
 						name="currentPage" value="1">
