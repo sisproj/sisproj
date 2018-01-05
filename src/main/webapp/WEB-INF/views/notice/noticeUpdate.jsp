@@ -1,23 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
-<%@include file="../inc/top.jsp" %>
+<%@include file="../inc/admTop.jsp" %>
 <link rel="stylesheet" href="<c:url value="/resources/css/mypage.css"/>">
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/bootstrap/bootstrap.min.css'/>">
 <script type="text/javascript" src="<c:url value='/resources/js/bootstrap/bootstrap.min.js'/>"></script>
-<!-- 0. include부분 -->
-		        <nav>
-					<ul>
-						<!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
-						<li class="active"><a href="<c:url value='/notice/noticeList.do'/>"><i class="fa fa-pencil-square-o"></i>&nbsp;<span>공지사항 홈</span></a></li>
-					</ul>
-					<!-- 1.왼쪽 사이드 메뉴 지정 끝-->
-					<div id="listbtn">
-						<p>
-							<i class="fa fa-chevron-circle-left" style="text-align: center;"></i>
-						</p>
-					</div>
-				</nav>
-		</aside>
-		<!-- 왼쪽 사이드 메뉴 끝 -->
+
 		<article id="headsection">
 			<!-- 2. 페이지 이름 지정 // 북마크 지정 여부 .bookmark || .nobook -->
 			<h1><i class="fa fa-book" aria-hidden="true"></i>&nbsp;공지 사항&nbsp;<a href="#"><i class="fa fa-bookmark nobook" aria-hidden="true"></i></a></h1>
@@ -91,7 +77,7 @@
 						</tr>
 						<tr>
 							<td class="active"><textarea class="form-control" placeholder="글 내용"
-								name="notiContent" id="ir1" maxlength="2048" style="height: 480px;">${vo.notiContent }
+								name="notiContent" id="ir1" maxlength="2048" style="height: 380px;">${vo.notiContent }
 							</textarea></td>
 						</tr>
 						<tr>
@@ -115,7 +101,7 @@
 					</tbody>
 				</table>
 				<!-- <input type="submit" class="btn btn-primary" id="btUpdate" value="글수정"> -->
-				<a href="noticeList.do" class="btn btn-primary">목록</a>
+				<a href="<c:url value='/notice/noticeList.do'/>" class="btn btn-primary">목록</a>
 				<button type="submit" class="btn btn-primary pull-right" id="btUpdate">글수정</button>
 			</form>
 		</div>

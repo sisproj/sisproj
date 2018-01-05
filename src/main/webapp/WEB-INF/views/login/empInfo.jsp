@@ -22,7 +22,7 @@
 	   	    <c:if test="${!empty sessionScope.empVo.empNo }">         	
 		       <c:if test="${sessionScope.empVo.empLev eq ('관리자') }">
 		      	    <li><i class="fa fa-id-card"></i>&nbsp;<span class="name bold">관리자 ${sessionScope.empVo.empName }님</span></li>
-		  	        <li><i class="fa fa-cog"></i>&nbsp;<span><a href="<c:url value='/employee/employeeList.do'/>">관리자페이지</a></span></li>
+		  	        <li><i class="fa fa-cog"></i>&nbsp;<span><a href="<c:url value='/employee/adm/employeeList.do'/>">관리자페이지</a></span></li>
 		       </c:if>
 		       <c:if test="${sessionScope.empVo.empLev eq ('사원') }">
 			       <li><i class="fa fa-id-card"></i>&nbsp;<span class="name bold">${sessionScope.empVo.empName }</span></li>
