@@ -126,7 +126,6 @@
         }
 
         function changeContent(chatKey) {
-            console.log("changeContent" + chatKey)
             loadMemberListByChatKey(chatKey);
             var chatsRef = firebase.database().ref('chats/' + chatKey);
             chatsRef.once('value', function (snapshot) {
@@ -138,12 +137,15 @@
 
                 var memberCnt = titleArr.length
                 var titleStr = titleArr.toString();
+                $('#memberTitle').val(titleStr);
+
                 if(titleStr.length > 20) {
                     titleStr = titleStr.substring(0, 20) + "..."
                 }
                 titleStr += "(" + memberCnt + ")";
 
-                $('#chatTitle').html(titleStr);            });
+                $('#chatTitle').html(titleStr);
+            });
 
             $('#messenger-main-container').html("").load('messengerChat.do', {chatKey: chatKey});
             $('#sidebar-button').show().attr('name', 'hide-nav');
@@ -182,12 +184,10 @@
     <script>
         /* keyList 배열에 사용자의 채팅방 리스트를 담는 함수*/
         var keyList = [];
-
-
         function loadKeyListByUserId(userId) {
             $('#chatsList').html("");
             var usersRef = firebase.database().ref('users/' + userId + "/chatlist");
-            usersRef.once('value', function (snapshot) {
+            /*usersRef.once('value', function (snapshot) {
                 snapshot.forEach(function (childSnapshot) {
                     var childKey = childSnapshot.key;
                     keyList.push(childKey);
@@ -195,6 +195,39 @@
                 });
             }).then(function () { //불러오기 끝난후 실행
                 loadChats(keyList);
+            });*/
+
+
+            usersRef.on('child_added', function(data) {
+                var addKey = [];
+                addKey.push(data.key);
+                setTimeout(function () {
+                    loadChats(addKey);
+                    appendMessages(data.key);
+                },1000);
+
+                /*처음 실행시 안읽은 메시지 표시*/
+                setTimeout(function () {
+                    var membersRef = firebase.database().ref('members/' + addKey + "/" + userId);
+                    membersRef.once('value', function (snapshot) {
+                        var parentKey = snapshot.ref.parent.key;
+                        if (snapshot.val().count == 0) {
+                            $('#' + parentKey + 'Count').html('');
+                        } else {
+                            $('#' + parentKey + 'Count').html(snapshot.val().count);
+                        }
+                    });
+
+                    /* 채팅이 추가될때마다 안읽은 메시지 표시 */
+                    membersRef.on('child_changed', function (snapshot) {
+                        var parentKey = snapshot.ref.parent.parent.key;
+                        if (snapshot.val() == 0) {
+                            $('#' + parentKey + 'Count').html('');
+                        } else {
+                            $('#' + parentKey + 'Count').html(snapshot.val());
+                        }
+                    });
+                },2000)
             });
         }
 
@@ -259,12 +292,11 @@
         }
 
         /* 가져온 채팅방 리스트를 왼쪽 사이드네비에 뿌려주는 함수 */
-        function loadChats(keyList) {
-            $('#chatsList').html("");
-            for (var i = 0; i < keyList.length; i++) {
-                var chatsRef = firebase.database().ref('chats/' + keyList[i]);
+        function loadChats(reckeyList) {
+            for (var i = 0; i < reckeyList.length; i++) {
+                var chatsRef = firebase.database().ref('chats/' + reckeyList[i]);
                 chatsRef.once('value', function (snapshot) {
-                    var title = snapshot.val().title.toString();
+                    var title = snapshot.val().title;
                     var lastMessage = snapshot.val().lastMessage;
                     if (snapshot.val().lastMessage == undefined) {
                         lastMessage = "";
@@ -313,29 +345,6 @@
                         '</a>'
                     );
                 });
-
-                var membersRef = firebase.database().ref('members/' + keyList[i] + "/" + userId);
-
-                /*처음 실행시 안읽은 메시지 표시*/
-                membersRef.once('value', function (snapshot) {
-                    var parentKey = snapshot.ref.parent.key;
-                    if (snapshot.val().count == 0) {
-                        $('#' + parentKey + 'Count').html('');
-                    } else {
-                        $('#' + parentKey + 'Count').html(snapshot.val().count);
-                    }
-                });
-
-
-                /* 채팅이 추가될때마다 안읽은 메시지 표시 */
-                membersRef.on('child_changed', function (snapshot) {
-                    var parentKey = snapshot.ref.parent.parent.key;
-                    if (snapshot.val() == 0) {
-                        $('#' + parentKey + 'Count').html('');
-                    } else {
-                        $('#' + parentKey + 'Count').html(snapshot.val());
-                    }
-                });
             }
         }
 
@@ -365,7 +374,6 @@
             }
             var message = data.val().message;
             var name = data.val().name;
-
 
             if (userName == data.val().name) {
                 $('#messengerContainer').append(
@@ -404,7 +412,7 @@
             var timestamp = date.getTime();
             var lastMessage = $('#chatMsg').val();
             var userImg = "<c:url value='/emp_images/defaultImg.png'/>";
-            var title = $('#chatTitle').html();
+            var title = $('#memberTitle').val();
 
             var titleArr = title;
             if (title.indexOf(",") > 0) {
@@ -424,7 +432,7 @@
             }
 
             if(titleStr.length > 10) {
-                titleStr = titleStr.substring(0, 15) + "..." + "(" + memberCnt + ")";
+                titleStr = titleStr.substring(0, 10) + "..." + "(" + memberCnt + ")";
             }
 
             firebase.database().ref('chats/' + chatKey).update({
@@ -464,6 +472,7 @@
 
             changeLastChats();
             updateUnreadCount(memberList);
+            resetUnreadCount();
         }
 
         function updateUnreadCount(memberList) {
@@ -555,7 +564,8 @@
         <input type="hidden" value="${sessionScope.empVo.empNo}" id="sessionId">
         <input type="hidden" value="${sessionScope.empVo.empName}" id="sessionName">
         <input type="hidden" value="${sessionScope.empVo.empImg}" id="sessionImg">
-        <p class="w3-left w3-bar-item w3-padding-24" id="chatTitle">대화 하기</p>
+        <p class="w3-left w3-bar-item w3-padding-24" id="chatTitle"></p>
+        <input type="hidden" id="memberTitle" value="">
         <p class="w3-right">
             <a href="#" class="w3-bar-item w3-button w3-padding-24 w3-right" name="hide-nav" id="sidebar-button">
                 <i class="fa fa-bars"></i>
