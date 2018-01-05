@@ -102,15 +102,19 @@
 	}
 </style>
 <!-- 0. include부분 -->
-			<nav>
-				<ul>
-					<!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
-					<li class="active"><a href="<c:url value='/notice/noticeList.do'/>"><i class="fa fa-pencil-square-o"></i>&nbsp;<span>공지사항 홈</span></a></li>
-					
-				</ul>	
-				<!-- 1.왼쪽 사이드 메뉴 지정 끝-->
-				<div id="listbtn"><p><i class="fa fa-chevron-circle-left" style="text-align: center;"></i></p></div>
-			</nav>
+		<link rel="stylesheet" href="<c:url value="/resources/css/mypage.css"/>">
+		        <nav>
+					<ul>
+						<!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
+						<li class="active"><a href="<c:url value='/notice/not	iceList.do'/>"><i class="fa fa-pencil-square-o"></i>&nbsp;<span>공지사항 홈</span></a></li>
+					</ul>
+					<!-- 1.왼쪽 사이드 메뉴 지정 끝-->
+					<div id="listbtn">
+						<p>
+							<i class="fa fa-chevron-circle-left" style="text-align: center;"></i>
+						</p>
+					</div>
+				</nav>
 		</aside>
 		<!-- 왼쪽 사이드 메뉴 끝 -->
 		<article id="headsection">
@@ -249,7 +253,7 @@ action="<c:url value='/notice/noticeList.do'/>">
 							value="검색">
 					</form>
 					<c:if test="${sessionScope.empVo.empLev=='관리자'}">
-						<div id="wrbtn"><a href="noticeWrite.do" class="button">글쓰기</a></div>
+						<div id="wrbtn"><a href="noticeWrite.do" class="btn btn-primary pull-right">글쓰기</a></div>
 					</c:if>
 				</div>
 			</div>
