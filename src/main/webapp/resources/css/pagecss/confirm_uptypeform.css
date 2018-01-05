@@ -36,7 +36,7 @@
 				box-sizing:border-box;
 				display: inline-block;
 				width: 20%;
-				background-color: #036;
+				background-color: #00464a;
 				border-radius:10px;
 				text-align: center;
 				font-weight: bold;
@@ -108,7 +108,7 @@
 			#doc_type #doc_info div label{
 				display: inline-block;
 				width: 30%;
-				background-color: #036;
+				background-color: #00464a;
 				text-align: center;
 				color: #fff;
 				border-radius: 10px;
