@@ -46,7 +46,7 @@ public class AddrBookController {
 		logger.info("empVO={}",empVo);
 		searchVo.setEmpNo(empNo);
 		
-		logger.info("개인주소록 리스트 조회하기111111111111111, searchVo={}", searchVo);		
+		logger.info("개인주소록 리스트 조회하기, searchVo={}", searchVo);		
 		
 		//Paging 처리에 필요한 변수를 계산해주는 PaginationInfo 생성
 		PaginationInfo pagingInfo = new PaginationInfo();
@@ -262,6 +262,33 @@ public class AddrBookController {
 			msg="수정 성공";
 		}else {
 			msg="수정 실패";			
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "common/message";
+	}
+	
+	@RequestMapping("/moveGroup.do")
+	public String moveGroupMulti(@ModelAttribute AddrBookListVO addrBookListVo,			
+			@RequestParam(defaultValue="0") int groupNo, Model model) {
+		logger.info("선택한 레코드의 멀티 그룹이동 - 파라미터 groupNo={}", groupNo);
+		
+		List<AddrBookVO> list=addrBookListVo.getAddrItems();
+		
+		for (AddrBookVO addrBookVO : list) {
+			addrBookVO.setGroupNo(groupNo);
+		}
+		
+		int cnt=addrBookService.moveGroupMulti(list);
+		logger.info("멀티 그룹이동 결과, cnt={}",cnt);
+		
+		String msg="",url="/addrBook/addrBookList.do";
+		if(cnt>0) {
+			msg="멀티 그룹 이동 성공";
+		}else {
+			msg="멀티 그룹 이동 실패";			
 		}
 		
 		model.addAttribute("msg", msg);

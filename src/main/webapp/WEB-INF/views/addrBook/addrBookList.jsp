@@ -16,6 +16,18 @@
 			$('#frmList').submit();
 		});
 		
+		$('select[name=groupName]').change(function(){
+			var len=$('td input[type=checkbox]:checked').length;
+			if(len==0){
+				alert('그룹이동 시킬 정보를 체크하세요');
+				return;
+			}
+			var groupNo=$(this).val();
+			$('#groupNo').val(groupNo);
+			$('#frmList').prop('action','<c:url value="/addrBook/moveGroup.do"/>');
+			$('#frmList').submit();
+		});
+		
 		$('#addrSearch').click(function(){
 			 $('#frmList').submit();		
 		});
@@ -277,17 +289,25 @@
     	</div>
     </div>
     
-    <!-- 그룹 추가 영역 끝 --> 
-    
-    
+    <!-- 그룹 추가 영역 끝 -->     
     
     
 	    <form name="frmList" id="frmList" method="post" action="<c:url value='/addrBook/addrBookList.do'/>">
 	        <div id="divBodysection">
 		        <div class="divAddrHeader">
 			        <a href="#"><div id="divDeleteMulti"><i class="fa fa-trash"></i><span> 삭제</span></div></a>
-			        <a href="#"><div><i class="fa fa-envelope-o"></i><span> 메일 보내기</span></div></a>
-			        <a href="#"><div><i class="fa fa-file-excel-o"></i><span> 주소록 내보내기</span></div></a>
+			        <div id="selectGroup">
+				        <span><i class="fa fa-share"></i> 그룹이동 </span>
+			        	<select name="groupName">
+			        		<c:forEach var="vo" items="${groupList }">
+						        <option value="${vo.groupNo }"<c:if test="${param.groupNo==vo.groupNo }">selected</c:if>>${vo.groupName}</option>			        		
+			        		</c:forEach>					        
+				        </select>
+			        </div>
+			        
+			        <!-- <a href="#"><div><i class="fa fa-envelope-o"></i><span> 메일 보내기</span></div></a> -->
+			        <!-- <a href="#"><div><i class="fa fa-file-excel-o"></i><span> 주소록 내보내기</span></div></a> -->
+			        
 			        <input type="hidden" id="currentPage" name="currentPage" value="1">
 			        <input type="hidden" id="groupNo" name="groupNo" value="${param.groupNo }">
 			        <div>
@@ -328,12 +348,8 @@
 		        			<td id="${addrBookVo.addrNo }"><a href="#">${addrBookVo.addrName }</a></td>
 		        			<td>${addrBookVo.addrTel }</td>
 		        			<td><a href="#">${addrBookVo.addrEmail}</a></td>
-		        			<td>${addrBookVo.addrComp}</td>
-		        			<c:forEach var="addrGroupVo" items="${groupList }">
-		        				<c:if test="${addrBookVo.groupNo==addrGroupVo.groupNo }">
-		        					<td>${addrGroupVo.groupName}</td>
-		        				</c:if>
-		        			</c:forEach>
+		        			<td>${addrBookVo.addrComp}</td>		        			
+		        			<td>${addrBookVo.groupName}</td>		        			
 		        		</tr>
 	        		</c:forEach>
 	        		</tbody>
