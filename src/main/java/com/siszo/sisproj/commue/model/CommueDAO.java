@@ -15,4 +15,5 @@ public interface CommueDAO {
 	
 	public List<CommueVO> selectAll();
 	public List<Map<String, Object>> searchDate(DateSearchVO vo);
+	public List<CommueVO> selectPage(DateSearchVO vo);
 }

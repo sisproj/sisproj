@@ -44,6 +44,32 @@
 		where to_char(cmt_out,'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')
 		and emp_no=#{empNo}
 	</select>
+	
+	<select id="selectPage" parameterType="DateSearchVO" resultType="CommueVO">
+		select *
+		from
+		(
+		    select rownum as RNUM, blist.*
+		    from(
+		        select  emp_name,dept_name,pos_name,to_char(cmt_in,'HH:mm') as "CMTIN",
+     			to_char(cmt_out,'HH:mm') as "CMTOUT",cmt_status
+				from cmtView
+				<if test="empName!=null and !empName.isEmpty()">
+					where emp_name=#{empName}
+				</if>	
+				<if test="deptName!=null and !deptName.isEmpty()">
+					where dept_name=#{deptName}
+				</if>
+				<if test="posName!=null and !posName.isEmpty()">
+					where pos_name=#{posName}
+				</if>        
+		        order by CMTIN       
+		    ) blist
+		)
+		<![CDATA[
+		where RNUM>#{firstRecordIndex}
+		and RNUM<=#{firstRecordIndex}+#{recordCountPerPage}]]>
+	</select>
 </mapper>
 
 

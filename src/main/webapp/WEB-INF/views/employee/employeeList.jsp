@@ -60,7 +60,6 @@
 <div id="dimyPage">
 	<form id="searchEmp" name="searchEmp" method="post" action="<c:url value='/employee/adm/employeeList.do'/>">	
 	<input type="hidden" id="currentPage" name="currentPage" value="1">
-	
 	        <div id="dimyP">
 		        <select name="searchCondition">
 		            <option value="emp_name"

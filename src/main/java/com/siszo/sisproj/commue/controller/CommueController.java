@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.siszo.sisproj.commue.model.CommueService;
 import com.siszo.sisproj.commue.model.CommueVO;
@@ -27,9 +26,11 @@ public class CommueController {
 	@Autowired
 	private CommueService commueService;
 	
-	@RequestMapping(value="/adm/commueMonthList.do",method=RequestMethod.GET)
-	public void commueMonthList_get() {
+	@RequestMapping("/adm/commueMonthList2.do")
+	public String commueMonthList() {
 		logger.info("출퇴근 월별 통계 보여주기");
+		
+		return "commue/commueMonthList2";
 	}
 	
 	@RequestMapping("/adm/commueDateList.do")
@@ -46,6 +47,7 @@ public class CommueController {
 			
 		return "commue/employeeDateList";
 	}
+	
 	@RequestMapping("/commueDateList2.do")
 	public String commueDateList2(@ModelAttribute DateSearchVO dateSearchVo,Model model) {
 		logger.info("출퇴근 일별 통계 보여주기 파라미터 dateSearchVo={}",dateSearchVo);
@@ -109,6 +111,5 @@ public class CommueController {
 		model.addAttribute("url",url);
 		
 		return "common/message";
-		
 	}
 }

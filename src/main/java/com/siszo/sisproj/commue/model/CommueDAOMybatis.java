@@ -48,6 +48,10 @@ public class CommueDAOMybatis extends SqlSessionDaoSupport implements CommueDAO{
 	public int selectOutChk(int empNo) {
 		return getSqlSession().selectOne(namespace+".selectOutChk",empNo);
 	}
+	@Override
+	public List<CommueVO> selectPage(DateSearchVO vo) {
+		return getSqlSession().selectList(namespace+".selectPage",vo);
+	}
 	
 
 }

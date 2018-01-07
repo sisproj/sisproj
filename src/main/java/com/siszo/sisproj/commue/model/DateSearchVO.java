@@ -1,17 +1,15 @@
 package com.siszo.sisproj.commue.model;
 
-import java.util.Date;
+import com.siszo.sisproj.common.SearchVO;
 
-public class DateSearchVO{
-	private String startDay;  
+public class DateSearchVO extends SearchVO{
+	private String startDay; 
 	private String endDay; 
-	private String customerId;
+	private String customerId; 
 	
 	private String year;
 	private String month;
-	
-	private Date day;	
-	
+
 	public String getYear() {
 		return year;
 	}
@@ -43,16 +41,17 @@ public class DateSearchVO{
 	public void setCustomerId(String customerId) {
 		this.customerId = customerId;
 	}
-	public Date getDay() {
-		return day;
-	}
-	public void setDay(Date day) {
-		this.day = day;
-	}
+	
 	@Override
 	public String toString() {
-		return "DateSearchVO [startDay=" + startDay + ", endDay=" + endDay + ", customerId=" + customerId + ", year="
-				+ year + ", month=" + month + ", day=" + day + "]";
+		return "DateSearchVO [startDay=" + startDay + ", endDay=" + endDay
+				+ ", customerId=" + customerId + ", year=" + year + ", month="
+				+ month 
+				+ ", currentPage="
+				+ getCurrentPage() 
+				+ ", firstRecordIndex=" + getFirstRecordIndex()				
+				+ ", recordCountPerPage=" + getRecordCountPerPage()
+				+ "]";
 	}
 	
 	

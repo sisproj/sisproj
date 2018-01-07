@@ -24,6 +24,7 @@ import com.siszo.sisproj.common.SearchVO;
 import com.siszo.sisproj.common.Utility;
 import com.siszo.sisproj.dept.model.DeptService;
 import com.siszo.sisproj.dept.model.DeptVO;
+import com.siszo.sisproj.employee.common.EmployeePwdLock;
 import com.siszo.sisproj.employee.model.EmployeeListVO;
 import com.siszo.sisproj.employee.model.EmployeeService;
 import com.siszo.sisproj.employee.model.EmployeeVO;
@@ -75,7 +76,11 @@ public class EmployeeController {
 		logger.info("vo.getEmpImg={}",vo.getEmpImg());
 		//db작업
 		vo.setEmpImg(empImg);
-
+		
+		String pwd = vo.getEmpPwd();
+		String shaPwd=EmployeePwdLock.convertEncryption(pwd);
+		vo.setEmpPwd(shaPwd);
+		
 		int cnt=employeeService.insertEmployee(vo);
 
 		String msg="",url="/adm/employee/employeeRegister.do";
@@ -238,7 +243,6 @@ public class EmployeeController {
 
 		return "common/message";
 	}
-	//완료
 
 	@RequestMapping("/adm/employeeList.do")
 	public String employeeList(@ModelAttribute SearchVO seVo,Model model) {

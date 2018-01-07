@@ -60,6 +60,11 @@ public class CommueServiceImpl implements CommueService{
 		}
 		return result;
 	}
+
+	@Override
+	public List<CommueVO> selectPage(DateSearchVO vo) {
+		return commueDao.selectPage(vo);
+	}
 	
 	
 }

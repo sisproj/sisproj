@@ -13,8 +13,6 @@
 	$(function () {	
 		if($('#startDay').val()==''){
 			$.setToday();
-		}else{
-			$.setChDate();	
 		}
 		
 		$.applyDatePicker('#startDay');
@@ -28,8 +26,6 @@
 	}	
 	
 	$.setChDate=function(){
-		var chD = $.convertDate($('#startDay').attr('value'));
-		alert(chD);
 		$('#spDate').html(chD);
 	}
 	
@@ -59,6 +55,10 @@
 		}
 		return result;
 	}
+	 function pageFunc(curPage){
+			document.searchEmp.currentPage.value=curPage;
+			searchEmp.submit();
+	} 
 </script>
 <style type="text/css">
 	#diPage {
@@ -153,9 +153,15 @@
 	#diCal #spDate{
 		text-align: center;
 	}
+	#diSearch{
+		width: 90%;
+		margin: 0 auto;
+		padding : 10px;
+	}
 </style>
 </head>
 <body>
+
     <!-- 왼쪽 사이드 메뉴 끝 -->
     <article id="headsection">
         <!-- 2. 페이지 이름 지정 // 북마크 지정 여부 .bookmark || .nobook -->
@@ -164,14 +170,18 @@
         </h1>
         <!-- 2. 페이지 이름 지정 끝 -->
     </article>
+<form name="frmPage" method="post">
+	<input type="hidden" name="eventName" 	value="${param.eventName}">
+	<input type="hidden" name="currentPage">	
+</form>
     <article id="bodysection">
         <!-- 3. 내용 -->
 	<div id="dimyPage">	
 			<div id="diBtCa">
 				<div id="diCal">
 					<span id="spDate"></span>
-				</div>
-		<form name="frmDate" id="frmDate" method="post" action="<c:url value='/commue/commueDateList.do' />">
+				</div>			
+		<form name="frmDate" id="frmDate" method="post" action="<c:url value='/commue/adm/commueDateList.do' />">
 				<div id="diSearch" style="margin-left: 10px;">
 						<input type="text" name="startDay" id="startDay" 
 							value="${dateSearchVO.startDay }" placeholder="누르시면 달력이나옵니다."> 
@@ -200,9 +210,12 @@
 		<c:if test="${!empty list }">
 			<c:forEach var="map" items="${list }">
 				<tr>
-					<td><a href="<c:url value='' />">${map['EMP_NAME'] }</a></td>
-					<td>${map['DEPT_NAME'] }</td>
-					<td>${map['POS_NAME'] }</td>
+					<!-- 해당 사원의 근태관리로 갑니다.  -->
+					<td><a href="<c:url value='/commue/adm/searchEmpName.do?empName=${map["EMP_NAME"] }' />">${map['EMP_NAME'] }</a></td>
+					<!-- 해당 부서근태를 보여줍니다. -->
+					<td><a href="<c:url value='/commue/adm/searchDeptName.do?deptName=${map["DEPT_NAME"] }' />">${map['DEPT_NAME'] }</a></td>
+					<!-- 해당 직급근태를 보여줍니다.  -->
+					<td><a href="<c:url value='/commue/adm/searchPosName.do?posName=${map["POS_NAME"] }' />">${map['POS_NAME'] }</a></td>
 					<td id="cmtT">${map['CMTIN'] }</td>
 					<td id="cmtT">${map['CMTOUT'] }</td>
 					<c:if test="${map['CMT_STATUS'] eq ('Y') }">
@@ -219,6 +232,26 @@
 		</c:if>
 			</table>
 	</div>
+	<div id="pagingbtn">
+			<!-- 이전 블럭으로 이동 ◀ -->
+			<c:if test="${pagingInfo.firstPage>1 }">
+				<a id="prevbtn" href="#" onclick="pageFunc(${pageInfo.firstPage-1})"><i class="fa fa-chevron-left"></i></a>	
+			</c:if>	
+		
+			<!-- [1][2][3][4][5][6][7][8][9][10] -->
+			<c:forEach var="i" begin="${pagingInfo.firstPage}" end="${pagingInfo.lastPage}">
+				<c:if test="${i==pagingInfo.currentPage}">
+					<span class="thispage">${i }</span>	
+				</c:if>
+				<c:if test="${i!=pagingInfo.currentPage}">
+					<a href="#" onclick="pageFunc(${i })">${i }</a>		
+		 		</c:if>				
+			</c:forEach>
+			<!-- 다음 블럭으로 이동 ▶ -->
+			<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage}">
+				<a id=nextbtn href="#" onclick="pageFunc(${pagingInfo.lastPage+1})"><i class="fa fa-chevron-right"></i></a>
+			</c:if>
+		</div>
 </body>
 </html>
 <%@include file="commueBottom.jsp" %>
