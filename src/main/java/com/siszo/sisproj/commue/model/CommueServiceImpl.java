@@ -62,8 +62,8 @@ public class CommueServiceImpl implements CommueService{
 	}
 
 	@Override
-	public List<CommueVO> selectPage(DateSearchVO vo) {
-		return commueDao.selectPage(vo);
+	public int selectTotalRecord(DateSearchVO vo) {
+		return commueDao.selectTotalRecord(vo);
 	}
 	
 	

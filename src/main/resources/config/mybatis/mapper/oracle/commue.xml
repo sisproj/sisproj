@@ -3,6 +3,19 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="config.mybatis.mapper.oracle.commue">
+	<sql id="searchWhere">
+		<choose>
+			<when test="empName!=null and !empName.isEmpty()">
+				and emp_name=#{empName}			
+			</when>
+			<when test="deptName!=null and !deptName.isEmpty()">
+				and dept_name=#{deptName}			
+			</when>
+			<when test="posName!=null and !posName.isEmpty()">
+				and pos_name=#{posName}	
+			</when>
+		</choose>     
+	</sql>
 	
 	<insert id="insertIn" parameterType="CommueVO">
 		<selectKey keyProperty="cmtNo" resultType="int" order="BEFORE">
@@ -23,17 +36,7 @@
 		from (select * from commute where emp_no=#{empNo} order by cmt_no desc) cmt
 		<![CDATA[where rownum<2 ]]>
 	</select>
-	
-	<select id="searchDate" parameterType="DateSearchVO" resultType="map">
-		select emp_name,dept_name,pos_name,to_char(cmt_in,'HH:mm') as "CMTIN",
-        to_char(cmt_out,'HH:mm') as "CMTOUT",cmt_status    
-		from cmtView
-		<if test="startDay!=null">
-		where to_char(cmt_in, 'yyyy-mm-dd')=#{startDay}
-		order by to_char(cmt_in, 'HH:mm')
-		</if>
-	</select>
-	
+
 	<select id="selectInChk" parameterType="int" resultType="int">
 		select count(*) from cmtView
 		where to_char(cmt_in,'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')
@@ -45,30 +48,38 @@
 		and emp_no=#{empNo}
 	</select>
 	
-	<select id="selectPage" parameterType="DateSearchVO" resultType="CommueVO">
+	<select id="searchDate" parameterType="DateSearchVO" resultType="map">
 		select *
 		from
 		(
-		    select rownum as RNUM, blist.*
+		    select rownum as RNUM, clist.*
 		    from(
-		        select  emp_name,dept_name,pos_name,to_char(cmt_in,'HH:mm') as "CMTIN",
-     			to_char(cmt_out,'HH:mm') as "CMTOUT",cmt_status
+		        select emp_name,dept_name,pos_name,to_char(cmt_in,'HH24:MI') as "CMTIN",
+     			to_char(cmt_out,'HH24:MI') as "CMTOUT",cmt_status
 				from cmtView
-				<if test="empName!=null and !empName.isEmpty()">
-					where emp_name=#{empName}
-				</if>	
-				<if test="deptName!=null and !deptName.isEmpty()">
-					where dept_name=#{deptName}
-				</if>
-				<if test="posName!=null and !posName.isEmpty()">
-					where pos_name=#{posName}
-				</if>        
+				where to_char(cmt_in, 'yyyy-mm-dd')=#{startDay}
+				<include refid="searchWhere"></include>  
 		        order by CMTIN       
-		    ) blist
+		    ) clist
 		)
 		<![CDATA[
 		where RNUM>#{firstRecordIndex}
 		and RNUM<=#{firstRecordIndex}+#{recordCountPerPage}]]>
+	</select>
+	
+	<select id="sear" parameterType="DateSearchVO" resultType="map">
+		select emp_name,dept_name,pos_name,to_char(cmt_in,'HH24:MI') as "CMTIN",
+        to_char(cmt_out,'HH24:MI') as "CMTOUT",cmt_status    
+		from cmtView
+		<if test="startDay!=null">
+		where to_char(cmt_in, 'yyyy-mm-dd')=#{startDay}
+		order by to_char(cmt_in, 'HH24:MI')
+		</if>
+	</select>
+	
+	<select id="selectTotalRecordCount" resultType="int" parameterType="DateSearchVO">
+		select count(*) from cmtView
+		<include refid="searchWhere"></include>  
 	</select>
 </mapper>
 

@@ -1,60 +1,59 @@
 package com.siszo.sisproj.commue.model;
 
-import com.siszo.sisproj.common.SearchVO;
+import com.siszo.sisproj.commue.common.ComSearchVO;
 
-public class DateSearchVO extends SearchVO{
+public class DateSearchVO extends ComSearchVO{
 	private String startDay; 
-	private String endDay; 
-	private String customerId; 
-	
-	private String year;
-	private String month;
-
-	public String getYear() {
-		return year;
-	}
-	public void setYear(String year) {
-		this.year = year;
-	}
-	public String getMonth() {
-		return month;
-	}
-	public void setMonth(String month) {
-		this.month = month;
-	}
+	private String empName;
+	private String posName;
+	private String deptName;
 	
 	public String getStartDay() {
 		return startDay;
 	}
+
+
 	public void setStartDay(String startDay) {
 		this.startDay = startDay;
 	}
-	public String getEndDay() {
-		return endDay;
+
+
+	public String getEmpName() {
+		return empName;
 	}
-	public void setEndDay(String endDay) {
-		this.endDay = endDay;
+
+
+	public void setEmpName(String empName) {
+		this.empName = empName;
 	}
-	public String getCustomerId() {
-		return customerId;
+
+
+	public String getPosName() {
+		return posName;
 	}
-	public void setCustomerId(String customerId) {
-		this.customerId = customerId;
+
+
+	public void setPosName(String posName) {
+		this.posName = posName;
 	}
+
+
+	public String getDeptName() {
+		return deptName;
+	}
+
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+
 	
 	@Override
 	public String toString() {
-		return "DateSearchVO [startDay=" + startDay + ", endDay=" + endDay
-				+ ", customerId=" + customerId + ", year=" + year + ", month="
-				+ month 
-				+ ", currentPage="
-				+ getCurrentPage() 
-				+ ", firstRecordIndex=" + getFirstRecordIndex()				
-				+ ", recordCountPerPage=" + getRecordCountPerPage()
-				+ "]";
+		return "DateSearchVO [startDay=" + startDay + ", empName=" + empName + ", posName=" + posName + ", deptName="
+				+ deptName + ", currentPage="
+						+ getCurrentPage() 
+						+ ", firstRecordIndex=" + getFirstRecordIndex()				
+						+ ", recordCountPerPage=" + getRecordCountPerPage() +"]";
 	}
-	
-	
-	
-	
 }

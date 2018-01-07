@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.siszo.sisproj.common.PaginationInfo;
+import com.siszo.sisproj.common.Utility;
 import com.siszo.sisproj.commue.model.CommueService;
 import com.siszo.sisproj.commue.model.CommueVO;
 import com.siszo.sisproj.commue.model.DateSearchVO;
@@ -26,29 +28,46 @@ public class CommueController {
 	@Autowired
 	private CommueService commueService;
 	
-	@RequestMapping("/adm/commueMonthList2.do")
+	@RequestMapping("/adm/AdminMonthList.do")
 	public String commueMonthList() {
 		logger.info("출퇴근 월별 통계 보여주기");
 		
-		return "commue/commueMonthList2";
+		return "commue/AdminMonthList";
 	}
 	
-	@RequestMapping("/adm/commueDateList.do")
+	@RequestMapping("/adm/AdminDateList.do")
 	public String commueDateList(@ModelAttribute DateSearchVO dateSearchVo,Model model) {
 		logger.info("출퇴근 일별 통계 보여주기 파라미터 dateSearchVo={}",dateSearchVo);
 				
+		//Paging 처리에 필요한 변수를 계산해주는 PaginationInfo 생성
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(Utility.BLOCK_SIZE);
+		pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);
+		pagingInfo.setCurrentPage(dateSearchVo.getCurrentPage());
+				
+		//SearchVo에 값 셋팅
+		dateSearchVo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);
+		dateSearchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		logger.info("DateSearchVo 최종값 : {}", dateSearchVo);
+		
 		List<Map<String, Object>> list=null;
 		if(dateSearchVo.getStartDay()!=null && !dateSearchVo.getStartDay().isEmpty()) {
 			list=commueService.searchDate(dateSearchVo);
 			logger.info("출퇴근 일별 조회 결과, list.size()={}", list.size());		
-		}
+		}	
 		
+		int totalRecord = commueService.selectTotalRecord(dateSearchVo);
+		logger.info("글 전체 개수 조회 결과, totalRecord={}", totalRecord);
+		
+		pagingInfo.setTotalRecord(totalRecord);
+					
 		model.addAttribute("list", list);	
-			
-		return "commue/employeeDateList";
+		model.addAttribute("pagingInfo",pagingInfo);
+		
+		return "commue/AdminDateList";
 	}
 	
-	@RequestMapping("/commueDateList2.do")
+	@RequestMapping("/employeeMonthList.do")
 	public String commueDateList2(@ModelAttribute DateSearchVO dateSearchVo,Model model) {
 		logger.info("출퇴근 일별 통계 보여주기 파라미터 dateSearchVo={}",dateSearchVo);
 				
@@ -60,7 +79,7 @@ public class CommueController {
 		
 		model.addAttribute("list", list);	
 			
-		return "commue/employeeDateList2";
+		return "commue/employeeMonthList";
 	}
 	@RequestMapping("/commueIn.do")
 	public String commueIn(@ModelAttribute CommueVO cmtVo,HttpSession session,Model model) {

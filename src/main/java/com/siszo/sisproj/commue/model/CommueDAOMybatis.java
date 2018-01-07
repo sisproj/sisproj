@@ -40,6 +40,7 @@ public class CommueDAOMybatis extends SqlSessionDaoSupport implements CommueDAO{
 	public List<Map<String, Object>> searchDate(DateSearchVO vo) {
 		return getSqlSession().selectList(namespace+".searchDate",vo);
 	}
+	
 	@Override
 	public int selectInChk(int empNo) {
 		return getSqlSession().selectOne(namespace+".selectInChk",empNo);
@@ -48,10 +49,9 @@ public class CommueDAOMybatis extends SqlSessionDaoSupport implements CommueDAO{
 	public int selectOutChk(int empNo) {
 		return getSqlSession().selectOne(namespace+".selectOutChk",empNo);
 	}
-	@Override
-	public List<CommueVO> selectPage(DateSearchVO vo) {
-		return getSqlSession().selectList(namespace+".selectPage",vo);
-	}
 	
-
+	@Override
+	public int selectTotalRecord(DateSearchVO vo) {
+		return getSqlSession().selectOne(namespace+".selectTotalRecordCount",vo);
+	}
 }
