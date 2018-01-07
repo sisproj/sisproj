@@ -120,9 +120,9 @@ public class NewsController {
 		model.addAttribute("pagingInfo", pagingInfo);
 	}
 
-	@RequestMapping("/newsWrite.do")
-	public void newWrite() {
-
+	@RequestMapping("/adm/newsWrite.do")
+	public String newWrite() {
+		return "news/newsWrite";			
 	}
 
 	@RequestMapping("/bottomNews.do")
@@ -167,7 +167,7 @@ public class NewsController {
 
 
 
-	@RequestMapping(value = "/newsEdit.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/adm/newsEdit.do", method = RequestMethod.GET)
 	public String newsEdit_get(@RequestParam(defaultValue = "0") int newsNo, Model model) {
 
 		NewsVO newsVo = newsService.newsSearchByNo(newsNo);
@@ -337,8 +337,8 @@ public class NewsController {
 		return "common/message";
 
 	}
-	@RequestMapping("/newsRegdit.do")
-	public void registerView(Model model, @ModelAttribute NewsSearchVO newsSearchVO) {
+	@RequestMapping("/adm/newsRegdit.do")
+	public String registerView(Model model, @ModelAttribute NewsSearchVO newsSearchVO) {
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(Utility.BLOCK_SIZE);
 		pagingInfo.setRecordCountPerPage(Utility.NEWSRECORD_COUNT_PER_PAGE);
@@ -366,6 +366,8 @@ public class NewsController {
 		logger.info("데일리뉴스화면 출력 listsize={}", list.size());
 		model.addAttribute("list", list);
 		model.addAttribute("pagingInfo", pagingInfo);
+		
+		return "news/newsRegdit";
 	}
 	
 	

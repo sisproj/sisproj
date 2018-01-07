@@ -37,14 +37,11 @@ public class ReservationServiceImpl implements ReservationService{
 	public List<ReservationVO> reservationNselect(){
 		return resDao.reservationNselect();
 	}
-	public List<Map<String, Object>> reservationNotYselect(int empNo){
-		return resDao.reservationNotYselect(empNo);
+	public List<Map<String, Object>> reservationNotYselect(ReservationSearchVO searchVo){
+		return resDao.reservationNotYselect(searchVo);
 	}
 	public int chkDupRes(ReservationVO resVo) {
 		return resDao.chkDupRes(resVo);
-	}
-	public int deleteTimeOver() {
-		return resDao.deleteTimeOver();
 	}
 	
 	@Override

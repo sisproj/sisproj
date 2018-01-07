@@ -7,6 +7,8 @@ package com.siszo.sisproj.reservation.model;
 */
 
 public class ReservationSearchVO {
+	
+	private int empNo;
 	/** 검색조건 */
 	private String searchCondition = "";
 	
@@ -45,9 +47,20 @@ public class ReservationSearchVO {
     	this.firstRecordIndex = bean.firstRecordIndex;
     	this.lastRecordIndex = bean.lastRecordIndex;
     	this.recordCountPerPage = bean.recordCountPerPage;
+    	this.empNo = bean.getEmpNo();
     }
+    
+    
 
-    public String getSearchCondition() {
+    public int getEmpNo() {
+	return empNo;
+}
+
+public void setEmpNo(int empNo) {
+	this.empNo = empNo;
+}
+
+	public String getSearchCondition() {
     	return searchCondition;
     }
 
@@ -114,9 +127,9 @@ public class ReservationSearchVO {
 
 	@Override
 	public String toString() {
-		return "ReservationSearchVO [searchCondition=" + searchCondition + ", searchKeyword=" + searchKeyword
-				+ ", searchUseYn=" + searchUseYn + ", currentPage=" + currentPage + ", blockSize=" + blockSize
-				+ ", firstRecordIndex=" + firstRecordIndex + ", lastRecordIndex=" + lastRecordIndex
+		return "ReservationSearchVO [empNo=" + empNo + ", searchCondition=" + searchCondition + ", searchKeyword="
+				+ searchKeyword + ", searchUseYn=" + searchUseYn + ", currentPage=" + currentPage + ", blockSize="
+				+ blockSize + ", firstRecordIndex=" + firstRecordIndex + ", lastRecordIndex=" + lastRecordIndex
 				+ ", recordCountPerPage=" + recordCountPerPage + "]";
 	}
 
