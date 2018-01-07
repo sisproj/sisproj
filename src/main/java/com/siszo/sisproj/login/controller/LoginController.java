@@ -1,12 +1,13 @@
 package com.siszo.sisproj.login.controller;
 
+import java.util.Random;
+
 import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.siszo.sisproj.message.model.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,12 @@ import com.siszo.sisproj.common.EmailSender;
 import com.siszo.sisproj.commue.model.CommueService;
 import com.siszo.sisproj.confirm.model.DocumentService;
 import com.siszo.sisproj.confirm.model.DocumentVO;
+import com.siszo.sisproj.employee.common.EmployeePwdLock;
+import com.siszo.sisproj.employee.common.SHA256;
 import com.siszo.sisproj.employee.model.EmployeeService;
 import com.siszo.sisproj.employee.model.EmployeeVO;
 import com.siszo.sisproj.login.model.LoginService;
+import com.siszo.sisproj.message.model.MessageService;
 
 @Controller
 @RequestMapping("/login")
@@ -59,6 +63,12 @@ public class LoginController {
 			HttpServletRequest request, HttpServletResponse response,
 			Model model) {
 		logger.info("로그인 하기 파라미터 vo={},chkSaveId={}",vo,saveId);
+		
+		String pwd = vo.getEmpPwd();
+		String shaPwd = EmployeePwdLock.convertEncryption(pwd);
+		vo.setEmpPwd(shaPwd);
+		
+		logger.info("암호화된 비밀번호 shaPwd={}",shaPwd);
 		
 		int cnt = loginService.loginCheck(vo.getEmpNo(), vo.getEmpPwd());
 
@@ -120,7 +130,7 @@ public class LoginController {
 		logger.info("사원 출근을 하였었는지 체크하기 resultIn={}",resultIn);
 		
 		int resultOut=commueService.selectOutChk(empVo.getEmpNo());
-		logger.info("사원 출근을 하였었는지 체크하기 resultOut={}",resultOut);
+		logger.info("사원 퇴근을 하였었는지 체크하기 resultOut={}",resultOut);
 		
 		DocumentVO dVo = new DocumentVO();
 		dVo.setEmpNo(empVo.getEmpNo());
@@ -151,20 +161,37 @@ public class LoginController {
 		int result= loginService.searchPwd(vo.getEmpNo(), vo.getEmpName());
 		
 		EmployeeVO empVo = employeeService.selectEmployeeByNo(vo.getEmpNo());
-		String msg="",url="/login/login.do";
+		String msg="",url="";
 		if(result==loginService.ID_NONE) {
 			msg="사원번호가 일치하지않습니다";
 		}else if(result==loginService.NAME_DISAGREE){
 			msg="이름이 일치하지않습니다";
 		}else if(result==loginService.SUSSCES_SEARCH) {
-			int ranPwd=0;
+			StringBuffer ranPwd = new StringBuffer();
+			Random rnd = new Random();
+			for (int i = 0; i < 10; i++) {
+			    int rIndex = rnd.nextInt(3);
+			    switch (rIndex) {
+			    case 0:
+			        // a-z
+			    	ranPwd.append((char) ((int) (rnd.nextInt(26)) + 97));
+			        break;
+			    case 1:
+			        // A-Z
+			    	ranPwd.append((char) ((int) (rnd.nextInt(26)) + 65));
+			        break;
+			    case 2:
+			        // 0-9
+			    	ranPwd.append((rnd.nextInt(10)));
+			        break;
+			    }
+			}
 			
-			ranPwd = (int)(Math.random()*1000);				
-			
-			logger.info("변경된 비밀번호 ranPwd={}",ranPwd);
-			
+			String ranPwd2 = ranPwd.toString();	
+			logger.info("변경된 비밀번호 ranPwd2={}",ranPwd2);
+					
 			String subject="비밀번호 찾기에 대한 이메일입니다";		
-			String content="변경된 비밀번호는 "+Integer.toString(ranPwd)+" 입니다";	
+			String content="변경된 비밀번호는 "+ranPwd2+" 입니다";	
 			String receiver =empVo.getEmpEmail();			
 			String sender="admin@herbmall.com";
 			
@@ -175,13 +202,19 @@ public class LoginController {
 				logger.info("이메일 발송 실패!");
 				e.printStackTrace();
 			}
-			empVo.setEmpPwd(Integer.toString(ranPwd));
+						
+			String shaPwd=EmployeePwdLock.convertEncryption(ranPwd2);	
+			logger.info("변경된 비밀번호 shaPwd={}",shaPwd);			
+			
+			empVo.setEmpPwd(shaPwd);
+			
+			logger.info("변경되어 수정된 비밀번호 shaPwd={}",shaPwd);
 			int cnt = employeeService.employeeEditPwd(empVo);
 			
 			logger.info("이메일이 발송됨과 동시에 랜던값이 비밀번호에 셋팅됨 파라미터 ranPwd={},empVo={}",ranPwd,empVo);
-			msg="비밀번호가 이메일로 발송되었습니다";
 		}
+		model.addAttribute("msg",msg);
 		
-		return "login/searchPwd";
+		return "common/message";
 	}
 }

@@ -17,6 +17,5 @@ public interface CommueService {
 	public List<Map<String, Object>> searchDate(DateSearchVO vo);
 	public int selectInChk(int empNo);
 	public int selectOutChk(int empNo);
-	
-	/*	public int checkCmt(int empNo);*/
+	public int selectTotalRecord(DateSearchVO vo);
 }

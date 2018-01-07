@@ -1,4 +1,4 @@
-package com.siszo.sisproj.employee.controller;
+package com.siszo.sisproj.employee.common;
 
 import java.io.File;
 import java.io.FileInputStream;
