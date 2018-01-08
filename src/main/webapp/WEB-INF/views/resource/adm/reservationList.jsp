@@ -3,12 +3,7 @@
 	pageEncoding="utf-8"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../../inc/admTop.jsp" %>
-<!-- scheduler -->
-<script src="<c:url value="/resources/codebase/dhtmlxscheduler.js"/>"></script>
-<link rel="stylesheet"
-	href="<c:url value="/resources/codebase/dhtmlxscheduler.css"/>">
-
-<script type="text/javascript" charset="utf-8">
+<script type="text/javascript">
 	$(function(){
 		$('#checkAll').click(function() {
 			if($("#checkAll").prop("checked")) {
@@ -19,30 +14,24 @@
 				$("td input[type=checkbox]").prop("checked",false); 
 			}
 		});
-		$('.divOkMulti').click(function(){
+		
+		$('#divDeleteMulti').click(function(){
 			var len=$('td input[type=checkbox]:checked').length;
 			if(len==0){
-				alert('승인할 정보를 체크하세요');
-				return;
+				alert('삭제할 정보를 체크하세요');
+				return false;
 			}
-			$('#frmList').prop('action','<c:url value="/resource/updateYMulti.do"/>');
-			$('#frmList').submit();
-		});
-		$('.divBackMulti').click(function(){
-			var len=$('td input[type=checkbox]:checked').length;
-			if(len==0){
-				alert('반려할 정보를 체크하세요');
-				return;
+			if(confirm('영구 삭제 하시겠습니까?')){
+				$('#frmList').prop('action','<c:url value="/resource/adm/deleteResMulti.do"/>');
+				$('#frmList').submit();				
 			}
-			$('#frmList').prop('action','<c:url value="/resource/updateRMulti.do"/>');
-			$('#frmList').submit();
 		});	
-
 		
 		$('#reqSearch').click(function(){
 			$('#frmList').submit();
 		});
-	});
+	});///////
+	
 	function pageFunc(curPage){
 		document.frmList.currentPage.value=curPage;
 		frmList.submit();
@@ -148,6 +137,15 @@
 	#pagingbtn #nextbtn{
 		background-color: #306;
 	}
+	.colorblue{
+	color:blue;
+	}
+	.colorred{
+	color:red;
+	}
+	.colorgreen{
+	color:green;
+	}
 </style>
 <!-- 0. include부분 -->
 <!-- 왼쪽 사이드 메뉴 끝 -->
@@ -166,7 +164,8 @@
 	        <input type="hidden" id="currentPage" name="currentPage" value="1">			        
 	        <input type="hidden" id="rvNo" name="rvNo" value="${param.rvNo }">			        
 	        <div id="divBodysection">
-		        <div class="divRequestHeader">		        		        
+		        <div class="divRequestHeader">	
+		        	<a href="#"><div id="divDeleteMulti"><i class="fa fa-trash"></i><span> 삭제</span></div></a>	        		        
 			        <div>
 			        	<input type="text" placeholder="검색" id="searchKeyword" name="searchKeyword" value='${param.searchKeyword}'>
 			        	<a href="#"><i id="reqSearch" class="fa fa-search"></i></a>
@@ -206,16 +205,21 @@
 		        			<td><input type="checkbox" name="resItems[${status.index }].rvNo" value="${map['RV_NO'] }"></td>
 		        			<td>${map['RES_CATEG']}</td>
 		        			<td id="${map['RES_NO'] }">${map['RES_NAME']}</td>
-		        			<td>${map['RV_CONTENT']}</td>
+		        			<c:if test="${fn:length(map['RV_CONTENT'])>=20 }">
+								<td>${fn:substring(map['RV_CONTENT'],0,20) }...</td> 
+							</c:if>
+							<c:if test="${fn:length(map['RV_CONTENT'])<20 }">
+								<td>${map['RV_CONTENT']}</td> 
+							</c:if>
 		        			<td>${map['RV_START'] }</td>
 		        			<td>${map['RV_END'] }</td>
 		        			<td>${map['EMP_NAME']}</td>
 		        			<td>${map['DEPT_NAME'] }</td>
 		        			<td><fmt:formatDate value="${map['RV_REGDATE']}" pattern="yyyy-MM-dd"/></td>		        			
 		        			<td>
-		        				<c:if test="${map['RV_CONFIRM']=='Y'}"><span style="color: green;">승인</span></c:if>
-		        				<c:if test="${map['RV_CONFIRM']=='N'}"><span style="color: blue;">승인 대기중</span></c:if>
-		        				<c:if test="${map['RV_CONFIRM']=='R'}"><span style="color: red;">반려</span></c:if>			        				
+		        				<c:if test="${map['RV_CONFIRM']=='Y'}"><span class="colorgreen">승인</span></c:if>
+		        				<c:if test="${map['RV_CONFIRM']=='N'}"><span class="colorblue">승인 대기중</span></c:if>
+		        				<c:if test="${map['RV_CONFIRM']=='R'}"><span class="colorred">반려</span></c:if>			        				
 		        			</td>		        			
 		        		</tr>
 	        		</c:forEach>

@@ -221,16 +221,16 @@
 			    
 	        	<table id="addrTable">
 	        		<colgroup>
-	        			<col width="5%">
-	        			<col width="10%">
+	        			<col width="3%">
+	        			<col width="8%">
 	        			<col width="10%">
 	        			<col width="*">
-	        			<col width="13%">
-	        			<col width="13%">
 	        			<col width="10%">
 	        			<col width="10%">
-	        			<col width="10%">
-	        			<col width="10%">
+	        			<col width="6%">
+	        			<col width="5%">
+	        			<col width="8%">
+	        			<col width="8%">
 	        		</colgroup>
 	        		<thead>
 	        		<tr>
@@ -252,22 +252,22 @@
 		        			<td><input type="checkbox" name="resItems[${status.index }].rvNo" value="${map['RV_NO'] }"></td>
 		        			<td>${map['RES_CATEG']}</td>
 		        			<td id="${map['RES_NO'] }">${map['RES_NAME']}</td>
-		        			<td>${map['RV_CONTENT']}</td>
-		        			<td>${map['RV_START'] }</td>
-		        			<td>${map['RV_END'] }</td>
+		        			<c:if test="${fn:length(map['RV_CONTENT'])>=20 }">
+								<td>${fn:substring(map['RV_CONTENT'],0,20) }...</td> 
+							</c:if>
+							<c:if test="${fn:length(map['RV_CONTENT'])<20 }">
+								<td>${map['RV_CONTENT']}</td> 
+							</c:if>
+		        			<td>${map['RV_START']}</td>
+		        			<td>${map['RV_END']}</td>
 		        			<td>${map['EMP_NAME']}</td>
-		        			<td>${map['DEPT_NAME'] }</td>
+		        			<td>${map['DEPT_NAME']}</td>
 		        			<td><fmt:formatDate value="${map['RV_REGDATE']}" pattern="yyyy-MM-dd"/></td>		        			
 		        			<td>
 			        			<c:if test="${sessionScope.empVo.empLev!='사원' }">
 			        				<input type="button" name="btOk" id="${map['RV_NO'] }" value="승인">
 			        				<input type="button" name="btBack" value="반려">			        				
-			        			</c:if>
-			        			<%-- <c:if test="${sessionScope.empVo.empLev!='관리자' }">
-			        				<c:if test="${map['RV_CONFIRM']=='Y'}">승인</c:if>
-			        				<c:if test="${map['RV_CONFIRM']=='N'}">승인 대기중</c:if>
-			        				<c:if test="${map['RV_CONFIRM']=='R'}">반려</c:if>			        				
-			        			</c:if> --%>
+			        			</c:if>			        			
 		        			</td>		        			
 		        		</tr>
 	        		</c:forEach>
