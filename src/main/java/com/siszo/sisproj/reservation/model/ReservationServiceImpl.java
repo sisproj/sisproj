@@ -93,4 +93,13 @@ public class ReservationServiceImpl implements ReservationService{
 	public int cancelReservation(int rvNo) {
 		return resDao.cancelReservation(rvNo);
 	}
+	@Override
+	public List<Map<String, Object>> selectReservationAllAMD(ReservationSearchVO searchVo) {
+		return resDao.selectReservationAllAMD(searchVo);
+	}
+
+	@Override
+	public int selectTotalRecordAll() {
+		return resDao.selectTotalRecordAll();
+	}
 }

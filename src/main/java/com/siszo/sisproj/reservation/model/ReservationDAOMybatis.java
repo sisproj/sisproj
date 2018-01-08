@@ -56,6 +56,16 @@ public class ReservationDAOMybatis extends SqlSessionDaoSupport implements Reser
 	public int cancelReservation(int rvNo) {
 		return getSqlSession().delete(namespace+".cancelReservation", rvNo);
 	}
+
+	@Override
+	public List<Map<String, Object>> selectReservationAllAMD(ReservationSearchVO searchVo) {
+		return getSqlSession().selectList(namespace+".selectReservationAllAMD",searchVo);
+	}
+
+	@Override
+	public int selectTotalRecordAll() {
+		return getSqlSession().selectOne(namespace+".selectTotalRecordAll");
+	}
 	
 
 }
