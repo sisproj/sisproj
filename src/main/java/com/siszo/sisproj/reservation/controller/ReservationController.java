@@ -207,4 +207,23 @@ public class ReservationController {
 
 		return "common/message";
 	}
+	
+	@RequestMapping("/cancelR.do")
+	public String cancelReservation(@RequestParam int rvNo, Model model) {
+		int cnt = resService.cancelReservation(rvNo);
+		
+		String msg = "", url = "/resource/resource.do";
+		if (cnt > 0) {
+			msg = "예약이 취소되었습니다.";
+		} else {
+			msg = "예약취소가 실패하였습니다.";
+		}
+
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+
+		return "common/message";
+	}
+	
+	
 }

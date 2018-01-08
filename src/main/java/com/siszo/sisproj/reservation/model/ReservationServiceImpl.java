@@ -89,4 +89,8 @@ public class ReservationServiceImpl implements ReservationService{
 	public List<DeptVO> deptsearch(){
 		return resDao.deptsearch();
 	}
+	
+	public int cancelReservation(int rvNo) {
+		return resDao.cancelReservation(rvNo);
+	}
 }

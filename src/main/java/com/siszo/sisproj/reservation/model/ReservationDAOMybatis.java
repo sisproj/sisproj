@@ -53,6 +53,9 @@ public class ReservationDAOMybatis extends SqlSessionDaoSupport implements Reser
 	public List<DeptVO> deptsearch(){
 		return getSqlSession().selectList(namespace+".deptsearch");
 	}
+	public int cancelReservation(int rvNo) {
+		return getSqlSession().delete(namespace+".cancelReservation", rvNo);
+	}
 	
 
 }
