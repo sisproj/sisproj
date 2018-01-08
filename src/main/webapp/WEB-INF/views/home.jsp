@@ -84,7 +84,7 @@
         $(function () {
             $('header nav ul li:nth-child(1) a').addClass('active');
             
-            $('#organ').css('height', '420px');
+            $('#organ').css('height', '425px');
 			$('#orgUp').hide();
 			$('#orgDown').hide();
 			$('#organbody').show();
