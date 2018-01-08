@@ -22,4 +22,5 @@ public interface ReservationService {
 	public int updateConfirmRMulti(List<ReservationVO> list);
 	public List<Map<String, Object>> resourceAllselect(ReservationSearchVO searchVo);
 	public List<DeptVO> deptsearch();
+	public int cancelReservation(int rvNo);
 }

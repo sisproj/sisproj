@@ -129,6 +129,11 @@
 	
 	</select>
 	
+	<delete id="cancelReservation" parameterType="int">
+	delete from reservation where rv_no=#{rvNo}
+	
+	</delete>
+	
 	
 </mapper>
 
