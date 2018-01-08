@@ -87,9 +87,7 @@
 		) 
 		<![CDATA[
 		where RNUM > #{firstRecordIndex} 
-		and RNUM<=#{firstRecordIndex}+ #{recordCountPerPage} ]]>
-	
-		
+		and RNUM<=#{firstRecordIndex}+ #{recordCountPerPage} ]]>		
 	</select>
 	
 	<select id="chkDupRes" parameterType="ReservationVO" resultType="int">
@@ -119,21 +117,16 @@
 		) 
 		<![CDATA[
 		where RNUM > #{firstRecordIndex} 
-		and RNUM<=#{firstRecordIndex}+ #{recordCountPerPage} ]]>
-	
-	
+		and RNUM<=#{firstRecordIndex}+ #{recordCountPerPage} ]]>	
 	</select>
 	
 	<select id="deptsearch" resultType="DeptVO">
-	select * from dept
-	
+		select * from dept	
 	</select>
 	
 	<delete id="cancelReservation" parameterType="int">
-	delete from reservation where rv_no=#{rvNo}
-	
+		delete from reservation where rv_no=#{rvNo}	
 	</delete>
-	
 	
 </mapper>
 

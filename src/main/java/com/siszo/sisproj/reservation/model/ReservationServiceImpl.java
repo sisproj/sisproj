@@ -102,4 +102,24 @@ public class ReservationServiceImpl implements ReservationService{
 	public int selectTotalRecordAll() {
 		return resDao.selectTotalRecordAll();
 	}
+
+	@Override
+	@Transactional
+	public int deleteResMulti(List<ReservationVO> list) {
+		int cnt=0;
+		try {
+			for (ReservationVO vo : list) {
+				int rvNo=vo.getRvNo();
+				if(rvNo!=0) {
+					cnt=resDao.cancelReservation(rvNo);
+				}
+			}
+		}catch (RuntimeException e) {
+			cnt=0;
+			e.printStackTrace();
+		}
+		
+		return cnt;
+	}
+	
 }

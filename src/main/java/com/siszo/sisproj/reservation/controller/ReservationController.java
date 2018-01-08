@@ -254,4 +254,25 @@ public class ReservationController {
 
 		return "resource/adm/reservationList";
 	}
+	
+	@RequestMapping("/adm/deleteResMulti.do")
+	public String deleteMulti(@ModelAttribute ReservationListVO resListVo, Model model) {
+		logger.info("관리자 페이지 - 자원 사용 현황 멀티 삭제, 파라미터 resListVo={}",resListVo);
+		
+		List<ReservationVO> list=resListVo.getResItems();
+		
+		int cnt=resService.deleteResMulti(list);
+		
+		String msg="",url="/resource/adm/reservationList.do";
+		if(cnt>0) {
+			msg="멀티 삭제 성공";
+		}else {
+			msg="멀티 삭제 실패";			
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "common/message";
+	}
 }

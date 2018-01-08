@@ -23,4 +23,5 @@ public interface ReservationService {
 	public List<Map<String, Object>> resourceAllselect(ReservationSearchVO searchVo);
 	public List<DeptVO> deptsearch();
 	public int cancelReservation(int rvNo);
+	public int deleteResMulti(List<ReservationVO> list);
 }
