@@ -231,25 +231,40 @@
             });
         }
 
-
         var memberList = [];
-
         function loadMemberListByChatKey(chatKey) {
+            memberList = [];
             var membersRef = firebase.database().ref('members/' + chatKey);
             membersRef.once('value', function (snapshot) {
                 snapshot.forEach(function (childSnapshot) {
                     memberList.push(childSnapshot.key);
-                    var onclickStr = 'onclick="changeNameCard(\'' + childSnapshot.key + '\')"';
-                    var userImg = "<c:url value='/emp_images/'/>";
-                    $('#memberList').append(
-                        '<div class="w3-bar-item w3-button">' +
-                        '<img src="' + userImg + '" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">' +
-                        '<div>' +
-                        '<div class="w3-small w3-center">' + name + '</div>' +
-                        '</div>' +
-                        '</div>'
-                    );
                 });
+            }).then(function () {
+                for(var i = 0; i < memberList.length; i++) {
+                    var usersRef = firebase.database().ref('users/' + memberList[i]);
+                    usersRef.once('value', function (snapshot) {
+                        console.log
+                        var empNo = snapshot.key;
+                        var empImg = snapshot.val().emp_img;
+                        var empName = snapshot.val().emp_name;
+                        var empPosition = snapshot.val().emp_position;
+
+                        var onclickStr = 'onclick="changeNameCard(\'' + empNo + '\')"';
+                        var userImg = "<c:url value='/emp_images/"+empImg+"'/>";
+                        if(empImg == null) {
+                            userImg = "<c:url value='/emp_images/defaultImg.png'/>";
+                        }
+                        $('#memberList').append(
+                            '<li class="w3-bar w3-button w3-left-align" '+ onclickStr +'>' +
+                            '<img src="' + userImg + '" class="w3-circle" style="width:50px; height: 50px; margin-right: 50px">' +
+                            '<span class="w3-large">' + empName + " " + empPosition +
+                            '</span>'+
+                            '<span>(' + empNo + ')</span>' +
+                            '</li>'
+                        );
+                    })
+
+                }
             });
         }
 
@@ -552,7 +567,7 @@
             <%--로그인한 user의 채팅방 목록을 여기다 뿌려줌--%>
         </ul>
     </div>
-</nav>
+</nav>ss
 
 <form id="frmMessenger" name="frmMessenger" method="post" action="<c:url value='/messenger/messenger.do'/>">
     <input type="text" value="${userKey}" id="userKey" name="userKey">
