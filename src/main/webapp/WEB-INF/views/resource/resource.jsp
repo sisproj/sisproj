@@ -2,7 +2,9 @@
 <%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%SchedulerUtility schedulerUtil = new SchedulerUtility();%>
+<%
+	SchedulerUtility schedulerUtil = new SchedulerUtility();
+%>
 <%@include file="../inc/top.jsp"%>
 <!-- scheduler -->
 <script src="<c:url value="/resources/codebase/dhtmlxscheduler.js"/>"></script>
@@ -37,7 +39,7 @@ function ChangeDate(Date) {
 	return years+"-"+Month+"-"+day+" "+times;
 	}
 
-	window.onload = function() {
+	window.onload = function() { 
 
 		
 		scheduler.config.readonly = true;
@@ -51,18 +53,20 @@ function ChangeDate(Date) {
 		scheduler.config.details_on_dblclick = true;
 		scheduler.config.details_on_create = true;
 		scheduler.config.quick_info_detached = true;
+		scheduler.config.buttons_right=[];
 
 		scheduler.locale.labels.section_type = "Type";  
-
+ 
 		// default values for filters
 		var filters = {
-			"1" : true,
-			"2" : true,
-			"3" : true,
-			"4" : true,
-			"5" : true,
-			"6" : true,
+			<c:forEach var="map" items="${resourcelist }">
+			"${map['RES_NO']}" : true,
+			</c:forEach>
+			<c:forEach var="vo" items="${deptlist }">
+			"${vo.deptNo}" : true,
+			</c:forEach>
 			orders : true,
+			
 		};
 
 		var filter_inputs = document.getElementById("filters_wrapper").getElementsByTagName("input");
@@ -84,8 +88,8 @@ function ChangeDate(Date) {
 		scheduler.filter_month = scheduler.filter_day = scheduler.filter_week = function(id, event) {
 			// display event only if its type is set to true in filters obj
 			// or it was not defined yet - for newly created event
-			if (filters[event.subject] || event.subject==scheduler.undefined) {
-				console.log(event);
+			if ((filters[event.subject] || event.subject==scheduler.undefined) && (filters[event.dept] || event.dept==scheduler.undefined)) {
+				console.log(event.subject);
 				return true;
 			}
 
@@ -112,10 +116,10 @@ function ChangeDate(Date) {
 		var subject = [ {
 			key : '',
 			label : '자원을 선택하세요'
-		<c:forEach var="vo" items="${resourcelist }">
+		<c:forEach var="map" items="${resourcelist }">
 		}, {
-			key : "${vo.resNo}",
-			label : "${vo.resName}"
+			key : "${map['RES_NO'] }",
+			label : "${map['RES_NAME'] }"
 		</c:forEach>
 		}, {
 			key : 'orders',
@@ -143,33 +147,18 @@ function ChangeDate(Date) {
 		
 		
 		 scheduler.templates.quick_info_content = function(start, end, ev){ 
-		     var items=ev.subject; 
-		     if(items==1){
-			 return "카테고리 : 101호 회의실 " ;
-		     }
-		     if(items==2){
-			 return "카테고리 : 102호 회의실 " ;
-		     }
-		     if(items==3){
-			 return "카테고리 : 스타렉스 자동차 " ;
-		     }
-		     if(items==4){
-			 return "카테고리 : 포터 자동차 " ;
-		     }
-		     if(items==5){
-			 return "카테고리 : 축구장 " ;
-		     }
-		     if(items==6){
-			 return "카테고리 : 법인카드 " ;
-		     }	
-		     if(items=='orders'){
-			 return "카테고리 : 기타 " ;
-		     }
+		     var items=ev.categ; 
+		     var dept=ev.dept; 
+		     
+			 return "카테고리 : "+ items+",  사용부서 :"+dept; 
 		}; 
 		
-		
 		$('#bttest').click(function(){
-			scheduler.showLightbox(subject);
+			var eventId = scheduler.addEvent({
+			    start_date: "01-01-2018 09:00",
+			    end_date:   "01-01-2018 11:00",
+			});
+			scheduler.showLightbox(eventId);
 		});
 		
 		scheduler.init('scheduler_here', new Date(), "week");
@@ -178,7 +167,7 @@ function ChangeDate(Date) {
 		    if (!ev.text) {
 		        alert("내용을 입력하세요");
 		        return false;
-		    }
+		    } 
 		    else if (ev.subject=='') {
 		        alert("자원을 선택하세요");
 		        return false;
@@ -203,16 +192,17 @@ function ChangeDate(Date) {
 		
 		scheduler.parse([//화면에 뿌려주기.
 			<c:if test="${!empty reslist}">
-			<c:forEach var="vo" items="${reslist }">
-				{start_date: "${vo.rvStart}", end_date: "${vo.rvEnd}",
-					text:"${vo.rvContent}",	subject: '${vo.resNo}'},
-					
+			<c:forEach var="map" items="${reslist }">
+				{start_date: "${map['RV_START']}", end_date: "${map['RV_END']}",
+					text:"${map['RV_CONTENT']}",	subject: "${map['RES_NO']}",
+					categ:"${map['RES_NAME']}", dept:"${map['DEPT_NO']}"},
 			</c:forEach>
 			</c:if>
 			], "json");
 		
-		
 		}
+	
+	
 	
 	function pageFunc(curPage){
 		document.pagefrm.currentPage.value=curPage;
@@ -221,108 +211,9 @@ function ChangeDate(Date) {
 	
 	
 </script>
-<style type="text/css">
-.dhx_cal_event
+<style type="text/css"> 
 
 
-div
-
-
-.dhx_footer
-,
-.dhx_cal_event
-
-
-.past_event
-
-
-div
-
-
-.dhx_footer
-,
-.dhx_cal_event
-
-
-.event_1
-
-
-div
-
-
-.dhx_footer
-,
-.dhx_cal_event
-
-
-.event_2
-
-
-div
-
-
-.dhx_footer
-,
-.dhx_cal_event
-
-
-.event_3
-
-
-div
-
-
-.dhx_footer
-,
-.dhx_cal_event
-
-
-.event_4
-
-
-div
-
-
-.dhx_footer
-,
-.dhx_cal_event
-
-
-.event_5
-
-
-div
-
-
-.dhx_footer
-,
-.dhx_cal_event
-
-
-.event_6
-
-
-div
-
-
-.dhx_footer
-,
-{
-background-color
-
-
-:
-
-
-transparent
-
-
-!
-important
-
-
-;
-}
 .dhx_cal_event .dhx_body {
 	-webkit-transition: opacity 0.1s;
 	transition: opacity 0.1s;
@@ -338,14 +229,14 @@ important
 	{
 	opacity: 1;
 }
-
+ 
 .dhx_cal_event.event_1 div, .dhx_cal_event_line.event_1 .dhx_cal_event.event_2 div,
 	.dhx_cal_event_line.event_2 {
 	background-color: #36BD14 !important;
 	border-color: #698490 !important;
 }
-
-.dhx_cal_event_clear.event_1, .dhx_cal_event_clear.event_2 {
+  
+.dhx_cal_event_clear.event_1, .dhx_cal_event_clear.event_2 { 
 	color: #36BD14 !important;
 }
 
@@ -387,7 +278,7 @@ important
 
 #resource_here {
 	width: 50%;
-	height: 500px;
+	height: 400px;
 	float: left;
 }
 
@@ -522,6 +413,13 @@ important
 	min-width: 1500px;
 	clear: both;
 }
+
+.colorblue{
+color:blue;
+}
+.colorred{
+color:red;
+}
 </style>
 <!-- 0. include부분 -->
 <nav>
@@ -565,28 +463,31 @@ important
 			action="<c:url value='/resource/resourceWrite.do'/>">
 			<input type="hidden" id="rvStart" name="rvStart"> <input
 				type="hidden" id="rvEnd" name="rvEnd"> <input type="hidden"
-				id="resNo" name="resNo">	
-				 <input type="hidden" id="rvContent"
-				name="rvContent"> 
+				id="resNo" name="resNo"> <input type="hidden" id="rvContent"
+				name="rvContent">
 			<!-- 제목 -->
 		</form>
 		<form name="pagefrm" id="pagefrm" method="post"
 			action="<c:url value='/resource/resource.do'/>">
-		<input type="hidden" id="currentPage"
-						name="currentPage" value="1">
+			<input type="hidden" id="currentPage" name="currentPage" value="1">
 		</form>
-		<div style='height: 20px; padding: 5px;'>
+		<div style='height: 40px; padding: 5px;'>
 			<div class="filters_wrapper" id="filters_wrapper">
-				<span>카테고리 별 검색:</span> <label> <input type="checkbox"
-					name="1" /> 101호 회의실
-				</label> <label> <input type="checkbox" name="2" /> 102호 회의실
-				</label> <label> <input type="checkbox" name="3" /> 스타렉스 자동차
-				</label> <label> <input type="checkbox" name="4" /> 포터 자동차
-				</label> <label> <input type="checkbox" name="5" /> 축구장
-				</label> <label> <input type="checkbox" name="6" /> 법인카드
-				</label> <label> <input type="checkbox" name="orders" /> 기타
-				</label>
+				<span>카테고리 별 검색:</span> 
+				
+				<c:forEach var="map" items="${resourcelist}">
+				<label> <input type="checkbox" name="${map['RES_NO'] }" /> ${map['RES_NAME'] }</label>
+				</c:forEach>
+				 <label> <input type="checkbox" name="orders" /> 기타</label>
+				 
+				<br>
+				
+				 <span>부서 별 검색:</span> 
+				<c:forEach var="vo" items="${deptlist}">
+				<label> <input type="checkbox" name="${vo.deptNo }" /> ${vo.deptName }</label>
+				</c:forEach>
 			</div>
+				
 		</div>
 
 		<div id="scheduler_here" class="dhx_cal_container"
@@ -605,10 +506,11 @@ important
 
 		</div>
 		<div id="resource_here">
-			<input type="button" id="bttest" value="자원등록 신청하기">
+
 			<hr>
-			<h4 style="text-align: center;">나의 자원신청 승인 현황</h4>
+			<h3 style="text-align: center;">나의 자원신청 승인 현황</h3>
 			<hr>
+			<input type="button" id="bttest" value="자원등록 신청하기"> <br>
 			<table id="addrTable">
 				<colgroup>
 					<col width="15%">
@@ -616,7 +518,8 @@ important
 					<col width="17%">
 					<col width="17%">
 					<col width="13%">
-					<col width="15%">
+					<col width="10%">
+					<col width="6%">
 				</colgroup>
 				<thead>
 					<tr>
@@ -626,6 +529,7 @@ important
 						<th>종료일</th>
 						<th>등록일</th>
 						<th>승인여부</th>
+						<th>취소</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -638,13 +542,19 @@ important
 						<c:forEach var="map" items="${myreslist }">
 							<tr>
 								<td>${map['RES_NAME']}</td>
-								<td>${map['RV_CONTENT']}</td>
+								<c:if test="${fn:length(map['RV_CONTENT'])>=11 }">
+								<td>${fn:substring(map['RV_CONTENT'],0,11) }...</td> 
+								</c:if> 
+								<c:if test="${fn:length(map['RV_CONTENT'])<11 }">
+								<td>${map['RV_CONTENT']}</td> 
+								</c:if> 
 								<td>${map['RV_START'] }</td>
 								<td>${map['RV_END'] }</td>
 								<td><fmt:formatDate value="${map['RV_REGDATE']}"
 										pattern="yyyy-MM-dd" /></td>
-								<td><c:if test="${map['RV_CONFIRM']=='N'}">승인 대기중</c:if> <c:if
-										test="${map['RV_CONFIRM']=='R'}">반려</c:if></td>
+								<td><c:if test="${map['RV_CONFIRM']=='N'}"><span class="colorblue">승인 대기중</span></c:if> <c:if
+										test="${map['RV_CONFIRM']=='R'}"><span class="colorred">반려</span></c:if></td>
+								<td><%-- <a href="#" class="cancel" onclick="sendcancel(${map['RV_NO']})">취소</a> --%>취소</td>
 							</tr>
 						</c:forEach>
 					</c:if>
@@ -665,7 +575,7 @@ important
 					<c:forEach var="i" begin="${pagingInfo.firstPage}"
 						end="${pagingInfo.lastPage}">
 						<c:if test="${i==pagingInfo.currentPage}">
-							<span class="thispage">${i }</span> 
+							<span class="thispage">${i }</span>
 						</c:if>
 						<c:if test="${i!=pagingInfo.currentPage}">
 							<a href="#" onclick="pageFunc(${i })" class="active">${i }</a>
@@ -684,13 +594,94 @@ important
 
 
 		</div>
+		<div id="resource_here">
+
+			<div>
+				<hr>
+				<h3 style="text-align: center;">현재 사내 자원 목록</h3>
+				<hr>
+				<table id="addrTable">
+					<colgroup>
+						<col width="10%">
+						<col width="17%">
+						<col width="17%">
+						<col width="*">
+						<col width="10%">
+						<col width="10%">
+						<col width="10%">
+					</colgroup>
+					<thead>
+						<tr>
+							<th>고유번호</th>
+							<th>대분류</th>
+							<th>자원이름</th>
+							<th>자원설명</th>
+							<th>관리자 명</th> 
+							<th>직급</th> 
+							<th>부서 명</th> 
+						</tr>
+					</thead>
+					<tbody>  
+						<c:if test="${empty resourcelist }">
+							<tr>
+								<td colspan="5">등록된 자원이 없습니다.</td>
+							</tr>
+						</c:if>
+						<c:if test="${!empty resourcelist }">
+							<c:forEach var="map" items="${resourcelist }">
+								<tr>
+									<td>${map['RES_NO']}</td>
+									<td>${map['RES_CATEG']}</td>
+									<td>${map['RES_NAME']}</td>
+									<td>${map['RES_DESC']}</td>
+									<td>${map['EMP_NAME']}</td>
+									<td>${map['EMP_LEV']}</td>
+									<td>${map['DEPT_NAME']}</td>
+								</tr>
+							</c:forEach>
+						</c:if>
+					</tbody>
+				</table>
+
+				<!-- 페이징처리 -->
+				<div id="pagingbtn">
+					<ul>
+						<!-- 이전 블럭으로 이동 ◀ -->
+						<c:if test="${pagingInfo.firstPage>1 }">
+							<a id="prevbtn" href="#"
+								onclick="pageFunc(${pagingInfo.firstPage-1})"><i
+								class="fa fa-chevron-left"></i></a>
+						</c:if>
+
+						<!-- [1][2][3][4][5][6][7][8][9][10] -->
+						<c:forEach var="i" begin="${pagingInfo.firstPage}"
+							end="${pagingInfo.lastPage}">
+							<c:if test="${i==pagingInfo.currentPage}">
+								<span class="thispage">${i }</span>
+							</c:if>
+							<c:if test="${i!=pagingInfo.currentPage}">
+								<a href="#" onclick="pageFunc(${i })" class="active">${i }</a>
+							</c:if>
+						</c:forEach>
+
+						<!-- 다음 블럭으로 이동 ▶ -->
+						<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage}">
+							<a id=nextbtn href="#"
+								onclick="pageFunc(${pagingInfo.lastPage+1})"><i
+								class="fa fa-chevron-right"></i></a>
+						</c:if>
+					</ul>
+				</div>
+				<!-- 페이징 처리 끝 -->
+
+			</div>
+		</div>
 	</div>
+	
 	<!-- 3. 내용 끝 -->
 </article>
 <!-- 4. 상단 네비 색먹이기 // li태그 순서(전자결재 : 6번째) 입력 -->
 <script type="text/javascript">
-
-
 
 	$(function() {
 		$('header nav ul li:nth-child(4) a').addClass('active');

@@ -334,7 +334,7 @@
 	        		<thead>
 	        		<tr>
 	        			<th><input type="checkbox" id="checkAll"></th>
-	        			<th><a href="#">이름</a></th>
+	        			<th>이름</th>
 	        			<th>전화번호</th>
 	        			<th>이메일</th>
 	        			<th>회사</th>

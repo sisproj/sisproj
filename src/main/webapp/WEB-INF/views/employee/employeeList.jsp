@@ -23,7 +23,7 @@
 					alert('퇴사시킬 사원을 먼저 체크하세요');
 					return;
 				}			
-				$('#searchEmp').prop('action','<c:url value="/employee/employeeOut.do"/>');
+				$('#searchEmp').prop('action','<c:url value="/employee/adm/employeeOut.do"/>');
 				$('#searchEmp').submit();				
 			});
 			
@@ -35,7 +35,38 @@
 					return;
 				}
 				
-				$('#searchEmp').prop('action','<c:url value="/employee/employeeCome.do"/>');
+				$('#searchEmp').prop('action','<c:url value="/employee/adm/employeeCome.do"/>');
+				$('#searchEmp').submit();				
+			});
+			//선택한 사원 퇴사					
+			$('#btOu').click(function(){
+				var len = $('td input[type=checkbox]:checked').length;
+				if(len==0){
+					alert('퇴사시킬 사원을 먼저 체크하세요');
+					return;
+				}			
+				$('#searchEmp').prop('action','<c:url value="/employee/adm/employeeOut.do"/>');
+				$('#searchEmp').submit();				
+			});
+			
+			//선택한 사원 관리자 권한주기					
+			$('#btMa').click(function(){
+				var len = $('td input[type=checkbox]:checked').length;
+				if(len==0){
+					alert('관리자 권한을 줄 사원을 먼저 체크하세요');
+					return;
+				}			
+				$('#searchEmp').prop('action','<c:url value="/employee/adm/employeeUpdateMaster.do"/>');
+				$('#searchEmp').submit();				
+			});
+			//선택한 사원 팀장 권한주기		
+			$('#btTe').click(function(){
+				var len = $('td input[type=checkbox]:checked').length;
+				if(len==0){
+					alert('팀장 권할을 줄 사원을 먼저 체크하세요');
+					return;
+				}			
+				$('#searchEmp').prop('action','<c:url value="/employee/adm/employeeUpdateTeam.do"/>');
 				$('#searchEmp').submit();				
 			});
 			
@@ -139,6 +170,8 @@
 	<div style="text-align: right; margin-top: 3px;width:90%; ">
 		<input type="button" id="btOu" name="btOu" value="퇴사">
 		<input type="button" id="btCo" name="btCo" value="복직">
+		<input type="button" id="btMa" name="btMa" value="관리자">
+		<input type="button" id="btTe" name="btTe" value="팀장">
 	</div>
 	</c:if>
 		<div id="pagingbtn">
@@ -146,11 +179,11 @@
 			<c:if test="${pagingInfo.firstPage>1 }">
 				<a id="prevbtn" href="#" onclick="pageFunc(${pageInfo.firstPage-1})"><i class="fa fa-chevron-left"></i></a>	
 			</c:if>	
-		
+			
 			<!-- [1][2][3][4][5][6][7][8][9][10] -->
 			<c:forEach var="i" begin="${pagingInfo.firstPage}" end="${pagingInfo.lastPage}">
 				<c:if test="${i==pagingInfo.currentPage}">
-					<span class="thispage">${i }</span>	
+					<span class="thispage">${i }</span>
 				</c:if>
 				<c:if test="${i!=pagingInfo.currentPage}">
 					<a href="#" onclick="pageFunc(${i })">${i }</a>		

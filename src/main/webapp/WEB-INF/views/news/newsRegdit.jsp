@@ -14,15 +14,18 @@
 		});
 		
 		$('#btDeleteMulti').click(function(){
-			//선택한 상품들 삭제
 			var len = $('tbody input[type=checkbox]:checked').length;
 			if(len==0){
 				alert('삭제할 항목을 먼저 체크하세요');
 				return;
 			}
 			$('#frmList').prop('action',
-				'<c:url value="/news/deleteMulti.do"/>');
+				'<c:url value="/news/adm/deleteMulti.do"/>');
 			$('#frmList').submit();
+		});
+		
+		$('#btWriteNews').click(function(){
+			location.href="<c:url value='/news/adm/newsWrite.do'/>"; 
 		});
 	});
 </script>	
@@ -108,8 +111,8 @@ action="<c:url value='/news/newsRegdit.do'/>">
 				<td><fmt:formatDate value="${vo.newsRegdate }" 
 					pattern="yyyy-MM-dd"/>
 				</td>
-				<td><a href="<c:url value='/news/newsEdit.do?newsNo=${vo.newsNo }'/>">수정</a></td>	
-				<td><a href="<c:url value='/news/newsDelete.do?newsNo=${vo.newsNo}&newsImage=${vo.newsImage}'/>" class="deleteNews">삭제</a></td>	
+				<td><a href="<c:url value='/news/adm/newsEdit.do?newsNo=${vo.newsNo }'/>">수정</a></td>	
+				<td><a href="<c:url value='/news/adm/newsDelete.do?newsNo=${vo.newsNo}&newsImage=${vo.newsImage}'/>" class="deleteNews">삭제</a></td>	
 			</tr>
 		</c:forEach>
 		<!-- 반복 끝 -->
@@ -121,6 +124,7 @@ action="<c:url value='/news/newsRegdit.do'/>">
 </div>
 </form>
 <input type="button" id="btDeleteMulti" value="선택한 뉴스 삭제" >
+<input type="button" id="btWriteNews" value="뉴스등록" >
 	<form name="frmPage" method="post"
 				action="<c:url value='/news/newsRegdit.do'/>">
 				 <input type="hidden" name="currentPage">

@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@include file="../inc/top.jsp"%>
+<%@ include file="../../inc/admTop.jsp" %>
 <!-- scheduler -->
 <script src="<c:url value="/resources/codebase/dhtmlxscheduler.js"/>"></script>
 <link rel="stylesheet"
@@ -36,24 +36,8 @@
 			}
 			$('#frmList').prop('action','<c:url value="/resource/updateRMulti.do"/>');
 			$('#frmList').submit();
-		});
-		
-		$('input[name="btOk"]').click(function(){
-			var rvNo=$(this).attr('id');
-			$('#rvNo').val(rvNo);
-			$('#frmList').prop('action',"<c:url value='/resource/confirmY.do'/>");
-			$('#frmList').submit();
-			$(this).hide();
-			$(this).next().hide();
-		});
-		$('input[name="btBack"]').click(function(){
-			var rvNo=$(this).prev().attr('id');
-			$('#rvNo').val(rvNo);
-			$('#frmList').prop('action',"<c:url value='/resource/confirmR.do'/>");
-			$('#frmList').submit();
-			$(this).hide();
-			$(this).prev().hide();
-		});
+		});	
+
 		
 		$('#reqSearch').click(function(){
 			$('#frmList').submit();
@@ -85,12 +69,6 @@
    	}
    	#reqSearch{
    		color: rgb(195, 195, 195);
-   	}
-   	.divOkMulti i{
-   		color: #0f0;
-   	}
-   	.divBackMulti i{
-   		color: #f00;
    	}
 	#addrTable{
 		width:100%;
@@ -172,33 +150,11 @@
 	}
 </style>
 <!-- 0. include부분 -->
-<nav>
-	<ul>
-		<!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
-		<li><a href="<c:url value='/resource/resource.do'/>"><i class="fa fa-calendar-check-o" aria-hidden="true"></i>&nbsp;<span>자원관리</span></a></li>
-		<c:if test="${sessionScope.empVo.empLev!='사원' }">
-			<li class="active">
-				<a href="<c:url value='/resource/requestList.do'/>">
-				<i class="fa fa-hourglass-half" ></i>&nbsp;<span>승인 대기 목록</span></a>
-			</li>
-		</c:if>
-		<!-- <li><a href="#"><i class="fa fa-file-text"></i>&nbsp;<span>승인 완료 목록</span></a></li> -->
-                
-	</ul>
-	<!-- 1.왼쪽 사이드 메뉴 지정 끝-->
-	<div id="listbtn">
-		<p>
-			<i class="fa fa-chevron-circle-left" style="text-align: center;"></i>
-		</p>
-	</div>
-</nav>
-</aside>
-
 <!-- 왼쪽 사이드 메뉴 끝 -->
 <article id="headsection">
 	<!-- 2. 페이지 이름 지정 // 북마크 지정 여부 .bookmark || .nobook -->
 	<h1>
-		<i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;자원 관리&nbsp;<a href="#"> <i class="fa fa-bookmark bookmark" aria-hidden="true"></i></a>
+		<i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;자원 사용 현황&nbsp;<a href="#"> <i class="fa fa-bookmark bookmark" aria-hidden="true"></i></a>
 	</h1>
 	<!-- 2. 페이지 이름 지정 끝 -->
 </article>
@@ -206,13 +162,11 @@
 <article id="bodysection">
 	<!-- 3. 내용 -->
 
-		<form name="frmList" id="frmList" method="post" action="<c:url value='/resource/requestList.do'/>">
+		<form name="frmList" id="frmList" method="post" action="<c:url value='/resource/adm/reservationList.do'/>">
 	        <input type="hidden" id="currentPage" name="currentPage" value="1">			        
 	        <input type="hidden" id="rvNo" name="rvNo" value="${param.rvNo }">			        
 	        <div id="divBodysection">
-		        <div class="divRequestHeader">		        
-			        <a href="#"><div class="divOkMulti"><i class="fa fa-check"></i><span> 선택 승인</span></div></a>
-			        <a href="#"><div class="divBackMulti"><i class="fa fa-times"></i><span> 선택 반려</span></div></a>		        
+		        <div class="divRequestHeader">		        		        
 			        <div>
 			        	<input type="text" placeholder="검색" id="searchKeyword" name="searchKeyword" value='${param.searchKeyword}'>
 			        	<a href="#"><i id="reqSearch" class="fa fa-search"></i></a>
@@ -221,16 +175,16 @@
 			    
 	        	<table id="addrTable">
 	        		<colgroup>
-	        			<col width="5%">
-	        			<col width="10%">
+	        			<col width="3%">
+	        			<col width="8%">
 	        			<col width="10%">
 	        			<col width="*">
-	        			<col width="13%">
-	        			<col width="13%">
 	        			<col width="10%">
 	        			<col width="10%">
-	        			<col width="10%">
-	        			<col width="10%">
+	        			<col width="6%">
+	        			<col width="5%">
+	        			<col width="8%">
+	        			<col width="8%">
 	        		</colgroup>
 	        		<thead>
 	        		<tr>
@@ -259,15 +213,9 @@
 		        			<td>${map['DEPT_NAME'] }</td>
 		        			<td><fmt:formatDate value="${map['RV_REGDATE']}" pattern="yyyy-MM-dd"/></td>		        			
 		        			<td>
-			        			<c:if test="${sessionScope.empVo.empLev!='사원' }">
-			        				<input type="button" name="btOk" id="${map['RV_NO'] }" value="승인">
-			        				<input type="button" name="btBack" value="반려">			        				
-			        			</c:if>
-			        			<%-- <c:if test="${sessionScope.empVo.empLev!='관리자' }">
-			        				<c:if test="${map['RV_CONFIRM']=='Y'}">승인</c:if>
-			        				<c:if test="${map['RV_CONFIRM']=='N'}">승인 대기중</c:if>
-			        				<c:if test="${map['RV_CONFIRM']=='R'}">반려</c:if>			        				
-			        			</c:if> --%>
+		        				<c:if test="${map['RV_CONFIRM']=='Y'}"><span style="color: green;">승인</span></c:if>
+		        				<c:if test="${map['RV_CONFIRM']=='N'}"><span style="color: blue;">승인 대기중</span></c:if>
+		        				<c:if test="${map['RV_CONFIRM']=='R'}"><span style="color: red;">반려</span></c:if>			        				
 		        			</td>		        			
 		        		</tr>
 	        		</c:forEach>
@@ -311,4 +259,4 @@
 </script>
 <!-- 4. 상단 네비 색먹이기 끝-->
 <!-- 0. include부분 끝-->
-<%@include file="../inc/bottom.jsp"%>
+<%@include file="../../inc/bottom.jsp"%>

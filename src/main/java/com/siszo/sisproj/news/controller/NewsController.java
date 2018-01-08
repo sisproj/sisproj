@@ -43,47 +43,7 @@ public class NewsController {
 	@Autowired
 	private FileUploadUtil FileUtil;
 
-	@RequestMapping("/newsWriteOk.do")
-	public String newsInsert(@ModelAttribute NewsVO newsVo, HttpServletRequest request, Model model) {
-		logger.info("뉴스 등록 처리, 파라미터 newsVo={}", newsVo);
-		String msg = "", url = "";
-
-		List<Map<String, Object>> list = null;
-		String newsImage = "";
-		try {
-			list = FileUtil.fileupload(request, FileUploadUtil.NEWS_IMAGES);
-			// 파일 업로드 한 경우
-			if (list != null && !list.isEmpty()) {
-				for (Map<String, Object> map : list) {
-					newsImage = (String) map.get("fileName");
-				} // for
-			}
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		newsVo.setNewsImage(newsImage);
-		int cnt = newsService.insertNews(newsVo);
-
-		if (cnt > 0) {
-			msg = "뉴스 등록 성공";
-			url = "/news/dailyNews.do";
-		} else {
-			msg = "뉴스 등록 실패";
-			url = "/news/newsWrite.do";
-		}
-		model.addAttribute("url", url);
-		model.addAttribute("msg", msg);
-
-		return "common/message";
-
-	}
-
-	@RequestMapping("/photoNews.do")
-	public void photoNewsView() {
-
-	}
+	
 
 	@RequestMapping("/dailyNews.do")
 	public void DailyNewsView(Model model, @ModelAttribute NewsSearchVO newsSearchVO) {
@@ -120,10 +80,6 @@ public class NewsController {
 		model.addAttribute("pagingInfo", pagingInfo);
 	}
 
-	@RequestMapping("/adm/newsWrite.do")
-	public String newWrite() {
-		return "news/newsWrite";			
-	}
 
 	@RequestMapping("/bottomNews.do")
 	public void bottomNews(Model model) {
@@ -166,117 +122,7 @@ public class NewsController {
 
 
 
-
-	@RequestMapping(value = "/adm/newsEdit.do", method = RequestMethod.GET)
-	public String newsEdit_get(@RequestParam(defaultValue = "0") int newsNo, Model model) {
-
-		NewsVO newsVo = newsService.newsSearchByNo(newsNo);
-		logger.info("뉴스 수정 화면 출력,newsVo ={}", newsVo);
-
-		model.addAttribute("newsVo", newsVo);
-
-		return "news/newsEdit";
-	}
-
-	@RequestMapping(value = "/newsEdit.do", method = RequestMethod.POST)
-	public String newsEdit_post(@ModelAttribute NewsVO newsVo, HttpServletRequest request, Model model) {
-		logger.info("뉴스 수정처리 newsvo={}", newsVo);
-		logger.info("뉴스 수정 이미지  getNewsImage={}", newsVo.getNewsImage());
-		String msg = "", url = "/news/dailyNews.do";
-		if (newsVo.getNewsImage() == null || newsVo.getNewsImage().isEmpty()) {
-			List<Map<String, Object>> list = null;
-			String newsImage = "";
-			try {
-				list = FileUtil.fileupload(request, FileUploadUtil.NEWS_IMAGES);
-				// 파일 업로드 한 경우
-				if (list != null && !list.isEmpty()) {
-					for (Map<String, Object> map : list) {
-						newsImage = (String) map.get("fileName");
-					} // for
-				}
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			newsVo.setNewsImage(newsImage);
-			logger.info("뉴스 수정 이미지#############3333 getNewsImage={}", newsVo.getNewsImage());
-			int cnt = 0;
-			cnt = newsService.newsUpdate(newsVo);
-
-			if (cnt > 0) {
-				msg = "뉴스 수정 성공";
-			} else {
-				msg = "뉴스 수정 실패";
-			}
-		} else if (newsVo.getNewsImage() != null && !newsVo.getNewsImage().isEmpty()) {
-			int cnt = 0;
-			logger.info("뉴스 수정처리############################3 vo={}", newsVo);
-			cnt = newsService.newsUpdateImageException(newsVo);
-			if (cnt > 0) {
-				msg = "뉴스 수정 성공";
-			} else {
-				msg = "뉴스 수정 실패";
-			}
-		}
-
-		model.addAttribute("url", url);
-		model.addAttribute("msg", msg);
-
-		return "common/message";
-	}
-
-	@RequestMapping("/newsDelete.do")
-	public String newsDelete(@RequestParam(defaultValue = "0") int newsNo, @RequestParam String newsImage,
-			HttpServletRequest request, Model model) {
-		logger.info("뉴스 삭제처리 newsNo={}", newsNo);
-		logger.info("oldfileName####={}", newsImage);
-		int cnt = newsService.newsDelete(newsNo);
-
-		String msg = "", url = "";
-
-		if (cnt > 0) {
-			if (newsImage != null && !newsImage.isEmpty()) {
-				String path = FileUtil.getUploadPath(request, FileUploadUtil.NEWS_IMAGES);
-				File delFile = new File(path, newsImage);
-				if (delFile.exists()) {
-					boolean bool = delFile.delete();
-					logger.info("뉴스 이미지 삭제여부 bool={}", bool);
-				}
-			}
-			msg = "뉴스 삭제 성공";
-			url = "/news/dailyNews.do";
-		} else {
-			msg = "뉴스 삭제 실패";
-			url = "/news/newsDetailcnt.do?newsNo="+newsNo;
-		}
-		model.addAttribute("url", url);
-		model.addAttribute("msg", msg);
-
-		return "common/message";
-
-	}
-
-	@RequestMapping("/comWrite.do")
-	public String insertCom(@ModelAttribute NewsComVO vo, @RequestParam int newsNo, HttpSession session, Model model) {
-		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
-		int empNo = empVo.getEmpNo();
-		vo.setEmpNo(empNo);
-		logger.info("뉴스 댓글 파라미터 newsComvo={}", vo);
-		int cnt = newsService.insertNewsCommand(vo);
-		String msg = "", url = "";
-		if (cnt > 0) {
-			msg = "등록 성공";
-			url = "/news/newsDetailcnt.do?newsNo=" + newsNo;
-		} else {
-			msg = "등록 실패";
-			url = "/news/dailyNews.do";
-		}
-		model.addAttribute("url", url);
-		model.addAttribute("msg", msg);
-
-		return "common/message";
-	}
+	
 
 	@RequestMapping("/newsLike.do")
 	public String cntuplike(@ModelAttribute NewsVO vo, @ModelAttribute NewsLikeVO likevo, @RequestParam int newsNo,
@@ -337,6 +183,163 @@ public class NewsController {
 		return "common/message";
 
 	}
+
+	
+	@RequestMapping("/comWrite.do")
+	public String insertCom(@ModelAttribute NewsComVO vo, @RequestParam int newsNo, HttpSession session, Model model) {
+		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
+		int empNo = empVo.getEmpNo();
+		vo.setEmpNo(empNo);
+		logger.info("뉴스 댓글 파라미터 newsComvo={}", vo);
+		int cnt = newsService.insertNewsCommand(vo);
+		String msg = "", url = "";
+		if (cnt > 0) {
+			msg = "등록 성공";
+			url = "/news/newsDetailcnt.do?newsNo=" + newsNo;
+		} else {
+			msg = "등록 실패";
+			url = "/news/dailyNews.do";
+		}
+		model.addAttribute("url", url);
+		model.addAttribute("msg", msg);
+
+		return "common/message";
+	}
+	
+	
+	
+	@RequestMapping("/adm/newsWrite.do")
+	public String newWrite() {
+		return "news/newsWrite";			
+	}
+	
+	@RequestMapping("/adm/newsWriteOk.do")
+	public String newsInsert(@ModelAttribute NewsVO newsVo, HttpServletRequest request, Model model) {
+		logger.info("뉴스 등록 처리, 파라미터 newsVo={}", newsVo);
+		String msg = "", url = "";
+
+		List<Map<String, Object>> list = null;
+		String newsImage = "";
+		try {
+			list = FileUtil.fileupload(request, FileUploadUtil.NEWS_IMAGES);
+			// 파일 업로드 한 경우
+			if (list != null && !list.isEmpty()) {
+				for (Map<String, Object> map : list) {
+					newsImage = (String) map.get("fileName");
+				} // for
+			}
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		newsVo.setNewsImage(newsImage);
+		int cnt = newsService.insertNews(newsVo);
+
+		if (cnt > 0) {
+			msg = "뉴스 등록 성공";
+			url = "/news/adm/newsRegdit.do";
+		} else {
+			msg = "뉴스 등록 실패";
+			url = "/news/adm/newsWrite.do";
+		}
+		model.addAttribute("url", url);
+		model.addAttribute("msg", msg);
+
+		return "common/message";
+
+	}
+	
+	
+	@RequestMapping(value = "/adm/newsEdit.do", method = RequestMethod.GET)
+	public String newsEdit_get(@RequestParam(defaultValue = "0") int newsNo, Model model) {
+
+		NewsVO newsVo = newsService.newsSearchByNo(newsNo);
+		logger.info("뉴스 수정 화면 출력,newsVo ={}", newsVo);
+
+		model.addAttribute("newsVo", newsVo);
+
+		return "news/newsEdit";
+	}
+
+	@RequestMapping(value = "/adm/newsEdit.do", method = RequestMethod.POST)
+	public String newsEdit_post(@ModelAttribute NewsVO newsVo, HttpServletRequest request, Model model) {
+		logger.info("뉴스 수정처리 newsvo={}", newsVo);
+		logger.info("뉴스 수정 이미지  getNewsImage={}", newsVo.getNewsImage());
+		String msg = "", url = "/news/adm/newsRegdit.do";
+		if (newsVo.getNewsImage() == null || newsVo.getNewsImage().isEmpty()) {
+			List<Map<String, Object>> list = null;
+			String newsImage = "";
+			try {
+				list = FileUtil.fileupload(request, FileUploadUtil.NEWS_IMAGES);
+				// 파일 업로드 한 경우
+				if (list != null && !list.isEmpty()) {
+					for (Map<String, Object> map : list) {
+						newsImage = (String) map.get("fileName");
+					} // for
+				}
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			newsVo.setNewsImage(newsImage);
+			int cnt = 0;
+			cnt = newsService.newsUpdate(newsVo);
+
+			if (cnt > 0) {
+				msg = "뉴스 수정 성공";
+			} else {
+				msg = "뉴스 수정 실패";
+			}
+		} else if (newsVo.getNewsImage() != null && !newsVo.getNewsImage().isEmpty()) {
+			int cnt = 0;
+			logger.info("뉴스 수정처리############################3 vo={}", newsVo);
+			cnt = newsService.newsUpdateImageException(newsVo);
+			if (cnt > 0) {
+				msg = "뉴스 수정 성공";
+			} else {
+				msg = "뉴스 수정 실패";
+			}
+		}
+
+		model.addAttribute("url", url);
+		model.addAttribute("msg", msg);
+
+		return "common/message";
+	}
+	
+	@RequestMapping("/adm/newsDelete.do")
+	public String newsDelete(@RequestParam(defaultValue = "0") int newsNo, @RequestParam String newsImage,
+			HttpServletRequest request, Model model) {
+		logger.info("뉴스 삭제처리 newsNo={}", newsNo);
+		logger.info("oldfileName####={}", newsImage);
+		int cnt = newsService.newsDelete(newsNo);
+
+		String msg = "", url = "";
+
+		if (cnt > 0) {
+			if (newsImage != null && !newsImage.isEmpty()) {
+				String path = FileUtil.getUploadPath(request, FileUploadUtil.NEWS_IMAGES);
+				File delFile = new File(path, newsImage);
+				if (delFile.exists()) {
+					boolean bool = delFile.delete();
+					logger.info("뉴스 이미지 삭제여부 bool={}", bool);
+				}
+			}
+			msg = "뉴스 삭제 성공";
+			url = "/news/adm/newsRegdit.do";
+		} else {
+			msg = "뉴스 삭제 실패";
+			url = "/news/adm/newsDetailcnt.do?newsNo="+newsNo;
+		}
+		model.addAttribute("url", url);
+		model.addAttribute("msg", msg);
+
+		return "common/message";
+
+	}
+	
 	@RequestMapping("/adm/newsRegdit.do")
 	public String registerView(Model model, @ModelAttribute NewsSearchVO newsSearchVO) {
 		PaginationInfo pagingInfo = new PaginationInfo();
@@ -370,8 +373,7 @@ public class NewsController {
 		return "news/newsRegdit";
 	}
 	
-	
-	@RequestMapping("/deleteMulti.do")
+	@RequestMapping("/adm/deleteMulti.do")
 	public String deleteMulti(@ModelAttribute NewsListVO newsListVo,HttpServletRequest request, Model model) {
 
 		logger.info("일괄 삭제처리 파라미터newsListVo={}",newsListVo);
@@ -382,7 +384,7 @@ public class NewsController {
 		logger.info("선택한 항목 삭제 결과, cnt={}",cnt);
 
 		//이미지 파일 삭제
-		String msg="",url="/news/dailyNews.do";
+		String msg="",url="/news/adm/newsRegdit.do";
 		if(cnt>0) {
 			for(int i=0;i<list.size();i++) {
 				NewsVO vo=list.get(i);
@@ -412,6 +414,7 @@ public class NewsController {
 		return "common/message";
 
 	}
+	
 	
 	
 }

@@ -144,7 +144,7 @@
 	<div id="newsWriteDiv">
 		<!-- 3. 내용 -->
 		<form method="post" id="newsFrm"
-			action="<c:url value='/news/newsWriteOk.do'/>"
+			action="<c:url value='/news/adm/newsWriteOk.do'/>"
 			enctype="multipart/form-data">
 			<div class="se2_tool" id="se2_tool">
 				<div class="se2_text_tool husky_seditor_text_tool">

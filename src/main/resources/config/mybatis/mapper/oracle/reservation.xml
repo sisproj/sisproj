@@ -4,8 +4,7 @@
 <mapper namespace="config.mybatis.mapper.oracle.reservation">
 	<sql id="searchWhere">
 		<if test="searchKeyword !=null and searchKeyword!=''">
-			or s.res_name like '%' || #{searchKeyword} || '%'
-			or s.res_categ like '%' || #{searchKeyword} || '%'
+			and s.res_name like '%' || #{searchKeyword} || '%'
 		</if>
 	</sql>	
 
@@ -13,19 +12,40 @@
 		select *
 			from
 			(
-			    select rownum as RNUM, alist.*
+			    select rownum as RNUM, rlist.*
 			    from(
-					select v.*, s.res_categ, s.res_name, e.emp_name, d.dept_name
-					from reservation v join resourcereg s
-					on v.res_no=s.res_no
+					select r.*, s.res_categ, s.res_name, e.emp_name, d.dept_name
+					from reservation r join resourcereg s
+					on r.res_no=s.res_no
 					join emp e
-					on e.emp_no=v.EMP_NO
+					on e.emp_no=r.EMP_NO
 					join dept d
 					on e.dept_no=d.dept_no
-					where v.rv_confirm='N'
+					where r.rv_confirm='N'
 					<include refid="searchWhere"></include>
-					order by v.rv_regdate desc
-				) alist
+					order by r.rv_regdate desc
+				) rlist
+			) 
+			<![CDATA[
+			where RNUM > #{firstRecordIndex} 
+			and RNUM<=#{firstRecordIndex}+ #{recordCountPerPage} ]]>
+	</select>
+	<select id="selectReservationAllAMD" parameterType="ReservationSearchVO" resultType="map">
+		select *
+			from
+			(
+			    select rownum as RNUM, rlist.*
+			    from(
+					select r.*, s.res_categ, s.res_name, e.emp_name, d.dept_name
+					from reservation r join resourcereg s
+					on r.res_no=s.res_no
+					join emp e
+					on e.emp_no=r.EMP_NO
+					join dept d
+					on e.dept_no=d.dept_no
+					where s.res_name like '%' || #{searchKeyword} || '%'
+					order by r.rv_regdate desc
+				) rlist
 			) 
 			<![CDATA[
 			where RNUM > #{firstRecordIndex} 
@@ -41,6 +61,9 @@
 	<select id="selectTotalRecord" resultType="int">
 		select count(*) from reservation where rv_confirm='N'
 	</select>
+	<select id="selectTotalRecordAll" resultType="int">
+		select count(*) from reservation
+	</select>
 	<update id="updateConfirmY" parameterType="int">
 		update reservation
 		set rv_confirm='Y'
@@ -51,8 +74,8 @@
 		set rv_confirm='R'
 		where rv_no=#{rvNo}
 	</update>
-	<select id="reservationNselect" resultType="ReservationVO">
-		select * from reservation where rv_confirm='Y'
+	<select id="reservationNselect" resultType="map">
+		select * from reservationList_view
 	</select>
 	
 	<select id="reservationNotYselect" parameterType="ReservationSearchVO" resultType="map">
@@ -86,6 +109,32 @@
 		where to_date(rv_End,'yyyy-MM-dd hh:mi')<sysdate
 		]]>
 	</delete>	 -->
+	
+	<select id="resourceAllselect" parameterType="ReservationSearchVO" resultType="map">
+		select * from (
+		    select rownum as RNUM, blist.*
+		    from(
+		  	  select * from resourceList_view
+		   	 ) blist
+		) 
+		<![CDATA[
+		where RNUM > #{firstRecordIndex} 
+		and RNUM<=#{firstRecordIndex}+ #{recordCountPerPage} ]]>
+	
+	
+	</select>
+	
+	<select id="deptsearch" resultType="DeptVO">
+	select * from dept
+	
+	</select>
+	
+	<delete id="cancelReservation" parameterType="int">
+	delete from reservation where rv_no=#{rvNo}
+	
+	</delete>
+	
+	
 </mapper>
 
 
