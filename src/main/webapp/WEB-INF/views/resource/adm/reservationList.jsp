@@ -213,9 +213,9 @@
 		        			<td>${map['DEPT_NAME'] }</td>
 		        			<td><fmt:formatDate value="${map['RV_REGDATE']}" pattern="yyyy-MM-dd"/></td>		        			
 		        			<td>
-		        				<c:if test="${map['RV_CONFIRM']=='Y'}">승인</c:if>
-		        				<c:if test="${map['RV_CONFIRM']=='N'}">승인 대기중</c:if>
-		        				<c:if test="${map['RV_CONFIRM']=='R'}">반려</c:if>			        				
+		        				<c:if test="${map['RV_CONFIRM']=='Y'}"><span style="color: green;">승인</span></c:if>
+		        				<c:if test="${map['RV_CONFIRM']=='N'}"><span style="color: blue;">승인 대기중</span></c:if>
+		        				<c:if test="${map['RV_CONFIRM']=='R'}"><span style="color: red;">반려</span></c:if>			        				
 		        			</td>		        			
 		        		</tr>
 	        		</c:forEach>
