@@ -56,5 +56,29 @@ public class EmployeeDAOMybatis extends SqlSessionDaoSupport implements Employee
 		return getSqlSession().update(namespace+".employeeEditPwd",empVo);
 	}
 
+	@Override
+	public int employeeUpdateMaster(int empNo) {
+		return getSqlSession().update(namespace+".employeeUpdateMaster",empNo);
+	}
+
+	@Override
+	public int employeeUpdateTeam(int empNo) {
+		return getSqlSession().update(namespace+".employeeUpdateTeam",empNo);
+		}
+
+	@Override
+	public int employeeTeamCheck(int empNo) {
+		return getSqlSession().selectOne(namespace+".employeeTeamCheck",empNo);
+	}
+
+	@Override
+	public int employeeMasterCheck(int empNo) {
+		return getSqlSession().selectOne(namespace+".employeeMasterCheck",empNo);
+	}
+
+	@Override
+	public int employeeOutCheck(int empNo) {
+		return getSqlSession().selectOne(namespace+".employeeOutCheck",empNo);
+	}
 
 }
