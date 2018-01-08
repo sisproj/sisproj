@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.siszo.sisproj.common.PaginationInfo;
 import com.siszo.sisproj.common.Utility;
@@ -68,21 +70,6 @@ public class CommueController {
 		
 		return "commue/AdminDateList";
 	}
-	
-	@RequestMapping("/employeeMonthList.do")
-	public String commueDateList2(@ModelAttribute DateSearchVO dateSearchVo,Model model) {
-		logger.info("출퇴근 일별 통계 보여주기 파라미터 dateSearchVo={}",dateSearchVo);
-				
-		List<Map<String, Object>> list=null;
-		if(dateSearchVo.getStartDay()!=null && !dateSearchVo.getStartDay().isEmpty()) {
-			list=commueService.searchDate(dateSearchVo);
-			logger.info("출퇴근 일별 조회 결과, list.size()={}", list.size());		
-		}
-		
-		model.addAttribute("list", list);	
-			
-		return "commue/employeeMonthList";
-	}
 	@RequestMapping("/commueIn.do")
 	public String commueIn(@ModelAttribute CommueVO cmtVo,HttpSession session,Model model) {
 		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
@@ -132,5 +119,21 @@ public class CommueController {
 		model.addAttribute("url",url);
 		
 		return "common/message";
+	}
+	
+	@RequestMapping(value="/employeeMonthList.do",method=RequestMethod.GET)
+	public void employeeMonthList_get() {
+		logger.info("사원 월별 근태 보여주기 화면");
+	}
+	
+	@RequestMapping(value="/employeeMonthList.do",method=RequestMethod.POST)
+	@ResponseBody
+	public List<Map<String, Object>> employeeMonthList(@ModelAttribute DateSearchVO dateSearchVo) {
+		logger.info("사원 월별 근태 파라미터 dateSearchVo={}",dateSearchVo);
+		
+	   List<Map<String, Object>> lists = commueService.selectMonthListCount(dateSearchVo);
+		logger.info("사원 월별 근태 조회 결과 lists.size()={}",lists.size());
+		
+		return lists;
 	}
 }
