@@ -113,13 +113,23 @@ img#plain{
 	}
 }
 
-@keyframes flyplain{
-	0%{
-		right:-1000px;
-		top: 700px;
+@media screen and (max-width:900px) {
+	img#plain{display:none;}
+
+	@keyframes ani1 {
+		0%{
+			margin-top: 0;	
+		}
+		100%{			
+			margin-top: 30px;	
+						
+		}
 	}
-	70%{ 
-		right:1500px;
-		top: -300px;	
+
+	#logo {
+		width: 350px;
+		margin: 0 auto;
+		margin-top: 30px;
+		animation : ani1 700ms linear;
 	}
 }
