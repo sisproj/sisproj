@@ -38,7 +38,7 @@ public class CommueController {
 	@RequestMapping("/adm/AdminDateList.do")
 	public String commueDateList(@ModelAttribute DateSearchVO dateSearchVo,Model model) {
 		logger.info("출퇴근 일별 통계 보여주기 파라미터 dateSearchVo={}",dateSearchVo);
-				
+		int totalRecord=0;
 		//Paging 처리에 필요한 변수를 계산해주는 PaginationInfo 생성
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(Utility.BLOCK_SIZE);
@@ -56,8 +56,10 @@ public class CommueController {
 			logger.info("출퇴근 일별 조회 결과, list.size()={}", list.size());		
 		}	
 		
-		int totalRecord = commueService.selectTotalRecord(dateSearchVo);
-		logger.info("글 전체 개수 조회 결과, totalRecord={}", totalRecord);
+		if(dateSearchVo.getStartDay()!=null && !dateSearchVo.getStartDay().isEmpty()) {
+			totalRecord = commueService.selectTotalRecord(dateSearchVo);
+			logger.info("글 전체 개수 조회 결과, totalRecord={}", totalRecord);
+		}
 		
 		pagingInfo.setTotalRecord(totalRecord);
 					
@@ -92,11 +94,11 @@ public class CommueController {
 		int result=commueService.selectInChk(empNo);
 		String msg="",url="/home.do";
 		if(result==commueService.CHECK_IN) {
-			int cnt = commueService.insertIn(cmtVo);
-			logger.info("출근 하기 결과 cnt={}",cnt);
-			if(cnt>0) {
-				msg="출근 성공";				
-			}
+				int cnt = commueService.insertIn(cmtVo);
+				logger.info("출근 하기 결과 cnt={}",cnt);
+				if(cnt>0) {
+					msg="출근 성공";				
+				}
 		}else if(result==commueService.CHECK_IN_OK) {
 			msg="이미 출근 버튼을 누르셨습니다";
 		}

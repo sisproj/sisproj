@@ -3,6 +3,7 @@ package com.siszo.sisproj.employee.controller;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -185,7 +186,7 @@ public class EmployeeController {
 			}
 		}else {
 			msg="사원 수정 실패!";
-			url="/employee/employeeEdit.do?empNo="+vo.getEmpNo();
+			url="/employee/adm/employeeEdit.do?empNo="+vo.getEmpNo();
 		}
 
 		model.addAttribute("msg",msg);
@@ -193,24 +194,25 @@ public class EmployeeController {
 
 		return "common/message";
 	}
-	@RequestMapping("/employeeOut.do")
+	@RequestMapping("/adm/employeeOut.do")
 	public String employeeOut(@ModelAttribute EmployeeListVO vo,Model model) {
 		logger.info("퇴사시킬 사원 ,파라미터 vo={}",vo);
+		int count=0;
+		int cnt=0;		
 		
+		String msg="",url="/employee/adm/employeeList.do";
 		List<EmployeeVO> list = vo.getEmpItems();
 		for(EmployeeVO emVo : list) {
 			emVo.getEmpNo();
 			logger.info("사원 번호  emVo.getEmpNo={}",emVo.getEmpNo());
+			count=employeeService.employeeOutCheck(emVo.getEmpNo());
 		}
-		int cnt=employeeService.employeeOut(list);
-		logger.info("선택한 사원 퇴사 결과, cnt={}",cnt);		
-
-		String msg="",url="/employee/employeeList.do";
-
-		if(cnt>0) {
+		if(count==employeeService.OUT_NONE) {
+			 cnt=employeeService.employeeOut(list);
+			logger.info("선택한 사원 퇴사 결과, cnt={}",cnt);		
 			msg="사원 퇴사 완료";
 		}else {
-			msg="사원 퇴사 실패";
+			msg="이미 퇴사한 사원입니다";
 		}
 
 		model.addAttribute("msg",msg);
@@ -218,24 +220,25 @@ public class EmployeeController {
 
 		return "common/message";
 	}
-	@RequestMapping("/employeeCome.do")
+	@RequestMapping("/adm/employeeCome.do")
 	public String employeeCome(@ModelAttribute EmployeeListVO vo,Model model) {
 		logger.info("복직시킬 사원 ,파라미터 vo={}",vo);
-		
+		int count=0;
+		int cnt=0;		
 		List<EmployeeVO> list = vo.getEmpItems();
 		for(EmployeeVO emVo : list) {
 			emVo.getEmpNo();
 			logger.info("사원 번호  emVo.getEmpNo={}",emVo.getEmpNo());
+			count=employeeService.employeeOutCheck(emVo.getEmpNo());
 		}
-		int cnt=employeeService.employeeCome(list);
-		logger.info("선택한 사원 복직 결과, cnt={}",cnt);		
-
-		String msg="",url="/employee/employeeList.do";
-
-		if(cnt>0) {
+		
+		String msg="",url="/employee/adm/employeeList.do";
+		if(count==employeeService.OUT_OK) {
+			 cnt=employeeService.employeeCome(list);
+			logger.info("선택한 사원 복직 결과, cnt={}",cnt);		
 			msg="사원 복직 완료";
 		}else {
-			msg="사원 복직 실패";
+			msg="재직중인 사원입니다";			
 		}
 
 		model.addAttribute("msg",msg);
@@ -243,7 +246,61 @@ public class EmployeeController {
 
 		return "common/message";
 	}
+	@RequestMapping("/adm/employeeUpdateMaster.do")
+	public String employeeUpdateLev(@ModelAttribute EmployeeListVO vo,Model model) {
+		logger.info("관리자로 올릴 사원 , 파라미터 vo={}",vo);
+		int count=0;
+		int cnt=0;
+		List<EmployeeVO> list = vo.getEmpItems();
+		String msg="",url="/employee/adm/employeeList.do";
+		for(EmployeeVO emVo : list) {
+			emVo.getEmpNo();
+			logger.info("사원 번호  emVo.getEmpNo={}",emVo.getEmpNo());
+			count=employeeService.employeeMasterCheck(emVo.getEmpNo());
+		}
+		
+		logger.info("관리자로 직급 변환 결과 조회 컨트롤러 count={}",count);
+		if(count==employeeService.MASTER_NONE) {
+			cnt = employeeService.employeeUpdateMaster(list);
+			logger.info("선택한 관리자로 변경  결과, cnt={}",cnt);	
+			msg="사원 관리자로 올리기 완료";
+		}else {
+			msg="사원 관리자로 올리기  실패";
+		}
 
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+
+		return "common/message";
+	}
+	@RequestMapping("/adm/employeeUpdateTeam.do")
+	public String employeeUpdateTeam(@ModelAttribute EmployeeListVO vo,Model model) {
+		logger.info("팀장으로 권한을 준 사원, 파라미터 vo={}",vo);
+		List<EmployeeVO> list = vo.getEmpItems();
+		int count=0;
+		int cnt=0;
+		
+		for(EmployeeVO emVo : list) {
+			emVo.getEmpNo();
+			logger.info("사원 번호  emVo.getEmpNo={}",emVo.getEmpNo());
+			count=employeeService.employeeTeamCheck(emVo.getEmpNo());
+		}
+		logger.info("팀장으로 직급 변환 결과 count={}",count);
+		
+		String msg="",url="/employee/adm/employeeList.do";
+		if(count==employeeService.TEAM_NONE) {
+			cnt = employeeService.employeeUpdateTeam(list);
+			logger.info("선택한 팀장으로 변경  결과, cnt={}",cnt);	
+			msg="사원 팀장으로 변경 완료";
+		}else {
+			msg="사원 팀장으로 변경 실패";
+		}
+		
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+
+		return "common/message";
+	}
 	@RequestMapping("/adm/employeeList.do")
 	public String employeeList(@ModelAttribute SearchVO seVo,Model model) {
 		logger.info("사원 리스트 화면 보여주기 seVo={}",seVo );	

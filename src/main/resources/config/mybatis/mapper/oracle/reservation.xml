@@ -58,8 +58,8 @@
 		set rv_confirm='R'
 		where rv_no=#{rvNo}
 	</update>
-	<select id="reservationNselect" resultType="ReservationVO">
-		select * from reservation where rv_confirm='Y'
+	<select id="reservationNselect" resultType="map">
+		select * from reservationList_view
 	</select>
 	
 	<select id="reservationNotYselect" parameterType="ReservationSearchVO" resultType="map">
@@ -93,6 +93,27 @@
 		where to_date(rv_End,'yyyy-MM-dd hh:mi')<sysdate
 		]]>
 	</delete>	 -->
+	
+	<select id="resourceAllselect" parameterType="ReservationSearchVO" resultType="map">
+		select * from (
+		    select rownum as RNUM, blist.*
+		    from(
+		  	  select * from resourceList_view
+		   	 ) blist
+		) 
+		<![CDATA[
+		where RNUM > #{firstRecordIndex} 
+		and RNUM<=#{firstRecordIndex}+ #{recordCountPerPage} ]]>
+	
+	
+	</select>
+	
+	<select id="deptsearch" resultType="DeptVO">
+	select * from dept
+	
+	</select>
+	
+	
 </mapper>
 
 

@@ -14,4 +14,10 @@ public interface EmployeeDAO {
 	public int selectTotalRecordCount(SearchVO vo);
 	public int employeeCome(int empNo);
     public int employeeEditPwd(EmployeeVO empVo);
+    public int employeeUpdateMaster(int empNo);
+    public int employeeUpdateTeam(int empNo);
+    public int employeeTeamCheck(int empNo);
+    public int employeeMasterCheck(int empNo);
+    public int employeeOutCheck(int empNo);
+   
 }

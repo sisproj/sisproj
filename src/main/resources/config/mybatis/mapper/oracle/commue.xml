@@ -79,7 +79,10 @@
 	
 	<select id="selectTotalRecordCount" resultType="int" parameterType="DateSearchVO">
 		select count(*) from cmtView
+		<if test="startDay!=null and !startDay.isEmpty()">
+		where to_char(cmt_in, 'yyyy-mm-dd')=#{startDay}		
 		<include refid="searchWhere"></include>  
+		</if>
 	</select>
 </mapper>
 

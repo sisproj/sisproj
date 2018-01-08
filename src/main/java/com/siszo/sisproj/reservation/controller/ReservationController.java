@@ -19,13 +19,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.siszo.sisproj.common.SchedulerUtility;
 import com.siszo.sisproj.common.PaginationInfo;
 import com.siszo.sisproj.common.Utility;
+import com.siszo.sisproj.dept.model.DeptVO;
 import com.siszo.sisproj.reservation.model.ReservationListVO;
 import com.siszo.sisproj.reservation.model.ReservationSearchVO;
 
 import com.siszo.sisproj.employee.model.EmployeeVO;
 import com.siszo.sisproj.reservation.model.ReservationService;
 import com.siszo.sisproj.reservation.model.ReservationVO;
-import com.siszo.sisproj.resource.model.ResourceService;
 import com.siszo.sisproj.resource.model.ResourceVO;
 
 @Controller
@@ -35,8 +35,6 @@ public class ReservationController {
 	private SchedulerUtility schUtil = new SchedulerUtility();
 	@Autowired
 	private ReservationService resService;
-	@Autowired
-	private ResourceService resourceService;
 
 	@RequestMapping("/resourceWrite.do")
 	public String reservationInsert(@ModelAttribute ReservationVO resVo, HttpSession session, Model model) {
@@ -152,19 +150,17 @@ public class ReservationController {
 		// SearchVo에 값 셋팅
 		searchVo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
-
-		List<ResourceVO> resourcelist = resourceService.resourceAllselect();
-		List<ReservationVO> reslist = resService.reservationNselect();
+		List<Map<String, Object>> resourcelist = resService.resourceAllselect(searchVo);
+		List<Map<String, Object>> reslist = resService.reservationNselect();
 		List<Map<String, Object>> myreslist = resService.reservationNotYselect(searchVo);
-		logger.info("ㄴㅁ어라ㅓㅁ낭ㄹ조횜ㄴㄹㄴㅇㅁㄹㅇㅁㅇㄴㄹ ={}",myreslist);
-		logger.info("ㄴㅁ어라ㅓㅁ낭ㄹ조횜ㄴㄹㄴㅇㅁㄹㅇㅁㅇㄴㄹ ={}",reslist);
-		logger.info("ㄴㅁ어라ㅓㅁ낭ㄹ조횜ㄴㄹㄴㅇㅁㄹㅇㅁㅇㄴㄹ ={}",resourcelist);
+		List<DeptVO> deptlist = resService.deptsearch(); 
 		int totalRecord = resService.selectTotalRecord();
 		logger.info("승인대기 전체 개수 조회 결과, totalRecord={}", totalRecord);
 
 		pagingInfo.setTotalRecord(totalRecord);
 
 		model.addAttribute("myreslist", myreslist);
+		model.addAttribute("deptlist", deptlist);
 		model.addAttribute("resourcelist", resourcelist);
 		model.addAttribute("reslist", reslist);
 		model.addAttribute("pagingInfo", pagingInfo);
