@@ -14,6 +14,7 @@
     <link href="<c:url value="/resources/font-awesome/css/font-awesome.min.css"/>" rel="stylesheet" type="text/css">
     <!-- css -->
     <link rel="stylesheet" href="<c:url value="/resources/css/reset.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/mainStyle.css"/>">
     <!-- jquery-ui css -->
     <link rel="stylesheet" href="<c:url value="/resources/jquery-ui/jquery-ui.min.css"/>">
 
@@ -26,22 +27,8 @@
     <script type="text/javascript" src="<c:url value='/resources/se2/js/service/HuskyEZCreator.js'/>" charset="utf-8"></script>
     <!-- mainjs -->
 
+    <script src="<c:url value="/resources/js/mainjs.js"/>"></script>
     <script src="<c:url value="/resources/js/zipcode.js"/>"></script>
-    
-    <!-- 디바이스별 css 적용 파일 -->
-	<!-- <script type="text/javascript">
-		if(/Android/i.test(navigator.userAgent) || /iPhone|iPad|iPod/i.test(navigator.userAgent)){
-			alert("모바일 기기로 접속하였습니다.");		 
-			document.write("<link rel='stylesheet' href='css/mainStyle_m.css'>
-			<script src="js/mainjs_m.js"></script>");
-		}else{
-			alert("PC로 접속하였습니다.");		 
-			document.write("<link rel='stylesheet' href='css/mainStyle.css'>
-			<script src="js/mainjs.js"></script>");
-		}
-	</script> -->
-	<link rel='stylesheet' href='css/mainStyle_m.css'>
-    <script src="<c:url value="/resources/js/mainjs_m.js"/>"></script>
 
 </head>
 <body>
