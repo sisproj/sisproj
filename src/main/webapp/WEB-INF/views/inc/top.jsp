@@ -42,7 +42,7 @@
             <li><a href="<c:url value='/scheduler/scheduler.do'/>">스케줄</a></li>
             <li><a href="<c:url value='/resource/resource.do'/>">자원관리</a></li>
             <li><a href="<c:url value='/confirm/main.do'/>">전자결재</a></li>
-            <li><a href="<c:url value='/commue/commueDateList2.do'/>">근태관리</a></li>
+            <li><a href="<c:url value='/commue/employeeMonthList.do'/>">근태관리</a></li>
             <li><a href="<c:url value='/webhard/main.do'/>">웹하드</a></li>
             <li><a href="<c:url value='/notice/noticeList.do'/>">공지사항</a></li>
             <li><a href="<c:url value='/news/dailyNews.do'/>">사내뉴스</a></li>

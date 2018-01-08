@@ -16,4 +16,5 @@ public interface AddrBookDAO {
 	public int selectTotalRecordCountY(AddrSearchVO searchVo);
 	public AddrBookVO selectByAddrNo(int addrNo);
 	public int updateAddrBook(AddrBookVO vo);
+	public int moveGroup(AddrBookVO vo);
 }

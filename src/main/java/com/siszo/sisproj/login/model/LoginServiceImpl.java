@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.siszo.sisproj.employee.common.EmployeePwdLock;
 import com.siszo.sisproj.employee.model.EmployeeVO;
 
 @Service
@@ -19,11 +20,13 @@ public class LoginServiceImpl implements LoginService{
 		int result=0;
 		EmployeeVO vo = loginDao.selectAdmin(empNo);
 		
+		String shaPwd=EmployeePwdLock.convertEncryption(vo.getEmpPwd());
+		
 		logger.info("로그인 할때 실패시  vo={}",vo);
 		
-		if(vo==null || vo.getEmpNo()!=empNo) {
+		if(vo.getEmpNo()!=empNo) {
 			result=ID_NONE;
-		}else if(vo.getEmpPwd().equals(empPwd)){		
+		}else if(vo.getEmpNo()==empNo && shaPwd.equals(empPwd)){		
 			if(vo.getEmpOutdate()!=null) {
 				result=EMP_OUT;
 			}else {				

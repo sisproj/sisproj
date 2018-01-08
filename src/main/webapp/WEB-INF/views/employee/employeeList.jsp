@@ -60,7 +60,6 @@
 <div id="dimyPage">
 	<form id="searchEmp" name="searchEmp" method="post" action="<c:url value='/employee/adm/employeeList.do'/>">	
 	<input type="hidden" id="currentPage" name="currentPage" value="1">
-	
 	        <div id="dimyP">
 		        <select name="searchCondition">
 		            <option value="emp_name"
@@ -81,7 +80,6 @@
 		        </select>   
 		        <input type="text" name="searchKeyword" title="검색어 입력" value="${param.searchKeyword }">   
 				<input type="submit" value="검색">
-				<!-- <input type="button" id="btEx" name="btEx" value="엑셀다운로드"> -->
 			    <select id="pl" style="float: right;">
 					<option value="10">10명</option>
 					<option value="20">20명</option>

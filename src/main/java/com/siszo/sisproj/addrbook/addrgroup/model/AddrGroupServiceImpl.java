@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.siszo.sisproj.addrbook.addrbook.model.AddrBookVO;
+
 @Service
 public class AddrGroupServiceImpl implements AddrGroupService{
 	@Autowired
@@ -34,4 +36,5 @@ public class AddrGroupServiceImpl implements AddrGroupService{
 	public int countGroup(int empNo) {
 		return addrGroupDao.countGroup(empNo);
 	}
+
 }

@@ -33,4 +33,5 @@ public class AddrGroupDAOMybatis extends SqlSessionDaoSupport implements AddrGro
 	public int countGroup(int empNo) {
 		return getSqlSession().selectOne(namespace+".countGroup", empNo);
 	}
+
 }

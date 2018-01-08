@@ -90,6 +90,11 @@
 		set group_no=(select group_no from addrgroup where group_name='미지정' and emp_no=#{empNo})
 		where group_no=#{groupNo};
 	</update>
+	<update id="moveGroup" parameterType="AddrBookVO">
+		update addrbook
+		set group_no=#{groupNo}
+		where addr_no=#{addrNo}
+	</update>
 </mapper>
 
 

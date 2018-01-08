@@ -4,8 +4,7 @@
 <script type="text/javascript">
 	$(function () {
 		 $('#asidebtn ul li:nth-child(1)').click(function () {
-
-		});
+	});
 
 
 	});

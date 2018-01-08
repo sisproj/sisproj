@@ -288,7 +288,7 @@
 
 			<%--1:1 대화하기 form--%>
 			<form id="frmMessenger" name="frmMessenger" method="post" action="<c:url value='/messenger/messenger.do'/>" target="messengerWindow">
-				<input type="text" value="${userKey}" id="userKey" name="userKey">
+				<input type="hidden" value="${userKey}" id="userKey" name="userKey">
 			</form>
      	</div>
 

@@ -16,4 +16,5 @@ public interface AddrBookService {
 	public int selectTotalRecordCountY(AddrSearchVO searchVo);
 	public AddrBookVO selectByAddrNo(int addrNo);
 	public int updateAddrBook(AddrBookVO vo);
+	public int moveGroupMulti(List<AddrBookVO> list);
 }

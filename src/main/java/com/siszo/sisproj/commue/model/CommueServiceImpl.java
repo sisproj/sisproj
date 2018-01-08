@@ -60,6 +60,11 @@ public class CommueServiceImpl implements CommueService{
 		}
 		return result;
 	}
+
+	@Override
+	public int selectTotalRecord(DateSearchVO vo) {
+		return commueDao.selectTotalRecord(vo);
+	}
 	
 	
 }

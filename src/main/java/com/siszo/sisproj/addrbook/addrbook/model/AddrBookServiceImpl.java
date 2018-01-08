@@ -87,5 +87,23 @@ public class AddrBookServiceImpl implements AddrBookService{
 	public int updateAddrBook(AddrBookVO vo) {
 		return addrBookDao.updateAddrBook(vo);
 	}
+	@Override
+	@Transactional
+	public int moveGroupMulti(List<AddrBookVO> list) {
+		int cnt=0;
+		try {
+			for (AddrBookVO vo : list) {
+				int addrNo=vo.getAddrNo();				
+				if(addrNo!=0) {
+					cnt=addrBookDao.moveGroup(vo);
+				}
+			}
+		}catch (RuntimeException e) {
+			cnt=0;
+			e.printStackTrace();
+		}
+		
+		return cnt;
+	}
 	
 }

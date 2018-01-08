@@ -327,7 +327,7 @@
     	#selectMenu{
     		float: right;
     	}
-    	#selectMenu select{
+    	#selectMenu select, #selectGroup select{
     		border: 0;
     	}		
 		#groupList{
