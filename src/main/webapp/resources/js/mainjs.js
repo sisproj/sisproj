@@ -43,6 +43,7 @@ $(function(){
 		}, 15000);
 	},15500);
 	
+	/*북마크*/
 	$('#headsection').prepend("<form id='bookmarkFrm' name='bookmarkFrm' method='post' action='/sisproj/bookmark/mark.do'><input type='hidden' id='pageNo' name='pageNo'><input type='hidden' id='markStat' name='markStat'></form>");
 	$('body').append("<script type='text/javascript' src='/sisproj/resources/js/bookmark.js'></script>");
 });

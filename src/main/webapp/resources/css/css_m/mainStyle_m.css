@@ -1,0 +1,269 @@
+html,body{
+	width: 100%;
+	background-color: #fff;
+	overflow: auto;
+}
+header{
+	position: fixed;
+	width: 100%;
+	height: 90px;
+	box-sizing: border-box;
+	padding-left: 10px;
+	padding-top: 10px;
+	background-color: #069;
+	z-index:9000;
+}
+
+header img{
+	height: 70px;
+}
+
+header #navSlideBtn{
+	position:fixed;
+	right:20px;
+	top:20px;
+	display: block;
+	width: 50px;
+	height: 50px;
+	box-sizing: border-box;
+	text-align: center;
+	background: #036;
+	border-radius: 5px;
+	box-shadow: 2px 2px 5px #aaa;
+	z-index: 9500;
+}
+
+header #navSlideBtn i {
+	color: #fff;
+	font-size: 30px;
+	line-height:50px;
+}
+
+header nav{
+	position:absolute;
+	left:0;
+	width: 100%;
+	top:90px;
+	display: none;
+}
+header nav ul li a{
+	font-weight: 600;
+	display: inline-block;
+	width: 100%;
+	height: 50px;
+	text-align: center;
+	line-height: 50px;
+	background-color: #036;
+	color: #fff;
+}
+header nav ul li a i{
+	color: #fff;		
+}
+header nav ul li a span{
+	color: #fff;	
+}
+aside{
+	position:fixed;
+	top:0;
+	left:0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.7);
+	z-index: 9600;
+	display: none;
+}
+aside #organ{
+	display: none;
+}
+aside #loginfo{
+	box-sizing: border-box;
+	width: 90%;
+	height:200px;
+	border-radius: 10px;
+	margin: 0 auto;
+	margin-top: 70px;
+	margin-bottom: 30px;
+}
+aside #loginfo #photo{
+	width: 120px;
+	height: 120px;
+	border-radius:120px;
+	border: 2px solid #fff;
+	overflow: hidden;
+	margin: 0 auto;
+}
+aside #loginfo #photo img{
+	width: 100%;
+	height: 100%;
+}
+aside #loginfo #info{
+	width: 100%;
+}
+aside #loginfo #info ul li{
+	display:block;
+	height:40px;
+	line-height: 40px;
+	text-align: center;
+	width: 32%;
+	box-sizing: border-box;
+	font-size:14px;
+}
+aside #loginfo #info ul li:first-child{
+	margin: 0 auto;
+	width: 50%;
+	font-size:18px;
+}
+aside #loginfo #info ul li:nth-child(2){
+	position: fixed;
+	bottom:0;
+	right: 10px;
+	height:50px;
+	font-weight:600;
+	font-size: 16px;
+	text-align: right:
+}
+
+aside #loginfo #info ul li:nth-child(3){
+	float:left;
+}
+aside #loginfo #info ul li:nth-child(4){
+	float:left;
+}
+aside #loginfo #info ul li:nth-child(5){
+	float:left;
+	margin-bottom: 10px;
+}
+aside #loginfo #info .name, 
+aside #loginfo #info a,
+aside #loginfo #info i{
+	color: #fff;
+}
+.red{
+	color: #f60;
+	font-weight: 600;
+	font-size: 0.8em;
+	vertical-align: middle;
+}
+.t-a-center{
+	text-align: center;
+}
+aside #loginfo #asidebtn{
+	clear:both;
+}
+aside #loginfo #asidebtn ul li{
+	display: block;
+	box-sizing:border-box;
+}
+aside #loginfo #asidebtn ul li a{
+	display: block;
+	color: #fff;
+	font-weight: 600;
+}
+aside #loginfo #asidebtn ul li a i{
+	color: #fff;
+}
+aside #loginfo #asidebtn ul li:first-child{
+	display: none;
+}
+/*로그아웃 버튼*/
+aside #loginfo #asidebtn ul li:last-child{
+	position: fixed;
+	bottom: 0;
+	height: 50px;
+	padding: 10px;
+	left: 10px;
+	font-size: 16px;
+}
+aside #listbtn p {
+	display:none;
+}
+aside > ul{
+	width:100%;
+	height:auto;
+	
+}
+aside > ul li:first-child{
+	display: none;
+}
+aside > ul li{
+	width: 33%;
+	height: 80px;
+	float:left;
+	text-align: center;
+}
+aside > ul li i{
+    display: block !important;
+	width: 50px;
+	height: 50px;
+	border-radius:50px;
+	margin-bottom:5px;
+	text-align: center;
+	color: #fff;
+	border : 1px solid #aaa;
+	font-size: 30px !important; 
+	margin: 0 auto;
+	padding-top: 8px;
+	box-sizing: border-box;
+}
+aside > ul li a{
+	color: #fff;
+	font-weight: 600;	
+}
+#mainNavButton{
+	position:fixed;
+	bottom:10px;
+	right:10px;
+	background-color: #fff;
+	border:3px solid #036;
+	width: 50px;
+	height: 50px;
+	border-radius:50px;
+	z-index: 9700;
+	text-align: center;
+	box-sizing: border-box;
+	padding-top: 7px;
+}
+#mainNavButton i {
+	color: #036;
+	font-size: 30px;
+}
+/* footer */
+footer{
+	position: fixed;
+	background-color: #fff;
+	bottom: 0;
+	right:0;
+	box-sizing: border-box;
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	border-top: 1px solid #ccc;
+	z-index: 800;
+	font-size: 1em;
+	overflow: hidden;
+}
+footer div{
+	position: absolute;
+	width: 100%;
+}
+footer div div{
+	position: relative;
+	top: 0px;
+	text-align: center;
+	height: 40px;
+	width: 100%;
+}
+
+/* 	 */
+@keyframes newsrolling{
+	0%{top: 0px;}
+	15%{top: 0px;}
+	20%{top: -40px;}
+	35%{top: -40px;}
+	40%{top: -80px;}
+	55%{top: -80px;}
+	60%{top: -120px;}
+	75%{top: -120px;}
+	80%{top: -160px;}
+	100%{top: -160px;}
+}
