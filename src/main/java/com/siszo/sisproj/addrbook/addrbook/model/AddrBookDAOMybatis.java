@@ -62,4 +62,9 @@ public class AddrBookDAOMybatis extends SqlSessionDaoSupport implements AddrBook
 		return getSqlSession().update(namespace+".updateAddrBook", vo);
 	}
 
+	@Override
+	public int moveGroup(AddrBookVO vo) {
+		return getSqlSession().update(namespace+".moveGroup", vo);
+	}
+
 }

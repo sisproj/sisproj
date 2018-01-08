@@ -4,8 +4,7 @@
 <mapper namespace="config.mybatis.mapper.oracle.reservation">
 	<sql id="searchWhere">
 		<if test="searchKeyword !=null and searchKeyword!=''">
-			or s.res_name like '%' || #{searchKeyword} || '%'
-			or s.res_categ like '%' || #{searchKeyword} || '%'
+			and s.res_name like '%' || #{searchKeyword} || '%'
 		</if>
 	</sql>	
 
@@ -13,23 +12,31 @@
 		select *
 			from
 			(
-			    select rownum as RNUM, alist.*
+			    select rownum as RNUM, rlist.*
 			    from(
-					select v.*, s.res_categ, s.res_name, e.emp_name, d.dept_name
+					select r.*, s.res_categ, s.res_name, e.emp_name, d.dept_name
+					from reservation r join resourcereg s
+					on r.res_no=s.res_no
+					join emp e
+					on e.emp_no=r.EMP_NO
+					join dept d
+					on e.dept_no=d.dept_no
+					where r.rv_confirm='N'
+					<include refid="searchWhere"></include>
+					order by r.rv_regdate desc
+				) rlist
+			) 
+			<![CDATA[
+			where RNUM > #{firstRecordIndex} 
+			and RNUM<=#{firstRecordIndex}+ #{recordCountPerPage} ]]>
+			<!-- select v.*, s.res_categ, s.res_name, e.emp_name, d.dept_name
 					from reservation v join resourcereg s
 					on v.res_no=s.res_no
 					join emp e
 					on e.emp_no=v.EMP_NO
 					join dept d
 					on e.dept_no=d.dept_no
-					where v.rv_confirm='N'
-					<include refid="searchWhere"></include>
-					order by v.rv_regdate desc
-				) alist
-			) 
-			<![CDATA[
-			where RNUM > #{firstRecordIndex} 
-			and RNUM<=#{firstRecordIndex}+ #{recordCountPerPage} ]]>
+					where v.rv_confirm='N' -->
 	</select>	
 	<insert id="insertReservation" parameterType="ReservationVO">
 	<selectKey resultType="int" keyProperty="rvNo" order="BEFORE">

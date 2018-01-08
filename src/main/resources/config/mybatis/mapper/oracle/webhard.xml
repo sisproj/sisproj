@@ -12,7 +12,7 @@
 	</insert>
 	
 	<select id="selectWebhard" resultType="WebhardVO">
-		select w.*, emp_name
+		select w.*, emp_name, (sysdate - file_regdate)*24*60*60 as file_term
 		from webhard_file w
 		join emp e
 		on w.emp_no = e.emp_no
