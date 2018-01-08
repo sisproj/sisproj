@@ -53,12 +53,12 @@ public class ReservationSearchVO {
     
 
     public int getEmpNo() {
-	return empNo;
-}
+    	return empNo;
+    }
 
-public void setEmpNo(int empNo) {
-	this.empNo = empNo;
-}
+	public void setEmpNo(int empNo) {
+		this.empNo = empNo;
+	}
 
 	public String getSearchCondition() {
     	return searchCondition;
