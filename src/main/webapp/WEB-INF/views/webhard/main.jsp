@@ -26,9 +26,16 @@
         		<label>파일 검색 </label><input type="text" id="searchFile">
         	</div>
         	<c:forEach var="file" items="${list }">
-	        	<a href="<c:url value='/webhard/download.do?fileName=${file.fileName }'/>"><div class="file" id="${file.fileNo }">
-	        		<i class="fa fa-floppy-o"></i> <span>${file.fileOriName } (업로드자  : ${file.empName })</span>
-	        	</div></a>
+        		<c:if test="${file.fileTerm <= 10 }">
+		        	<a href="<c:url value='/webhard/download.do?fileName=${file.fileName }'/>"><div class="file new" id="${file.fileNo }">
+		        		<i class="fa fa-floppy-o"></i> <span><strong>${file.fileOriName }</strong> (업로드자  : ${file.empName })</span>
+		        	</div></a>        		
+        		</c:if>
+        		<c:if test="${file.fileTerm > 10 }">
+		        	<a href="<c:url value='/webhard/download.do?fileName=${file.fileName }'/>"><div class="file" id="${file.fileNo }">
+		        		<i class="fa fa-floppy-o"></i> <span><strong>${file.fileOriName }</strong> (업로드자  : ${file.empName })</span>
+		        	</div></a>
+		        </c:if>
         	</c:forEach>
         </div>
         <div id="message">

@@ -55,6 +55,9 @@ public class WebhardController {
 		
 		List<WebhardVO> list = wService.selectWebhard();
 		logger.info("업로드된 파일 조회 결과 list.size()={}",list.size());
+		for(WebhardVO wVo : list) {
+			System.out.println("wVo => "+wVo);
+		}
 		
 		model.addAttribute("list",list);
 		
@@ -109,7 +112,7 @@ public class WebhardController {
 	
 	@RequestMapping("/download.do")
 	public ModelAndView download(@RequestParam String fileName, HttpServletRequest request) {
-		logger.info("다운로드수 증가, fileName={}",fileName);
+		logger.info("다운로드 처리, fileName={}",fileName);
 		
 		//map에 다운로드할 파일 객체를 저장해서 ModelAndView에 저장한 후 리턴
 		Map<String, Object> map = new HashMap<String, Object>();
