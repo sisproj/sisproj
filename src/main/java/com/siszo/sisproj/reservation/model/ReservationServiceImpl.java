@@ -89,4 +89,14 @@ public class ReservationServiceImpl implements ReservationService{
 	public List<DeptVO> deptsearch(){
 		return resDao.deptsearch();
 	}
+
+	@Override
+	public List<Map<String, Object>> selectReservationAllAMD(ReservationSearchVO searchVo) {
+		return resDao.selectReservationAllAMD(searchVo);
+	}
+
+	@Override
+	public int selectTotalRecordAll() {
+		return resDao.selectTotalRecordAll();
+	}
 }

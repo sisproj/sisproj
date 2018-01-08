@@ -9,8 +9,10 @@ import com.siszo.sisproj.resource.model.ResourceVO;
 
 public interface ReservationService {
 	public List<Map<String, Object>> selectReservationAll(ReservationSearchVO searchVo);
+	public List<Map<String, Object>> selectReservationAllAMD(ReservationSearchVO searchVo);
 	public int insertReservation(ReservationVO resVo);
 	public int selectTotalRecord();
+	public int selectTotalRecordAll();
 	public int updateConfirmY(int rvNo);
 	public int updateConfirmR(int rvNo);	
 	public List<Map<String, Object>> reservationNselect();
