@@ -48,6 +48,12 @@
 			}
 			return true;
 		});
+		
+		
+		$('#nobutton').click(function(){
+			location.href="<c:url value='/news/adm/newsRegdit.do'/>";
+		});
+		
 
 	});
 </script>
@@ -140,7 +146,7 @@
 	<div id="newsWriteDiv">
 		<!-- 3. 내용 -->
 		<form method="post" id="newsFrm"
-			action="<c:url value='/news/newsEdit.do'/>"
+			action="<c:url value='/news/adm/newsEdit.do'/>"
 			enctype="multipart/form-data">
 			<input type="hidden" id="newsNo" name="newsNo" value="${newsVo.newsNo}">
 			<input type="hidden" id="newsImage" name="newsImage" value="${newsVo.newsImage}">
