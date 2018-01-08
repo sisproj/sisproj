@@ -165,6 +165,7 @@ aside #loginfo #asidebtn ul li a i{
 aside #loginfo #asidebtn ul li:first-child{
 	display: none;
 }
+
 /*로그아웃 버튼*/
 aside #loginfo #asidebtn ul li:last-child{
 	position: fixed;
@@ -213,8 +214,8 @@ aside > ul li a{
 	position:fixed;
 	bottom:10px;
 	right:10px;
-	background-color: #fff;
-	border:3px solid #036;
+	background-color: #036;
+	border:3px solid #fff;
 	width: 50px;
 	height: 50px;
 	border-radius:50px;
@@ -222,10 +223,16 @@ aside > ul li a{
 	text-align: center;
 	box-sizing: border-box;
 	padding-top: 7px;
+	box-shadow: 2px 2px 5px #333;
 }
 #mainNavButton i {
-	color: #036;
+	color: #fff;
 	font-size: 30px;
+}
+
+/* section bookmark */
+section #bookmark{
+	display:none;
 }
 /* footer */
 footer{
@@ -253,7 +260,6 @@ footer div div{
 	height: 40px;
 	width: 100%;
 }
-
 /* 	 */
 @keyframes newsrolling{
 	0%{top: 0px;}

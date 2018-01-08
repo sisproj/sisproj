@@ -2,33 +2,44 @@
     pageEncoding="utf-8"%>
 <%@include file="../inc/top.jsp" %>
 <link rel="stylesheet" href="<c:url value="/resources/css/commueStyle.css"/>">
-<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
-<script src="https://www.amcharts.com/lib/3/serial.js"></script>
-<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
-<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
-	$(function () {
-		var total;
-		var deptName;
-		var cmtIn;
+	$(function () {	
 		$.setYear();
 		alert("0");
-		$('#btSe').submit(function () {
-			$.ajax({
-				url:"<c:url value='/commue/employeeMonthList.do' />",
-				dataType:"json",
-				type:"post",
-				success:function(res){
-					$.each(res,function(idx,item){
-						total=item.total;
-						deptName=item.deptName;
-						cmtIn=item.cmtIn;	
-					});
-				},error(xhr,status,error){
-					alert("에러"+status+"=>"+error);
-				}
-			});			
-		});	
+		
+		 $('#btSe').submit(function () {
+		 	 $.ajax({
+		        url: '<c:url value='/commue/employeeMonthList.do' />',
+		        dataType:"json",
+		        type: 'post',
+		        success: function(lists) {
+		            google.charts.load('current', {'packages':['corechart']});
+		            google.charts.setOnLoadCallback(drawChart);
+		            function drawChart() {
+		                var dataChart = [['Task', 'Hours per Day']];
+		                if(lists.length != 0) {
+		                    $.each(lists, function(i, item){
+		                        dataChart.push([item.map['CMTIN'], item.map['TOTAL']]);
+		                    });
+		                }else {
+		                    dataChart.push(['입력해주세요', 1]);
+		                }
+		                var data = google.visualization.arrayToDataTable(dataChart);
+		                var view = new google.visualization.DataView(data);
+		                var options = {
+		                        title: "제목옵션",
+		                        width: 900, // 넓이 옵션
+		                        height: 300, // 높이 옵션
+		                }
+		                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+		                chart.draw(view, options);
+		            }
+		        },error:function(xhr,status,error){
+		        	alert("에러"+status+"=>"+error);
+		        	}
+		   	 });
+		});
 	});
 	$.setMonth=function(){
 
@@ -40,77 +51,6 @@
 			}
 		}
 	}
-		var chart = AmCharts.makeChart( "chartdiv", {
-			  "type": "serial",
-			  "theme": "light",
-			  "dataProvider": [ {
-			    "month": "1월",
-			    "visits":111
-			  }, {
-			    "month": "2월",
-			    "visits": 1882
-			  }, {
-			    "month": "3월",
-			    "visits": 1809
-			  }, {
-			    "month": "4월",
-			    "visits": 1322
-			  }, {
-			    "month": "5월",
-			    "visits": 1122
-			  }, {
-			    "month": "6월",
-			    "visits": 1114
-			  }, {
-			    "month": "7월",
-			    "visits": 984
-			  }, {
-			    "month": "8월",
-			    "visits": 711
-			  }, {
-			    "month": "9월",
-			    "visits": 665
-			  }, {
-			    "month": "10월",
-			    "visits": 580
-			  }, {
-			    "month": "11월",
-			    "visits": 443
-			  }, {
-			    "month": "12월",
-			    "visits": 441
-			  }],
-			  "valueAxes": [ {
-			    "gridColor": "#FFFFFF",
-			    "gridAlpha": 0.2,
-			    "dashLength": 0
-			  } ],
-			  "gridAboveGraphs": true,
-			  "startDuration": 1,
-			  "graphs": [ {
-			    "balloonText": "[[category]]: <b>[[value]]</b>",
-			    "fillAlphas": 0.8,
-			    "lineAlpha": 0.2,
-			    "type": "column",
-			    "valueField": "visits"
-			  } ],
-			  "chartCursor": {
-			    "categoryBalloonEnabled": false,
-			    "cursorAlpha": 0,
-			    "zoomable": false
-			  },
-			  "categoryField": "month",
-			  "categoryAxis": {
-			    "gridPosition": "start",
-			    "gridAlpha": 0,
-			    "tickPosition": "start",
-			    "tickLength": 20
-			  },
-			  "export": {
-			    "enabled": true
-			  }
-
-			});
 	
 	$.setToday=function(){		
 		var today = new Date();
@@ -138,13 +78,6 @@
 	}
 </script>
 <!-- 0. include부분 -->
-<style>
-#chartdiv {
-	width		: 100%;
-	height		: 500px;
-	font-size	: 11px;
-}					
-</style>
 <nav>
         <ul>
            <!-- 1.왼쪽 사이드 메뉴 지정 // li태그에 .active지정 -->
@@ -198,7 +131,7 @@
 			</div>
 		</div>
     <!-- 0. include부분 끝-->
-			<div id="chartdiv"></div>
+			   <div id="piechart" style="width: 900px; height: 500px;"></div>
 </body>
        
 <%@include file="../inc/bottom.jsp" %>

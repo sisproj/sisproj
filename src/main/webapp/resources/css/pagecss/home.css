@@ -93,6 +93,9 @@ section #homesection{
 #mainNoti h4 i{
 	color: #fff;		
 }
+#mainNoti thead tr th{
+	width: 100%;
+}
 /*전자결재*/
 #mainConfirm h4 {
 	background-color: #ffc107;
@@ -101,6 +104,16 @@ section #homesection{
 }
 #mainConfirm h4 i{
 	color: #fff;		
+}
+#mainConfirm thead tr th:nth-child(1){
+	width:50%;
+	overflow: hidden;
+}
+#mainConfirm thead tr th:nth-child(2){
+	width:20%;
+}
+#mainConfirm thead tr th:nth-child(3){
+	width:30%;
 }
 /*받은쪽지함*/
 #mainMessage h4 {
@@ -111,3 +124,17 @@ section #homesection{
 #mainMessage h4 i{
 	color: #fff;		
 }
+
+#mainMessage thead tr th:nth-child(1){
+	width:50%;
+}
+#mainMessage thead tr th:nth-child(2){
+	width:20%;
+}
+#mainMessage thead tr th:nth-child(3){
+	width:30%;
+}
+
+.box_skitter_large { width: 750px; height: 500px; }
+.box_skitter_small { width: 200px; height: 100px; }
+.box_skitter { position: relative; width: 750px; height: 500px; background: #000; }

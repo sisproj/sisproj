@@ -54,4 +54,9 @@ public class CommueDAOMybatis extends SqlSessionDaoSupport implements CommueDAO{
 	public int selectTotalRecord(DateSearchVO vo) {
 		return getSqlSession().selectOne(namespace+".selectTotalRecordCount",vo);
 	}
+	@Override
+	public List<Map<String, Object>> selectMonthList(DateSearchVO vo) {
+		return getSqlSession().selectList(namespace+".selectMonthListCount",vo);
+	}
+
 }

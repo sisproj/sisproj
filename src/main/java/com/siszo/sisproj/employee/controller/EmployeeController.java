@@ -3,7 +3,6 @@ package com.siszo.sisproj.employee.controller;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -96,8 +95,19 @@ public class EmployeeController {
 
 		return "common/message";
 	}
-	@RequestMapping("/adm/employeeDetail.do")
+	@RequestMapping("/adm/adminEmployeeDetail.do")
 	public String employeeDetail(@RequestParam(defaultValue="0") int empNo,Model model) {
+		logger.info("사원상세보기 화면 보여주기,파라미터 empNo={}",empNo);
+
+		EmployeeVO vo = employeeService.selectEmployeeByNo(empNo);
+
+		logger.info("사원 상세 화면 보여주기 결과 vo={}",vo);
+		model.addAttribute("vo",vo);
+		
+		return "employee/adminEmployeeDetail";
+	}
+	@RequestMapping("/employeeDetail.do")
+	public String employeeDetail2(@RequestParam(defaultValue="0") int empNo,Model model) {
 		logger.info("사원상세보기 화면 보여주기,파라미터 empNo={}",empNo);
 
 		EmployeeVO vo = employeeService.selectEmployeeByNo(empNo);
@@ -107,18 +117,22 @@ public class EmployeeController {
 		
 		return "employee/employeeDetail";
 	}
-	@RequestMapping("/employeeDetail2.do")
-	public String employeeDetail2(@RequestParam(defaultValue="0") int empNo,Model model) {
-		logger.info("사원상세보기 화면 보여주기,파라미터 empNo={}",empNo);
-
-		EmployeeVO vo = employeeService.selectEmployeeByNo(empNo);
-
-		logger.info("사원 상세 화면 보여주기 결과 vo={}",vo);
-		model.addAttribute("vo",vo);
+	@RequestMapping(value="/adm/adminEmployeeEdit.do",method=RequestMethod.GET)
+	public String adminEmployeeEdit_get(@RequestParam(defaultValue="0") int empNo,Model model) {
+		logger.info("사원수정 화면 보여주기, 파라미터 값 empNo={}",empNo);			
 		
-		return "employee/employeeDetail2";
+		EmployeeVO vo =  employeeService.selectEmployeeByNo(empNo);
+
+		List<DeptVO> list= deptService.selectDeptName();
+		
+		model.addAttribute("vo",vo);
+		model.addAttribute("list",list);
+
+		logger.info("회원 수정 화면 결과값  vo={}",vo);	
+
+		return "employee/adminEmployeeEdit";
 	}
-	@RequestMapping(value="/adm/employeeEdit.do",method=RequestMethod.GET)
+	@RequestMapping(value="/employeeEdit.do",method=RequestMethod.GET)
 	public String employeeEdit_get(@RequestParam(defaultValue="0") int empNo,Model model) {
 		logger.info("사원수정 화면 보여주기, 파라미터 값 empNo={}",empNo);			
 		
@@ -133,8 +147,7 @@ public class EmployeeController {
 
 		return "employee/employeeEdit";
 	}
-
-	@RequestMapping(value="/adm/employeeEdit.do",method=RequestMethod.POST)
+	@RequestMapping(value="/adm/EmployeeEdit.do",method=RequestMethod.POST)
 	public String employeeEdit_post(@ModelAttribute EmployeeVO vo
 			,@RequestParam String empHiredate1,@RequestParam String oldFileName 
 			,HttpServletRequest request,Model model) {
@@ -186,7 +199,68 @@ public class EmployeeController {
 			}
 		}else {
 			msg="사원 수정 실패!";
-			url="/employee/adm/employeeEdit.do?empNo="+vo.getEmpNo();
+			url="/employee/EmployeeEdit.do?empNo="+vo.getEmpNo();
+		}
+
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+
+		return "common/message";
+	}
+	
+	@RequestMapping(value="/adm/adminEmployeeEdit.do",method=RequestMethod.POST)
+	public String adminEmployeeEdit_post(@ModelAttribute EmployeeVO vo
+			,@RequestParam String empHiredate1,@RequestParam String oldFileName 
+			,HttpServletRequest request,Model model) {
+		logger.info("사원 수정 된 파라미터 vo={},empHiredate1={}",vo,empHiredate1);
+		logger.info("사원 수정 된 파라미터 oldFileName={}",oldFileName);
+
+		Timestamp hiredate =Timestamp.valueOf(empHiredate1+" 00:00:00");
+
+		vo.setEmpHiredate(hiredate);
+
+		List<Map<String, Object>> list=null;
+		String empImg="";
+		if(vo.getEmpImg()!=null && !vo.getEmpImg().isEmpty()) {
+			try {
+				list=fileUtil.fileupload(request,FileUploadUtil.EMP_IMAGE_UPLOAD);			
+				if(list!=null && !list.isEmpty()){
+					for(Map<String, Object> map : list){
+						empImg=(String)map.get("fileName");	
+
+						vo.setEmpImg(empImg);
+					}
+				}
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}		
+			logger.info("vo.getEmpImg={}",vo.getEmpImg());
+		}	
+		//db작업
+
+		int cnt= employeeService.editEmployee(vo);
+		logger.info("수정 결과 cnt={}",cnt);
+		String msg="",url="";
+
+		if(cnt>0) {
+			msg="사원 수정 성공!";
+			url="/employee/adm/employeeDetail.do?empNo="+vo.getEmpNo();
+
+			if(empImg!=null && !empImg.isEmpty()) {
+				if(oldFileName!=null && !oldFileName.isEmpty()) {
+					String path=fileUtil.getUploadPath(request, FileUploadUtil.EMP_IMAGE_UPLOAD);
+					File delFile = new File(path, oldFileName);
+					if(delFile.exists()) {
+						boolean bool=delFile.delete();
+						logger.info("기존 파일 삭제여부 bool={}", bool);
+					}
+				}
+			}
+		}else {
+			msg="사원 수정 실패!";
+			url="/employee/adm/adminEmployeeEdit.do?empNo="+vo.getEmpNo();
 		}
 
 		model.addAttribute("msg",msg);

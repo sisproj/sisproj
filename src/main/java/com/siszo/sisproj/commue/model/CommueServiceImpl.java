@@ -65,6 +65,9 @@ public class CommueServiceImpl implements CommueService{
 	public int selectTotalRecord(DateSearchVO vo) {
 		return commueDao.selectTotalRecord(vo);
 	}
-	
-	
+
+	@Override
+	public List<Map<String, Object>> selectMonthListCount(DateSearchVO vo) {
+		return commueDao.selectMonthList(vo); 
+	}
 }
