@@ -55,7 +55,9 @@
 			$(this).prev().hide();
 		});
 		
-		
+		$('#reqSearch').click(function(){
+			$('#frmList').submit();
+		});
 	});
 	function pageFunc(curPage){
 		document.frmList.currentPage.value=curPage;
@@ -221,6 +223,7 @@
 	        		<colgroup>
 	        			<col width="5%">
 	        			<col width="10%">
+	        			<col width="10%">
 	        			<col width="*">
 	        			<col width="13%">
 	        			<col width="13%">
@@ -232,7 +235,8 @@
 	        		<thead>
 	        		<tr>
 	        			<th><input type="checkbox" id="checkAll"></th>
-	        			<th><a href="#">자원이름</a></th>
+	        			<th>카테고리</th>
+	        			<th>자원이름</th>
 	        			<th>예약 내용</th>
 	        			<th>시작일</th>
 	        			<th>종료일</th>
@@ -246,6 +250,7 @@
 	        		<c:forEach var="map" items="${list }" varStatus="status">
 		        		<tr>
 		        			<td><input type="checkbox" name="resItems[${status.index }].rvNo" value="${map['RV_NO'] }"></td>
+		        			<td>${map['RES_CATEG']}</td>
 		        			<td id="${map['RES_NO'] }">${map['RES_NAME']}</td>
 		        			<td>${map['RV_CONTENT']}</td>
 		        			<td>${map['RV_START'] }</td>

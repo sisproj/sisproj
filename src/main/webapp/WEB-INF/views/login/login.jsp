@@ -50,7 +50,6 @@
 </script>
 </head>
 <body>
-<img id="plain" src="<c:url value="/resources/images/airplain.png"/>" alt="비행기">
 <div id="logo">
     <img src="<c:url value="/resources/images/logo_w.png"/>" alt="로고이미지">
 </div>
