@@ -10,6 +10,12 @@
 </c:if>
 <c:forEach items="${recMsgList}" var="msgVO">
   <tr>
+    <td onclick="window.open('<c:url
+      value="/message/detail.do?recNo=${msgVO.recNo}"/>', 'messageWindow', 'width=540,height=500,left=300,top=300,toolbar=no,scrollbars=no,resizable=no');">
+        <a href="#" onclick="messageDetailOpen('msg-${msgVO.recNo}')">
+            ${msgVO.msgTitle}
+        </a>
+    </td>
     <td>
       <c:if test="${fn:length(msgVO.empName)>7 }">
         ${fn:substring(msgVO.empName,0,7) }...
@@ -17,12 +23,6 @@
       <c:if test="${fn:length(msgVO.empName)<=7 }">
         ${msgVO.empName}
       </c:if>
-    </td>
-    <td onclick="window.open('<c:url
-      value="/message/detail.do?recNo=${msgVO.recNo}"/>', 'messageWindow', 'width=540,height=500,left=300,top=300,toolbar=no,scrollbars=no,resizable=no');">
-        <a href="#" onclick="messageDetailOpen('msg-${msgVO.recNo}')">
-            ${msgVO.msgTitle}
-        </a>
     </td>
     <td>
       <c:set var="today"><fmt:formatDate value="${now}" type="date"/></c:set>

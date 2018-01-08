@@ -31,7 +31,7 @@
     <c:set var="userAgentInfo" value="${header['User-Agent']}" />
     <c:if test="${fn:indexOf(userAgentInfo, 'Linux') > 0 || fn:indexOf(userAgentInfo, 'iPhone') > 0 || fn:indexOf(userAgentInfo, 'iPad') > 0 }">
 		<link rel='stylesheet' href="<c:url value='/resources/css/css_m/mainStyle_m.css'/>">
-	    <script src="<c:url value='/resources/js/mainjs_m.js'/>"></script>
+	    <script src="<c:url value='/resources/js/js_m/mainjs_m.js'/>"></script>
     </c:if>
     <c:if test="${fn:indexOf(userAgentInfo, 'Linux') <= 0 && fn:indexOf(userAgentInfo, 'iPhone') <= 0 && fn:indexOf(userAgentInfo, 'iPad') <= 0 }">
 	 	<link rel='stylesheet' href='<c:url value="/resources/css/mainStyle.css"/>'>

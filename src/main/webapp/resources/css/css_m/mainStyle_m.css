@@ -165,6 +165,7 @@ aside #loginfo #asidebtn ul li a i{
 aside #loginfo #asidebtn ul li:first-child{
 	display: none;
 }
+
 /*로그아웃 버튼*/
 aside #loginfo #asidebtn ul li:last-child{
 	position: fixed;
@@ -227,6 +228,11 @@ aside > ul li a{
 	color: #036;
 	font-size: 30px;
 }
+
+/* section bookmark */
+section #bookmark{
+	display:none;
+}
 /* footer */
 footer{
 	position: fixed;
@@ -253,7 +259,6 @@ footer div div{
 	height: 40px;
 	width: 100%;
 }
-
 /* 	 */
 @keyframes newsrolling{
 	0%{top: 0px;}

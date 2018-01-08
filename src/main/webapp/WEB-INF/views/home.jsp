@@ -3,6 +3,8 @@
 
 <%-- <!-- mobile -->
 <link rel="stylesheet" href="<c:url value='/resources/css/css_m/home_m.css'/>"> --%>
+
+<!-- 모바일, PC 구분 -->
 <c:if test="${fn:indexOf(userAgentInfo, 'Linux') > 0 || fn:indexOf(userAgentInfo, 'iPhone') > 0 || fn:indexOf(userAgentInfo, 'iPad') > 0 }">
 	<link rel="stylesheet" href="<c:url value='/resources/css/css_m/home_m.css'/>">
 </c:if>
@@ -32,14 +34,9 @@
         	<div id="mainNoti">
 	        	<h4><i class="fa fa-bullhorn"></i> 공지사항</h4>
 	       		<table>
-	      				<colgroup>
-	      					<col width="75%">
-	      					<col width="25%">
-	      				</colgroup>
 	       			<thead>
 	        			<tr>
 	        				<th>제목</th>
-	        				<th>작성자</th>
 	        			</tr>
 	       			</thead>
 	       			<tbody>
@@ -50,11 +47,6 @@
         	<div id="mainConfirm">
         		<h4><i class="fa fa-book"></i> 결재 대기</h4>
         		<table>
-       				<colgroup>
-       					<col width="50%">
-       					<col width="20%">
-       					<col width="30%">
-       				</colgroup>
         			<thead>
 	        			<tr>
 	        				<th>제목</th>
@@ -70,15 +62,10 @@
         	<div id="mainMessage">
         		<h4><i class="fa fa-envelope"></i> 받은 쪽지함</h4>
         		<table>
-       				<colgroup>
-       					<col width="20%">
-       					<col width="50%">
-       					<col width="30%">
-       				</colgroup>
         			<thead>
 	        			<tr>
-	        				<th>발신인</th>
 	        				<th>제목</th>
+	        				<th>발신인</th>
 	        				<th>날짜</th>
 	        			</tr>
         			</thead>
