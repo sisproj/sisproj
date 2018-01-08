@@ -215,7 +215,7 @@
 			        <a href="#"><div class="divBackMulti"><i class="fa fa-times"></i><span> 선택 반려</span></div></a>		        
 			        <div>
 			        	<input type="text" placeholder="검색" id="searchKeyword" name="searchKeyword" value='${param.searchKeyword}'>
-			        	<a href="<c:url value='/resource/requestList.do'/>"><i id="reqSearch" class="fa fa-search"></i></a>
+			        	<a href="#"><i id="reqSearch" class="fa fa-search"></i></a>
 		        	</div>		        	
 			    </div>
 			    
