@@ -10,7 +10,6 @@
 	<c:forEach var="notiVo" items="${noticeList }">
 		<tr>
 			<td><a href="<c:url value='/notice/countUpdate.do?notiNo=${notiVo.notiNo}'/>">${notiVo.notiTitle }</a></td>
-			<td>${notiVo.empName }</td>
 		</tr>
 	</c:forEach>
 </c:if>
