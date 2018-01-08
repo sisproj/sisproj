@@ -11,6 +11,7 @@ public class WebhardVO {
     private String regdate;
     private int empNo;
     private String empName;
+	private long fileTerm;
     
 	public int getFileNo() {
 		return fileNo;
@@ -60,16 +61,18 @@ public class WebhardVO {
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
 	}
+	public long getFileTerm() {
+		return fileTerm;
+	}
+	public void setFileTerm(long fileTerm) {
+		this.fileTerm = fileTerm;
+	}
 	@Override
 	public String toString() {
 		return "WebhardVO [fileNo=" + fileNo + ", fileName=" + fileName + ", fileOriName=" + fileOriName + ", fileSize="
 				+ fileSize + ", fileRegdate=" + fileRegdate + ", regdate=" + regdate + ", empNo=" + empNo + ", empName="
-				+ empName + "]";
+				+ empName + ", fileTerm=" + fileTerm + "]";
 	}
 	
 	
-	
-	
-    
-    
 }
