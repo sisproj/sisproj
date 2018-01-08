@@ -19,13 +19,19 @@
 			$('.editdeletechk').css('visibility','visible');
 		}
 		
+		
 		$('#clickLike').click(function() {
 			location.href="<c:url value='/news/newsLike.do?newsNo=${newsVo.newsNo}'/>";
 		});
 		
 		$('#btnewsEdit').click(function () {
-			location.href="<c:url value='/news/newsEdit.do?newsNo=${newsVo.newsNo}'/>";
+			location.href="<c:url value='/news/adm/newsEdit.do?newsNo=${newsVo.newsNo}'/>";
 		}); 
+		
+		$('#newsregditgo').click(function(){
+			location.href="<c:url value='/news/adm/newsRegdit.do'/>";
+			
+		});
 		$('#newshomego').click(function () {
 			location.href="<c:url value='/news/dailyNews.do'/>";
 		}); 
@@ -33,7 +39,7 @@
 		$('#btnewsDelete').click(function () {
 			var result = confirm("정말 ${newsVo.newsNo}번 뉴스를 삭제하시겠습니까?"); 
 			if(result) { 
-				location.href="<c:url value='/news/newsDelete.do?newsNo=${newsVo.newsNo}&newsImage=${newsVo.newsImage}'/>";
+				location.href="<c:url value='/news/adm/newsDelete.do?newsNo=${newsVo.newsNo}&newsImage=${newsVo.newsImage}'/>";
 			} else { 
 			
 			}
@@ -59,6 +65,7 @@ text-align:center;
 }
 .readcnt{
 	color: gray;
+	float:right;
 }
 
 .nocommantd{
@@ -86,11 +93,8 @@ text-align:center;
 	cursor: pointer;
 }
 
-#newsbtgroup{
-	float:right;
-}
 .newsempname{
-	font-weight: bold;
+	font-weight: bold; 
 }
 #reclabel{
 	font-weight: bold;
@@ -134,7 +138,6 @@ float:right;
 </article>
 <article id="bodysection">
 	<!-- 3. 내용 -->
-	<input type="hidden" id="newsDetailempLv" name="newsDetailempLv"  value="${sessionScope.empVo.empLev  }">
 	<div id="newsDmain">
 		<hr>
 		<div id="newsDTitle">
@@ -143,11 +146,7 @@ float:right;
 				<span class="newsregdate">기사입력 : <fmt:formatDate value="${newsVo.newsRegdate }"
 						pattern="yyyy-MM-dd hh:MM" />
 			</span>
-					<div id="newsbtgroup">
-						<span class="readcnt">조회수 : ${newsVo.newsReadCnt }</span>
-						<input type="button" id="btnewsEdit" value="수정" > 
-						<input type="button" id="btnewsDelete" value="삭제">
-					</div>
+			<span class="readcnt">조회수 : ${newsVo.newsReadCnt }</span>
 			</div>
 		</div>
 		<hr>
