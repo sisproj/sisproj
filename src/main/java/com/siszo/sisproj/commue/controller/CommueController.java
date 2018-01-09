@@ -1,6 +1,5 @@
 package com.siszo.sisproj.commue.controller;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +30,7 @@ public class CommueController {
 	@Autowired
 	private CommueService commueService;
 	
-	@RequestMapping("/adm/AdminMonthList.do")
+	/*@RequestMapping("/adm/adminMonthList.do")
 	public String commueMonthList(@ModelAttribute DateSearchVO dateSearchVo,Model model) {
 		logger.info("출퇴근 월별 통계 보여주기 파라미터 dateSearchVo={}",dateSearchVo);
 		
@@ -40,10 +39,33 @@ public class CommueController {
 		
 		model.addAttribute("list",list);
 		
-		return "commue/AdminMonthList";
+		return "commue/adminMonthList";
+	}*/
+	@RequestMapping("/adm/adminDateList.do")
+	public String commueDateList(Model model) {
+		logger.info("출퇴근 일별 통계 보여주기 파라미터");
+		int result=0;
+		List<Map<String, Object>> list = commueService.selectDateCount();
+		logger.info("출퇴근 일별 통계 부서별 구하기 조회 list.size()={}",list.size());
+		
+		int allCnt=commueService.selectAllCount();
+		logger.info("사원 전체 출근한 인원 allCnt={}",allCnt);
+		
+		/*for(Map<String, Object> map : list) {
+			int cnt = Integer.valueOf(String.valueOf(map.get("TOTAL")));	
+			logger.info("출근  파라미터 cnt={}",cnt);
+			String deptName=String.valueOf(map.get("DEPTNAME"));
+			logger.info("출근  파라미터 deptName={}",deptName);
+			String cmtIn = String.valueOf(map.get("CMTIN"));
+			logger.info("출근  파라미터 cmtIn={}",cmtIn);
+		}*/
+		
+		model.addAttribute("list",list);
+		model.addAttribute("allCnt",allCnt);
+		
+		return "commue/adminDateList";
 	}
-	
-	@RequestMapping("/adm/AdminDateList.do")
+	@RequestMapping("/adm/adminMonthList.do")
 	public String commueDateList(@ModelAttribute DateSearchVO dateSearchVo,Model model) {
 		logger.info("출퇴근 일별 통계 보여주기 파라미터 dateSearchVo={}",dateSearchVo);
 		int totalRecord=0;
@@ -74,8 +96,9 @@ public class CommueController {
 		model.addAttribute("list", list);	
 		model.addAttribute("pagingInfo",pagingInfo);
 		
-		return "commue/AdminDateList";
+		return "commue/adminMonthList";
 	}
+	
 	@RequestMapping("/commueIn.do")
 	public String commueIn(@ModelAttribute CommueVO cmtVo,HttpSession session,Model model) {
 		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
@@ -139,17 +162,15 @@ public class CommueController {
 		return "commue/employeeMonthList";
 	}
 
-	
-	
 	@RequestMapping(value="/employeeMonthList.do",method=RequestMethod.POST)
 	public String employeeMonthList(@ModelAttribute DateSearchVO dateSearchVo,HttpSession session,Model model) {
 		EmployeeVO vo = (EmployeeVO) session.getAttribute("empVo");
 		int empNo = vo.getEmpNo(); 
 		logger.info("사원 월별 근태 파라미터 dateSearchVo={}",dateSearchVo);
-		Date d = new Date();
+		/*Date d = new Date();
 		String year = Integer.toString(d.getYear());
 		dateSearchVo.setYear(year);
-		dateSearchVo.setEmpNo(empNo);
+		dateSearchVo.setEmpNo(empNo);*/
 		   List<Map<String, Object>> lists = commueService.selectMonthListCount(dateSearchVo);
 			logger.info("사원 월별 근태 조회 결과 lists.size()={}",lists.size());
 			

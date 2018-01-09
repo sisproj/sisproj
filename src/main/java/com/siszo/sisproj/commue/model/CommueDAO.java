@@ -19,7 +19,7 @@ public interface CommueDAO {
 	public List<Map<String, Object>> selectMonthList(DateSearchVO vo);
 	public List<Map<String, Object>> selectMonthListGet(int empNo);
 	public List<Map<String, Object>> selectMonthDeptName(DateSearchVO vo);
-
-	
+	public List<Map<String, Object>> selectDateCount();
+	public int selectAllCount();
 }
 

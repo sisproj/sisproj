@@ -17,16 +17,21 @@
 <!-- 0. include부분 -->
 <style type="text/css">
 #chartOne {
-  width: 60%;
-  height:500px;
-  float: right;
+  width: 50%;
+  height:450px;
 }
 #chartStick {
-	width		: 40%;
-	height		: 500px;
-	font-size	: 11px;
+	width	: 50%;
+	height: 400px;
+	font-size: 11px;
+}	
+#charts{
+	width: 50%;
+}			
+#dList{
+	width: 50%;
 	float: left;
-}					
+}	
 </style>
 <script type="text/javascript">
 	$(function () {	
@@ -66,23 +71,15 @@
 	}
 	
 	/* 그래프 차트 */
-	var chart = AmCharts.makeChart( "chartStick", {
+ 	var chart = AmCharts.makeChart( "chartStick", {
 		  "type": "serial",
 		  "theme": "light",
 		  "dataProvider": [
-		
-		  <c:if test="${empty lists}">
-			 <c:forEach var="i" begin="1" end="12">
-						 {
-						    "month": ${i}, 
-						    "visits": 0
-						  },			  
-			</c:forEach>						  				  
-		 </c:if>	  
-		 <c:forEach var="map" items="${lists}">
-			 <c:if test="${!empty map['CMTIN']}">
+	 	 <c:set var="allCnt" value="${allCnt}" />
+		 <c:forEach var="map" items="${list}">
+			 <c:if test="${!empty map['TOTAL']}">
 				  {
-			    "month": ${map['CMTIN']},
+			    "deptName": "${map['DEPTNAME']}",
 			    "visits": ${map['TOTAL']}
 			  },			  
 			  </c:if>
@@ -125,10 +122,20 @@
 		  "type": "pie",
 		  "theme": "light",
 		  "dataProvider": [ 
-			  {
-		    "deptName": "Lithuania",
-		    "litres": 501.9
-		  },
+		 /*  <c:if test="${empty list}">			 
+				  {
+				    "deptName": "데이터가없습니다",
+				    "litres": 0
+				  },							  				  
+		 </c:if>	   */ 
+		 <c:if test="${!empty list}">
+		 <c:forEach var="map" items="${list}">
+				  {
+			    "deptName": "${map['DEPTNAME']}",
+			    "litres": ${map['TOTAL']}
+			  },			  
+		  </c:forEach>
+		  </c:if>
 		  ],
 		  "valueField": "litres",
 		  "titleField": "deptName",
@@ -152,18 +159,33 @@
         <!-- 2. 페이지 이름 지정 끝 -->
     </article>
     <article id="bodysection">
-    <div id="dimyPage">	
-			<div id="diBtCa">
-				<div id="diCal">
-					<span id="spDate"></span>
-				</div>			
-			<form name="frmDate" id="frmDate" method="post" action="<c:url value='/commue/adm/employeeDateList.do' />">
-				<input type="hidden" id="currentPage" name="currentPage" value="1">
-			</form>
-			</div>
+    <div id="dimyPage">		
+    	<div id="dList">
+				<form name="frmDate" id="frmDate" method="post" action="<c:url value='/commue/adm/adminDateList.do' />">
+					<table border="1" id="allList">				
+							<tr>
+								<c:forEach var="map" items="${list }">				
+										<th>${map['DEPTNAME'] }</th>	
+									<%-- 	<c:if test="${!empty map['TOTAL'] }">	
+											<td>${map['TOTAL'] }명</td>		
+										</c:if>
+										<c:if test="${empty map['TOTAL'] }">
+											<td>0명</td>
+										</c:if>		 --%>										
+								</c:forEach>	
+							</tr>
+							<c:forEach var="i" begin="1" end="12">
+								<tr>
+									<th>${i } 월</th>						
+								</tr>
+							</c:forEach>
+					</table>
+				</form>
+			</div>		
+	    <div id="charts">
+			<div id="chartOne"></div>
+			<div id="chartStick"></div>
 		</div>
-	<div>
-	<div id="chartOne"></div>
-	<div id="chartStick"></div>
 	</div>
+	
 <%@include file="commueBottom.jsp" %>

@@ -100,15 +100,16 @@
 		order by dept_name,to_char(cmt_in, 'mm')
 	</select>
 	
-	<select id="selectDeptCount" parameterType="DateSearchVO" resultType="int">
-		select to_char(cmt_in, 'mm'),count(*) from cmtView
-		where dept_name=${deptName} and to_char(cmt_in, 'yyyy')=${year}
-		group by to_char(cmt_in, 'mm')
-		order by to_char(cmt_in, 'mm')
+	<select id="selectDateCount" resultType="map">
+		select dept_name as "DEPTNAME",to_char(cmt_in, 'dd') as "CMTIN" ,count(*) as "TOTAL" from cmtView
+		where to_char(cmt_in, 'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')
+		group by dept_name,to_char(cmt_in, 'dd')
+		order by dept_name,to_char(cmt_in, 'dd')
 	</select>
 	
-	<select id="">
+	<select id="selectAllCount" resultType="int">
 		select count(*) from cmtView
+		where to_char(cmt_in, 'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')
 	</select>
 </mapper>
 

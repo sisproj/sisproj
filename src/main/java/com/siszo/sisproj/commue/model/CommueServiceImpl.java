@@ -79,4 +79,15 @@ public class CommueServiceImpl implements CommueService{
 	public List<Map<String, Object>> selectMonthDeptName(DateSearchVO vo) {
 		return commueDao.selectMonthDeptName(vo);
 	}
+
+	@Override
+	public List<Map<String, Object>> selectDateCount() {
+		return commueDao.selectDateCount();
+	}
+
+	@Override
+	public int selectAllCount() {
+		return commueDao.selectAllCount();
+	}
+	
 }

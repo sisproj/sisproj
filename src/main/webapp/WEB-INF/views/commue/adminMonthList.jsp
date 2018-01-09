@@ -15,7 +15,6 @@
 		
 		$.applyDatePicker('#startDay');
 		
-		 $('header nav ul li:nth-child(6) a').addClass('active');
 	});
 	
 	$.setToday=function(){		
@@ -58,7 +57,7 @@
 	 function pageFunc(curPage){
 			document.searchEmp.currentPage.value=curPage;
 			searchEmp.submit();
-	} 
+	}
 
 </script>
 
@@ -79,7 +78,7 @@
 				<div id="diCal">
 					<span id="spDate"></span>
 				</div>			
-			<form name="frmDate" id="frmDate" method="post" action="<c:url value='/commue/adm/AdminDateList.do' />">
+			<form name="frmDate" id="frmDate" method="post" action="<c:url value='/commue/adm/adminMonthList.do' />">
 				<input type="hidden" id="currentPage" name="currentPage" value="1">
 				<div id="diSearch" style="margin-left: 10px;">
 						<input type="text" name="startDay" id="startDay" 
@@ -115,11 +114,11 @@
 				<c:forEach var="map" items="${list }">
 					<tr>
 						<!-- 해당 사원의 근태관리로 갑니다.  -->
-						<td><a href="<c:url value='/commue/adm/AdminDateList.do?empName=${map["EMP_NAME"] }&startDay=${param.startDay }' />">${map['EMP_NAME'] }</a></td>
+						<td><a href="<c:url value='/commue/adm/adminMonthList.do?empName=${map["EMP_NAME"] }&startDay=${param.startDay }' />">${map['EMP_NAME'] }</a></td>
 						<!-- 해당 부서근태를 보여줍니다. -->
-						<td><a href="<c:url value='/commue/adm/AdminDateList.do?deptName=${map["DEPT_NAME"] }&startDay=${param.startDay }' />">${map['DEPT_NAME'] }</a></td>
+						<td><a href="<c:url value='/commue/adm/adminMonthList.do?deptName=${map["DEPT_NAME"] }&startDay=${param.startDay }' />">${map['DEPT_NAME'] }</a></td>
 						<!-- 해당 직급근태를 보여줍니다.  -->
-						<td><a href="<c:url value='/commue/adm/AdminDateList.do?posName=${map["POS_NAME"] }&startDay=${param.startDay }' />">${map['POS_NAME'] }</a></td>
+						<td><a href="<c:url value='/commue/adm/adminMonthList.do?posName=${map["POS_NAME"] }&startDay=${param.startDay }' />">${map['POS_NAME'] }</a></td>
 						<td id="cmtT">${map['CMTIN'] }</td>
 						<td id="cmtT">${map['CMTOUT'] }</td>
 						<c:if test="${map['CMT_STATUS'] eq ('Y') }">
