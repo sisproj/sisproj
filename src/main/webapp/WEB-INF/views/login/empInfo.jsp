@@ -30,17 +30,17 @@
     function messengerCheck() {
         var membersRef = firebase.database().ref('members/');
         membersRef.on('value', function (snapshot) {
+            $('#unreadMessenger').html(0);
             var count = 0;
-            $('#unreadMessenger').html("");
             snapshot.forEach(function (childSnapshot) {
                 childSnapshot.forEach(function (data) {
-                    if(data.key == "${sessionScope.empVo.empNo}") {
+                    if (data.key == "${sessionScope.empVo.empNo}") {
                         count += parseInt(data.val().count);
                     }
                 });
                 $('#unreadMessenger').html(count);
             });
-            if(count > 0) {
+            if (count > 0) {
                 $('#unreadMessenger').append('  <img src=\"<c:url value='/resources/images/new_icon.png'/>\">');
             }
         })
@@ -79,7 +79,7 @@
 				<a href="#" onclick="window.open('<c:url
                         value="/messenger/messenger.do"/>', 'messengerWindow', 'width=1100,height=640,toolbar=no,scrollbars=yes')">대화</a>
 			</span>&nbsp;<span id="unreadMessenger"
-                class="red">0</span></li>
+                               class="red">0</span></li>
         <li><i class="fa fa-pencil-square-o"></i>&nbsp;<span><a
                 href="<c:url value='/confirm/await.do'/>">결재대기</a></span>&nbsp;<span
                 class="red">${awaitCnt }</span></li>
