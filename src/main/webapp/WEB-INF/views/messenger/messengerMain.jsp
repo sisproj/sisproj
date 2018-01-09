@@ -66,9 +66,17 @@
 
         function loadOrganization(userKey) {
             if (userKey != "0") {
+                var sendEmpNo = ${sendEmpNo};
+                var recEmpNo = ${recEmpNo};
+
+                console.log(sendEmpNo +"," +recEmpNo);
+                if(sendEmpNo != 0 || recEmpNo != 0) {
+                    chatStart();
+                }
+
                 setTimeout(function () {
                     changeContent(userKey);
-                },1500);
+                },3000);
 
             } else {
                 $('#messenger-main-container').html("").load('messengerStart.do');
@@ -76,9 +84,24 @@
         }
 
         function chatStart() {
-            var empIdArr = $('#choiceEmpId').val().split(",");
-            empIdArr.push(userId);
-            empIdArr.sort();
+            var empIdArr = [];
+            var sendEmpNo = 0;
+            var recEmpNo = 0;
+            sendEmpNo = ${sendEmpNo} + "";
+            recEmpNo = ${recEmpNo} + "";
+
+            if(sendEmpNo == 0 || recEmpNo == 0) {
+                empIdArr = $('#choiceEmpId').val().split(",");
+                empIdArr.push(userId);
+                empIdArr.sort();
+            } else {
+                empIdArr.push(sendEmpNo);
+                empIdArr.push(recEmpNo);
+                empIdArr.sort();
+            }
+
+            console.log(empIdArr);
+
 
             /* Users 설정 - 선택된 사용자에게 채팅방 할당 */
             var chat = "chat";
@@ -360,7 +383,7 @@
                         '</div>' +
                         '</a>'
                     );
-                });
+                })
             }
         }
 
@@ -459,8 +482,6 @@
                 if(titleStr.length > 10) {
                     titleStr = titleStr.substring(0, 10) + "..." + "(" + memberCnt + ")";
                 }
-
-
 
                 var resultDate = formatDate(timestamp);
                 $('#' + chatKey).html(

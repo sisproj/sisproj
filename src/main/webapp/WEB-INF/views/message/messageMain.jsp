@@ -2,7 +2,7 @@
 <jsp:useBean id="now" class="java.util.Date"/>
 <%@include file="../inc/top.jsp" %>
 <!-- 0. include부분 -->
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="<c:url value='/resources/css/w3/w3.css'/>"/>
 <style>
     .message-button {
         margin: 30px;

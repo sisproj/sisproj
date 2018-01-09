@@ -31,7 +31,13 @@ public class MessengerController {
 
 
     @RequestMapping(value = "/messenger/messenger.do")
-    public String messengerMain(@RequestParam(defaultValue = "0") String userKey, Model model) {
+    public String messengerMain(@RequestParam(defaultValue = "0") String userKey,
+                                @RequestParam(defaultValue = "0") String sendEmpNo,
+                                @RequestParam(defaultValue = "0") String recEmpNo,
+                                Model model) {
+
+        model.addAttribute("sendEmpNo", sendEmpNo);
+        model.addAttribute("recEmpNo", recEmpNo);
         model.addAttribute("userKey", userKey);
         logger.info("메신저 들어옴 messengerMain userKey={}", userKey);
         return "messenger/messengerMain";
