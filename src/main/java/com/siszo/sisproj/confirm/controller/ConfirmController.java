@@ -148,7 +148,7 @@ public class ConfirmController {
 		//제목 길이 처리, 꺽쇠 처리, 이름 세팅
 		for(DocumentVO imvo : awaitList) {			
 			String str = imvo.getCfTitle();
-			String title = ConfirmUtility.titleLength(str, 16);
+			String title = ConfirmUtility.titleLength(str, 26);
 			//스크립트 보안 : 꺽쇠 변환
 			title = ConfirmUtility.changeTag(title);			
 			imvo.setCfTitle(title);

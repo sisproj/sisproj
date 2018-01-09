@@ -175,7 +175,11 @@
             $('#sidebar-button').show().attr('name', 'hide-nav');
 
             $('#chatsList').find('a').attr("class", "w3-button w3-block w3-white w3-left-align");
+            $('#chatsList').find('span i').attr("class", "fa fa-circle-o");
+
             $('#' + chatKey).attr("class", "w3-button w3-block w3-white w3-left-align w3-light-grey");
+            $('#' + chatKey + ' span i').attr("class", "fa fa-circle");
+
         }
 
         function findUser() {
@@ -371,7 +375,7 @@
                     var userImg = "<c:url value='/emp_images/defaultImg.png'/>";
                     $('#chatsList').append(
                         '<a class="w3-button w3-block w3-white w3-left-align" id="' + snapshot.key + '" style="padding: 5px"' + onclickStr + '>' +
-                        '<img src="' + userImg + '" class="w3-bar-item w3-circle" style="width:85px; float: left;">' +
+                        '<span class="w3-bar-item" style="padding-top:20px; width:85px;height: 60px; float: left;"><i class="fa fa-circle-o" aria-hidden="true"></i></span>'+
                         '<div class="w3-bar-item">' +
                         '<div class="w3-large w3-left">' + titleStr + '</div>' +
                         '<div class="w3-right w3-small">' + resultDate + '</div>' +
@@ -485,7 +489,7 @@
 
                 var resultDate = formatDate(timestamp);
                 $('#' + chatKey).html(
-                    '<img src="' + userImg + '" class="w3-bar-item w3-circle" style="width:85px; float: left;">' +
+                    '<span class="w3-bar-item" style="padding-top:20px; width:85px;height: 60px; float: left;"><i class="fa fa-circle-o" aria-hidden="true"></i></span>'+
                     '<div class="w3-bar-item">' +
                     '<div class="w3-large w3-left">' + titleStr + '</div>' +
                     '<div class="w3-right w3-small">' + resultDate + '</div>' +

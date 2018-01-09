@@ -554,7 +554,7 @@ color:red;
 				<tbody>
 					<c:if test="${empty myreslist }">
 						<tr>
-							<td colspan="6">자원 승인 대기현황이 없습니다.</td>
+							<td colspan="7">자원 승인 대기현황이 없습니다.</td>
 						</tr>
 					</c:if>
 					<c:if test="${!empty myreslist }">

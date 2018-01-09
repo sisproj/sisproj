@@ -42,6 +42,7 @@
 		where to_char(cmt_in,'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')
 		and emp_no=#{empNo}
 	</select>
+	
 	<select id="selectOutChk" parameterType="int" resultType="int">
 		select count(*) from cmtView
 		where to_char(cmt_out,'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')
@@ -83,7 +84,34 @@
 		group by to_char(cmt_in, 'mm')
 		order by to_char(cmt_in, 'mm')
 	</select>
+		
+		
+	<select id="selectMonthListGet" parameterType="int" resultType="map">	
+		select to_char(cmt_in,'mm') as "CMTIN",count(*) as "TOTAL" from cmtView
+		where to_char(cmt_in,'yyyy')=to_char(sysdate,'yyyy') and emp_no=#{empNo}
+		group by to_char(cmt_in, 'mm')
+		order by to_char(cmt_in, 'mm')
+	</select>
+	
+	<select id="selectMonthDeptName" parameterType="DateSearchVO" resultType="map">
+	    select dept_name,to_char(cmt_in, 'mm'),count(*) from cmtView
+		where dept_name=${deptName} and to_char(cmt_in, 'yyyy')=${year}
+		group by dept_name,to_char(cmt_in, 'mm')
+		order by dept_name,to_char(cmt_in, 'mm')
+	</select>
+	
+	<select id="selectDeptCount" parameterType="DateSearchVO" resultType="int">
+		select to_char(cmt_in, 'mm'),count(*) from cmtView
+		where dept_name=${deptName} and to_char(cmt_in, 'yyyy')=${year}
+		group by to_char(cmt_in, 'mm')
+		order by to_char(cmt_in, 'mm')
+	</select>
+	
+	<select id="">
+		select count(*) from cmtView
+	</select>
 </mapper>
+
 
 
 
