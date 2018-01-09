@@ -83,6 +83,7 @@
         bottom: 0;
         width: 368px;
         padding: 16px;
+        box-shadow: 2px 2px 3px grey;
     }
 
     .emp-item div{
@@ -93,8 +94,8 @@
 </style>
 
 <!-- 오른쪽 SideMenu -->
-<div id="messengerSideNav" class="sidenav">
-    <div id="divEmp" class="w3-margin w3-light-blue emp-info">
+<div id="messengerSideNav" class="sidenav w3-white">
+    <div id="divEmp" class="w3-margin w3-leftbar w3-border-blue w3-pale-blue emp-info">
         <div class="w3-bar">
             <div class="w3-right-align"><a href="#" onclick="hideCard();">X</a></div>
             <div class="w3-bar-item">
@@ -119,7 +120,6 @@
         </form>
     </div>
 
-    <%--TODO 클릭한 회원 정보 카드--%>
     <div class="w3-white w3-margin">
         <div class="w3-light-grey">
             <ul class="w3-ul" id="memberList">
