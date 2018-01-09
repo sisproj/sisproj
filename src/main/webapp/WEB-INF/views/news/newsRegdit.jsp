@@ -44,6 +44,8 @@
 	margin-bottom: 10px;
 }
 
+
+
 #newsRegFrm tr{
 	transition:all 300ms linear;
 }
@@ -125,6 +127,7 @@
 #pagingbtn #nextbtn{
 	background-color: #306;
 }
+>>>>>>> branch 'master' of https://github.com/sisproj/sisproj
 </style>
 
 <!-- 왼쪽 사이드 메뉴 끝 -->
