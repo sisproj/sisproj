@@ -83,8 +83,7 @@
 </script>
 <article id="headsection">
         <!-- 2. 페이지 이름 지정 // 북마크 지정 여부 .bookmark || .nobook -->
-        <h1><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;사원 리스트&nbsp;<a href="#"><i class="fa fa-bookmark bookmark"
-                                                                                         aria-hidden="false"></i></a>
+        <h1><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;사원 리스트&nbsp;
         </h1>
     </article>
 <article id="bodysection">

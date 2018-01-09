@@ -132,8 +132,7 @@
 
 	<!-- 2. 페이지 이름 지정 // 북마크 지정 여부 .bookmark || .nobook -->
 	<h1>
-		<i class="fa fa-book" aria-hidden="true"></i>&nbsp;뉴스 관리&nbsp;<a
-			href="#"><i class="fa fa-bookmark bookmark" aria-hidden="true"></i></a>
+		<i class="fa fa-book" aria-hidden="true"></i>&nbsp;뉴스 관리&nbsp;
 	</h1>
 	<!-- 2. 페이지 이름 지정 끝 -->
 </article>
