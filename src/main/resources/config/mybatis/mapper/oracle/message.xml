@@ -107,7 +107,7 @@
                 WHERE SENDEMP_NO = #{empNo} AND SEND_DELFLAG = 'R'
                 <include refid="messageSearchWhere"></include>
                 GROUP BY MSG_NO
-                ORDER BY MSG_NO DESC
+                ORDER BY MSG_REGDATE DESC
             ) mlist
         )
         <![CDATA[
@@ -136,7 +136,7 @@
                      FROM MSGSENDVIEW
                      WHERE SENDEMP_NO = #{empNo} AND SEND_DELFLAG = 'N'
                      GROUP BY MSG_NO
-                     ORDER BY MSG_NO DESC
+                     ORDER BY MSG_REGDATE DESC
                  ) mlist
         )
         <![CDATA[
@@ -162,7 +162,7 @@
                     WHERE SENDEMP_NO = #{empNo} AND SEND_DELFLAG = 'N'
                     <include refid="messageSearchWhere"></include>
                     GROUP BY MSG_NO
-                    ORDER BY MSG_NO DESC
+                    ORDER BY MSG_REGDATE DESC
                 ) mlist
             )
         <![CDATA[
@@ -182,7 +182,7 @@
                 FROM (
                          SELECT m.*
                          FROM MSGRECVIEW m
-                         WHERE EMP_NO = #{empNo} and MSG_IMPFLAG = 'Y'
+                         WHERE EMP_NO = #{empNo} and MSG_IMPFLAG = 'Y' and MSG_DELFLAG = 'N'
                          <include refid="messageSearchWhere"></include>
                          ORDER BY MSG_REGDATE DESC
                      ) mlist
@@ -209,6 +209,7 @@
         FROM MSGSENDVIEW
         WHERE MSG_NO = #{msgNo}
         GROUP BY SENDEMP_NO
+        ORDER BY MSG_REGDATE DESC
     </select>
 
     <select id="selectTotalMsgRecCount" parameterType="MessageSearchVO" resultType="int">
@@ -308,8 +309,14 @@
 
     <update id="delMsgUndo" parameterType="int">
         UPDATE MESSAGE_REC
-        SET MSG_DELFLAG = 'R'
+        SET MSG_DELFLAG = 'N'
         WHERE REC_NO = #{recNo}
+    </update>
+
+    <update id="delSendMsgUndo" parameterType="int">
+        UPDATE MESSAGE
+        SET SEND_DELFLAG = 'N'
+        WHERE MSG_NO = #{msgNo}
     </update>
 
     <update id="updateReadFlag" parameterType="int">

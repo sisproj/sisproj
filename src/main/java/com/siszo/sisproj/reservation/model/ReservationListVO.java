@@ -2,8 +2,6 @@ package com.siszo.sisproj.reservation.model;
 
 import java.util.List;
 
-import com.siszo.sisproj.addrbook.addrbook.model.AddrBookVO;
-
 public class ReservationListVO {
 	private List<ReservationVO> resItems;
 

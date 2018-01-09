@@ -63,7 +63,7 @@ function ChangeDate(Date) {
 			"${map['RES_NO']}" : true,
 			</c:forEach>
 			<c:forEach var="vo" items="${deptlist }">
-			"${vo.deptNo}" : true,
+			"${vo.deptName}" : true,
 			</c:forEach>
 			orders : true,
 			
@@ -195,7 +195,7 @@ function ChangeDate(Date) {
 			<c:forEach var="map" items="${reslist }">
 				{start_date: "${map['RV_START']}", end_date: "${map['RV_END']}",
 					text:"${map['RV_CONTENT']}",	subject: "${map['RES_NO']}",
-					categ:"${map['RES_NAME']}", dept:"${map['DEPT_NO']}"},
+					categ:"${map['RES_NAME']}", dept:"${map['DEPT_NAME']}"},
 			</c:forEach>
 			</c:if>
 			], "json");
@@ -484,7 +484,7 @@ color:red;
 				
 				 <span>부서 별 검색:</span> 
 				<c:forEach var="vo" items="${deptlist}">
-				<label> <input type="checkbox" name="${vo.deptNo }" /> ${vo.deptName }</label>
+				<label> <input type="checkbox" name="${vo.deptName }" /> ${vo.deptName }</label>
 				</c:forEach>
 			</div>
 				
@@ -535,7 +535,7 @@ color:red;
 				<tbody>
 					<c:if test="${empty myreslist }">
 						<tr>
-							<td colspan="6">자원 승인 대기현황이 없습니다.</td>
+							<td colspan="7">자원 승인 대기현황이 없습니다.</td>
 						</tr>
 					</c:if>
 					<c:if test="${!empty myreslist }">
@@ -554,7 +554,7 @@ color:red;
 										pattern="yyyy-MM-dd" /></td>
 								<td><c:if test="${map['RV_CONFIRM']=='N'}"><span class="colorblue">승인 대기중</span></c:if> <c:if
 										test="${map['RV_CONFIRM']=='R'}"><span class="colorred">반려</span></c:if></td>
-								<td><%-- <a href="#" class="cancel" onclick="sendcancel(${map['RV_NO']})">취소</a> --%>취소</td>
+								<td><a href="<c:url value="/resource/cancelR.do?rvNo=${map['RV_NO']}"/>" onclick="return confirm('정말 취소하시겠습니까?');">취소</a></td>
 							</tr>
 						</c:forEach>
 					</c:if>

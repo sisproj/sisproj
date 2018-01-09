@@ -30,6 +30,9 @@
     <script src="<c:url value="/resources/js/mainjs.js"/>"></script>
     <script src="<c:url value="/resources/js/zipcode.js"/>"></script>
 
+    <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+    <script src="<c:url value="/resources/js/pagejs/firebase_init.js"/>"></script>
+
 </head>
 <body>
 <!-- 상단부분 -->
@@ -61,6 +64,7 @@
                 <li><a href="<c:url value='/news/adm/newsWrite.do'/>"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;<span>SIS 뉴스등록 </span></a></li>                          
                 <li><a href="<c:url value='/news/adm/newsRegdit.do'/>"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;<span>SIS 뉴스관리 </span></a></li>
                 <li><a href="<c:url value='/resource/adm/reservationList.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>자원 사용 현황</span></a></li> 
+                <li><a href="<c:url value='/resource/adm/resourceList.do'/>"><i class="fa fa-cog"></i>&nbsp;<span>자원 목록/등록</span></a></li> 
 			</ul>	
 			<!-- 1.왼쪽 사이드 메뉴 지정 끝-->
 			<div id="listbtn"><p><i class="fa fa-chevron-circle-left" style="text-align: center;"></i></p></div>

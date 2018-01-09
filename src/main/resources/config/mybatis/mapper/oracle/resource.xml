@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="config.mybatis.mapper.oracle.resource">
+	<insert id="insertResource" parameterType="ResourceVO">
+		<selectKey keyProperty="resNo" resultType="int" order="BEFORE">
+			select resour_seq.nextval from dual
+		</selectKey>
+		insert into resourcereg(res_no, res_categ, res_name, res_desc, emp_no)
+		values(#{resNo},#{resCateg}, #{resName},#{resDesc},#{empNo})
+	</insert>
+	<select id="selectResourceAll" resultType="map" parameterType="ResourceSearchVO">
+		select * 
+		from resourcereg r join emp e
+		on r.emp_no=e.emp_no
+		<if test="searchKeyword !=null and searchKeyword!=''">
+			where r.res_name like '%' || #{searchKeyword} || '%'
+		</if>
+	</select>
+	<select id="selectTotalRecord" resultType="int">
+		select count(*) from resourcereg
+	</select>
+	<delete id="deleteResource" parameterType="int">
+		delete from resourcereg
+		where res_no=#{resNo}
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+
