@@ -32,14 +32,14 @@ public class CommueController {
 	private CommueService commueService;
 	
 	@RequestMapping("/adm/AdminMonthList.do")
-	public String commueMonthList() {
-/*		logger.info("출퇴근 월별 통계 보여주기 파라미터 dateSearchVo={}",dateSearchVo);
+	public String commueMonthList(@ModelAttribute DateSearchVO dateSearchVo,Model model) {
+		logger.info("출퇴근 월별 통계 보여주기 파라미터 dateSearchVo={}",dateSearchVo);
 		
 		List<Map<String, Object>> list = commueService.selectMonthDeptName(dateSearchVo);
 		logger.info("출퇴근 월별 통계 조회 결과 list.size()={}",list.size());
 		
 		model.addAttribute("list",list);
-		*/
+		
 		return "commue/AdminMonthList";
 	}
 	
@@ -146,10 +146,10 @@ public class CommueController {
 		EmployeeVO vo = (EmployeeVO) session.getAttribute("empVo");
 		int empNo = vo.getEmpNo(); 
 		logger.info("사원 월별 근태 파라미터 dateSearchVo={}",dateSearchVo);
-	/*	Date d = new Date();
+		Date d = new Date();
 		String year = Integer.toString(d.getYear());
 		dateSearchVo.setYear(year);
-		dateSearchVo.setEmpNo(empNo);*/
+		dateSearchVo.setEmpNo(empNo);
 		   List<Map<String, Object>> lists = commueService.selectMonthListCount(dateSearchVo);
 			logger.info("사원 월별 근태 조회 결과 lists.size()={}",lists.size());
 			

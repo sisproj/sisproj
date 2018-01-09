@@ -165,8 +165,6 @@
 		</div>
 	<div>
 	<div id="chartOne"></div>
-	<c:forEach></c:forEach>
-	<c:if ></c:if>
 	<div id="chartStick"></div>
 	</div>
 <%@include file="commueBottom.jsp" %>
