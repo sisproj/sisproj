@@ -131,4 +131,9 @@ public class MessageServiceImpl implements MessageService {
         return messageDAO.selectRecencySendMsg(empNo);
     }
 
+    @Override
+    public int delSendMsgUndo(int msgNo) {
+        return messageDAO.delSendMsgUndo(msgNo);
+    }
+
 }
