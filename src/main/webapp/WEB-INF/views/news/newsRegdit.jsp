@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ include file="../inc/admTop.jsp" %>
-<link rel="stylesheet" href="<c:url value='/resources/css/w3/w3.css'/>">
 <script type="text/javascript">
 	function pageFunc(curPage) {
 	      document.frmPage.currentPage.value = curPage;
@@ -35,7 +34,97 @@
 	text-align: center;
 }
 
+#newsRegFrm{
+	width: 90%;
+	margin: 0 auto;
+	padding : 10px;
+	box-sizing:border-box;
+	border:0;
+	border-collapse: collapse;
+	margin-bottom: 10px;
+}
 
+#newsRegFrm tr{
+	transition:all 300ms linear;
+}
+#newsRegFrm tbody tr:hover{
+	background-color: #e1e1e1;
+}
+#newsRegFrm th{
+	box-sizing:border-box;
+	padding: 5px;
+	height: 30px;
+	color: #036;
+	font-size: 1.17em;
+	border:0;
+	border-top: 2px solid #e1e1e1;
+	border-bottom: 2px solid #e1e1e1;
+}
+#newsRegFrm td {
+	box-sizing:border-box;
+	padding: 5px;
+	border:0;
+	text-align: center;
+	border-bottom: 2px solid #e1e1e1;
+}
+/*버튼 영역*/
+#newsRegbtns{
+	width: 90%;
+	margin: 0 auto;
+}
+#newsRegbtns input[type=button]{
+	display: inline-block;
+	width:  110px;
+	height: 30px;
+	margin-right: 5px;
+}
+/*하단 페이징 버튼*/
+#pagingbtn{
+	width: 100%;
+	max-width:1100px;
+	margin: 0 auto;
+	height: 40px;
+	width: auto;
+	box-sizing:border-box;
+	padding-bottom: 10px;
+	text-align:center;
+	margin-top: 10px;
+}
+#pagingbtn span, #pagingbtn a{
+	display: inline-block;
+	width: 24px;
+	line-height: 24px;
+	border-radius:12px;
+	background-color: #369;
+	color: fff;
+	text-align: center;
+	font-weight: bold;
+	margin-left: 5px;
+	box-shadow:2px 2px 3px #333;
+	font-size: 0.8em;
+}
+#pagingbtn a:hover,
+#pagingbtn span.thispage{
+	background-color:#09f;
+	box-shadow:2px 2px 3px transparent;	
+}
+#pagingbtn span:first-child{
+	margin-left: 0;	
+}
+#pagingbtn a i {
+	line-height: 24px;
+	color: fff;
+	text-align: center;
+	font-size: 0.8em;
+}
+#pagingbtn #firstbtn,
+#pagingbtn #lastbtn{
+	background-color: #333;
+}
+#pagingbtn #prevbtn,
+#pagingbtn #nextbtn{
+	background-color: #306;
+}
 </style>
 
 <!-- 왼쪽 사이드 메뉴 끝 -->
@@ -55,7 +144,7 @@
 <form name="frmList" id="frmList" method="post" 
 action="<c:url value='/news/newsRegdit.do'/>">
 <div class="divList"> 
-<table width="1200" class="box2" >
+<table id="newsRegFrm">
 	<colgroup>
 		<col style="width:5%" />
 		<col style="width:15%" />
@@ -123,30 +212,36 @@ action="<c:url value='/news/newsRegdit.do'/>">
 
 </div>
 </form>
-<input type="button" id="btDeleteMulti" value="선택한 뉴스 삭제" >
-<input type="button" id="btWriteNews" value="뉴스등록" >
+<div id="newsRegbtns">
+	<input type="button" id="btDeleteMulti" value="선택한 뉴스 삭제" >
+	<input type="button" id="btWriteNews" value="뉴스등록" >
+</div>
 	<form name="frmPage" method="post"
 				action="<c:url value='/news/newsRegdit.do'/>">
-				 <input type="hidden" name="currentPage">
-			</form>
-			<div class="w3-bar w3-margin w3-center">
-				<a href="#" class="w3-button"
-					onclick="pageFunc(${pagingInfo.firstPage})">&laquo;</a>
-				<c:forEach var="i" begin="${pagingInfo.firstPage}"
-					end="${pagingInfo.lastPage}">
-					<c:if test="${i==pagingInfo.currentPage}">
-						<span style="font-weight: bold; color: blue" class="w3-button">${i}</span>
-					</c:if>
-					<c:if test="${i != pagingInfo.currentPage}">
-						<a href="#" onclick="pageFunc(${i})" class="w3-button">${i}</a>
-					</c:if>
-				</c:forEach>
-				<a href="#" class="w3-button"
-					onclick="pageFunc(${pagingInfo.lastPage})">&raquo;</a>
-			</div>
-			
-			
-		<!-- 3. 내용 끝 -->
+		 <input type="hidden" name="currentPage">
+	</form>
+	<div id="pagingbtn">
+		<!-- 이전 블럭으로 이동 ◀ -->
+		<c:if test="${pagingInfo.firstPage>1 }">
+			<a id="prevbtn" href="#" onclick="pageFunc(${pageInfo.firstPage-1})"><i class="fa fa-chevron-left"></i></a>	
+		</c:if>	
+		
+		<!-- [1][2][3][4][5][6][7][8][9][10] -->
+		<c:forEach var="i" begin="${pagingInfo.firstPage}" end="${pagingInfo.lastPage}">
+			<c:if test="${i==pagingInfo.currentPage}">
+				<span class="thispage">${i }</span>
+			</c:if>
+			<c:if test="${i!=pagingInfo.currentPage}">
+				<a href="#" onclick="pageFunc(${i })">${i }</a>		
+	 		</c:if>				
+		</c:forEach>
+	
+		<!-- 다음 블럭으로 이동 ▶ -->
+		<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage}">
+			<a id=nextbtn href="#" onclick="pageFunc(${pagingInfo.lastPage+1})"><i class="fa fa-chevron-right"></i></a>
+		</c:if>
+	</div>
+	<!-- 3. 내용 끝 -->
 </article>
 <!-- 4. 상단 네비 색먹이기 // li태그 순서(전자결재 : 6번째) 입력 -->
 <script type="text/javascript">

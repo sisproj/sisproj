@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="<c:url value='/resources/css/css_m/home_m.css'/>"> --%>
 
 <!-- 모바일, PC 구분 -->
+<c:set var="userAgentInfo" value="${header['User-Agent']}" />
 <c:if test="${fn:indexOf(userAgentInfo, 'Linux') > 0 || fn:indexOf(userAgentInfo, 'iPhone') > 0 || fn:indexOf(userAgentInfo, 'iPad') > 0 }">
 	<link rel="stylesheet" href="<c:url value='/resources/css/css_m/home_m.css'/>">
 </c:if>
