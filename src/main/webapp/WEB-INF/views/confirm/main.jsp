@@ -1,7 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ include file="../inc/top.jsp" %>
-<link href="<c:url value='/resources/css/pagecss/confirm_main.css'/>" rel="stylesheet" type="text/css">
 
+<!-- 모바일, PC 구분 -->
+<c:set var="userAgentInfo" value="${header['User-Agent']}" />
+<c:if test="${fn:indexOf(userAgentInfo, 'Linux') > 0 || fn:indexOf(userAgentInfo, 'iPhone') > 0 || fn:indexOf(userAgentInfo, 'iPad') > 0 }">
+	<link rel="stylesheet" href="<c:url value='/resources/css/css_m/confirm_main_m.css'/>">
+	<script type="text/javascript">
+		$(function(){
+			var cnt = 0;
+			$('#complete table tbody tr').each(function(idx, item){
+				cnt+=1;
+			});
+			if(cnt<=1){
+				$('#complete table tbody tr td').css({
+					height : '20px',
+					width : '100%',
+					'line-height' : '20px'
+				});
+			}
+		});
+	</script>
+</c:if>
+<c:if test="${fn:indexOf(userAgentInfo, 'Linux') <= 0 && fn:indexOf(userAgentInfo, 'iPhone') <= 0 && fn:indexOf(userAgentInfo, 'iPad') <= 0 }">
+	<link href="<c:url value='/resources/css/pagecss/confirm_main.css'/>" rel="stylesheet" type="text/css">
+</c:if>
 <!-- 0. include부분 -->
 			<nav>
 				<ul>
@@ -60,7 +82,7 @@
 				</div>
 				<div class="clr"></div>
 				<div id="await" class="cfmain_table">
-					<h3><i class="fa fa-hdd-o"></i> 결재 대기함</h3>
+					<h3><i class="fa fa-hdd-o"></i> 결재 대기함<a href="<c:url value='/confirm/await.do'/>">more</a></h3>
 					<table>
 						<thead>
 							<tr>
@@ -88,7 +110,7 @@
 					</table>			
 				</div>
 				<div id="complete" class="cfmain_table">
-					<h3><i class="fa fa-file-text"></i> 결재 완료함</h3>
+					<h3><i class="fa fa-file-text"></i> 결재 완료함<a href="<c:url value='/confirm/complete.do'/>">more</a></h3>
 					<table>
 						<thead>
 							<tr>

@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="<c:url value='/resources/css/css_m/home_m.css'/>"> --%>
 
 <!-- 모바일, PC 구분 -->
+<c:set var="userAgentInfo" value="${header['User-Agent']}" />
 <c:if test="${fn:indexOf(userAgentInfo, 'Linux') > 0 || fn:indexOf(userAgentInfo, 'iPhone') > 0 || fn:indexOf(userAgentInfo, 'iPad') > 0 }">
 	<link rel="stylesheet" href="<c:url value='/resources/css/css_m/home_m.css'/>">
 </c:if>
@@ -24,7 +25,13 @@
     <!-- 왼쪽 사이드 메뉴 끝 -->
     <article id="homesection">
         <div id="mainbanner">
-        	<c:import url="/mainbanner.do" />
+        	<!-- 모바일, PC 구분 -->
+		<c:if test="${fn:indexOf(userAgentInfo, 'Linux') > 0 || fn:indexOf(userAgentInfo, 'iPhone') > 0 || fn:indexOf(userAgentInfo, 'iPad') > 0 }">
+			<c:import url="/mainbanner_m.do" />
+		</c:if>
+		<c:if test="${fn:indexOf(userAgentInfo, 'Linux') <= 0 && fn:indexOf(userAgentInfo, 'iPhone') <= 0 && fn:indexOf(userAgentInfo, 'iPad') <= 0 }">
+			<c:import url="/mainbanner.do" />
+		</c:if>
         </div>
         <div id="mainCalendar">
         	<c:import url="/scheduler/sideScheduler.do" />
@@ -32,7 +39,7 @@
         <div class="clr"></div>
         <div id="mainTable">
         	<div id="mainNoti">
-	        	<h4><i class="fa fa-bullhorn"></i> 공지사항</h4>
+	        	<h4><i class="fa fa-bullhorn"></i> 공지사항 <a href="<c:url value='/notice/noticeList.do'/>">more</a></h4>
 	       		<table>
 	       			<thead>
 	        			<tr>
@@ -47,7 +54,7 @@
 	       		</table>
         	</div>
         	<div id="mainConfirm">
-        		<h4><i class="fa fa-book"></i> 결재 대기</h4>
+        		<h4><i class="fa fa-book"></i> 결재 대기 <a href="<c:url value='/confirm/await.do'/>">more</a></h4>
         		<table>
         			<thead>
 	        			<tr>
@@ -62,7 +69,7 @@
         		</table>
         	</div>
         	<div id="mainMessage">
-        		<h4><i class="fa fa-envelope"></i> 받은 쪽지함</h4>
+        		<h4><i class="fa fa-envelope"></i> 받은 쪽지함<a href="<c:url value='/message/receive.do'/>">more</a></h4>
         		<table>
         			<thead>
 	        			<tr>

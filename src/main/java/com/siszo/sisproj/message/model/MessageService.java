@@ -50,4 +50,6 @@ public interface MessageService {
     public List<MessageVO> selectRecencyRecMsg(int empNo);
 
     public List<MessageVO> selectRecencySendMsg(int empNo);
+
+    public int delSendMsgUndo(int msgNo);
 }

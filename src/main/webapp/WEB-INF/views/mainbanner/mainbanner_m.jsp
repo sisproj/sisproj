@@ -47,35 +47,35 @@
                 <div class="box_skitter box_skitter_large">
                     <ul>
                         <li>
-                            <a href="#random">
-                                <img src="${pageContext.request.contextPath }/resources/skitter/img/banner1.jpg" class="random">
+                            <a href="#horizontal">
+                                <img src="${pageContext.request.contextPath }/resources/skitter/img/banner1.jpg" class="horizontal">
                             </a>
                             <div class="label_text">
-                                <p>random</p>
+                                <p>horizontal</p>
                             </div>
                         </li>
                         <li>
-                            <a href="#cubeRandom">
-                                <img src="${pageContext.request.contextPath }/resources/skitter/img/banner2.jpg" class="cubeRandom">
+                            <a href="#fadeFour">
+                                <img src="${pageContext.request.contextPath }/resources/skitter/img/banner2.jpg" class="fadeFour">
                             </a>
                             <div class="label_text">
-                                <p>cubeRandom</p>
+                                <p>fadeFour</p>
                             </div>
                         </li>
                         <li>
-                            <a href="#random">
-                                <img src="${pageContext.request.contextPath }/resources/skitter/img/banner3.jpg" class="random">
+                            <a href="#directionRight">
+                                <img src="${pageContext.request.contextPath }/resources/skitter/img/banner3.jpg" class="directionRight">
                             </a>
                             <div class="label_text">
-                                <p>random</p>
+                                <p>directionRight</p>
                             </div>
                         </li>
                         <li>
-                            <a href="#random">
-                                <img src="${pageContext.request.contextPath }/resources/skitter/img/banner4.jpg" class="random">
+                            <a href="#fadeFour">
+                                <img src="${pageContext.request.contextPath }/resources/skitter/img/banner4.jpg" class="fadeFour">
                             </a>
                             <div class="label_text">
-                                <p>random</p>
+                                <p>fadeFour</p>
                             </div>
                         </li>
                     </ul>

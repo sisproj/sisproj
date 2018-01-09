@@ -149,8 +149,6 @@
 		}
 
         function messengerOpen(sendEmpNo, recEmpNo) {
-		    console.log(sendEmpNo);
-		    console.log(recEmpNo);
 		    var empNoArr = [];
 		    empNoArr.push(sendEmpNo);
             empNoArr.push(recEmpNo);
@@ -163,6 +161,8 @@
                 chatKey += empNo;
 			}
 
+			$('#sendEmpNo').val(sendEmpNo);
+            $('#recEmpNo').val(recEmpNo);
             $('#userKey').val(chatKey);
             window.open("", 'messengerWindow', 'width=1100,height=640,toolbar=no,scrollbars=yes');
 
@@ -289,6 +289,8 @@
 			<%--1:1 대화하기 form--%>
 			<form id="frmMessenger" name="frmMessenger" method="post" action="<c:url value='/messenger/messenger.do'/>" target="messengerWindow">
 				<input type="hidden" value="${userKey}" id="userKey" name="userKey">
+				<input type="hidden" value="${sendEmpNo}" id="sendEmpNo" name="sendEmpNo">
+				<input type="hidden" value="${recEmpNo}" id="recEmpNo" name="recEmpNo">
 			</form>
      	</div>
 
