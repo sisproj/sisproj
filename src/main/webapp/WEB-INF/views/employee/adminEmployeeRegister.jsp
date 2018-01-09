@@ -11,7 +11,7 @@
 			if(!confirm("취소하시겠습니까?")){
 				return false;
 			}else{
-				location.href="<c:url value='/employee/employeeList.do' />";
+				location.href="<c:url value='/employee/adm/adminEmployeeList.do' />";
 			}
 		});
 		
@@ -142,15 +142,14 @@
 </script>
 	<article id="headsection">
     <!-- 2. 페이지 이름 지정 // 북마크 지정 여부 .bookmark || .nobook -->
-    <h1><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;사원 등록&nbsp;<a href="#"><i class="fa fa-bookmark bookmark"
-                                                                                     aria-hidden="false"></i></a>
+    <h1><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;사원 등록&nbsp;
     </h1>
 </article>
     <article id="bodysection">
         <!-- 3. 내용 -->
      <div id="dimyPage">
       	<form id="frmEmp" name="frmEMP" method="post" 
-      	action="<c:url value='/employee/employeeRegister.do'/>" enctype="multipart/form-data">
+      	action="<c:url value='/employee/adm/adminEmployeeRegister.do'/>" enctype="multipart/form-data">
         <input type="hidden" name="empTel" id="empTel">
       	<input type="hidden" name="empSsn" id="empSsn">
       	<input type="hidden" name="empEmail" id="empEmail">

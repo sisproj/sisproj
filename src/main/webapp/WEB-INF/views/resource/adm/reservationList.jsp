@@ -152,7 +152,7 @@
 <article id="headsection">
 	<!-- 2. 페이지 이름 지정 // 북마크 지정 여부 .bookmark || .nobook -->
 	<h1>
-		<i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;자원 사용 현황&nbsp;<a href="#"> <i class="fa fa-bookmark bookmark" aria-hidden="true"></i></a>
+		<i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;자원 사용 현황&nbsp;</a>
 	</h1>
 	<!-- 2. 페이지 이름 지정 끝 -->
 </article>

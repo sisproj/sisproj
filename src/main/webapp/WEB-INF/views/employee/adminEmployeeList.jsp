@@ -83,13 +83,12 @@
 </script>
 <article id="headsection">
         <!-- 2. 페이지 이름 지정 // 북마크 지정 여부 .bookmark || .nobook -->
-        <h1><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;사원 리스트&nbsp;<a href="#"><i class="fa fa-bookmark bookmark"
-                                                                                         aria-hidden="false"></i></a>
+        <h1><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;사원 리스트&nbsp;
         </h1>
     </article>
 <article id="bodysection">
 <div id="dimyPage">
-	<form id="searchEmp" name="searchEmp" method="post" action="<c:url value='/employee/adm/employeeList.do'/>">	
+	<form id="searchEmp" name="searchEmp" method="post" action="<c:url value='/employee/adm/adminEmployeeList.do'/>">	
 	<input type="hidden" id="currentPage" name="currentPage" value="1">
 	        <div id="dimyP">
 		        <select name="searchCondition">
@@ -149,7 +148,7 @@
 						<td><input type="checkbox" name="empItems[${status.index}].empNo" value="${vo.empNo}"></td>	
 						<td>${vo.empNo }</td>
 						<!-- 사원번호로 사원 디테일 이동 -->
-						<td><a href="<c:url value='/employee/adm/employeeDetail.do?empNo=${vo.empNo }'/>">${vo.empName}</a></td>
+						<td><a href="<c:url value='/employee/adm/adminEmployeeDetail.do?empNo=${vo.empNo }'/>">${vo.empName}</a></td>
 						<td>${vo.deptName }</td>
 						<td>${vo.posName }</td>
 						<td>${vo.empTel }</td>
