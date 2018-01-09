@@ -11,6 +11,8 @@
 	<script src="<c:url value='/resources/codebase/ext/dhtmlxscheduler_map_view.js'/> "></script>
 	<!-- PDF로 보내기 -->
 	<script src="<c:url value='/resources/codebase/ext/dhtmlxscheduler_pdf.js'/>"></script>
+	<!-- quickinfo -->
+	 <script src="<c:url value="/resources/codebase/ext/dhtmlxscheduler_quick_info.js"/>"></script>
 
 <script type="text/javascript" charset="utf-8">
 		window.onload=function() {
@@ -28,7 +30,7 @@
 			scheduler.config.limit_time_select = true;
 			scheduler.config.details_on_dblclick = true;
 			scheduler.config.details_on_create = true;
-			
+			scheduler.config.quick_info_detached = true;
 			
 			scheduler.locale.labels.map_tab = "Map";
 			scheduler.locale.labels.section_location = "Location";
@@ -89,6 +91,12 @@
 			];
 			
 			scheduler.init('scheduler_here', new Date(), "month");
+			
+			scheduler.templates.quick_info_content = function(start, end, ev){ 
+			       return "장소 : " + ev.event_location + "  // 내용 : " + ev.content ; 
+			       
+			};
+			
 			
 			scheduler.attachEvent("onConfirmedBeforeEventDelete", function(id,ev){ //삭제버튼 눌렀을때
 				var tschNo = ev.tschid;
@@ -338,6 +346,11 @@ html, body {
             $('header nav ul li:nth-child(3) a').addClass('active');
         });
     </script>
+    <style>
+    .dhx_qi_big_icon{
+		display: none;
+	}
+    </style>
 <!-- 4. 상단 네비 색먹이기 끝-->
 <!-- 0. include부분 끝-->
 <%@include file="../inc/bottom.jsp"%>

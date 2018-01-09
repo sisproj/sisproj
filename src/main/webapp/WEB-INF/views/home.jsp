@@ -36,7 +36,9 @@
 	       		<table>
 	       			<thead>
 	        			<tr>
-	        				<th>제목</th>
+	        				<th>첨부</th>
+	        				<th>제목</th> 
+	        				<th>날짜</th> 
 	        			</tr>
 	       			</thead>
 	       			<tbody>
