@@ -43,7 +43,7 @@
             if (count > 0) {
                 $('#unreadMessenger').append('  <img src=\"<c:url value='/resources/images/new_icon.png'/>\">');
             }
-        })
+        });
     }
 </script>
 <div id="photo">

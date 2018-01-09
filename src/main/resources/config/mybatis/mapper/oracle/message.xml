@@ -107,7 +107,7 @@
                 WHERE SENDEMP_NO = #{empNo} AND SEND_DELFLAG = 'R'
                 <include refid="messageSearchWhere"></include>
                 GROUP BY MSG_NO
-                ORDER BY MSG_NO DESC
+                ORDER BY MSG_REGDATE DESC
             ) mlist
         )
         <![CDATA[
@@ -136,7 +136,7 @@
                      FROM MSGSENDVIEW
                      WHERE SENDEMP_NO = #{empNo} AND SEND_DELFLAG = 'N'
                      GROUP BY MSG_NO
-                     ORDER BY MSG_NO DESC
+                     ORDER BY MSG_REGDATE DESC
                  ) mlist
         )
         <![CDATA[
@@ -162,7 +162,7 @@
                     WHERE SENDEMP_NO = #{empNo} AND SEND_DELFLAG = 'N'
                     <include refid="messageSearchWhere"></include>
                     GROUP BY MSG_NO
-                    ORDER BY MSG_NO DESC
+                    ORDER BY MSG_REGDATE DESC
                 ) mlist
             )
         <![CDATA[
@@ -209,6 +209,7 @@
         FROM MSGSENDVIEW
         WHERE MSG_NO = #{msgNo}
         GROUP BY SENDEMP_NO
+        ORDER BY MSG_REGDATE DESC
     </select>
 
     <select id="selectTotalMsgRecCount" parameterType="MessageSearchVO" resultType="int">

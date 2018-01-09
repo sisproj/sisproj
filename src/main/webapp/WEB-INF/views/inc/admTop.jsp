@@ -30,6 +30,9 @@
     <script src="<c:url value="/resources/js/mainjs.js"/>"></script>
     <script src="<c:url value="/resources/js/zipcode.js"/>"></script>
 
+    <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+    <script src="<c:url value="/resources/js/pagejs/firebase_init.js"/>"></script>
+
 </head>
 <body>
 <!-- 상단부분 -->
