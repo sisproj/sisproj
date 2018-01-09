@@ -5,6 +5,16 @@
 <script type="text/javascript">
 	$(function () {			
 		$('#dimypage input[type=text]').attr("disabled",true);
+	
+			$('#btCen').click(function () {
+				location.href="<c:url value='/employee/employeeList.do'/>";
+			});	
+			
+			$('#btEdit').click(function () {
+				location.href="<c:url value='/employee/employeeEdit.do?empNo="+${vo.empNo}+"'/>";
+			}); 
+			
+			$('#dimypage input[type=text]').attr("disabled",true);
 	});
 </script>
 <article id="headsection">
@@ -80,6 +90,10 @@
 			        <input type="text" name="empEmail" id="empEmail"value="${vo.empEmail }">		        
 	           	</div>
 		  </fieldset>	
+		        <div id="diReg">
+	           		<input type="button" id="btEdit" value="수정">
+					<input type="button" id="btCen" value="목록">
+			   </div>
 	   </form> 
 	   </div>
 	   <div id="diImg1">

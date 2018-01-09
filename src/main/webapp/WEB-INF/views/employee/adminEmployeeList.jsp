@@ -89,7 +89,7 @@
     </article>
 <article id="bodysection">
 <div id="dimyPage">
-	<form id="searchEmp" name="searchEmp" method="post" action="<c:url value='/employee/adm/employeeList.do'/>">	
+	<form id="searchEmp" name="searchEmp" method="post" action="<c:url value='/employee/adm/adminEmployeeList.do'/>">	
 	<input type="hidden" id="currentPage" name="currentPage" value="1">
 	        <div id="dimyP">
 		        <select name="searchCondition">
@@ -149,7 +149,7 @@
 						<td><input type="checkbox" name="empItems[${status.index}].empNo" value="${vo.empNo}"></td>	
 						<td>${vo.empNo }</td>
 						<!-- 사원번호로 사원 디테일 이동 -->
-						<td><a href="<c:url value='/employee/adm/employeeDetail.do?empNo=${vo.empNo }'/>">${vo.empName}</a></td>
+						<td><a href="<c:url value='/employee/adm/adminEmployeeDetail.do?empNo=${vo.empNo }'/>">${vo.empName}</a></td>
 						<td>${vo.deptName }</td>
 						<td>${vo.posName }</td>
 						<td>${vo.empTel }</td>

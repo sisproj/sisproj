@@ -11,7 +11,7 @@
 			if(!confirm("취소하시겠습니까?")){
 				return false;
 			}else{
-				location.href="<c:url value='/employee/employeeList.do' />";
+				location.href="<c:url value='/employee/adm/adminEmployeeList.do' />";
 			}
 		});
 		
@@ -150,7 +150,7 @@
         <!-- 3. 내용 -->
      <div id="dimyPage">
       	<form id="frmEmp" name="frmEMP" method="post" 
-      	action="<c:url value='/employee/employeeRegister.do'/>" enctype="multipart/form-data">
+      	action="<c:url value='/employee/adm/adminEmployeeRegister.do'/>" enctype="multipart/form-data">
         <input type="hidden" name="empTel" id="empTel">
       	<input type="hidden" name="empSsn" id="empSsn">
       	<input type="hidden" name="empEmail" id="empEmail">

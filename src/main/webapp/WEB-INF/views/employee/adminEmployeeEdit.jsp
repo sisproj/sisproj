@@ -11,11 +11,11 @@
 			if(!confirm("취소하시겠습니까?")){
 				return false;
 			}else{
-				location.href="<c:url value='/employee/adm/employeeList.do' />"
+				location.href="<c:url value='/employee/adm/adminEmployeeList.do' />"
 			}			
 		});
 		$('#btL').click(function() {
-			location.href="<c:url value='/employee/adm/employeeList.do' />"
+			location.href="<c:url value='/employee/adm/adminEmployeeList.do' />"
 		});
 		$('#email2').change(function(){
 			if($('#email2').val()=='etc'){
@@ -151,7 +151,7 @@
     <div id="dimyPage">
     	<div id="diInput">
       	<form id="frmEmp" name="frmEnp"    	
-  		action="<c:url value='/employee/adm/employeeEdit.do?empNo=${vo.empNo }'/>" method="post" enctype="multipart/form-data">
+  		action="<c:url value='/employee/adm/adminEmployeeEdit.do?empNo=${vo.empNo }'/>" method="post" enctype="multipart/form-data">
       	<input type="hidden" name="empTel" id="empTel" value="${vo.empTel }">
       	<input type="hidden" name="empSsn" id="empSsn" value="${vo.empSsn }">
       	<input type="hidden" name="empEmail" id="empEmail" value="${vo.empEmail }">
