@@ -111,7 +111,7 @@
                 <div id="cardEmail"><a href="#" title="이메일 보내기"><i class="fa fa-envelope-o"></i></a></div>
             </div>
         </div>
-        <hr>
+        <hr style="background-color: blue; height: 1px">
         <div class="w3-center"><a id="msgWrite" href="#" title="쪽지보내기"><i class="fa fa-paper-plane"></i> 쪽지 보내기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <a id="messengerOpen" href="#" title="대화하기"><i class="fa fa-comments-o"></i> 1:1 대화하기</a></div>
         <form id="frmMessenger" name="frmMessenger" method="post" action="<c:url value='/messenger/messenger.do'/>"

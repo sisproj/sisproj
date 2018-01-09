@@ -489,7 +489,7 @@
 
                 var resultDate = formatDate(timestamp);
                 $('#' + chatKey).html(
-                    '<span class="w3-bar-item" style="padding-top:20px; width:85px;height: 60px; float: left;"><i class="fa fa-circle-o" aria-hidden="true"></i></span>'+
+                    '<span class="w3-bar-item" style="padding-top:20px; width:85px;height: 60px; float: left;"><i class="fa fa-circle" aria-hidden="true"></i></span>'+
                     '<div class="w3-bar-item">' +
                     '<div class="w3-large w3-left">' + titleStr + '</div>' +
                     '<div class="w3-right w3-small">' + resultDate + '</div>' +
