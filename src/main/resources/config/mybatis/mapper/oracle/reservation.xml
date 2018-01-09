@@ -100,14 +100,6 @@
 		and 
 		res_no=#{resNo}]]>
 	</select>
-	
-	<!-- <delete id="deleteTimeOver">
-		delete from reservation
-		<![CDATA[
-		where to_date(rv_End,'yyyy-MM-dd hh:mi')<sysdate
-		]]>
-	</delete>	 -->
-	
 	<select id="resourceAllselect" parameterType="ReservationSearchVO" resultType="map">
 		select * from (
 		    select rownum as RNUM, blist.*
@@ -118,16 +110,13 @@
 		<![CDATA[
 		where RNUM > #{firstRecordIndex} 
 		and RNUM<=#{firstRecordIndex}+ #{recordCountPerPage} ]]>	
-	</select>
-	
+	</select>	
 	<select id="deptsearch" resultType="DeptVO">
 		select * from dept	
-	</select>
-	
+	</select>	
 	<delete id="cancelReservation" parameterType="int">
 		delete from reservation where rv_no=#{rvNo}	
 	</delete>
-	
 </mapper>
 
 

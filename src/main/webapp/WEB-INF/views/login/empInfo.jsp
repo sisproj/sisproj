@@ -43,7 +43,7 @@
             if (count > 0) {
                 $('#unreadMessenger').append('  <img src=\"<c:url value='/resources/images/new_icon.png'/>\">');
             }
-        })
+        });
     }
 </script>
 <div id="photo">
@@ -63,13 +63,13 @@
                 <li><i class="fa fa-id-card"></i>&nbsp;<span
                         class="name bold">관리자 ${sessionScope.empVo.empName }님</span></li>
                 <li><i class="fa fa-cog"></i>&nbsp;<span><a
-                        href="<c:url value='/employee/adm/employeeList.do'/>">관리자페이지</a></span></li>
+                        href="<c:url value='/employee/adm/adminEmployeeList.do'/>">관리자페이지</a></span></li>
             </c:if>
             <c:if test="${sessionScope.empVo.empLev eq ('사원') }">
                 <li><i class="fa fa-id-card"></i>&nbsp;<span class="name bold">${sessionScope.empVo.empName }</span>
                 </li>
                 <li><i class="fa fa-cog"></i>&nbsp;<span><a
-                        href="<c:url value='/employee/employeeDetail2.do?empNo=${sessionScope.empVo.empNo }'/>">마이페이지</a></span>
+                        href="<c:url value='/employee/employeeDetail.do?empNo=${sessionScope.empVo.empNo }'/>">마이페이지</a></span>
                 </li>
             </c:if>
         </c:if>

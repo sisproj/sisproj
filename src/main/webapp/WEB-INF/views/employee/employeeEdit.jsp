@@ -2,7 +2,6 @@
 <%@include file="employeeTop.jsp" %>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="<c:url value='/resources/js/zipcode.js'/>"></script>
-<%@include file="../inc/admTop.jsp" %>
      <!-- 0. include부분 -->
         <link rel="stylesheet" href="<c:url value="/resources/css/mypage.css"/>">
 <script type="text/javascript">
@@ -11,11 +10,8 @@
 			if(!confirm("취소하시겠습니까?")){
 				return false;
 			}else{
-				location.href="<c:url value='/employee/adm/employeeList.do' />"
+				location.href="<c:url value='/employee/employeeDetail.do?empNo=${sessionScope.empVo.empNo}' />"
 			}			
-		});
-		$('#btL').click(function() {
-			location.href="<c:url value='/employee/adm/employeeList.do' />"
 		});
 		$('#email2').change(function(){
 			if($('#email2').val()=='etc'){
@@ -397,8 +393,7 @@
            		</div>
 	        	<div style="text-align: center;">
 	        		<input type="submit" id="btS" name="btS" value="수정">
-	        		<input type="button" id="btC" name="btC" value="취소">
-	        		<input type="button" id="btL" name="btL" value="목록">	        			        		 
+	        		<input type="button" id="btC" name="btC" value="취소">        			        		 
 	        	</div>
         	</fieldset>
         </form>

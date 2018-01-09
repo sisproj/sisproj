@@ -26,7 +26,7 @@
 		emp_email=#{empEmail},emp_zipcode=#{empZipcode},emp_addr=#{empAddr},
 		emp_addr2=#{empAddr2},emp_hobby=#{empHobby},emp_hiredate=#{empHiredate},emp_school=#{empSchool},
 		emp_major=#{empMajor}
-		<if test="empImg!=null and !empImg.isEmpty()">
+		<if test="empImg!=null and empImg!=''">
 		,emp_img=#{empImg}
 		</if>
 		,emp_sal=#{empSal},

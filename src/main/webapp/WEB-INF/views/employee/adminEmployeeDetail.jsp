@@ -6,11 +6,11 @@
 <script type="text/javascript">
 	$(function () {	
 		$('#btCen').click(function () {
-			location.href="<c:url value='/employee/adm/employeeList.do'/>";
+			location.href="<c:url value='/employee/adm/adminEmployeeList.do'/>";
 		});	
 		
 		$('#btEdit').click(function () {
-			location.href="<c:url value='/employee/adm/employeeEdit.do?empNo="+${vo.empNo}+"'/>";
+			location.href="<c:url value='/employee/adm/adminEmployeeEdit.do?empNo="+${vo.empNo}+"'/>";
 		}); 
 		
 		$('#dimypage input[type=text]').attr("disabled",true);
@@ -27,7 +27,7 @@
     <div id="dimyPage">
     	<div id="diInput">
    		<form id="frmEmp" name="frmEMP" method="post" 
-   		action="<c:url value='/employee/adm/employeeEdit.do?empNo=${vo.empNo }'/>">
+   		action="<c:url value='/employee/adm/adminEmployeeEdit.do?empNo=${vo.empNo }'/>">
 	      	  <fieldset>
 	      	    <div id="diId">
 	      	 		<label for="name">사원번호</label><input type="text" id="empNo" name="empNo" value="${vo.empNo }">   

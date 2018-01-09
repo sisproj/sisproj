@@ -136,10 +136,10 @@
                         <tr class="hoverable unReadMessage" id="msg-${msgVO.recNo}">
                     </c:if>
                     <td style="width: 20%">
-                        <c:if test="${fn:length(msgVO.empName)>7 }">
-                            ${fn:substring(msgVO.empName,0,7) }...
+                        <c:if test="${fn:length(msgVO.empName)>5 }">
+                            ${fn:substring(msgVO.empName,0,5) }...
                         </c:if>
-                        <c:if test="${fn:length(msgVO.empName)<=7 }">
+                        <c:if test="${fn:length(msgVO.empName)<=5 }">
                             ${msgVO.empName}
                         </c:if>
                     </td>
