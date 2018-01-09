@@ -5,6 +5,21 @@
 <c:set var="userAgentInfo" value="${header['User-Agent']}" />
 <c:if test="${fn:indexOf(userAgentInfo, 'Linux') > 0 || fn:indexOf(userAgentInfo, 'iPhone') > 0 || fn:indexOf(userAgentInfo, 'iPad') > 0 }">
 	<link rel="stylesheet" href="<c:url value='/resources/css/css_m/confirm_main_m.css'/>">
+	<script type="text/javascript">
+		$(function(){
+			var cnt = 0;
+			$('#complete table tbody tr').each(function(idx, item){
+				cnt+=1;
+			});
+			if(cnt<=1){
+				$('#complete table tbody tr td').css({
+					height : '20px',
+					width : '100%',
+					'line-height' : '20px'
+				});
+			}
+		});
+	</script>
 </c:if>
 <c:if test="${fn:indexOf(userAgentInfo, 'Linux') <= 0 && fn:indexOf(userAgentInfo, 'iPhone') <= 0 && fn:indexOf(userAgentInfo, 'iPad') <= 0 }">
 	<link href="<c:url value='/resources/css/pagecss/confirm_main.css'/>" rel="stylesheet" type="text/css">
