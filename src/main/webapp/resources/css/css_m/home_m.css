@@ -32,6 +32,12 @@
 	margin-bottom: 5px;
 	font-size: 1.2em;
 }
+#mainTable h4 a{
+	display: inline-block;
+	color : #fff;
+	float:right;
+	margin-right: 10px;
+}
 #mainTable table{
 	width: 100%;
 	box-sizing:border-box;

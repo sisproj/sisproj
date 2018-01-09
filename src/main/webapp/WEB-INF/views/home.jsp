@@ -38,7 +38,7 @@
         <div class="clr"></div>
         <div id="mainTable">
         	<div id="mainNoti">
-	        	<h4><i class="fa fa-bullhorn"></i> 공지사항</h4>
+	        	<h4><i class="fa fa-bullhorn"></i> 공지사항 <a href="<c:url value='/notice/noticeList.do'/>">more</a></h4>
 	       		<table>
 	       			<thead>
 	        			<tr>
@@ -53,7 +53,7 @@
 	       		</table>
         	</div>
         	<div id="mainConfirm">
-        		<h4><i class="fa fa-book"></i> 결재 대기</h4>
+        		<h4><i class="fa fa-book"></i> 결재 대기 <a href="<c:url value='/confirm/await.do'/>">more</a></h4>
         		<table>
         			<thead>
 	        			<tr>
@@ -68,7 +68,7 @@
         		</table>
         	</div>
         	<div id="mainMessage">
-        		<h4><i class="fa fa-envelope"></i> 받은 쪽지함</h4>
+        		<h4><i class="fa fa-envelope"></i> 받은 쪽지함<a href="<c:url value='/message/receive.do'/>">more</a></h4>
         		<table>
         			<thead>
 	        			<tr>
