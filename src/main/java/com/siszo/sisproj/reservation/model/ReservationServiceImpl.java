@@ -89,4 +89,37 @@ public class ReservationServiceImpl implements ReservationService{
 	public List<DeptVO> deptsearch(){
 		return resDao.deptsearch();
 	}
+	
+	public int cancelReservation(int rvNo) {
+		return resDao.cancelReservation(rvNo);
+	}
+	@Override
+	public List<Map<String, Object>> selectReservationAllAMD(ReservationSearchVO searchVo) {
+		return resDao.selectReservationAllAMD(searchVo);
+	}
+
+	@Override
+	public int selectTotalRecordAll() {
+		return resDao.selectTotalRecordAll();
+	}
+
+	@Override
+	@Transactional
+	public int deleteResMulti(List<ReservationVO> list) {
+		int cnt=0;
+		try {
+			for (ReservationVO vo : list) {
+				int rvNo=vo.getRvNo();
+				if(rvNo!=0) {
+					cnt=resDao.cancelReservation(rvNo);
+				}
+			}
+		}catch (RuntimeException e) {
+			cnt=0;
+			e.printStackTrace();
+		}
+		
+		return cnt;
+	}
+	
 }

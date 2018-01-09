@@ -51,6 +51,11 @@ public class HomeController {
     public String mainbanner() {
     	return "mainbanner/mainbanner";
     }
+
+    @RequestMapping("/mainbanner_m.do")
+    public String mainbanner_m() {
+    	return "mainbanner/mainbanner_m";
+    }
     
     @RequestMapping("/clock.do")
     public String clock() {
@@ -86,8 +91,18 @@ public class HomeController {
 			String empName = eVo.getEmpName();
 			imvo.setEmpName(empName);
 		}
+		List<DocumentVO> list = new ArrayList<DocumentVO>();
+		if(awaitList.size()>5) {
+			for(int i=0; i<6; i++) {
+				DocumentVO dVo = awaitList.get(i);
+				
+				list.add(dVo);
+			} 			
+		} else {
+			list = awaitList;
+		}
 		
-		model.addAttribute("awaitList",awaitList);
+		model.addAttribute("awaitList",list);
 		
 		return "mainbanner/awaitList";
     }
@@ -99,12 +114,12 @@ public class HomeController {
     	List<NoticeVO> list = nService.selectAllNotice();
     	List<NoticeVO> noticeList = new ArrayList<NoticeVO>();
     	//리스트 개수 9개이상이라면 9개로 바꾸기
-    	if(list.size()>7) {
-        	for(int i=0; i<7; i++) {
+    	if(list.size()>5) {
+        	for(int i=0; i<6; i++) {
         		NoticeVO nVo =  list.get(i);
         		
 				String str = nVo.getNotiTitle();
-				String title = ConfirmUtility.titleLength(str, 38);
+				String title = ConfirmUtility.titleLength(str, 28);
 				//스크립트 보안 : 꺽쇠 변환
 				title = ConfirmUtility.changeTag(title);			
 				nVo.setNotiTitle(title);

@@ -67,22 +67,21 @@
 		and RNUM<=#{firstRecordIndex}+#{recordCountPerPage}]]>
 	</select>
 	
-	<select id="sear" parameterType="DateSearchVO" resultType="map">
-		select emp_name,dept_name,pos_name,to_char(cmt_in,'HH24:MI') as "CMTIN",
-        to_char(cmt_out,'HH24:MI') as "CMTOUT",cmt_status    
-		from cmtView
-		<if test="startDay!=null">
-		where to_char(cmt_in, 'yyyy-mm-dd')=#{startDay}
-		order by to_char(cmt_in, 'HH24:MI')
-		</if>
-	</select>
-	
 	<select id="selectTotalRecordCount" resultType="int" parameterType="DateSearchVO">
 		select count(*) from cmtView
-		<if test="startDay!=null and !startDay.isEmpty()">
+		<if test="startDay!=null and startDay!=''">
 		where to_char(cmt_in, 'yyyy-mm-dd')=#{startDay}		
 		<include refid="searchWhere"></include>  
 		</if>
+	</select>
+	
+	<select id="selectMonthListCount" parameterType="DateSearchVO" resultType="map">
+		select to_char(cmt_in,'mm') as "CMTIN",count(*) as "TOTAL" from cmtView
+		<if test="year!=null and year!=''">
+		where to_char(cmt_in,'yyyy')=#{year} and emp_no=#{empNo}
+		</if>
+		group by to_char(cmt_in, 'mm')
+		order by to_char(cmt_in, 'mm')
 	</select>
 </mapper>
 

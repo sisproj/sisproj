@@ -29,14 +29,27 @@
 			<![CDATA[
 			where RNUM > #{firstRecordIndex} 
 			and RNUM<=#{firstRecordIndex}+ #{recordCountPerPage} ]]>
-			<!-- select v.*, s.res_categ, s.res_name, e.emp_name, d.dept_name
-					from reservation v join resourcereg s
-					on v.res_no=s.res_no
+	</select>
+	<select id="selectReservationAllAMD" parameterType="ReservationSearchVO" resultType="map">
+		select *
+			from
+			(
+			    select rownum as RNUM, rlist.*
+			    from(
+					select r.*, s.res_categ, s.res_name, e.emp_name, d.dept_name
+					from reservation r join resourcereg s
+					on r.res_no=s.res_no
 					join emp e
-					on e.emp_no=v.EMP_NO
+					on e.emp_no=r.EMP_NO
 					join dept d
 					on e.dept_no=d.dept_no
-					where v.rv_confirm='N' -->
+					where s.res_name like '%' || #{searchKeyword} || '%'
+					order by r.rv_regdate desc
+				) rlist
+			) 
+			<![CDATA[
+			where RNUM > #{firstRecordIndex} 
+			and RNUM<=#{firstRecordIndex}+ #{recordCountPerPage} ]]>
 	</select>	
 	<insert id="insertReservation" parameterType="ReservationVO">
 	<selectKey resultType="int" keyProperty="rvNo" order="BEFORE">
@@ -47,6 +60,9 @@
 	</insert>
 	<select id="selectTotalRecord" resultType="int">
 		select count(*) from reservation where rv_confirm='N'
+	</select>
+	<select id="selectTotalRecordAll" resultType="int">
+		select count(*) from reservation
 	</select>
 	<update id="updateConfirmY" parameterType="int">
 		update reservation
@@ -71,9 +87,7 @@
 		) 
 		<![CDATA[
 		where RNUM > #{firstRecordIndex} 
-		and RNUM<=#{firstRecordIndex}+ #{recordCountPerPage} ]]>
-	
-		
+		and RNUM<=#{firstRecordIndex}+ #{recordCountPerPage} ]]>		
 	</select>
 	
 	<select id="chkDupRes" parameterType="ReservationVO" resultType="int">
@@ -103,16 +117,16 @@
 		) 
 		<![CDATA[
 		where RNUM > #{firstRecordIndex} 
-		and RNUM<=#{firstRecordIndex}+ #{recordCountPerPage} ]]>
-	
-	
+		and RNUM<=#{firstRecordIndex}+ #{recordCountPerPage} ]]>	
 	</select>
 	
 	<select id="deptsearch" resultType="DeptVO">
-	select * from dept
-	
+		select * from dept	
 	</select>
 	
+	<delete id="cancelReservation" parameterType="int">
+		delete from reservation where rv_no=#{rvNo}	
+	</delete>
 	
 </mapper>
 

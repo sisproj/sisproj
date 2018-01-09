@@ -39,7 +39,7 @@ function ChangeDate(Date) {
 	return years+"-"+Month+"-"+day+" "+times;
 	}
 
-	window.onload = function() {
+	window.onload = function() { 
 
 		
 		scheduler.config.readonly = true;
@@ -63,7 +63,7 @@ function ChangeDate(Date) {
 			"${map['RES_NO']}" : true,
 			</c:forEach>
 			<c:forEach var="vo" items="${deptlist }">
-			"${vo.deptNo}" : true,
+			"${vo.deptName}" : true,
 			</c:forEach>
 			orders : true,
 			
@@ -195,13 +195,14 @@ function ChangeDate(Date) {
 			<c:forEach var="map" items="${reslist }">
 				{start_date: "${map['RV_START']}", end_date: "${map['RV_END']}",
 					text:"${map['RV_CONTENT']}",	subject: "${map['RES_NO']}",
-					categ:"${map['RES_NAME']}", dept:"${map['DEPT_NO']}"},
+					categ:"${map['RES_NAME']}", dept:"${map['DEPT_NAME']}"},
 			</c:forEach>
 			</c:if>
 			], "json");
 		
-		
 		}
+	
+	
 	
 	function pageFunc(curPage){
 		document.pagefrm.currentPage.value=curPage;
@@ -412,6 +413,13 @@ function ChangeDate(Date) {
 	min-width: 1500px;
 	clear: both;
 }
+
+.colorblue{
+color:blue;
+}
+.colorred{
+color:red;
+}
 </style>
 <!-- 0. include부분 -->
 <nav>
@@ -476,7 +484,7 @@ function ChangeDate(Date) {
 				
 				 <span>부서 별 검색:</span> 
 				<c:forEach var="vo" items="${deptlist}">
-				<label> <input type="checkbox" name="${vo.deptNo }" /> ${vo.deptName }</label>
+				<label> <input type="checkbox" name="${vo.deptName }" /> ${vo.deptName }</label>
 				</c:forEach>
 			</div>
 				
@@ -510,7 +518,8 @@ function ChangeDate(Date) {
 					<col width="17%">
 					<col width="17%">
 					<col width="13%">
-					<col width="15%">
+					<col width="10%">
+					<col width="6%">
 				</colgroup>
 				<thead>
 					<tr>
@@ -520,6 +529,7 @@ function ChangeDate(Date) {
 						<th>종료일</th>
 						<th>등록일</th>
 						<th>승인여부</th>
+						<th>취소</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -532,13 +542,19 @@ function ChangeDate(Date) {
 						<c:forEach var="map" items="${myreslist }">
 							<tr>
 								<td>${map['RES_NAME']}</td>
-								<td>${map['RV_CONTENT']}</td>
+								<c:if test="${fn:length(map['RV_CONTENT'])>=11 }">
+								<td>${fn:substring(map['RV_CONTENT'],0,11) }...</td> 
+								</c:if> 
+								<c:if test="${fn:length(map['RV_CONTENT'])<11 }">
+								<td>${map['RV_CONTENT']}</td> 
+								</c:if> 
 								<td>${map['RV_START'] }</td>
 								<td>${map['RV_END'] }</td>
 								<td><fmt:formatDate value="${map['RV_REGDATE']}"
 										pattern="yyyy-MM-dd" /></td>
-								<td><c:if test="${map['RV_CONFIRM']=='N'}">승인 대기중</c:if> <c:if
-										test="${map['RV_CONFIRM']=='R'}">반려</c:if></td>
+								<td><c:if test="${map['RV_CONFIRM']=='N'}"><span class="colorblue">승인 대기중</span></c:if> <c:if
+										test="${map['RV_CONFIRM']=='R'}"><span class="colorred">반려</span></c:if></td>
+								<td><a href="<c:url value="/resource/cancelR.do?rvNo=${map['RV_NO']}"/>" onclick="return confirm('정말 취소하시겠습니까?');">취소</a></td>
 							</tr>
 						</c:forEach>
 					</c:if>
@@ -666,8 +682,6 @@ function ChangeDate(Date) {
 </article>
 <!-- 4. 상단 네비 색먹이기 // li태그 순서(전자결재 : 6번째) 입력 -->
 <script type="text/javascript">
-
-
 
 	$(function() {
 		$('header nav ul li:nth-child(4) a').addClass('active');

@@ -11,7 +11,6 @@
             messageCheck();
         }, 10000);
     });
-
     function messageCheck() {
         $.ajax({
             url: "<c:url value='/message/unReadCount.do'/>",
@@ -28,7 +27,6 @@
             }
         });
     }
-
     function messengerCheck() {
         var membersRef = firebase.database().ref('members/');
         membersRef.on('value', function (snapshot) {
@@ -47,7 +45,6 @@
             }
         })
     }
-
 </script>
 <div id="photo">
     <c:if test="${empty sessionScope.empVo.empImg }">
@@ -84,7 +81,7 @@
 			</span>&nbsp;<span id="unreadMessenger"
                                class="red">0</span></li>
         <li><i class="fa fa-pencil-square-o"></i>&nbsp;<span><a
-                href="<c:url value='/confirm/await.do'/>">결재대기문서</a></span>&nbsp;<span
+                href="<c:url value='/confirm/await.do'/>">결재대기</a></span>&nbsp;<span
                 class="red">${awaitCnt }</span></li>
     </ul>
 </div>

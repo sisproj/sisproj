@@ -21,6 +21,12 @@ header h1 img {
 header h1 {
 	float:left;		
 }
+header #navSlideBtn{
+	display: none;
+}
+#mainNavButton{
+	display: none;	
+}
 header nav {
 	margin-top: 54px;
 	margin-left: 50px;

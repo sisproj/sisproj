@@ -207,4 +207,72 @@ public class ReservationController {
 
 		return "common/message";
 	}
+	
+	@RequestMapping("/cancelR.do")
+	public String cancelReservation(@RequestParam int rvNo, Model model) {
+		int cnt = resService.cancelReservation(rvNo);
+		
+		String msg = "", url = "/resource/resource.do";
+		if (cnt > 0) {
+			msg = "예약이 취소되었습니다.";
+		} else {
+			msg = "예약취소가 실패하였습니다.";
+		}
+
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+
+		return "common/message";
+	}
+	
+	
+	@RequestMapping("/adm/reservationList.do")
+	public String reservationList(@ModelAttribute ReservationSearchVO searchVo, Model model) {
+		logger.info("관리자 페이지 - 자원 사용현황 리스트, 파라미터 searchVo={}", searchVo);
+
+		// Paging 처리에 필요한 변수를 계산해주는 PaginationInfo 생성
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(Utility.BLOCK_SIZE);
+		pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+
+		// SearchVo에 값 셋팅
+		searchVo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		logger.info("searchVo 최종값 : {}", searchVo);
+
+		List<Map<String, Object>> list = resService.selectReservationAllAMD(searchVo);
+		logger.info("관리자 페이지 - 자원 사용현황 리스트 조회결과 list.size={}", list.size());
+
+		int totalRecord = resService.selectTotalRecord();
+		logger.info("관리자 페이지 - 자원 사용현황 전체 조회 결과, totalRecord={}", totalRecord);
+
+		pagingInfo.setTotalRecord(totalRecord);
+
+		model.addAttribute("list", list);
+		model.addAttribute("pagingInfo", pagingInfo);
+
+		return "resource/adm/reservationList";
+	}
+	
+	@RequestMapping("/adm/deleteResMulti.do")
+	public String deleteMulti(@ModelAttribute ReservationListVO resListVo, Model model) {
+		logger.info("관리자 페이지 - 자원 사용 현황 멀티 삭제, 파라미터 resListVo={}",resListVo);
+		
+		List<ReservationVO> list=resListVo.getResItems();
+		
+		int cnt=resService.deleteResMulti(list);
+		
+		String msg="",url="/resource/adm/reservationList.do";
+		if(cnt>0) {
+			msg="멀티 삭제 성공";
+		}else {
+			msg="멀티 삭제 실패";			
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "common/message";
+	}
 }
