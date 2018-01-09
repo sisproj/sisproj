@@ -30,7 +30,7 @@ section #homesection{
 }
 #mainTable div{
 	box-sizing: border-box;
-	height: 300px;	
+	height: 270px;	
 	border : 1px solid #069;
 	padding: 5px;
 }
@@ -93,8 +93,14 @@ section #homesection{
 #mainNoti h4 i{
 	color: #fff;		
 }
-#mainNoti thead tr th{
-	width: 100%;
+#mainNoti thead tr th:nth-child(1){
+	width:15%;
+}
+#mainNoti thead tr th:nth-child(2){
+	width:55%;
+}
+#mainNoti thead tr th:nth-child(3){
+	width:30%;
 }
 /*전자결재*/
 #mainConfirm h4 {

@@ -24,7 +24,13 @@
     <!-- 왼쪽 사이드 메뉴 끝 -->
     <article id="homesection">
         <div id="mainbanner">
-        	<c:import url="/mainbanner.do" />
+        	<!-- 모바일, PC 구분 -->
+		<c:if test="${fn:indexOf(userAgentInfo, 'Linux') > 0 || fn:indexOf(userAgentInfo, 'iPhone') > 0 || fn:indexOf(userAgentInfo, 'iPad') > 0 }">
+			<c:import url="/mainbanner_m.do" />
+		</c:if>
+		<c:if test="${fn:indexOf(userAgentInfo, 'Linux') <= 0 && fn:indexOf(userAgentInfo, 'iPhone') <= 0 && fn:indexOf(userAgentInfo, 'iPad') <= 0 }">
+			<c:import url="/mainbanner.do" />
+		</c:if>
         </div>
         <div id="mainCalendar">
         	<c:import url="/scheduler/sideScheduler.do" />
