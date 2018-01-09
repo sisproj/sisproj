@@ -149,8 +149,6 @@
 		}
 
         function messengerOpen(sendEmpNo, recEmpNo) {
-		    console.log(sendEmpNo);
-		    console.log(recEmpNo);
 		    var empNoArr = [];
 		    empNoArr.push(sendEmpNo);
             empNoArr.push(recEmpNo);
