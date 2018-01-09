@@ -205,6 +205,7 @@
             SENDEMP_NO,
             LISTAGG(EMP_NAME||'('||EMP_NO||')', ',') WITHIN GROUP (ORDER BY EMP_NAME) AS EMP_NAME,
             MIN(MSG_TITLE) AS MSG_TITLE,
+            MIN(MSG_REGDATE) AS MSG_REGDATE,
             MIN(TO_CHAR(MSG_CONTENT)) AS MSG_CONTENT
         FROM MSGSENDVIEW
         WHERE MSG_NO = #{msgNo}

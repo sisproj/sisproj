@@ -183,8 +183,8 @@
             <textarea class="message-text" name="msgContent" id="msgContent" style="resize: none;"></textarea>
         </div>
         <div class="w3-row w3-section" style="height: 35px">
-            <input type="button" class="w3-button w3-blue w3-left w3-small" id="submitButton" value="보내기">
-            <%--<button type="submit" class="w3-button w3-blue w3-left w3-small" form="writefrm">보내기</button>--%>
+            <%--<input type="button" class="w3-button w3-blue w3-left w3-small" id="submitButton" value="보내기">--%>
+            <button type="button" class="w3-button w3-blue w3-left w3-small" id="submitButton">보내기</button>
         </div>
     </form>
 </div>
