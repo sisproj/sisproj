@@ -230,24 +230,43 @@ function ChangeDate(Date) {
 	opacity: 1;
 }
  
-.dhx_cal_event.event_1 div, .dhx_cal_event_line.event_1 .dhx_cal_event.event_2 div,
-	.dhx_cal_event_line.event_2 {
+.dhx_cal_event.event_1 div, .dhx_cal_event_line.event_1{
 	background-color: #36BD14 !important;
-	border-color: #698490 !important;
+	border-color: #36BD14 !important;
 }
+
+ .dhx_cal_event.event_2 div,
+	.dhx_cal_event_line.event_2 {
+	background-color: navy !important;
+	border-color: navy !important;
+	}
+
   
-.dhx_cal_event_clear.event_1, .dhx_cal_event_clear.event_2 { 
+.dhx_cal_event_clear.event_1 { 
 	color: #36BD14 !important;
 }
 
-.dhx_cal_event.event_3 div, .dhx_cal_event_line.event_3 .dhx_cal_event.event_4 div,
-	.dhx_cal_event_line.event_4 {
-	background-color: #FC5BD5 !important;
-	border-color: #839595 !important;
+.dhx_cal_event_clear.event_2{
+ 	color: navy !important;
 }
 
-.dhx_cal_event_clear.event_3 .dhx_cal_event_clear.event_4 {
-	color: #B82594 !important;
+.dhx_cal_event.event_3 div, .dhx_cal_event_line.event_3 {
+	background-color: #FC5BD5 !important;
+	border-color: #FC5BD5 !important;
+}
+
+.dhx_cal_event.event_4 div,
+	.dhx_cal_event_line.event_4 {
+	background-color: orange !important;
+	border-color: orange !important;
+	}
+
+.dhx_cal_event_clear.event_3 {
+	color: #FC5BD5 !important;
+}
+
+.dhx_cal_event_clear.event_4{
+	color: orange !important;
 }
 
 .dhx_cal_event.event_5 div, .dhx_cal_event_line.event_5 {
@@ -260,17 +279,17 @@ function ChangeDate(Date) {
 }
 
 .dhx_cal_event.event_6 div, .dhx_cal_event_line.event_6 {
-	background-color: olive !important;
+	background-color: red !important;
 	border-color: #839595 !important;
 }
 
 .dhx_cal_event_clear.event_6 {
-	color: blue !important;
+	color: red !important;
 }
 
 .dhx_cal_container {
 	float: left;
-}
+} 
 
 #bttest {
 	float: right;
