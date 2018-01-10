@@ -105,7 +105,7 @@
 		});
 		$('#btCancel').click(function(){
 			$('#divWriteSection').css('visibility', 'hidden');
-			$('#email3Update').css('visibility','hidden');
+			$('#email3').css('visibility','hidden');
 		});
 		$('#btCancelU').click(function(){
 			$('#divUpdateSection').css('visibility', 'hidden');
