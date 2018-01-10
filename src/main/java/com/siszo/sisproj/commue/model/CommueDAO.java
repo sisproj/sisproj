@@ -3,6 +3,8 @@ package com.siszo.sisproj.commue.model;
 import java.util.List;
 import java.util.Map;
 
+import com.siszo.sisproj.employee.model.EmployeeVO;
+
 public interface CommueDAO {
 	
 	public CommueVO selectByNo(int cmtNo);
@@ -21,5 +23,6 @@ public interface CommueDAO {
 	public List<Map<String, Object>> selectMonthDeptName(DateSearchVO vo);
 	public List<Map<String, Object>> selectDateCount(DateSearchVO vo);
 	public int selectAllCount();
+
 }
 

@@ -6,6 +6,8 @@ import java.util.Map;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.siszo.sisproj.employee.model.EmployeeVO;
+
 @Repository
 public class CommueDAOMybatis extends SqlSessionDaoSupport implements CommueDAO{
 

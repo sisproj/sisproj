@@ -34,6 +34,12 @@
 		where emp_no = #{empNo}
 	</update>
 	
+	<update id="editEmployeeEmp" parameterType="EmployeeVO">
+		update empView set emp_pwd=#{empPwd},emp_zipcode=#{empZipcode},emp_addr=#{empAddr},
+		emp_addr2=#{empAddr2},emp_hobby=#{empHobby}
+		where emp_no = #{empNo}
+	</update>
+	
 	<select id="selectTotalRecordCount" resultType="int" parameterType="SearchVO" >
 		select count(*) from empView
 		 <include refid="searchWhere"></include>  
