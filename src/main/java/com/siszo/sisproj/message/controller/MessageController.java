@@ -346,7 +346,7 @@ public class MessageController {
         return "message/messageSend";
     }
 
-    @RequestMapping(value = "/message/recycleBin.do")
+    @RequestMapping(value = "/message/recycleBin")
     public String messageRecycleBin(HttpSession session, @ModelAttribute MessageSearchVO messageSearchVO, Model model) {
         EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
         int empNo = empVo.getEmpNo();
