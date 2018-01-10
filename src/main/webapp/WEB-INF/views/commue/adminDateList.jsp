@@ -29,16 +29,14 @@
 }					
 </style>
 <script type="text/javascript">
-	$(function () {	
-		$.setYear();
-		$.setMonth();
-		
+	$(function () {		
+		$('#startDay').datepicker({
+			dateFormat:'yy-mm-dd',
+			changeYear:true,
+			dayNamesMin:['일','월','화','수','목','금','토'],
+			monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
+		});	
 	});
-	
-	$.convertTime=function(today){
-		return today.getHour()+":"+today.getMinutes();
-	}
-	
 	/* 그래프 차트 */
  	var chart = AmCharts.makeChart( "chartStick", {
 		  "type": "serial",
@@ -115,26 +113,6 @@
 		    "enabled": true
 		  }
 		} );
-	$.setYear=function(){
-		var date = new Date();
-		var year = date.getFullYear();
-		
-		var ye = "${param.year}";
-		
-		for(var i=year;i>=year-10;i--){
-			if(ye==i){
-				$('#year').append("<option value='"+i+"' selected>"+i+"</option>");
-			}else{
-				$('#year').append("<option value='"+i+"' >"+i+"</option>");					
-			}
-		}
-	}
-	$.setMonth=function(){
-		var date = new Date();
-		var year = date.getFullYear();
-		
-		$('#frmDate #year').val(year);
-	}
 </script>
 </head>
 <body>
@@ -148,31 +126,44 @@
     </article>
     <article id="bodysection">
     <div>
-		<div id="chartOne"></div>
+		<div id="chartOne">
+		</div>
 		<div id="chartStick"></div>
 	</div>
     <div id="dimyPage">		
-			<form name="frmDate" id="frmDate" method="post" action="<c:url value='/commue/adm/adminDateList.do' />">
 				<div id="seYear">		
-					<input type="hidden" id="year" name="year">
+					<form name="frmDate" id="frmDate" method="post" action="<c:url value='/commue/adm/adminDateList.do' />">
+							<input type="text" id="startDay" name="startDay" placeholder="누르시면 달력이 나옵니다." value="${param.startDay }">
+							<input type="submit" id="yeSear" name="yeSear" value="검색">
+					</form>			
 				</div>	
-			</form>			
 					<table border="1" id="allList">
+					<c:if test="${empty list }">
+						<tr>
+							<th>부서</th>
+							<th>데이터가 없습니다</th>
+						</tr>
+						<tr>
+							<th>출근 인원</th>
+							<th>데이터가 없습니다</th>
+						</tr>
+					</c:if>
+					<c:if test="${!empty list }">
 						<tr>					
 							 <th>부서</th>
-						<c:forEach var="i" begin="1" end="12">
-								<th>${i } 월</th>						
-						</c:forEach>
-						</tr>
-						<c:forEach var="map" items="${list }">				
-						<tr>
-							<th>${map['DEPTNAME'] }</th>	
-							<c:if test="${!empty map['TOTAL'] }">	
-								<td>${map['TOTAL'] }명</td>		
-								<td></td>							
-							</c:if>											
-						</tr>
-						</c:forEach>	
+							 <c:forEach var="map" items="${list }">	
+								<th>${map['DEPTNAME'] }</th>	
+							</c:forEach>							
+						</tr>	
+						<tr>	
+							<th>출근 인원</th>
+							 <c:forEach var="map" items="${list }">		
+								<c:if test="${!empty map['TOTAL'] }">	
+									<td>${map['TOTAL'] }명</td>	
+								</c:if>					
+							</c:forEach>	
+						</tr>	
+					</c:if>									
 				</table>
 			</div>			
 			</div>

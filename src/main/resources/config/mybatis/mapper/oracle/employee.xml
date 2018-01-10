@@ -22,7 +22,7 @@
 
 	<update id="editEmployee" parameterType="EmployeeVO">
 		update empView set emp_name=#{empName},
-		emp_eName=#{empEName},emp_tel=#{empTel},emp_ssn=#{empSsn},
+		emp_eName=#{empEName},emp_pwd=#{empPwd},emp_tel=#{empTel},emp_ssn=#{empSsn},
 		emp_email=#{empEmail},emp_zipcode=#{empZipcode},emp_addr=#{empAddr},
 		emp_addr2=#{empAddr2},emp_hobby=#{empHobby},emp_hiredate=#{empHiredate},emp_school=#{empSchool},
 		emp_major=#{empMajor}

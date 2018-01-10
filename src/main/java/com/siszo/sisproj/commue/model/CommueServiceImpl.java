@@ -84,8 +84,8 @@ public class CommueServiceImpl implements CommueService{
 	}
 
 	@Override
-	public List<Map<String, Object>> selectDateCount() {
-		return commueDao.selectDateCount();
+	public List<Map<String, Object>> selectDateCount(DateSearchVO vo) {
+		return commueDao.selectDateCount(vo);
 	}
 
 	@Override

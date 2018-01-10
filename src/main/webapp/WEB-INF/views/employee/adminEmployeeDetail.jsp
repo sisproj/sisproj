@@ -14,7 +14,9 @@
 		}); 
 		
 		$('#dimypage input[type=text]').attr("disabled",true);
+		
 	});
+
 </script>
 <article id="headsection">
         <!-- 2. 페이지 이름 지정 // 북마크 지정 여부 .bookmark || .nobook -->
