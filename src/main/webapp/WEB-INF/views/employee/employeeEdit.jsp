@@ -86,7 +86,7 @@
 			</div>
 			<div id="diPos">
 				<label for="posNo">직급</label>  
-				<input type="text" name="posName" id="posName" value="${vo.deptName }" readonly="readonly">	
+				<input type="text" name="posName" id="posName" value="${vo.posName }" readonly="readonly">	
 			</div>
        		<div id="diJumin">
        		<c:set var="jumin" value="${fn:split(vo.empSsn,'-')}" ></c:set>

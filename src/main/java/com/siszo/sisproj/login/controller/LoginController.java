@@ -23,7 +23,6 @@ import com.siszo.sisproj.commue.model.CommueService;
 import com.siszo.sisproj.confirm.model.DocumentService;
 import com.siszo.sisproj.confirm.model.DocumentVO;
 import com.siszo.sisproj.employee.common.EmployeePwdLock;
-import com.siszo.sisproj.employee.common.SHA256;
 import com.siszo.sisproj.employee.model.EmployeeService;
 import com.siszo.sisproj.employee.model.EmployeeVO;
 import com.siszo.sisproj.login.model.LoginService;
@@ -64,11 +63,11 @@ public class LoginController {
 			Model model) {
 		logger.info("로그인 하기 파라미터 vo={},chkSaveId={}",vo,saveId);
 		
-		String pwd = vo.getEmpPwd();
+/*		String pwd = vo.getEmpPwd();
 		String shaPwd = EmployeePwdLock.convertEncryption(pwd);
-		vo.setEmpPwd(shaPwd);
-		
 		logger.info("암호화된 비밀번호 shaPwd={}",shaPwd);
+		vo.setEmpPwd(shaPwd);
+		*/
 		
 		int cnt = loginService.loginCheck(vo.getEmpNo(), vo.getEmpPwd());
 
