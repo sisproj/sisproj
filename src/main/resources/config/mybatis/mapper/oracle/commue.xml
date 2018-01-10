@@ -55,10 +55,11 @@
 		(
 		    select rownum as RNUM, clist.*
 		    from(
-		        select emp_name,dept_name,pos_name,to_char(cmt_in,'HH24:MI') as "CMTIN",
-     			to_char(cmt_out,'HH24:MI') as "CMTOUT",cmt_status
+		        select emp_name,dept_name,pos_name,to_char(cmt_in,'dd HH24:MI') as "CMTIN",
+     			to_char(cmt_out,'dd HH24:MI') as "CMTOUT",cmt_status
 				from cmtView
-				where to_char(cmt_in, 'yyyy-mm-dd')=#{startDay}
+				where to_char(cmt_in, 'yyyy')=#{year}
+				and to_char(cmt_in,'mm')=#{month}
 				<include refid="searchWhere"></include>  
 		        order by CMTIN       
 		    ) clist
@@ -70,8 +71,9 @@
 	
 	<select id="selectTotalRecordCount" resultType="int" parameterType="DateSearchVO">
 		select count(*) from cmtView
-		<if test="startDay!=null and startDay!=''">
-		where to_char(cmt_in, 'yyyy-mm-dd')=#{startDay}		
+		<if test="year!=null and year!=''">
+		where to_char(cmt_in, 'yyyy')=#{year}
+		and to_char(cmt_in,'mm')=#{month}
 		<include refid="searchWhere"></include>  
 		</if>
 	</select>
@@ -84,8 +86,7 @@
 		group by to_char(cmt_in, 'mm')
 		order by to_char(cmt_in, 'mm')
 	</select>
-		
-		
+				
 	<select id="selectMonthListGet" parameterType="int" resultType="map">	
 		select to_char(cmt_in,'mm') as "CMTIN",count(*) as "TOTAL" from cmtView
 		where to_char(cmt_in,'yyyy')=to_char(sysdate,'yyyy') and emp_no=#{empNo}
@@ -109,7 +110,7 @@
 	
 	<select id="selectAllCount" resultType="int">
 		select count(*) from cmtView
-		where to_char(cmt_in, 'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')
+		where to_char(cmt_in, 'yyyy')=to_char(sysdate,'yyyy')
 	</select>
 </mapper>
 

@@ -4,12 +4,12 @@
 
 <script type="text/javascript">
     $(function () {
-        $('#asidebtn ul li:nth-child(1)').click(function () {
-        });
         messengerCheck();
         setInterval(function () {
             messageCheck();
         }, 10000);
+        
+        
     });
     function messageCheck() {
         $.ajax({

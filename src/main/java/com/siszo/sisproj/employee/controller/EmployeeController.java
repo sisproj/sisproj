@@ -86,7 +86,7 @@ public class EmployeeController {
 		String msg="",url="/employee/adm/adminEmployeeRegister.do";
 		if(cnt>0){
 			msg="사원 등록 완료!";
-			url="/home.do";
+			url="/employee/adm/adminEmployeeList.do";
 		}else {
 			msg="사원 등록 실패!";
 		}
@@ -221,7 +221,7 @@ public class EmployeeController {
 			count=employeeService.employeeOutCheck(emVo.getEmpNo());
 		}
 		
-		String msg="",url="/employee/adm/aminEmployeeList.do";
+		String msg="",url="/employee/adm/adminEmployeeList.do";
 		if(count==employeeService.OUT_OK) {
 			 cnt=employeeService.employeeCome(list);
 			logger.info("선택한 사원 복직 결과, cnt={}",cnt);		

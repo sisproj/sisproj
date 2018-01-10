@@ -7,11 +7,20 @@ public class DateSearchVO extends ComSearchVO{
 	private String empName;
 	private String posName;
 	private String deptName;
+	
 	private String year;
+	private String month;
+	
 	private int empNo;
 	private int total;
 	
 	
+	public String getMonth() {
+		return month;
+	}
+	public void setMonth(String month) {
+		this.month = month;
+	}
 	public int getTotal() {
 		return total;
 	}
@@ -74,7 +83,7 @@ public class DateSearchVO extends ComSearchVO{
 	@Override
 	public String toString() {
 		return "DateSearchVO [startDay=" + startDay + ", empName=" + empName + ", posName=" + posName + ", deptName="
-				+ deptName + ", year=" + year + ", empNo=" + empNo +", firstRecordIndex=" + getFirstRecordIndex()				
-				+ ", recordCountPerPage=" + getRecordCountPerPage() +  "]";
+				+ deptName + ", year=" + year + ", month=" + month + ", empNo=" + empNo + ", total=" + total +", firstRecordIndex=" + getFirstRecordIndex()				
+				+ ", recordCountPerPage=" + getRecordCountPerPage() + "]";
 	}
 }

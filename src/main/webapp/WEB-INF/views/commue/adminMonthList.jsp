@@ -9,56 +9,51 @@
 <!-- 0. include부분 -->
 <script type="text/javascript">
 	$(function () {	
-		if($('#startDay').val()==''){
-			$.setToday();
+		$.setYear();
+		$.setMonth();
+	});	
+	$.setYear=function(){
+		//현재년도에서 5년전 부터 출력
+		var date = new Date();
+		var year = date.getFullYear(); //2018
+		
+		var ye = "${param.year}";
+		
+		for(var i=year;i>=year-10;i--){
+			if(ye==i){
+				$('#year').append("<option value='"+i+"' selected>"+i+"</option>");
+			}else{
+				$('#year').append("<option value='"+i+"' >"+i+"</option>");					
+			}
+		}
+	}
+	$.setMonth=function(){
+		var mo = "${param.month}";
+		for(var i=1;i<=12;i++){	
+			if(mo==i){
+				$('#month').append("<option value='"+$.formatDate(i)+"' selected>"+i+"</option>");
+			}else{
+				$('#month').append("<option value='"+$.formatDate(i)+"'>"+i+"</option>");				
+			}
+		}
+	}
+	 $.convertDate=function(date){
+			return date.getFullYear()+"-"+$.formatDate(date.getMonth()+1)+"-"
+			 + $.formatDate(date.getDate());
 		}
 		
-		$.applyDatePicker('#startDay');
-		
-	});
-	
-	$.setToday=function(){		
-			var today = new Date();
-			var str = $.convertDate(today); 
-
-			$('#spDate').html(str);
-	}	
-	
-	$.setChDate=function(){
-		$('#spDate').html(chD);
-	}
-	
-	$.convertDate=function(today){
-		return today.getFullYear()+"년 "+(today.getMonth()+1)+"월 "+today.getDate()+"일";
-	}
-	
-	$.convertMonth=function(today){
-		return today.getFullYear()+"-"+$.formatDate((today.getMonth()+1))+"-"+$.formatDate(today.getDate());
-	}
-	
-	$.convertTime=function(today){
-		return today.getHour()+":"+today.getMinutes();
-	}
-	$.applyDatePicker=function(id){
-		$(id).datepicker({			
-			dateFormat:'yy-mm-dd',
-			changeYear:true,
-			dayNamesMin:['일','월','화','수','목','금','토'],
-			monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
-		});
-	}
-	$.formatDate = function(d){
-		var result=d;
-		if(d<10){
-			result="0"+d;
+		$.formatDate = function(d){
+			var result=d;
+			if(d<10){
+				result="0"+d;
+			}
+			return result;
 		}
-		return result;
-	}
 	 function pageFunc(curPage){
-			document.searchEmp.currentPage.value=curPage;
-			searchEmp.submit();
+			document.frmDate.currentPage.value=curPage;
+			frmDate.submit();
 	}
-
+	
 </script>
 
 </head>
@@ -67,7 +62,7 @@
     <!-- 왼쪽 사이드 메뉴 끝 -->
     <article id="headsection">
         <!-- 2. 페이지 이름 지정 // 북마크 지정 여부 .bookmark || .nobook -->
-        <h1><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;근태 현황&nbsp;
+        <h1><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;월별 근태현황&nbsp;
         </h1>
         <!-- 2. 페이지 이름 지정 끝 -->
     </article>
@@ -81,14 +76,16 @@
 			<form name="frmDate" id="frmDate" method="post" action="<c:url value='/commue/adm/adminMonthList.do' />">
 				<input type="hidden" id="currentPage" name="currentPage" value="1">
 				<div id="diSearch" style="margin-left: 10px;">
-						<input type="text" name="startDay" id="startDay" 
-							value="${param.startDay }" placeholder="누르시면 달력이나옵니다."> 
+					 <select id="year" name="year">
+					</select>년
+					<select id="month" name="month">				
+					</select>월
 						<input type="submit" id="btSearch" value="검색">					
 				</div>
 			</div>
 		</div>
 		<div id="diPage">
-			<table id="allList" border="1" >
+			<table id="allList" border="1">
 			<colgroup>
 				<col width="15%">
 				<col width="15%">
@@ -114,14 +111,14 @@
 				<c:forEach var="map" items="${list }">
 					<tr>
 						<!-- 해당 사원의 근태관리로 갑니다.  -->
-						<td><a href="<c:url value='/commue/adm/adminMonthList.do?empName=${map["EMP_NAME"] }&startDay=${param.startDay }' />">${map['EMP_NAME'] }</a></td>
+						<td><a href="<c:url value='/commue/adm/adminMonthList.do?empName=${map["EMP_NAME"] }&year=${year }&month=${month } ' />">${map['EMP_NAME'] }</a></td>
 						<!-- 해당 부서근태를 보여줍니다. -->
-						<td><a href="<c:url value='/commue/adm/adminMonthList.do?deptName=${map["DEPT_NAME"] }&startDay=${param.startDay }' />">${map['DEPT_NAME'] }</a></td>
+						<td><a href="<c:url value='/commue/adm/adminMonthList.do?deptName=${map["DEPT_NAME"] }&year=${year }&month=${month }' />">${map['DEPT_NAME'] }</a></td>
 						<!-- 해당 직급근태를 보여줍니다.  -->
-						<td><a href="<c:url value='/commue/adm/adminMonthList.do?posName=${map["POS_NAME"] }&startDay=${param.startDay }' />">${map['POS_NAME'] }</a></td>
+						<td><a href="<c:url value='/commue/adm/adminMonthList.do?posName=${map["POS_NAME"] }&year=${year }&month=${month }' />">${map['POS_NAME'] }</a></td>
 						<td id="cmtT">${map['CMTIN'] }</td>
 						<td id="cmtT">${map['CMTOUT'] }</td>
-						<c:if test="${map['CMT_STATUS'] eq ('Y') }">
+						<c:if test="${map['CMT_STATUS'] eq ('Y')}">
 							<td>출근</td>	
 						</c:if>
 						<c:if test="${map['CMT_STATUS'] eq ('N') }">

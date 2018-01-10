@@ -43,22 +43,12 @@ public class CommueController {
 	}*/
 	@RequestMapping("/adm/adminDateList.do")
 	public String commueDateList(Model model) {
-		logger.info("출퇴근 일별 통계 보여주기 파라미터");
-		int result=0;
+		logger.info("출퇴근 일별 통계 보여주기");
 		List<Map<String, Object>> list = commueService.selectDateCount();
 		logger.info("출퇴근 일별 통계 부서별 구하기 조회 list.size()={}",list.size());
 		
 		int allCnt=commueService.selectAllCount();
 		logger.info("사원 전체 출근한 인원 allCnt={}",allCnt);
-		
-		/*for(Map<String, Object> map : list) {
-			int cnt = Integer.valueOf(String.valueOf(map.get("TOTAL")));	
-			logger.info("출근  파라미터 cnt={}",cnt);
-			String deptName=String.valueOf(map.get("DEPTNAME"));
-			logger.info("출근  파라미터 deptName={}",deptName);
-			String cmtIn = String.valueOf(map.get("CMTIN"));
-			logger.info("출근  파라미터 cmtIn={}",cmtIn);
-		}*/
 		
 		model.addAttribute("list",list);
 		model.addAttribute("allCnt",allCnt);
@@ -67,7 +57,7 @@ public class CommueController {
 	}
 	@RequestMapping("/adm/adminMonthList.do")
 	public String commueDateList(@ModelAttribute DateSearchVO dateSearchVo,Model model) {
-		logger.info("출퇴근 일별 통계 보여주기 파라미터 dateSearchVo={}",dateSearchVo);
+		logger.info("출퇴근 월별 통계 보여주기 파라미터 dateSearchVo={}",dateSearchVo);
 		int totalRecord=0;
 		//Paging 처리에 필요한 변수를 계산해주는 PaginationInfo 생성
 		PaginationInfo pagingInfo = new PaginationInfo();
@@ -81,12 +71,14 @@ public class CommueController {
 		logger.info("DateSearchVo 최종값 : {}", dateSearchVo);
 		
 		List<Map<String, Object>> list=null;
-		if(dateSearchVo.getStartDay()!=null && !dateSearchVo.getStartDay().isEmpty()) {
+		if(dateSearchVo.getYear()!=null && !dateSearchVo.getYear().isEmpty()
+			&&dateSearchVo.getMonth()!=null && !dateSearchVo.getMonth().isEmpty()) {
 			list=commueService.searchDate(dateSearchVo);
-			logger.info("출퇴근 일별 조회 결과, list.size()={}", list.size());		
+			logger.info("출퇴근 월별 조회 결과, list.size()={}", list.size());		
 		}	
 		
-		if(dateSearchVo.getStartDay()!=null && !dateSearchVo.getStartDay().isEmpty()) {
+		if(dateSearchVo.getYear()!=null && !dateSearchVo.getYear().isEmpty()
+				&&dateSearchVo.getMonth()!=null && !dateSearchVo.getMonth().isEmpty()) {
 			totalRecord = commueService.selectTotalRecord(dateSearchVo);
 			logger.info("글 전체 개수 조회 결과, totalRecord={}", totalRecord);
 		}
@@ -110,11 +102,11 @@ public class CommueController {
 		int result=commueService.selectInChk(empNo);
 		String msg="",url="/home.do";
 		if(result==commueService.CHECK_IN) {
-				int cnt = commueService.insertIn(cmtVo);
-				logger.info("출근 하기 결과 cnt={}",cnt);
-				if(cnt>0) {
-					msg="출근 성공";				
-				}
+			int cnt = commueService.insertIn(cmtVo);
+			logger.info("출근 하기 결과 cnt={}",cnt);
+			if(cnt>0) {
+				msg="출근 성공";				
+			}
 		}else if(result==commueService.CHECK_IN_OK) {
 			msg="이미 출근 버튼을 누르셨습니다";
 		}
@@ -167,10 +159,7 @@ public class CommueController {
 		EmployeeVO vo = (EmployeeVO) session.getAttribute("empVo");
 		int empNo = vo.getEmpNo(); 
 		logger.info("사원 월별 근태 파라미터 dateSearchVo={}",dateSearchVo);
-		/*Date d = new Date();
-		String year = Integer.toString(d.getYear());
-		dateSearchVo.setYear(year);
-		dateSearchVo.setEmpNo(empNo);*/
+
 		   List<Map<String, Object>> lists = commueService.selectMonthListCount(dateSearchVo);
 			logger.info("사원 월별 근태 조회 결과 lists.size()={}",lists.size());
 			

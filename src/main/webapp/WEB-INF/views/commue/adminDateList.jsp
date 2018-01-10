@@ -17,57 +17,26 @@
 <!-- 0. include부분 -->
 <style type="text/css">
 #chartOne {
-  width: 50%;
+  width: 60%;
   height:450px;
+  float: right;
 }
 #chartStick {
-	width	: 50%;
+	width	: 40%;
 	height: 400px;
 	font-size: 11px;
-}	
-#charts{
-	width: 50%;
-}			
-#dList{
-	width: 50%;
 	float: left;
-}	
+}					
 </style>
 <script type="text/javascript">
 	$(function () {	
-		if($('#startDay').val()==''){
-			$.setToday();
-		}
+		$.setYear();
+		$.setMonth();
+		
 	});
-	
-	$.setToday=function(){		
-			var today = new Date();
-			var str = $.convertDate(today); 
-
-			$('#spDate').html(str);
-	}	
-	
-	$.setChDate=function(){
-		$('#spDate').html(chD);
-	}
-	
-	$.convertDate=function(today){
-		return today.getFullYear()+"년 "+(today.getMonth()+1)+"월 "+today.getDate()+"일";
-	}
-	
-	$.convertMonth=function(today){
-		return today.getFullYear()+"-"+$.formatDate((today.getMonth()+1))+"-"+$.formatDate(today.getDate());
-	}
 	
 	$.convertTime=function(today){
 		return today.getHour()+":"+today.getMinutes();
-	}
-	$.formatDate = function(d){
-		var result=d;
-		if(d<10){
-			result="0"+d;
-		}
-		return result;
 	}
 	
 	/* 그래프 차트 */
@@ -146,7 +115,26 @@
 		    "enabled": true
 		  }
 		} );
-	
+	$.setYear=function(){
+		var date = new Date();
+		var year = date.getFullYear();
+		
+		var ye = "${param.year}";
+		
+		for(var i=year;i>=year-10;i--){
+			if(ye==i){
+				$('#year').append("<option value='"+i+"' selected>"+i+"</option>");
+			}else{
+				$('#year').append("<option value='"+i+"' >"+i+"</option>");					
+			}
+		}
+	}
+	$.setMonth=function(){
+		var date = new Date();
+		var year = date.getFullYear();
+		
+		$('#frmDate #year').val(year);
+	}
 </script>
 </head>
 <body>
@@ -154,38 +142,40 @@
     <!-- 왼쪽 사이드 메뉴 끝 -->
     <article id="headsection">
         <!-- 2. 페이지 이름 지정 // 북마크 지정 여부 .bookmark || .nobook -->
-        <h1><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;근태 현황&nbsp;
+        <h1><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;일별 근태현황&nbsp;
         </h1>
         <!-- 2. 페이지 이름 지정 끝 -->
     </article>
     <article id="bodysection">
-    <div id="dimyPage">		
-    	<div id="dList">
-				<form name="frmDate" id="frmDate" method="post" action="<c:url value='/commue/adm/adminDateList.do' />">
-					<table border="1" id="allList">				
-							<tr>
-								<c:forEach var="map" items="${list }">				
-										<th>${map['DEPTNAME'] }</th>	
-									<%-- 	<c:if test="${!empty map['TOTAL'] }">	
-											<td>${map['TOTAL'] }명</td>		
-										</c:if>
-										<c:if test="${empty map['TOTAL'] }">
-											<td>0명</td>
-										</c:if>		 --%>										
-								</c:forEach>	
-							</tr>
-							<c:forEach var="i" begin="1" end="12">
-								<tr>
-									<th>${i } 월</th>						
-								</tr>
-							</c:forEach>
-					</table>
-				</form>
-			</div>		
-	    <div id="charts">
-			<div id="chartOne"></div>
-			<div id="chartStick"></div>
-		</div>
+    <div>
+		<div id="chartOne"></div>
+		<div id="chartStick"></div>
 	</div>
+    <div id="dimyPage">		
+			<form name="frmDate" id="frmDate" method="post" action="<c:url value='/commue/adm/adminDateList.do' />">
+				<div id="seYear">		
+					<input type="hidden" id="year" name="year">
+				</div>	
+			</form>			
+					<table border="1" id="allList">
+						<tr>					
+							 <th>부서</th>
+						<c:forEach var="i" begin="1" end="12">
+								<th>${i } 월</th>						
+						</c:forEach>
+						</tr>
+						<c:forEach var="map" items="${list }">				
+						<tr>
+							<th>${map['DEPTNAME'] }</th>	
+							<c:if test="${!empty map['TOTAL'] }">	
+								<td>${map['TOTAL'] }명</td>		
+								<td></td>							
+							</c:if>											
+						</tr>
+						</c:forEach>	
+				</table>
+			</div>			
+			</div>
+		</div>
 	
 <%@include file="commueBottom.jsp" %>

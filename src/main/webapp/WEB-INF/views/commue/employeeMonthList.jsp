@@ -112,13 +112,6 @@
 </nav>
 </aside>
 <hr>
-<!-- 2. 페이지 이름 지정 // 북마크 지정 여부 .bookmark || .nobook -->
-<article id="headsection">
-	<h1>
-		<i class="fa fa-address-book-o"></i>&nbsp;월별 근태현황&nbsp; <a href="#"><i
-			class="fa fa-bookmark nobook" aria-hidden="true"></i></a>
-	</h1>
-</article>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -130,13 +123,12 @@
 	<article id="headsection">
 		<!-- 2. 페이지 이름 지정 // 북마크 지정 여부 .bookmark || .nobook -->
 		<h1>
-			<i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;근태 현황&nbsp;<i
+			<i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;월별 근태 현황&nbsp;<i
 				class="fa fa-bookmark bookmark" aria-hidden="false"></i></a>
 		</h1>
 		<!-- 2. 페이지 이름 지정 끝 -->
 	</article>
 	<article id="bodysection">
-
 		<div id="dimyPage">
 			<div id="diBtCa">
 				<div id="diCal">
@@ -147,7 +139,7 @@
 
 				<form name="frmDate" id="frmDate" method="post"
 					<c:url value="/commue/employeeMonthList.do" />>
-					<input type="text" name="empNo" value="${sessionScope.empVo.empNo }">
+					<input type="hidden" name="empNo" value="${sessionScope.empVo.empNo }">
 					 <select id="year" name="year">
 					</select>년 
 					<input type="submit" id="btSe" name="btSe" value="검색">
@@ -157,8 +149,6 @@
 		<!-- 0. include부분 끝-->
 		
 		<div id="chartdiv"></div>
-		
-	
 </body>
 
 <%@include file="../inc/bottom.jsp"%>
