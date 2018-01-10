@@ -1,14 +1,17 @@
 package com.siszo.sisproj.commue.model;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CommueServiceImpl implements CommueService{
-
+	private static final Logger logger = LoggerFactory.getLogger(CommueServiceImpl.class);
 	@Autowired
 	private CommueDAO commueDao;
 	
@@ -18,8 +21,8 @@ public class CommueServiceImpl implements CommueService{
 	}
 
 	@Override
-	public int insertIn(CommueVO comVo) {	
-		return commueDao.insertIn(comVo);
+	public int insertIn(CommueVO comVo) {		
+		return  commueDao.insertIn(comVo);
 	}
 
 	@Override
@@ -65,6 +68,29 @@ public class CommueServiceImpl implements CommueService{
 	public int selectTotalRecord(DateSearchVO vo) {
 		return commueDao.selectTotalRecord(vo);
 	}
+
+	@Override
+	public List<Map<String, Object>> selectMonthListCount(DateSearchVO vo) {
+		return commueDao.selectMonthList(vo); 
+	}
 	
+	public List<Map<String, Object>> selectMonthListGet(int empNo){
+		return commueDao.selectMonthListGet(empNo); 
+	}
+
+	@Override
+	public List<Map<String, Object>> selectMonthDeptName(DateSearchVO vo) {
+		return commueDao.selectMonthDeptName(vo);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectDateCount(DateSearchVO vo) {
+		return commueDao.selectDateCount(vo);
+	}
+
+	@Override
+	public int selectAllCount() {
+		return commueDao.selectAllCount();
+	}
 	
 }

@@ -10,3 +10,4 @@
     </script>
     <!-- 0. include부분 끝-->
 <%@include file="../inc/bottom.jsp" %>
+

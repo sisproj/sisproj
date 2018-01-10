@@ -1,11 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
-<%@include file="employeeTop.jsp" %>
+<%@include file="../inc/admTop.jsp" %>
      <!-- 0. include부분 -->
-<link rel="stylesheet" href="<c:url value="/resources/css/mypage.css"/>">
+        <link rel="stylesheet" href="<c:url value="/resources/css/mypage.css"/>">
+        <!-- 2. 페이지 이름 지정 끝 -->
 <script type="text/javascript">
-	$(function () {			
+	$(function () {	
+		$('#btCen').click(function () {
+			location.href="<c:url value='/employee/adm/adminEmployeeList.do'/>";
+		});	
+		
+		$('#btEdit').click(function () {
+			location.href="<c:url value='/employee/adm/adminEmployeeEdit.do?empNo="+${vo.empNo}+"'/>";
+		}); 
+		
 		$('#dimypage input[type=text]').attr("disabled",true);
+		
 	});
+
 </script>
 <article id="headsection">
         <!-- 2. 페이지 이름 지정 // 북마크 지정 여부 .bookmark || .nobook -->
@@ -17,14 +28,15 @@
         <!-- 3. 내용 -->
     <div id="dimyPage">
     	<div id="diInput">
-   		<form id="frmEmp" name="frmEMP" method="post">
+   		<form id="frmEmp" name="frmEMP" method="post" 
+   		action="<c:url value='/employee/adm/adminEmployeeEdit.do?empNo=${vo.empNo }'/>">
 	      	  <fieldset>
 	      	    <div id="diId">
 	      	 		<label for="name">사원번호</label><input type="text" id="empNo" name="empNo" value="${vo.empNo }">   
 	       		</div>
 	       		<div id="diName">
 	      	 		<label for="name">이름</label><input type="text" id="empName" name="empName" maxlength="6" value="${vo.empName }">  
-	      	 	</div>
+	      	 	</div> 
 	       		<div id="diEnName">
 	       			<label for="enName">영어이름</label> <input type="text" id="empEName" name="empEName" value="${vo.empEName }">
 	       		</div>		
@@ -37,7 +49,7 @@
 					<input type="text" id="posName" name="posName" value="${vo.posName }">
 				</div>
 				<div id="diHobby">
-					<label for="hobby">취미</label>  	
+					<label for="hobby">취미</label>   	
 					<input type="text" name="empHobby" id="empHobby" value="${vo.empHobby }">
 				</div>
 		        <div>
@@ -77,8 +89,12 @@
 	    		</div>
 				<div id="diEmail">   
 			        <label for="email1">이메일 주소</label>
-			        <input type="text" name="empEmail" id="empEmail"value="${vo.empEmail }">		        
+			        <input type="text" name="empEmail"  id="empEmail"value="${vo.empEmail }">		        
 	           	</div>
+	       		<div id="diReg">
+		           		<input type="button" id="btEdit" value="수정">
+						<input type="button" id="btCen" value="목록">
+				</div>
 		  </fieldset>	
 	   </form> 
 	   </div>

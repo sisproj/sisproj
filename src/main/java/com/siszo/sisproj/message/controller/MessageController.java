@@ -211,6 +211,21 @@ public class MessageController {
         return "OK";
     }
 
+    @RequestMapping(value = "/message/delSendMsgUndo")
+    public @ResponseBody
+    String delSendMsgUndo(@RequestParam String msgNoStr) {
+        logger.info("쪽지 되돌리기 delMsgUndo() : msgNoStr={}", msgNoStr);
+
+        String[] msgNoArr = msgNoStr.split(",");
+        for (int i = 0; i < msgNoArr .length; i++) {
+            int msgNo = Integer.parseInt(msgNoArr [i]);
+            logger.info("chkArr 값 :  msgNo={}", msgNo);
+            int result = messageService.delSendMsgUndo(msgNo);
+            logger.info("update 결과 :  result ={}", result);
+        }
+        return "OK";
+    }
+
     @RequestMapping(value = "/message/delete")
     public @ResponseBody
     String messageDelete(@RequestParam String recNoStr) {
@@ -331,7 +346,7 @@ public class MessageController {
         return "message/messageSend";
     }
 
-    @RequestMapping(value = "/message/recycleBin.do")
+    @RequestMapping(value = "/message/recycleBin")
     public String messageRecycleBin(HttpSession session, @ModelAttribute MessageSearchVO messageSearchVO, Model model) {
         EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
         int empNo = empVo.getEmpNo();

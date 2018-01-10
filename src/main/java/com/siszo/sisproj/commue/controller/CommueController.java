@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.siszo.sisproj.common.PaginationInfo;
 import com.siszo.sisproj.common.Utility;
@@ -23,22 +25,31 @@ import com.siszo.sisproj.employee.model.EmployeeVO;
 @Controller
 @RequestMapping("/commue")
 public class CommueController {
-	private static final Logger logger = LoggerFactory.getLogger(CommueController.class);
-	
+	private static final Logger 	logger = LoggerFactory.getLogger(CommueController.class);
+
 	@Autowired
 	private CommueService commueService;
 	
-	@RequestMapping("/adm/AdminMonthList.do")
-	public String commueMonthList() {
-		logger.info("출퇴근 월별 통계 보여주기");
-		
-		return "commue/AdminMonthList";
-	}
-	
-	@RequestMapping("/adm/AdminDateList.do")
+	@RequestMapping("/adm/adminDateList.do")
 	public String commueDateList(@ModelAttribute DateSearchVO dateSearchVo,Model model) {
 		logger.info("출퇴근 일별 통계 보여주기 파라미터 dateSearchVo={}",dateSearchVo);
-				
+		
+		List<Map<String, Object>> list = commueService.selectDateCount(dateSearchVo);
+		logger.info("출퇴근 일별 통계 부서별 구하기 조회 list.size()={}",list.size());
+		
+		int allCnt=commueService.selectAllCount();
+		logger.info("사원 전체 출근한 인원 allCnt={}",allCnt);
+		
+		model.addAttribute("list",list);
+		model.addAttribute("allCnt",allCnt);
+		
+		return "commue/adminDateList";
+	}
+	
+	@RequestMapping("/adm/adminMonthList.do")
+	public String commueMonthList(@ModelAttribute DateSearchVO dateSearchVo,Model model) {
+		logger.info("출퇴근 월별 통계 보여주기 파라미터 dateSearchVo={}",dateSearchVo);
+		int totalRecord=0;
 		//Paging 처리에 필요한 변수를 계산해주는 PaginationInfo 생성
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(Utility.BLOCK_SIZE);
@@ -51,36 +62,26 @@ public class CommueController {
 		logger.info("DateSearchVo 최종값 : {}", dateSearchVo);
 		
 		List<Map<String, Object>> list=null;
-		if(dateSearchVo.getStartDay()!=null && !dateSearchVo.getStartDay().isEmpty()) {
+		if(dateSearchVo.getYear()!=null && !dateSearchVo.getYear().isEmpty()
+			&&dateSearchVo.getMonth()!=null && !dateSearchVo.getMonth().isEmpty()) {
 			list=commueService.searchDate(dateSearchVo);
-			logger.info("출퇴근 일별 조회 결과, list.size()={}", list.size());		
+			logger.info("출퇴근 월별 조회 결과, list.size()={}", list.size());		
 		}	
 		
-		int totalRecord = commueService.selectTotalRecord(dateSearchVo);
-		logger.info("글 전체 개수 조회 결과, totalRecord={}", totalRecord);
+		if(dateSearchVo.getYear()!=null && !dateSearchVo.getYear().isEmpty()
+				&&dateSearchVo.getMonth()!=null && !dateSearchVo.getMonth().isEmpty()) {
+			totalRecord = commueService.selectTotalRecord(dateSearchVo);
+			logger.info("글 전체 개수 조회 결과, totalRecord={}", totalRecord);
+		}
 		
 		pagingInfo.setTotalRecord(totalRecord);
 					
 		model.addAttribute("list", list);	
 		model.addAttribute("pagingInfo",pagingInfo);
 		
-		return "commue/AdminDateList";
+		return "commue/adminMonthList";
 	}
 	
-	@RequestMapping("/employeeMonthList.do")
-	public String commueDateList2(@ModelAttribute DateSearchVO dateSearchVo,Model model) {
-		logger.info("출퇴근 일별 통계 보여주기 파라미터 dateSearchVo={}",dateSearchVo);
-				
-		List<Map<String, Object>> list=null;
-		if(dateSearchVo.getStartDay()!=null && !dateSearchVo.getStartDay().isEmpty()) {
-			list=commueService.searchDate(dateSearchVo);
-			logger.info("출퇴근 일별 조회 결과, list.size()={}", list.size());		
-		}
-		
-		model.addAttribute("list", list);	
-			
-		return "commue/employeeMonthList";
-	}
 	@RequestMapping("/commueIn.do")
 	public String commueIn(@ModelAttribute CommueVO cmtVo,HttpSession session,Model model) {
 		EmployeeVO empVo = (EmployeeVO) session.getAttribute("empVo");
@@ -131,4 +132,33 @@ public class CommueController {
 		
 		return "common/message";
 	}
+	
+	
+	//사원용 
+	@RequestMapping(value="/employeeMonthList.do",method=RequestMethod.GET)
+	public String employeeMonthList_get(@RequestParam (defaultValue="0") int empNo,Model model) {
+		logger.info("사원 월별 근태 보여주기 화면 파라미터 empNo={}",empNo);
+		
+		List<Map<String, Object>> lists = commueService.selectMonthListGet(empNo);
+		logger.info("사원 월별 근태 조회 결과 lists.size()={}",lists.size());
+		
+		model.addAttribute("lists",lists);
+		
+		return "commue/employeeMonthList";
+	}
+
+	@RequestMapping(value="/employeeMonthList.do",method=RequestMethod.POST)
+	public String employeeMonthList(@ModelAttribute DateSearchVO dateSearchVo,HttpSession session,Model model) {
+		EmployeeVO vo = (EmployeeVO) session.getAttribute("empVo");
+		int empNo = vo.getEmpNo(); 
+		logger.info("사원 월별 근태 파라미터 dateSearchVo={}",dateSearchVo);
+
+		   List<Map<String, Object>> lists = commueService.selectMonthListCount(dateSearchVo);
+			logger.info("사원 월별 근태 조회 결과 lists.size()={}",lists.size());
+			
+			model.addAttribute("lists",lists);
+			
+			return "commue/employeeMonthList";
+	}
+	
 }

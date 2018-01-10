@@ -22,11 +22,11 @@
 
 	<update id="editEmployee" parameterType="EmployeeVO">
 		update empView set emp_name=#{empName},
-		emp_eName=#{empEName},emp_tel=#{empTel},emp_ssn=#{empSsn},
+		emp_eName=#{empEName},emp_pwd=#{empPwd},emp_tel=#{empTel},emp_ssn=#{empSsn},
 		emp_email=#{empEmail},emp_zipcode=#{empZipcode},emp_addr=#{empAddr},
 		emp_addr2=#{empAddr2},emp_hobby=#{empHobby},emp_hiredate=#{empHiredate},emp_school=#{empSchool},
 		emp_major=#{empMajor}
-		<if test="empImg!=null and !empImg.isEmpty()">
+		<if test="empImg!=null and empImg!=''">
 		,emp_img=#{empImg}
 		</if>
 		,emp_sal=#{empSal},
@@ -71,6 +71,32 @@
 		update empView set emp_pwd=#{empPwd}
 		where emp_no=#{empNo}
 	</update>
+	
+	<update id="employeeUpdateMaster" parameterType="int">
+		update empView set emp_Lev='관리자'
+		where emp_no=#{empNo}
+	</update>
+	
+	<update id="employeeUpdateTeam" parameterType="int">
+		update empView set emp_Lev='팀장'
+		where emp_no=#{empNo}
+	</update>
+	
+	<select id="employeeTeamCheck" parameterType="int" resultType="int">
+		select count(*) from empView
+		where emp_no=#{empNo} and emp_Lev='팀장'
+	</select>
+	
+	<select id="employeeMasterCheck" parameterType="int" resultType="int">
+		select count(*) from empView
+		where emp_no=#{empNo} and emp_Lev='관리자'
+	</select>
+	
+	<select id="employeeOutCheck" parameterType="int" resultType="int">
+		select count(*) from empView
+		where emp_no=#{empNo} and emp_outdate is not null
+	</select>
+
 </mapper>
 
 

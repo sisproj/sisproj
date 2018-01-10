@@ -43,13 +43,13 @@ public class EmployeeController {
 	@Autowired
 	private DeptService deptService;
 
-	@RequestMapping(value="/adm/employeeRegister.do",method=RequestMethod.GET)
+	@RequestMapping(value="/adm/adminEmployeeRegister.do",method=RequestMethod.GET)
 	public String employeeRegister_get() {
 		logger.info("사원등록 화면 보여주기");	
 
-		return "employee/employeeRegister";
+		return "employee/adminEmployeeRegister";
 	}	
-	@RequestMapping(value="/adm/employeeRegister.do",method=RequestMethod.POST)
+	@RequestMapping(value="/adm/adminEmployeeRegister.do",method=RequestMethod.POST)
 	public String employeeRegister_post(@ModelAttribute EmployeeVO vo,
 			@RequestParam String empHiredate1,HttpServletRequest request,Model model) {
 		logger.info("사원 등록 , 파라미터 vo={}, empHiredate1={}",vo, empHiredate1);
@@ -83,10 +83,10 @@ public class EmployeeController {
 		
 		int cnt=employeeService.insertEmployee(vo);
 
-		String msg="",url="/adm/employee/employeeRegister.do";
+		String msg="",url="/employee/adm/adminEmployeeRegister.do";
 		if(cnt>0){
 			msg="사원 등록 완료!";
-			url="/home.do";
+			url="/employee/adm/adminEmployeeList.do";
 		}else {
 			msg="사원 등록 실패!";
 		}
@@ -95,7 +95,7 @@ public class EmployeeController {
 
 		return "common/message";
 	}
-	@RequestMapping("/adm/employeeDetail.do")
+	@RequestMapping("/adm/adminEmployeeDetail.do")
 	public String employeeDetail(@RequestParam(defaultValue="0") int empNo,Model model) {
 		logger.info("사원상세보기 화면 보여주기,파라미터 empNo={}",empNo);
 
@@ -104,21 +104,11 @@ public class EmployeeController {
 		logger.info("사원 상세 화면 보여주기 결과 vo={}",vo);
 		model.addAttribute("vo",vo);
 		
-		return "employee/employeeDetail";
+		return "employee/adminEmployeeDetail";
 	}
-	@RequestMapping("/employeeDetail2.do")
-	public String employeeDetail2(@RequestParam(defaultValue="0") int empNo,Model model) {
-		logger.info("사원상세보기 화면 보여주기,파라미터 empNo={}",empNo);
 
-		EmployeeVO vo = employeeService.selectEmployeeByNo(empNo);
-
-		logger.info("사원 상세 화면 보여주기 결과 vo={}",vo);
-		model.addAttribute("vo",vo);
-		
-		return "employee/employeeDetail2";
-	}
-	@RequestMapping(value="/adm/employeeEdit.do",method=RequestMethod.GET)
-	public String employeeEdit_get(@RequestParam(defaultValue="0") int empNo,Model model) {
+	@RequestMapping(value="/adm/adminEmployeeEdit.do",method=RequestMethod.GET)
+	public String adminEmployeeEdit_get(@RequestParam(defaultValue="0") int empNo,Model model) {
 		logger.info("사원수정 화면 보여주기, 파라미터 값 empNo={}",empNo);			
 		
 		EmployeeVO vo =  employeeService.selectEmployeeByNo(empNo);
@@ -130,10 +120,207 @@ public class EmployeeController {
 
 		logger.info("회원 수정 화면 결과값  vo={}",vo);	
 
-		return "employee/employeeEdit";
+		return "employee/adminEmployeeEdit";
 	}
+	
+	@RequestMapping(value="/adm/adminEmployeeEdit.do",method=RequestMethod.POST)
+	public String adminEmployeeEdit_post(@ModelAttribute EmployeeVO vo
+			,@RequestParam String empHiredate1,@RequestParam String oldFileName 
+			,HttpServletRequest request,Model model) {
+		logger.info("사원 수정 된 파라미터 vo={},empHiredate1={}",vo,empHiredate1);
+		logger.info("사원 수정 된 파라미터 oldFileName={}",oldFileName);
 
-	@RequestMapping(value="/adm/employeeEdit.do",method=RequestMethod.POST)
+		Timestamp hiredate =Timestamp.valueOf(empHiredate1+" 00:00:00");
+
+		vo.setEmpHiredate(hiredate);
+
+		List<Map<String, Object>> list=null;
+		String empImg="";
+		if(vo.getEmpImg()!=null && !vo.getEmpImg().isEmpty()) {
+			try {
+				list=fileUtil.fileupload(request,FileUploadUtil.EMP_IMAGE_UPLOAD);			
+				if(list!=null && !list.isEmpty()){
+					for(Map<String, Object> map : list){
+						empImg=(String)map.get("fileName");	
+
+						vo.setEmpImg(empImg);
+					}
+				}
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}		
+			logger.info("vo.getEmpImg={}",vo.getEmpImg());
+		}	
+		//db작업
+
+		int cnt= employeeService.editEmployee(vo);
+		logger.info("수정 결과 cnt={}",cnt);
+		String msg="",url="";
+
+		if(cnt>0) {
+			msg="사원 수정 성공!";
+			url="/employee/adm/adminEmployeeDetail.do?empNo="+vo.getEmpNo();
+
+			if(empImg!=null && !empImg.isEmpty()) {
+				if(oldFileName!=null && !oldFileName.isEmpty()) {
+					String path=fileUtil.getUploadPath(request, FileUploadUtil.EMP_IMAGE_UPLOAD);
+					File delFile = new File(path, oldFileName);
+					if(delFile.exists()) {
+						boolean bool=delFile.delete();
+						logger.info("기존 파일 삭제여부 bool={}", bool);
+					}
+				}
+			}
+		}else {
+			msg="사원 수정 실패!";
+			url="/employee/adm/adminEmployeeEdit.do?empNo="+vo.getEmpNo();
+		}
+
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+
+		return "common/message";
+	}
+	@RequestMapping("/adm/employeeOut.do")
+	public String employeeOut(@ModelAttribute EmployeeListVO vo,Model model) {
+		logger.info("퇴사시킬 사원 ,파라미터 vo={}",vo);
+		int count=0;
+		int cnt=0;		
+		
+		String msg="",url="/employee/adm/adminEmployeeList.do";
+		List<EmployeeVO> list = vo.getEmpItems();
+		for(EmployeeVO emVo : list) {
+			emVo.getEmpNo();
+			logger.info("사원 번호  emVo.getEmpNo={}",emVo.getEmpNo());
+			count=employeeService.employeeOutCheck(emVo.getEmpNo());
+		}
+		if(count==employeeService.OUT_NONE) {
+			 cnt=employeeService.employeeOut(list);
+			logger.info("선택한 사원 퇴사 결과, cnt={}",cnt);		
+			msg="사원 퇴사 완료";
+		}else {
+			msg="이미 퇴사한 사원입니다";
+		}
+
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+
+		return "common/message";
+	}
+	@RequestMapping("/adm/employeeCome.do")
+	public String employeeCome(@ModelAttribute EmployeeListVO vo,Model model) {
+		logger.info("복직시킬 사원 ,파라미터 vo={}",vo);
+		int count=0;
+		int cnt=0;		
+		List<EmployeeVO> list = vo.getEmpItems();
+		for(EmployeeVO emVo : list) {
+			emVo.getEmpNo();
+			logger.info("사원 번호  emVo.getEmpNo={}",emVo.getEmpNo());
+			count=employeeService.employeeOutCheck(emVo.getEmpNo());
+		}
+		
+		String msg="",url="/employee/adm/adminEmployeeList.do";
+		if(count==employeeService.OUT_OK) {
+			 cnt=employeeService.employeeCome(list);
+			logger.info("선택한 사원 복직 결과, cnt={}",cnt);		
+			msg="사원 복직 완료";
+		}else {
+			msg="재직중인 사원입니다";			
+		}
+
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+
+		return "common/message";
+	}
+	@RequestMapping("/adm/employeeUpdateMaster.do")
+	public String employeeUpdateLev(@ModelAttribute EmployeeListVO vo,Model model) {
+		logger.info("관리자로 올릴 사원 , 파라미터 vo={}",vo);
+		int count=0;
+		int cnt=0;
+		List<EmployeeVO> list = vo.getEmpItems();
+		String msg="",url="/employee/adm/adminEmployeeList.do";
+		for(EmployeeVO emVo : list) {
+			emVo.getEmpNo();
+			logger.info("사원 번호  emVo.getEmpNo={}",emVo.getEmpNo());
+			count=employeeService.employeeMasterCheck(emVo.getEmpNo());
+		}
+		
+		logger.info("관리자로 직급 변환 결과 조회 컨트롤러 count={}",count);
+		if(count==employeeService.MASTER_NONE) {
+			cnt = employeeService.employeeUpdateMaster(list);
+			logger.info("선택한 관리자로 변경  결과, cnt={}",cnt);	
+			msg="사원 관리자로 올리기 완료";
+		}else {
+			msg="사원 관리자로 올리기  실패";
+		}
+
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+
+		return "common/message";
+	}
+	@RequestMapping("/adm/employeeUpdateTeam.do")
+	public String employeeUpdateTeam(@ModelAttribute EmployeeListVO vo,Model model) {
+		logger.info("팀장으로 권한을 준 사원, 파라미터 vo={}",vo);
+		List<EmployeeVO> list = vo.getEmpItems();
+		int count=0;
+		int cnt=0;
+		
+		for(EmployeeVO emVo : list) {
+			emVo.getEmpNo();
+			logger.info("사원 번호  emVo.getEmpNo={}",emVo.getEmpNo());
+			count=employeeService.employeeTeamCheck(emVo.getEmpNo());
+		}
+		logger.info("팀장으로 직급 변환 결과 count={}",count);
+		
+		String msg="",url="/employee/adm/adminEmployeeList.do";
+		if(count==employeeService.TEAM_NONE) {
+			cnt = employeeService.employeeUpdateTeam(list);
+			logger.info("선택한 팀장으로 변경  결과, cnt={}",cnt);	
+			msg="사원 팀장으로 변경 완료";
+		}else {
+			msg="사원 팀장으로 변경 실패";
+		}
+		
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+
+		return "common/message";
+	}
+	@RequestMapping("/adm/adminEmployeeList.do")
+	public String employeeList(@ModelAttribute SearchVO seVo,Model model) {
+		logger.info("사원 리스트 화면 보여주기 seVo={}",seVo );	
+		
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(Utility.BLOCK_SIZE);
+		pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);
+		pagingInfo.setCurrentPage(seVo.getCurrentPage());
+		
+		//SearchVo에 값 셋팅
+		seVo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);
+		seVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		logger.info("searchVo 최종값 : {}", seVo);
+
+		List<EmployeeVO> list =employeeService.selectAllEmployee(seVo);
+		
+		logger.info("사원수 결과, list.size()={}", list.size());
+
+		int totalRecord = employeeService.selectTotalRecordCount(seVo);
+		logger.info("사원 전체 인원 조회 결과, totalRecord={}", totalRecord);			
+
+		pagingInfo.setTotalRecord(totalRecord);		
+		
+		model.addAttribute("list", list);
+		model.addAttribute("pagingInfo", pagingInfo);
+		
+		return "employee/adminEmployeeList";
+	}
+	
+	/*사원 컨트롤러*/
+	@RequestMapping(value="/EmployeeEdit.do",method=RequestMethod.POST)
 	public String employeeEdit_post(@ModelAttribute EmployeeVO vo
 			,@RequestParam String empHiredate1,@RequestParam String oldFileName 
 			,HttpServletRequest request,Model model) {
@@ -185,7 +372,7 @@ public class EmployeeController {
 			}
 		}else {
 			msg="사원 수정 실패!";
-			url="/employee/employeeEdit.do?empNo="+vo.getEmpNo();
+			url="/employee/EmployeeEdit.do?empNo="+vo.getEmpNo();
 		}
 
 		model.addAttribute("msg",msg);
@@ -193,83 +380,30 @@ public class EmployeeController {
 
 		return "common/message";
 	}
-	@RequestMapping("/employeeOut.do")
-	public String employeeOut(@ModelAttribute EmployeeListVO vo,Model model) {
-		logger.info("퇴사시킬 사원 ,파라미터 vo={}",vo);
+	@RequestMapping(value="/employeeEdit.do",method=RequestMethod.GET)
+	public String employeeEdit_get(@RequestParam(defaultValue="0") int empNo,Model model) {
+		logger.info("사원수정 화면 보여주기, 파라미터 값 empNo={}",empNo);			
 		
-		List<EmployeeVO> list = vo.getEmpItems();
-		for(EmployeeVO emVo : list) {
-			emVo.getEmpNo();
-			logger.info("사원 번호  emVo.getEmpNo={}",emVo.getEmpNo());
-		}
-		int cnt=employeeService.employeeOut(list);
-		logger.info("선택한 사원 퇴사 결과, cnt={}",cnt);		
+		EmployeeVO vo =  employeeService.selectEmployeeByNo(empNo);
 
-		String msg="",url="/employee/employeeList.do";
+		List<DeptVO> list= deptService.selectDeptName();
+		
+		model.addAttribute("vo",vo);
+		model.addAttribute("list",list);
 
-		if(cnt>0) {
-			msg="사원 퇴사 완료";
-		}else {
-			msg="사원 퇴사 실패";
-		}
+		logger.info("회원 수정 화면 결과값  vo={}",vo);	
 
-		model.addAttribute("msg",msg);
-		model.addAttribute("url",url);
-
-		return "common/message";
+		return "employee/employeeEdit";
 	}
-	@RequestMapping("/employeeCome.do")
-	public String employeeCome(@ModelAttribute EmployeeListVO vo,Model model) {
-		logger.info("복직시킬 사원 ,파라미터 vo={}",vo);
+	@RequestMapping("/employeeDetail.do")
+	public String employeeDetail2(@RequestParam(defaultValue="0") int empNo,Model model) {
+		logger.info("사원상세보기 화면 보여주기,파라미터 empNo={}",empNo);
+
+		EmployeeVO vo = employeeService.selectEmployeeByNo(empNo);
+
+		logger.info("사원 상세 화면 보여주기 결과 vo={}",vo);
+		model.addAttribute("vo",vo);
 		
-		List<EmployeeVO> list = vo.getEmpItems();
-		for(EmployeeVO emVo : list) {
-			emVo.getEmpNo();
-			logger.info("사원 번호  emVo.getEmpNo={}",emVo.getEmpNo());
-		}
-		int cnt=employeeService.employeeCome(list);
-		logger.info("선택한 사원 복직 결과, cnt={}",cnt);		
-
-		String msg="",url="/employee/employeeList.do";
-
-		if(cnt>0) {
-			msg="사원 복직 완료";
-		}else {
-			msg="사원 복직 실패";
-		}
-
-		model.addAttribute("msg",msg);
-		model.addAttribute("url",url);
-
-		return "common/message";
-	}
-
-	@RequestMapping("/adm/employeeList.do")
-	public String employeeList(@ModelAttribute SearchVO seVo,Model model) {
-		logger.info("사원 리스트 화면 보여주기 seVo={}",seVo );	
-		
-		PaginationInfo pagingInfo = new PaginationInfo();
-		pagingInfo.setBlockSize(Utility.BLOCK_SIZE);
-		pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);
-		pagingInfo.setCurrentPage(seVo.getCurrentPage());
-		
-		//SearchVo에 값 셋팅
-		seVo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE);
-		seVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
-		logger.info("searchVo 최종값 : {}", seVo);
-
-		List<EmployeeVO> list =employeeService.selectAllEmployee(seVo);
-		
-		logger.info("사원수 결과, list.size()={}", list.size());
-
-		int totalRecord = employeeService.selectTotalRecordCount(seVo);
-		logger.info("사원 전체 인원 조회 결과, totalRecord={}", totalRecord);			
-
-		pagingInfo.setTotalRecord(totalRecord);		
-		
-		model.addAttribute("list", list);
-		model.addAttribute("pagingInfo", pagingInfo);
-		
-		return "employee/employeeList";
+		return "employee/employeeDetail";
 	}
 }

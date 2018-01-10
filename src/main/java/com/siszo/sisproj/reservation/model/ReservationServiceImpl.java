@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.siszo.sisproj.addrbook.addrbook.model.AddrBookVO;
+import com.siszo.sisproj.dept.model.DeptVO;
+import com.siszo.sisproj.employee.model.EmployeeVO;
+import com.siszo.sisproj.resource.model.ResourceVO;
 
 @Service
 public class ReservationServiceImpl implements ReservationService{
@@ -34,7 +37,7 @@ public class ReservationServiceImpl implements ReservationService{
 	public int updateConfirmR(int rvNo) {
 		return resDao.updateConfirmR(rvNo);
 	}
-	public List<ReservationVO> reservationNselect(){
+	public List<Map<String, Object>> reservationNselect(){
 		return resDao.reservationNselect();
 	}
 	public List<Map<String, Object>> reservationNotYselect(ReservationSearchVO searchVo){
@@ -80,4 +83,43 @@ public class ReservationServiceImpl implements ReservationService{
 		
 		return cnt;
 	}
+	public List<Map<String, Object>> resourceAllselect(ReservationSearchVO searchVo){
+		return resDao.resourceAllselect(searchVo);
+	}
+	public List<DeptVO> deptsearch(){
+		return resDao.deptsearch();
+	}
+	
+	public int cancelReservation(int rvNo) {
+		return resDao.cancelReservation(rvNo);
+	}
+	@Override
+	public List<Map<String, Object>> selectReservationAllAMD(ReservationSearchVO searchVo) {
+		return resDao.selectReservationAllAMD(searchVo);
+	}
+
+	@Override
+	public int selectTotalRecordAll() {
+		return resDao.selectTotalRecordAll();
+	}
+
+	@Override
+	@Transactional
+	public int deleteResMulti(List<ReservationVO> list) {
+		int cnt=0;
+		try {
+			for (ReservationVO vo : list) {
+				int rvNo=vo.getRvNo();
+				if(rvNo!=0) {
+					cnt=resDao.cancelReservation(rvNo);
+				}
+			}
+		}catch (RuntimeException e) {
+			cnt=0;
+			e.printStackTrace();
+		}
+		
+		return cnt;
+	}
+	
 }

@@ -12,7 +12,6 @@
 	margin: 0 auto;
 	padding-top: 10px;
 	margin-top:70px;
-	margin-left : 10px;
 	box-shadow:2px 2px 5px #555;
 	float: left;
 	margin-left: 5px;
@@ -57,12 +56,20 @@
 }
 
 .cfmain_table h3{
+	box-sizing:border-box;
+	padding-left:10px;
 	margin-bottom: 10px;
-	text-align: center;
 	height: 40px;
 	border-radius:10px ;
 	line-height: 40px;
 	color: #fff;
+}
+
+.cfmain_table h3 a{
+	display: inline-block;
+	color : #fff;
+	float:right;
+	margin-right: 10px;
 }
 .cfmain_table h3 i{
 	color: #fff;

@@ -30,6 +30,13 @@
             width: 750px;
             height: 500px;
         }
+        
+        @media screen and (max-width:749px){
+	        .box_skitter_large img {
+	            width: 100%;
+	            height: 300px;
+	        }
+        }
     </style>
 </head>
 
@@ -48,11 +55,11 @@
                             </div>
                         </li>
                         <li>
-                            <a href="#random">
-                                <img src="${pageContext.request.contextPath }/resources/skitter/img/banner2.jpg" class="random">
+                            <a href="#cubeRandom">
+                                <img src="${pageContext.request.contextPath }/resources/skitter/img/banner2.jpg" class="cubeRandom">
                             </a>
                             <div class="label_text">
-                                <p>random</p>
+                                <p>cubeRandom</p>
                             </div>
                         </li>
                         <li>

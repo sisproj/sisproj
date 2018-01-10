@@ -66,7 +66,7 @@
 		$('#addressWrite').click(function(){
 			$('#divWriteSection').css('visibility', 'visible');
 			$('#divUpdateSection').css('visibility', 'hidden');
-			$('#divInsertGroup').css('visibility', 'hidden');
+			$('#divInsertGroup').css('visibility', 'hidden');			
 		});
 		
 		/* 연락처 입력 */
@@ -105,9 +105,11 @@
 		});
 		$('#btCancel').click(function(){
 			$('#divWriteSection').css('visibility', 'hidden');
+			$('#email3Update').css('visibility','hidden');
 		});
 		$('#btCancelU').click(function(){
 			$('#divUpdateSection').css('visibility', 'hidden');
+			$('#email3Update').css('visibility','hidden');
 		});	
 		
 		/* 리스트의 이름 클릭시 수정창 띄우며 정보 보여주기 */

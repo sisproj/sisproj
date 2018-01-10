@@ -25,6 +25,7 @@
         var userImg = "";
         var chatKey = "";
         var userKey = "";
+
         $(document).ready(function () {
             userKey = $('#userKey').val();
             userId = $('#sessionId').val();
@@ -65,9 +66,17 @@
 
         function loadOrganization(userKey) {
             if (userKey != "0") {
+                var sendEmpNo = ${sendEmpNo};
+                var recEmpNo = ${recEmpNo};
+
+                console.log(sendEmpNo +"," +recEmpNo);
+                if(sendEmpNo != 0 || recEmpNo != 0) {
+                    chatStart();
+                }
+
                 setTimeout(function () {
                     changeContent(userKey);
-                },1500);
+                },3000);
 
             } else {
                 $('#messenger-main-container').html("").load('messengerStart.do');
@@ -75,9 +84,24 @@
         }
 
         function chatStart() {
-            var empIdArr = $('#choiceEmpId').val().split(",");
-            empIdArr.push(userId);
-            empIdArr.sort();
+            var empIdArr = [];
+            var sendEmpNo = 0;
+            var recEmpNo = 0;
+            sendEmpNo = ${sendEmpNo} + "";
+            recEmpNo = ${recEmpNo} + "";
+
+            if(sendEmpNo == 0 || recEmpNo == 0) {
+                empIdArr = $('#choiceEmpId').val().split(",");
+                empIdArr.push(userId);
+                empIdArr.sort();
+            } else {
+                empIdArr.push(sendEmpNo);
+                empIdArr.push(recEmpNo);
+                empIdArr.sort();
+            }
+
+            console.log(empIdArr);
+
 
             /* Users 설정 - 선택된 사용자에게 채팅방 할당 */
             var chat = "chat";
@@ -151,7 +175,11 @@
             $('#sidebar-button').show().attr('name', 'hide-nav');
 
             $('#chatsList').find('a').attr("class", "w3-button w3-block w3-white w3-left-align");
+            $('#chatsList').find('span i').attr("class", "fa fa-circle-o");
+
             $('#' + chatKey).attr("class", "w3-button w3-block w3-white w3-left-align w3-light-grey");
+            $('#' + chatKey + ' span i').attr("class", "fa fa-circle");
+
         }
 
         function findUser() {
@@ -231,25 +259,40 @@
             });
         }
 
-
         var memberList = [];
-
         function loadMemberListByChatKey(chatKey) {
+            memberList = [];
             var membersRef = firebase.database().ref('members/' + chatKey);
             membersRef.once('value', function (snapshot) {
                 snapshot.forEach(function (childSnapshot) {
                     memberList.push(childSnapshot.key);
-                    var onclickStr = 'onclick="changeNameCard(\'' + childSnapshot.key + '\')"';
-                    var userImg = "<c:url value='/emp_images/'/>";
-                    $('#memberList').append(
-                        '<div class="w3-bar-item w3-button">' +
-                        '<img src="' + userImg + '" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">' +
-                        '<div>' +
-                        '<div class="w3-small w3-center">' + name + '</div>' +
-                        '</div>' +
-                        '</div>'
-                    );
                 });
+            }).then(function () {
+                for(var i = 0; i < memberList.length; i++) {
+                    var usersRef = firebase.database().ref('users/' + memberList[i]);
+                    usersRef.once('value', function (snapshot) {
+                        console.log
+                        var empNo = snapshot.key;
+                        var empImg = snapshot.val().emp_img;
+                        var empName = snapshot.val().emp_name;
+                        var empPosition = snapshot.val().emp_position;
+
+                        var onclickStr = 'onclick="changeNameCard(\'' + empNo + '\')"';
+                        var userImg = "<c:url value='/emp_images/"+empImg+"'/>";
+                        if(empImg == null) {
+                            userImg = "<c:url value='/emp_images/defaultImg.png'/>";
+                        }
+                        $('#memberList').append(
+                            '<li class="w3-bar w3-button w3-left-align" '+ onclickStr +'>' +
+                            '<img src="' + userImg + '" class="w3-circle" style="width:50px; height: 50px; margin-right: 50px">' +
+                            '<span class="w3-large">' + empName + " " + empPosition +
+                            '</span>'+
+                            '<span>(' + empNo + ')</span>' +
+                            '</li>'
+                        );
+                    })
+
+                }
             });
         }
 
@@ -332,7 +375,7 @@
                     var userImg = "<c:url value='/emp_images/defaultImg.png'/>";
                     $('#chatsList').append(
                         '<a class="w3-button w3-block w3-white w3-left-align" id="' + snapshot.key + '" style="padding: 5px"' + onclickStr + '>' +
-                        '<img src="' + userImg + '" class="w3-bar-item w3-circle" style="width:85px; float: left;">' +
+                        '<span class="w3-bar-item" style="padding-top:20px; width:85px;height: 60px; float: left;"><i class="fa fa-circle-o" aria-hidden="true"></i></span>'+
                         '<div class="w3-bar-item">' +
                         '<div class="w3-large w3-left">' + titleStr + '</div>' +
                         '<div class="w3-right w3-small">' + resultDate + '</div>' +
@@ -344,7 +387,7 @@
                         '</div>' +
                         '</a>'
                     );
-                });
+                })
             }
         }
 
@@ -413,47 +456,51 @@
             var lastMessage = $('#chatMsg').val();
             var userImg = "<c:url value='/emp_images/defaultImg.png'/>";
             var title = $('#memberTitle').val();
-
-            var titleArr = title;
-            if (title.indexOf(",") > 0) {
-                titleArr = title.split(",");
-            }
-
-            var memberCnt = titleArr.length
-            titleArr.splice(titleArr.indexOf('${sessionScope.empVo.empName}'), 1);
-
-            var titleStr = "";
-            for(var i  = 0; i < titleArr.length; i++) {
-                if(i == titleArr.length - 1) {
-                    titleStr += titleArr[i];
-                } else {
-                    titleStr += titleArr[i] + ",";
-                }
-            }
-
-            if(titleStr.length > 10) {
-                titleStr = titleStr.substring(0, 10) + "..." + "(" + memberCnt + ")";
-            }
-
-            firebase.database().ref('chats/' + chatKey).update({
+            var chatsRef = firebase.database().ref('chats/' + chatKey);
+            chatsRef.update({
                 lastMessage: lastMessage,
                 timestamp: timestamp
             });
 
-            var resultDate = formatDate(timestamp);
+            chatsRef.on('value', function (snapshot) {
+                console.log(snapshot.val());
 
-            $('#' + chatKey).html(
-                '<img src="' + userImg + '" class="w3-bar-item w3-circle" style="width:85px; float: left;">' +
-                '<div class="w3-bar-item">' +
-                '<div class="w3-large w3-left">' + titleStr + '</div>' +
-                '<div class="w3-right w3-small">' + resultDate + '</div>' +
-                '<br>' +
-                '<div class="w3-left w3-small">' + lastMessage + '</div>' +
-                '<div>' +
-                '<div class="w3-badge w3-red w3-right w3-small" id="' + chatKey + 'Count"></div>' +
-                '</div>' +
-                '</div>'
-            )
+
+                var titleArr = snapshot.val().title;
+                if (title.indexOf(",") > 0) {
+                    titleArr = title.split(",");
+                }
+
+                var memberCnt = titleArr.length
+                titleArr.splice(titleArr.indexOf('${sessionScope.empVo.empName}'), 1);
+
+                var titleStr = "";
+                for(var i  = 0; i < titleArr.length; i++) {
+                    if(i == titleArr.length - 1) {
+                        titleStr += titleArr[i];
+                    } else {
+                        titleStr += titleArr[i] + ",";
+                    }
+                }
+
+                if(titleStr.length > 10) {
+                    titleStr = titleStr.substring(0, 10) + "..." + "(" + memberCnt + ")";
+                }
+
+                var resultDate = formatDate(timestamp);
+                $('#' + chatKey).html(
+                    '<span class="w3-bar-item" style="padding-top:20px; width:85px;height: 60px; float: left;"><i class="fa fa-circle" aria-hidden="true"></i></span>'+
+                    '<div class="w3-bar-item">' +
+                    '<div class="w3-large w3-left">' + titleStr + '</div>' +
+                    '<div class="w3-right w3-small">' + resultDate + '</div>' +
+                    '<br>' +
+                    '<div class="w3-left w3-small">' + lastMessage + '</div>' +
+                    '<div>' +
+                    '<div class="w3-badge w3-red w3-right w3-small" id="' + chatKey + 'Count"></div>' +
+                    '</div>' +
+                    '</div>'
+                )
+            });
         }
 
 
@@ -552,7 +599,7 @@
             <%--로그인한 user의 채팅방 목록을 여기다 뿌려줌--%>
         </ul>
     </div>
-</nav>
+</nav>ss
 
 <form id="frmMessenger" name="frmMessenger" method="post" action="<c:url value='/messenger/messenger.do'/>">
     <input type="text" value="${userKey}" id="userKey" name="userKey">

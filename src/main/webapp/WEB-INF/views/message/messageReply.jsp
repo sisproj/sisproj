@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>SIS - Standard Intranet System</title>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="<c:url value='/resources/css/w3/w3.css'/>"/>
     <link rel="stylesheet" href="<c:url value='/resources/css/bootstrap/bootstrap-tokenfield.css'/>">
     <link rel="stylesheet" href="<c:url value='/resources/css/bootstrap/tokenfield-typeahead.css'/>">
     <script src="<c:url value='/resources/js/bootstrap/bootstrap-tokenfield.js'/>"></script>
@@ -183,8 +183,8 @@
             <textarea class="message-text" name="msgContent" id="msgContent" style="resize: none;"></textarea>
         </div>
         <div class="w3-row w3-section" style="height: 35px">
-            <input type="button" class="w3-button w3-blue w3-left w3-small" id="submitButton" value="보내기">
-            <%--<button type="submit" class="w3-button w3-blue w3-left w3-small" form="writefrm">보내기</button>--%>
+            <%--<input type="button" class="w3-button w3-blue w3-left w3-small" id="submitButton" value="보내기">--%>
+            <button type="button" class="w3-button w3-blue w3-left w3-small" id="submitButton">보내기</button>
         </div>
     </form>
 </div>
