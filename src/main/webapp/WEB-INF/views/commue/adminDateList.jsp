@@ -29,16 +29,14 @@
 }					
 </style>
 <script type="text/javascript">
-	$(function () {	
-		$.setYear();
-		$.setMonth();
-		
+	$(function () {		
+		$('#startDay').datepicker({
+			dateFormat:'yy-mm-dd',
+			changeYear:true,
+			dayNamesMin:['일','월','화','수','목','금','토'],
+			monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
+		});	
 	});
-	
-	$.convertTime=function(today){
-		return today.getHour()+":"+today.getMinutes();
-	}
-	
 	/* 그래프 차트 */
  	var chart = AmCharts.makeChart( "chartStick", {
 		  "type": "serial",
@@ -115,26 +113,6 @@
 		    "enabled": true
 		  }
 		} );
-	$.setYear=function(){
-		var date = new Date();
-		var year = date.getFullYear();
-		
-		var ye = "${param.year}";
-		
-		for(var i=year;i>=year-10;i--){
-			if(ye==i){
-				$('#year').append("<option value='"+i+"' selected>"+i+"</option>");
-			}else{
-				$('#year').append("<option value='"+i+"' >"+i+"</option>");					
-			}
-		}
-	}
-	$.setMonth=function(){
-		var date = new Date();
-		var year = date.getFullYear();
-		
-		$('#frmDate #year').val(year);
-	}
 </script>
 </head>
 <body>
@@ -154,7 +132,8 @@
     <div id="dimyPage">		
 			<form name="frmDate" id="frmDate" method="post" action="<c:url value='/commue/adm/adminDateList.do' />">
 				<div id="seYear">		
-					<input type="hidden" id="year" name="year">
+					<input type="text" id="startDay" name="startDay" placeholder="누르시면 달력이 나옵니다.">
+					<input type="submit" id="yeSear" name="yeSear" value="검색">
 				</div>	
 			</form>			
 					<table border="1" id="allList">

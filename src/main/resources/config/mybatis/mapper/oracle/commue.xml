@@ -101,9 +101,14 @@
 		order by dept_name,to_char(cmt_in, 'mm')
 	</select>
 	
-	<select id="selectDateCount" resultType="map">
+	<select id="selectDateCount" resultType="map" parameterType="DateSearchVO">
 		select dept_name as "DEPTNAME",to_char(cmt_in, 'dd') as "CMTIN" ,count(*) as "TOTAL" from cmtView
-		where to_char(cmt_in, 'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')
+	    <if test="startDay==null or startDay==''">
+	   		where to_char(cmt_in, 'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')
+	    </if>
+		<if test="startDay!=null and startDay!=''">
+			where to_char(cmt_in, 'yyyy-mm-dd')=#{startDay}
+		</if>
 		group by dept_name,to_char(cmt_in, 'dd')
 		order by dept_name,to_char(cmt_in, 'dd')
 	</select>

@@ -21,6 +21,6 @@ public interface CommueService {
 	public List<Map<String, Object>> selectMonthListCount(DateSearchVO vo);
 	public List<Map<String, Object>> selectMonthListGet(int empNo);
 	public List<Map<String, Object>> selectMonthDeptName(DateSearchVO vo);
-	public List<Map<String, Object>> selectDateCount();
+	public List<Map<String, Object>> selectDateCount(DateSearchVO vo);
 	public int selectAllCount();
 }
