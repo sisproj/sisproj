@@ -44,13 +44,13 @@ public class EmployeeController {
 	private DeptService deptService;
 
 	@RequestMapping(value="/adm/adminEmployeeRegister.do",method=RequestMethod.GET)
-	public String employeeRegister_get() {
+	public String adminEmployeeRegister_get() {
 		logger.info("사원등록 화면 보여주기");	
 
 		return "employee/adminEmployeeRegister";
 	}	
 	@RequestMapping(value="/adm/adminEmployeeRegister.do",method=RequestMethod.POST)
-	public String employeeRegister_post(@ModelAttribute EmployeeVO vo,
+	public String adminEmployeeRegister_post(@ModelAttribute EmployeeVO vo,
 			@RequestParam String empHiredate1,HttpServletRequest request,Model model) {
 		logger.info("사원 등록 , 파라미터 vo={}, empHiredate1={}",vo, empHiredate1);
 
@@ -96,7 +96,7 @@ public class EmployeeController {
 		return "common/message";
 	}
 	@RequestMapping("/adm/adminEmployeeDetail.do")
-	public String employeeDetail(@RequestParam(defaultValue="0") int empNo,Model model) {
+	public String adminEmployeeDetail(@RequestParam(defaultValue="0") int empNo,Model model) {
 		logger.info("사원상세보기 화면 보여주기,파라미터 empNo={}",empNo);
 
 		EmployeeVO vo = employeeService.selectEmployeeByNo(empNo);
@@ -108,7 +108,7 @@ public class EmployeeController {
 	}
 
 	@RequestMapping(value="/adm/adminEmployeeEdit.do",method=RequestMethod.GET)
-	public String adminEmployeeEdit_get(@RequestParam(defaultValue="0") int empNo,Model model) {
+	public String adminEdminEmployeeEdit_get(@RequestParam(defaultValue="0") int empNo,Model model) {
 		logger.info("사원수정 화면 보여주기, 파라미터 값 empNo={}",empNo);			
 		
 		EmployeeVO vo =  employeeService.selectEmployeeByNo(empNo);
@@ -184,7 +184,7 @@ public class EmployeeController {
 		return "common/message";
 	}
 	@RequestMapping("/adm/employeeOut.do")
-	public String employeeOut(@ModelAttribute EmployeeListVO vo,Model model) {
+	public String adminEmployeeOut(@ModelAttribute EmployeeListVO vo,Model model) {
 		logger.info("퇴사시킬 사원 ,파라미터 vo={}",vo);
 		int count=0;
 		int cnt=0;		
@@ -210,7 +210,7 @@ public class EmployeeController {
 		return "common/message";
 	}
 	@RequestMapping("/adm/employeeCome.do")
-	public String employeeCome(@ModelAttribute EmployeeListVO vo,Model model) {
+	public String adminEmployeeCome(@ModelAttribute EmployeeListVO vo,Model model) {
 		logger.info("복직시킬 사원 ,파라미터 vo={}",vo);
 		int count=0;
 		int cnt=0;		
@@ -236,7 +236,7 @@ public class EmployeeController {
 		return "common/message";
 	}
 	@RequestMapping("/adm/employeeUpdateMaster.do")
-	public String employeeUpdateLev(@ModelAttribute EmployeeListVO vo,Model model) {
+	public String adminEmployeeUpdateMaster(@ModelAttribute EmployeeListVO vo,Model model) {
 		logger.info("관리자로 올릴 사원 , 파라미터 vo={}",vo);
 		int count=0;
 		int cnt=0;
@@ -263,7 +263,7 @@ public class EmployeeController {
 		return "common/message";
 	}
 	@RequestMapping("/adm/employeeUpdateTeam.do")
-	public String employeeUpdateTeam(@ModelAttribute EmployeeListVO vo,Model model) {
+	public String adminEmployeeUpdateTeam(@ModelAttribute EmployeeListVO vo,Model model) {
 		logger.info("팀장으로 권한을 준 사원, 파라미터 vo={}",vo);
 		List<EmployeeVO> list = vo.getEmpItems();
 		int count=0;
@@ -291,7 +291,7 @@ public class EmployeeController {
 		return "common/message";
 	}
 	@RequestMapping("/adm/adminEmployeeList.do")
-	public String employeeList(@ModelAttribute SearchVO seVo,Model model) {
+	public String adminEmployeeList(@ModelAttribute SearchVO seVo,Model model) {
 		logger.info("사원 리스트 화면 보여주기 seVo={}",seVo );	
 		
 		PaginationInfo pagingInfo = new PaginationInfo();
@@ -320,17 +320,17 @@ public class EmployeeController {
 	}
 	
 	/*사원 컨트롤러*/
-	@RequestMapping(value="/EmployeeEdit.do",method=RequestMethod.POST)
+	@RequestMapping(value="/employeeEdit.do",method=RequestMethod.POST)
 	public String employeeEdit_post(@ModelAttribute EmployeeVO vo
 			,@RequestParam String empHiredate1,@RequestParam String oldFileName 
 			,HttpServletRequest request,Model model) {
 		logger.info("사원 수정 된 파라미터 vo={},empHiredate1={}",vo,empHiredate1);
 		logger.info("사원 수정 된 파라미터 oldFileName={}",oldFileName);
-
+		
 		Timestamp hiredate =Timestamp.valueOf(empHiredate1+" 00:00:00");
-
+		
 		vo.setEmpHiredate(hiredate);
-
+		
 		List<Map<String, Object>> list=null;
 		String empImg="";
 		if(vo.getEmpImg()!=null && !vo.getEmpImg().isEmpty()) {
@@ -358,7 +358,7 @@ public class EmployeeController {
 
 		if(cnt>0) {
 			msg="사원 수정 성공!";
-			url="/employee/adm/employeeDetail.do?empNo="+vo.getEmpNo();
+			url="/employee/employeeDetail.do?empNo="+vo.getEmpNo();
 
 			if(empImg!=null && !empImg.isEmpty()) {
 				if(oldFileName!=null && !oldFileName.isEmpty()) {
@@ -372,7 +372,7 @@ public class EmployeeController {
 			}
 		}else {
 			msg="사원 수정 실패!";
-			url="/employee/EmployeeEdit.do?empNo="+vo.getEmpNo();
+			url="/employee/employeeEdit.do?empNo="+vo.getEmpNo();
 		}
 
 		model.addAttribute("msg",msg);

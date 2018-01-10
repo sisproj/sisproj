@@ -11,7 +11,7 @@
 				return false;
 			}else{
 				location.href="<c:url value='/employee/employeeDetail.do?empNo=${sessionScope.empVo.empNo}' />"
-			}			
+			}	
 		});
 		$('frmEmp').submit(function () {
 			var email1 = $('#email1').val();
@@ -58,7 +58,7 @@
     <div id="dimyPage">
     	<div id="diInput">
       	<form id="frmEmp" name="frmEnp"    	
-  		action="<c:url value='/employee/adm/employeeEdit.do?empNo=${vo.empNo }'/>" method="post" enctype="multipart/form-data">
+  		action="<c:url value='/employee/employeeEdit.do?empNo=${vo.empNo }'/>" method="post" enctype="multipart/form-data">
       	<input type="hidden" name="empTel" id="empTel" value="${vo.empTel }">
       	<input type="hidden" name="empSsn" id="empSsn" value="${vo.empSsn }">
       	<input type="hidden" name="empEmail" id="empEmail" value="${vo.empEmail }">
