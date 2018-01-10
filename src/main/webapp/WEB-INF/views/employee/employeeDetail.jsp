@@ -92,7 +92,6 @@
 		  </fieldset>	
 		        <div id="diReg">
 	           		<input type="button" id="btEdit" value="수정">
-					<input type="button" id="btCen" value="목록">
 			   </div>
 	   </form> 
 	   </div>

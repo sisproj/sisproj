@@ -116,6 +116,7 @@
 						<td><a href="<c:url value='/commue/adm/adminMonthList.do?deptName=${map["DEPT_NAME"] }&year=${year }&month=${month }' />">${map['DEPT_NAME'] }</a></td>
 						<!-- 해당 직급근태를 보여줍니다.  -->
 						<td><a href="<c:url value='/commue/adm/adminMonthList.do?posName=${map["POS_NAME"] }&year=${year }&month=${month }' />">${map['POS_NAME'] }</a></td>
+						<c:set var="vo" value="" />
 						<td id="cmtT">${map['CMTIN'] }</td>
 						<td id="cmtT">${map['CMTOUT'] }</td>
 						<c:if test="${map['CMT_STATUS'] eq ('Y')}">
