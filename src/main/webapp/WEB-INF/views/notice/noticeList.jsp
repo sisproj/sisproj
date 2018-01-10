@@ -244,10 +244,10 @@ action="<c:url value='/notice/noticeList.do'/>">
 								<c:if test="${param.searchCondition=='notiContent' }"> 
 		            		selected
 		            	</c:if>>내용</option>
-							<option value="emp_no"
-								<c:if test="${param.searchCondition=='empNo' }"> 
+							<option value="noti_Category"
+								<c:if test="${param.searchCondition=='notiCategory' }">
 		            		selected
-		            	</c:if>>작성자</option>
+		            	</c:if>>카테고리</option>
 						</select> <input type="text" name="searchKeyword" title="검색어 입력"
 							value="${param.searchKeyword }"> <input type="submit" class="btn btn-primary"
 							value="검색">
