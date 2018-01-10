@@ -352,7 +352,15 @@ public class EmployeeController {
 		}	
 		//db작업
 
-		int cnt= employeeService.editEmployee(vo);
+		String shaPwd=EmployeePwdLock.convertEncryption(vo.getEmpPwd());	
+		logger.info("변경된 비밀번호 shaPwd={}",shaPwd);			
+		
+		vo.setEmpPwd(shaPwd);
+		
+		logger.info("변경되어 수정된 비밀번호 shaPwd={}",shaPwd);
+		
+		int cnt= employeeService.editEmployeeEmp(vo);
+
 		logger.info("수정 결과 cnt={}",cnt);
 		String msg="",url="";
 

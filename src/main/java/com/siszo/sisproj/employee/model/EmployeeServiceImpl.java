@@ -164,4 +164,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return result;
 	}
 
+	@Override
+	public int editEmployeeEmp(EmployeeVO vo) {
+		return employeeDao.editEmployeeEmp(vo);
+	}
+
 }

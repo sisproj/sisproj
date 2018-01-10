@@ -28,5 +28,5 @@ public interface EmployeeService {
 	public int employeeTeamCheck(int empNo);
 	public int employeeMasterCheck(int empNo);
 	public int employeeOutCheck(int empNo);
-	
+	public int editEmployeeEmp(EmployeeVO vo);
 }
