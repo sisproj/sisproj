@@ -126,17 +126,29 @@
     </article>
     <article id="bodysection">
     <div>
-		<div id="chartOne"></div>
+		<div id="chartOne">
+		</div>
 		<div id="chartStick"></div>
 	</div>
     <div id="dimyPage">		
-			<form name="frmDate" id="frmDate" method="post" action="<c:url value='/commue/adm/adminDateList.do' />">
 				<div id="seYear">		
-					<input type="text" id="startDay" name="startDay" placeholder="누르시면 달력이 나옵니다.">
-					<input type="submit" id="yeSear" name="yeSear" value="검색">
+					<form name="frmDate" id="frmDate" method="post" action="<c:url value='/commue/adm/adminDateList.do' />">
+							<input type="text" id="startDay" name="startDay" placeholder="누르시면 달력이 나옵니다." value="${param.startDay }">
+							<input type="submit" id="yeSear" name="yeSear" value="검색">
+					</form>			
 				</div>	
-			</form>			
 					<table border="1" id="allList">
+					<c:if test="${empty list }">
+						<tr>
+							<th>부서</th>
+							<th>데이터가 없습니다</th>
+						</tr>
+						<tr>
+							<th>출근 인원</th>
+							<th>데이터가 없습니다</th>
+						</tr>
+					</c:if>
+					<c:if test="${!empty list }">
 						<tr>					
 							 <th>부서</th>
 							 <c:forEach var="map" items="${list }">	
@@ -148,9 +160,10 @@
 							 <c:forEach var="map" items="${list }">		
 								<c:if test="${!empty map['TOTAL'] }">	
 									<td>${map['TOTAL'] }명</td>	
-								</c:if>
+								</c:if>					
 							</c:forEach>	
-						</tr>										
+						</tr>	
+					</c:if>									
 				</table>
 			</div>			
 			</div>
