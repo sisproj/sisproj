@@ -160,19 +160,18 @@
 					<table border="1" id="allList">
 						<tr>					
 							 <th>부서</th>
-						<c:forEach var="i" begin="1" end="12">
-								<th>${i } 월</th>						
-						</c:forEach>
-						</tr>
-						<c:forEach var="map" items="${list }">				
-						<tr>
-							<th>${map['DEPTNAME'] }</th>	
-							<c:if test="${!empty map['TOTAL'] }">	
-								<td>${map['TOTAL'] }명</td>		
-								<td></td>							
-							</c:if>											
-						</tr>
-						</c:forEach>	
+							 <c:forEach var="map" items="${list }">	
+								<th>${map['DEPTNAME'] }</th>	
+							</c:forEach>							
+						</tr>	
+						<tr>	
+						<th>출근 인원</th>
+					 <c:forEach var="map" items="${list }">		
+								<c:if test="${!empty map['TOTAL'] }">	
+									<td>${map['TOTAL'] }명</td>	
+								</c:if>
+					</c:forEach>	
+						</tr>										
 				</table>
 			</div>			
 			</div>
