@@ -11,6 +11,7 @@
 	$(function () {	
 		$.setYear();
 		$.setMonth();
+		
 	});	
 	$.setYear=function(){
 		//현재년도에서 5년전 부터 출력
@@ -71,7 +72,12 @@
 		<div id="dimyPage">	
 			<div id="diBtCa">
 				<div id="diCal">
-					<span id="spDate"></span>
+					<c:if test="${empty param.year }">
+		   				<span id="spDate"></span>
+		   			</c:if>
+		   			<c:if test="${!empty param.year }">
+						<span id="spDate" style="font-size: 1.5em;text-align: center;">${param.year }년 ${param.month }월</span>
+					</c:if>
 				</div>			
 			<form name="frmDate" id="frmDate" method="post" action="<c:url value='/commue/adm/adminMonthList.do' />">
 				<input type="hidden" id="currentPage" name="currentPage" value="1">
@@ -82,6 +88,7 @@
 					</select>월
 						<input type="submit" id="btSearch" value="검색">					
 				</div>
+			</form>
 			</div>
 		</div>
 		<div id="diPage">
@@ -116,7 +123,7 @@
 						<td><a href="<c:url value='/commue/adm/adminMonthList.do?deptName=${map["DEPT_NAME"] }&year=${year }&month=${month }' />">${map['DEPT_NAME'] }</a></td>
 						<!-- 해당 직급근태를 보여줍니다.  -->
 						<td><a href="<c:url value='/commue/adm/adminMonthList.do?posName=${map["POS_NAME"] }&year=${year }&month=${month }' />">${map['POS_NAME'] }</a></td>
-						<c:set var="vo" value="" />
+						<%-- <c:set var="vo" value="${map['CMTIN'].substring(0,1) }" /> --%>
 						<td id="cmtT">${map['CMTIN'] }</td>
 						<td id="cmtT">${map['CMTOUT'] }</td>
 						<c:if test="${map['CMT_STATUS'] eq ('Y')}">
@@ -153,7 +160,7 @@
 					<a id=nextbtn href="#" onclick="pageFunc(${pagingInfo.lastPage+1})"><i class="fa fa-chevron-right"></i></a>
 				</c:if>
 			</div>
-		</form>
+		
 </body>
 </html>
        <!-- 3. 내용 끝 -->

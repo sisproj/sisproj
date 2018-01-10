@@ -160,7 +160,7 @@ public class LoginController {
 		int result= loginService.searchPwd(vo.getEmpNo(), vo.getEmpName());
 		
 		EmployeeVO empVo = employeeService.selectEmployeeByNo(vo.getEmpNo());
-		String msg="",url="";
+		String msg="",url="/login/searchPwd.do";
 		if(result==loginService.ID_NONE) {
 			msg="사원번호가 일치하지않습니다";
 		}else if(result==loginService.NAME_DISAGREE){
@@ -184,8 +184,7 @@ public class LoginController {
 			    	ranPwd.append((rnd.nextInt(10)));
 			        break;
 			    }
-			}
-			
+			}		
 			String ranPwd2 = ranPwd.toString();	
 			logger.info("변경된 비밀번호 ranPwd2={}",ranPwd2);
 					
@@ -211,8 +210,15 @@ public class LoginController {
 			int cnt = employeeService.employeeEditPwd(empVo);
 			
 			logger.info("이메일이 발송됨과 동시에 랜던값이 비밀번호에 셋팅됨 파라미터 ranPwd={},empVo={}",ranPwd,empVo);
+			msg="비밀번호 찾기 성공!";
+			url="/login/searchPwd.do";
+		}else {
+			msg="비밀번호 찾기 실패!";
+			url="/login/searchPwd.do";
 		}
+		
 		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
 		
 		return "common/message";
 	}

@@ -36,7 +36,24 @@
 			dayNamesMin:['일','월','화','수','목','금','토'],
 			monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
 		});	
+		var start = $('#startDay option').val();
+		var today = new Date();
+		
+		if(start==''){
+			$.convertDate(today)
+		}
 	});
+	 $.convertDate=function(date){
+			return date.getFullYear()+"-"+$.formatDate(date.getMonth()+1)+"-"
+			 + $.formatDate(date.getDate());
+	}
+	 $.formatDate = function(d){
+			var result=d;
+			if(d<10){
+				result="0"+d;
+			}
+			return result;
+		}
 	/* 그래프 차트 */
  	var chart = AmCharts.makeChart( "chartStick", {
 		  "type": "serial",
@@ -125,12 +142,23 @@
         <!-- 2. 페이지 이름 지정 끝 -->
     </article>
     <article id="bodysection">
-    <div>
-		<div id="chartOne">
+     <div id="dimyPage">		
+	    <div id="diBtCa">
+		   <div id="diCal">
+		   			<c:if test="${empty param.startDay }">
+		   				<span id="spDa"></span>
+		   			</c:if>
+		   			<c:if test="${!empty param.startDay }">
+		   				<c:set var="date" value="${fn:split(param.startDay, '-') }" />
+						<span id="spDate">${date[0] }년 ${date[1] }월 ${date[2] }일</span>
+					</c:if>
+			</div>	
+			</div>
+	    <div>
+			<div id="chartOne"></div>
+			<div id="chartStick"></div>
 		</div>
-		<div id="chartStick"></div>
-	</div>
-    <div id="dimyPage">		
+   
 				<div id="seYear">		
 				<div class="clr"></div>
 					<form name="frmDate" id="frmDate" method="post" action="<c:url value='/commue/adm/adminDateList.do' />">

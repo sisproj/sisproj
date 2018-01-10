@@ -26,19 +26,20 @@ public class LoginServiceImpl implements LoginService{
 		String shaPwd=EmployeePwdLock.convertEncryption(vo.getEmpPwd());
 		
 		logger.info("로그인 할때 실패시  vo={}",vo);*/
-		
-		if(vo.getEmpNo()!=empNo) {
-			result=ID_NONE;
-		}else if(vo.getEmpNo()==empNo && vo.getEmpPwd().equals(empPwd)){		
-			if(vo.getEmpOutdate()!=null) {
-				result=EMP_OUT;
-			}else {				
-				result=LOGIN_OK;		
+		if(vo!=null) {
+			if(vo.getEmpNo()!=empNo) {
+					result=ID_NONE;
+			}else if(vo.getEmpNo()==empNo && vo.getEmpPwd().equals(empPwd)){		
+				if(vo.getEmpOutdate()!=null) {
+					result=EMP_OUT;
+				}else {				
+					result=LOGIN_OK;		
+				}
+			}else if(vo.getEmpNo()==empNo && vo.getEmpPwd().equals(empPwd)){
+				result=PWD_DISAGREE;
 			}
-		}else if(vo.getEmpNo()==empNo && vo.getEmpPwd().equals(empPwd)){
-			result=PWD_DISAGREE;
 		}
-		logger.info("로그인 확인 결과 result={}",result);
+			logger.info("로그인 확인 결과 result={}",result);
 		return result;	
 	}
 

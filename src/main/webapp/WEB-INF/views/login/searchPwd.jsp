@@ -28,10 +28,6 @@
 			}
 		});
 		
-		$('#seFrm').submit(function() {
-			
-		});
-		
 		$('#ceBt').click(function() {
 			if(!confirm("취소하시겠습니까?")){
 				return false;
