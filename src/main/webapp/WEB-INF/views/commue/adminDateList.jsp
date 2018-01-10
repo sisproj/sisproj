@@ -165,12 +165,12 @@
 							</c:forEach>							
 						</tr>	
 						<tr>	
-						<th>출근 인원</th>
-					 <c:forEach var="map" items="${list }">		
+							<th>출근 인원</th>
+							 <c:forEach var="map" items="${list }">		
 								<c:if test="${!empty map['TOTAL'] }">	
 									<td>${map['TOTAL'] }명</td>	
 								</c:if>
-					</c:forEach>	
+							</c:forEach>	
 						</tr>										
 				</table>
 			</div>			
