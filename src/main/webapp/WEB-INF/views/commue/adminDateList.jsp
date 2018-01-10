@@ -132,6 +132,7 @@
 	</div>
     <div id="dimyPage">		
 				<div id="seYear">		
+				<div class="clr"></div>
 					<form name="frmDate" id="frmDate" method="post" action="<c:url value='/commue/adm/adminDateList.do' />">
 							<input type="text" id="startDay" name="startDay" placeholder="누르시면 달력이 나옵니다." value="${param.startDay }">
 							<input type="submit" id="yeSear" name="yeSear" value="검색">

@@ -34,6 +34,20 @@
 		where emp_no = #{empNo}
 	</update>
 	
+	<update id="editEmployee" parameterType="EmployeeVO">
+		update empView set emp_name=#{empName},
+		emp_eName=#{empEName},emp_pwd=#{empPwd},emp_tel=#{empTel},emp_ssn=#{empSsn},
+		emp_email=#{empEmail},emp_zipcode=#{empZipcode},emp_addr=#{empAddr},
+		emp_addr2=#{empAddr2},emp_hobby=#{empHobby},emp_hiredate=#{empHiredate},emp_school=#{empSchool},
+		emp_major=#{empMajor}
+		<if test="empImg!=null and empImg!=''">
+		,emp_img=#{empImg}
+		</if>
+		,emp_sal=#{empSal},
+		dept_no=#{deptNo},pos_no=#{posNo}
+		where emp_no = #{empNo}
+	</update>
+	
 	<select id="selectTotalRecordCount" resultType="int" parameterType="SearchVO" >
 		select count(*) from empView
 		 <include refid="searchWhere"></include>  
