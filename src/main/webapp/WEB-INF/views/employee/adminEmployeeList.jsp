@@ -110,11 +110,11 @@
 		        </select>   
 		        <input type="text" name="searchKeyword" title="검색어 입력" value="${param.searchKeyword }">   
 				<input type="submit" value="검색">
-			    <select id="pl" style="float: right;">
+			    <!-- <select id="pl" style="float: right;">
 					<option value="10">10명</option>
 					<option value="20">20명</option>
 					<option value="30">30명</option>
-				</select>
+				</select> -->
 			</div>
 	<div id="diempList">
 		<div id="coLi">

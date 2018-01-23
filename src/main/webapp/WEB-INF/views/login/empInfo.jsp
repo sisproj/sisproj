@@ -65,8 +65,15 @@
                 <li><i class="fa fa-cog"></i>&nbsp;<span><a
                         href="<c:url value='/employee/adm/adminEmployeeList.do'/>">관리자페이지</a></span></li>
             </c:if>
-            <c:if test="${sessionScope.empVo.empLev eq ('사원') || sessionScope.empVo.empLev eq ('팀장')}">
+            <c:if test="${sessionScope.empVo.empLev eq ('사원')}">
                 <li><i class="fa fa-id-card"></i>&nbsp;<span class="name bold">${sessionScope.empVo.empName }</span>
+                </li>
+                <li><i class="fa fa-cog"></i>&nbsp;<span><a
+                        href="<c:url value='/employee/employeeDetail.do?empNo=${sessionScope.empVo.empNo }'/>">마이페이지</a></span>
+                </li>
+            </c:if>
+            <c:if test="${sessionScope.empVo.empLev eq ('팀장') }">
+             <li><i class="fa fa-id-card"></i>&nbsp;<span class="name bold">팀장 ${sessionScope.empVo.empName } 님</span>
                 </li>
                 <li><i class="fa fa-cog"></i>&nbsp;<span><a
                         href="<c:url value='/employee/employeeDetail.do?empNo=${sessionScope.empVo.empNo }'/>">마이페이지</a></span>

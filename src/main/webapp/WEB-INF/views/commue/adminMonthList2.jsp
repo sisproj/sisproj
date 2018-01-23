@@ -117,11 +117,11 @@
 				<c:forEach var="map" items="${list }">
 					<tr>
 						<!-- 해당 사원의 근태관리로 갑니다.  -->
-						<td>${map['EMP_NAME'] }</td>
+						<td><a href="<c:url value='/commue/adm/adminMonthList.do?empName=${map["EMP_NAME"] }&year=${param.year }&month=${param.month } ' />">${map['EMP_NAME'] }</a></td>
 						<!-- 해당 부서근태를 보여줍니다. -->
-						<td>${map['DEPT_NAME'] }</td>
+						<td><a href="<c:url value='/commue/adm/adminMonthList.do?deptName=${map["DEPT_NAME"] }&year=${param.year }&month=${param.month }' />">${map['DEPT_NAME'] }</a></td>
 						<!-- 해당 직급근태를 보여줍니다.  -->
-						<td>${map['POS_NAME'] }</td>
+						<td><a href="<c:url value='/commue/adm/adminMonthList.do?posName=${map["POS_NAME"] }&year=${param.year }&month=${param.month }' />">${map['POS_NAME'] }</a></td>
 						<%-- <c:set var="vo" value="${map['CMTIN'].substring(0,1) }" /> --%>
 						<td id="cmtT">${map['CMTIN'] }</td>
 						<td id="cmtT">${map['CMTOUT'] }</td>

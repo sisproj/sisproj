@@ -10,7 +10,8 @@ public interface LoginService {
 		public static final int EMP_OUT=4; //퇴사직원
 		public static final int NAME_DISAGREE=5; //이름 불일치
 		public static final int SUSSCES_SEARCH=6; //비밀번호 찾기성공
-		
+		public static final int NO_MACH=7; //정보가 맞지않을때 
+
 		public int loginCheck(int empNo, String empPwd);
 		public EmployeeVO selectAdmin(int empNo);
 		public int searchPwd(int empNo, String empName);

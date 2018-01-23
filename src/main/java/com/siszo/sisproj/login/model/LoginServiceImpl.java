@@ -19,13 +19,13 @@ public class LoginServiceImpl implements LoginService{
 	public int loginCheck(int empNo, String empPwd) {
 		int result=0;
 		EmployeeVO vo = loginDao.selectAdmin(empNo);
-		
-		/*logger.info("로그인 파라미터 확인empPwd={}",empPwd);
+		logger.info("로그인 파라미터 확인empPwd={}",empPwd);
 		logger.info("로그인 파라미터 vo.empPwd()={}",vo.getEmpPwd());
 		
-		String shaPwd=EmployeePwdLock.convertEncryption(vo.getEmpPwd());
+		/*String shaPwd=EmployeePwdLock.convertEncryption(vo.getEmpPwd());*/
 		
-		logger.info("로그인 할때 실패시  vo={}",vo);*/
+		logger.info("로그인 할때 실패시  vo={}",vo);
+		
 		if(vo!=null) {
 			if(vo.getEmpNo()!=empNo) {
 					result=ID_NONE;
@@ -52,15 +52,18 @@ public class LoginServiceImpl implements LoginService{
 	public int searchPwd(int empNo, String empName) {
 		int result =0;
 		EmployeeVO vo = loginDao.selectAdmin(empNo);
-		
 		logger.info("비밀번호 찾기 파라미터  vo={}",vo);
 		
-		if(vo.getEmpNo()!=empNo) {
-			result=ID_NONE;
-		}else if(!vo.getEmpName().equals(empName)) {
-			result=NAME_DISAGREE;
-		}else if(empNo==vo.getEmpNo() && empName.equals(vo.getEmpName())) {
-			result=SUSSCES_SEARCH;
+		if(vo!=null) {
+			if(vo.getEmpNo()!=empNo) {
+				result=ID_NONE;
+			}else if(!vo.getEmpName().equals(empName)) {
+				result=NAME_DISAGREE;
+			}else if(empNo==vo.getEmpNo() && empName.equals(vo.getEmpName())) {
+				result=SUSSCES_SEARCH;
+			}
+		}else {
+			result=NO_MACH;
 		}
 		logger.info("비밀번호 찾기 후 결과 result={}",result);
 		return result;	

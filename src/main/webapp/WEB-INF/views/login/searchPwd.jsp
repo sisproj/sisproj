@@ -14,9 +14,9 @@
 		$('form[name=seFrm]').submit(function(){
 			var re = /^[0-9]+$/;
 	        if(!re.test($('#empNo').val())) {			
-	               alert("사원번호는 숫자만 넣으셔야 합니다.");
-	               $('#empNo').val().focus();
-	               return false;		     
+               alert("사원번호는 숫자만 넣으셔야 합니다.");
+               $('#empNo').val().focus();
+               return false;   
 			}else if($('#empNo').val()==''){
 				alert('사번을 입력하세요');
 				$('#empNo').focus();
@@ -54,6 +54,7 @@
 			<input type="submit" id="seBt" value="확인">
 		</div>
 	</form>
+	
 </div>
 </body>
 </html>

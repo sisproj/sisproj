@@ -63,12 +63,11 @@ public class LoginController {
 			Model model) {
 		logger.info("로그인 하기 파라미터 vo={},chkSaveId={}",vo,saveId);
 		
-/*		String pwd = vo.getEmpPwd();
+		/*String pwd = vo.getEmpPwd();
 		String shaPwd = EmployeePwdLock.convertEncryption(pwd);
 		logger.info("암호화된 비밀번호 shaPwd={}",shaPwd);
-		vo.setEmpPwd(shaPwd);
-		*/
-		
+		vo.setEmpPwd(shaPwd);*/
+			
 		int cnt = loginService.loginCheck(vo.getEmpNo(), vo.getEmpPwd());
 
 		String msg="",url="/login/login.do";
@@ -165,6 +164,8 @@ public class LoginController {
 			msg="사원번호가 일치하지않습니다";
 		}else if(result==loginService.NAME_DISAGREE){
 			msg="이름이 일치하지않습니다";
+		}else if(result==loginService.NO_MACH) {
+			msg="정보가 일치하지 않습니다";
 		}else if(result==loginService.SUSSCES_SEARCH) {
 			StringBuffer ranPwd = new StringBuffer();
 			Random rnd = new Random();
@@ -189,7 +190,7 @@ public class LoginController {
 			logger.info("변경된 비밀번호 ranPwd2={}",ranPwd2);
 					
 			String subject="비밀번호 찾기에 대한 이메일입니다";		
-			String content="변경된 비밀번호는 "+ranPwd2+" 입니다";	
+			String content=vo.getEmpName()+"님의 변경된 비밀번호는 "+ranPwd2+" 입니다";	
 			String receiver =empVo.getEmpEmail();			
 			String sender="admin@herbmall.com";
 			
@@ -200,13 +201,13 @@ public class LoginController {
 				logger.info("이메일 발송 실패!");
 				e.printStackTrace();
 			}
-						
-			String shaPwd=EmployeePwdLock.convertEncryption(ranPwd2);	
+			empVo.setEmpPwd(ranPwd2);
+			/*String shaPwd=EmployeePwdLock.convertEncryption(ranPwd2);	
 			logger.info("변경된 비밀번호 shaPwd={}",shaPwd);			
 			
-			empVo.setEmpPwd(shaPwd);
+			empVo.setEmpPwd(shaPwd);*/
 			
-			logger.info("변경되어 수정된 비밀번호 shaPwd={}",shaPwd);
+			/*logger.info("변경되어 수정된 비밀번호 shaPwd={}",shaPwd);*/
 			int cnt = employeeService.employeeEditPwd(empVo);
 			
 			logger.info("이메일이 발송됨과 동시에 랜던값이 비밀번호에 셋팅됨 파라미터 ranPwd={},empVo={}",ranPwd,empVo);
